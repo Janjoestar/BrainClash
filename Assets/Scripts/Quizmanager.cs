@@ -59,6 +59,7 @@ public class QuizManager : MonoBehaviour
     {
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
+        Debug.Log("Player " + playerNumber + " buzzed in first!");
 
         // Change background color based on player
         if (backgroundImage != null)
@@ -78,6 +79,7 @@ public class QuizManager : MonoBehaviour
         {
             Question q = questions[index];
             questionText.text = q.questionText;
+            Debug.Log("Showing question: " + q.questionText);
 
             for (int i = 0; i < answerTexts.Length; i++)
             {
@@ -96,9 +98,13 @@ public class QuizManager : MonoBehaviour
 
     public void SelectAnswer(int answerIndex)
     {
+        Debug.Log("Selected answer: " + answerIndex + ", Correct answer is: " + questions[currentQuestionIndex].correctAnswerIndex);
+
         if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
         {
             // Correct answer
+            Debug.Log("Correct answer! Player " + playerWhoBuzzed + " gets to attack!");
+
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
@@ -108,19 +114,48 @@ public class QuizManager : MonoBehaviour
         else
         {
             // Wrong answer
+            Debug.Log("Wrong answer! Back to buzzer.");
             StartCoroutine(ResetBuzzer());
         }
     }
 
     private IEnumerator TransitionToBattle()
     {
+        // Visual feedback for correct answer
+        questionText.text = "Correct! Preparing for battle...";
+
         yield return new WaitForSeconds(1f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
+
+        // Advance to next question for when we return
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= questions.Count)
+        {
+            currentQuestionIndex = 0; // Loop back to first question
+        }
+
+        // Transition to battle
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GoToBattleScene();
+        }
+        else if (TransitionManager.Instance != null)
+        {
+            TransitionManager.Instance.TransitionToScene("BattleScene");
+        }
+        else
+        {
+            Debug.LogError("No GameManager or TransitionManager found!");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
+        }
     }
 
     private IEnumerator ResetBuzzer()
     {
+        // Visual feedback for wrong answer
+        questionText.text = "Incorrect! Try again...";
+
         yield return new WaitForSeconds(1f);
+
         quizPanel.SetActive(false);
         buzzerPanel.SetActive(true);
         if (backgroundImage != null)
@@ -154,6 +189,7 @@ public class QuizManager : MonoBehaviour
 
     private void InitializeExampleQuestions()
     {
+        // Example questions (same as original)
         // Example 1
         Question q1 = new Question
         {
