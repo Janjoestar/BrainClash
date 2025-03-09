@@ -26,13 +26,24 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Battle scene started");
+
         // Set the attacking player based on who got the question right
         if (GameManager.Instance != null)
         {
             attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
+            Debug.Log("Attacking player set to: " + attackingPlayer);
+
+            // Fallback if no player is set
+            if (attackingPlayer == 0)
+            {
+                Debug.LogWarning("No attacking player set, defaulting to player 1");
+                attackingPlayer = 1;
+            }
         }
         else
         {
+            Debug.LogWarning("GameManager is null, defaulting to player 1");
             attackingPlayer = 1; // Default to player 1 for testing
         }
 
@@ -43,6 +54,10 @@ public class BattleManager : MonoBehaviour
         if (battleStatusText != null)
         {
             battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
+        }
+        else
+        {
+            Debug.LogError("Battle status text is missing!");
         }
 
         // Show attack options
@@ -128,11 +143,16 @@ public class BattleManager : MonoBehaviour
     {
         // Determine target (opposite of attacker)
         int targetPlayer = attackingPlayer == 1 ? 2 : 1;
+        Debug.Log("Player " + attackingPlayer + " attacks Player " + targetPlayer + " with " + attack.attackName);
 
         // Apply damage
         if (GameManager.Instance != null)
         {
             GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+        }
+        else
+        {
+            Debug.LogError("GameManager is null - cannot apply damage!");
         }
 
         // Update battle status
@@ -167,17 +187,28 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        else
+        {
+            Debug.LogWarning("No SpriteRenderer found on target character!");
+        }
 
         // Wait a bit before returning to quiz
         yield return new WaitForSeconds(1f);
+
+        Debug.Log("Attack animation complete, returning to quiz scene");
 
         // Return to quiz scene for next question
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ReturnToQuizScene();
         }
+        else if (TransitionManager.Instance != null)
+        {
+            TransitionManager.Instance.TransitionToScene("QuizScene");
+        }
         else
         {
+            Debug.LogError("No GameManager or TransitionManager found!");
             UnityEngine.SceneManagement.SceneManager.LoadScene("QuizScene");
         }
     }
