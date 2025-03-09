@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public void SetLastCorrectPlayer(int playerNumber)
     {
         lastCorrectPlayer = playerNumber;
-        Debug.Log("Set last correct player to: " + playerNumber);
     }
 
     public int GetLastCorrectPlayer()
@@ -41,15 +40,11 @@ public class GameManager : MonoBehaviour
         else
             player2Health -= damage;
 
-        Debug.Log("Player " + playerNumber + " took " + damage + " damage. Remaining health: " +
-            (playerNumber == 1 ? player1Health : player2Health));
-
         // Check for game over
         if (player1Health <= 0 || player2Health <= 0)
         {
             // Handle game over
             int winner = player1Health <= 0 ? 2 : 1;
-            Debug.Log("Game Over! Player " + winner + " wins!");
 
             // Reset health for a new game
             player1Health = 100;
@@ -67,8 +62,6 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToQuizScene()
     {
-        Debug.Log("Returning to Quiz Scene from GameManager");
-
         // Use TransitionManager if available
         if (TransitionManager.Instance != null)
         {
@@ -76,15 +69,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TransitionManager not found! Falling back to direct scene loading");
             SceneManager.LoadScene("QuizScene");
         }
     }
 
     public void GoToBattleScene()
     {
-        Debug.Log("Going to Battle Scene from GameManager");
-
         // Use TransitionManager if available
         if (TransitionManager.Instance != null)
         {
@@ -92,7 +82,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TransitionManager not found! Falling back to direct scene loading");
             SceneManager.LoadScene("BattleScene");
         }
     }
