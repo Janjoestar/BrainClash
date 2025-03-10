@@ -2099,7 +2099,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942804381}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 57d707f9021964b4899849f5e01a6ac5, type: 2}
   m_CullingMode: 0
@@ -2233,7 +2233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1978970372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2303,6 +2303,7 @@ GameObject:
   - component: {fileID: 2006361758}
   - component: {fileID: 2006361757}
   - component: {fileID: 2006361759}
+  - component: {fileID: 2006361760}
   m_Layer: 6
   m_Name: Player1
   m_TagString: Untagged
@@ -2386,7 +2387,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006361755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c4770048d2c8c8d429fbd924fb57daef, type: 2}
   m_CullingMode: 0
@@ -2399,6 +2400,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2006361760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006361755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac5868a4c22d3a4c8fcb6ca579ca765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
+  artworkSprite: {fileID: 2006361757}
 --- !u!1 &2117557143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,7 +2431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2117557144
 RectTransform:
   m_ObjectHideFlags: 0
