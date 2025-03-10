@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6365c38934c3a49a4091b7b635c807, type: 3}
+  m_Name: New Character Database
+  m_EditorClassIdentifier: 
+  character:
+  - characterName: Samurai
+    characterSprite: {fileID: -774134865, guid: 3265837ba755f6a4fb65ead9d043ecdb, type: 3}
+    scaleFactor: 10
+    positionOffset: {x: 0, y: 2, z: -4.120817}
+  - characterName: Knight
+    characterSprite: {fileID: -256371126, guid: 465f315484ebe0a469d5c2ae112c96e6, type: 3}
+    scaleFactor: 3
+    positionOffset: {x: 0.08, y: 0.81, z: -4.120817}
+  - characterName: Archer
+    characterSprite: {fileID: 21300000, guid: 921829387776d4143abd8f5a60388af1, type: 3}
+    scaleFactor: 8
+    positionOffset: {x: 0.1, y: 3, z: -4.120817}
+  - characterName: Water Princress
+    characterSprite: {fileID: 21300000, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    scaleFactor: 8
+    positionOffset: {x: 0, y: 3.3, z: -4.120817}
