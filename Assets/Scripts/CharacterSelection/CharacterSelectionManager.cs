@@ -111,6 +111,13 @@ public class CharacterSelectionManager : MonoBehaviour
         SaveCharacters();
     }
 
+    public void ConfirmSelection()
+    {
+        SaveCharacters();
+
+        SceneManager.LoadScene("QuizScene");
+    }
+
     public void SaveCharacters() //call before switch scenes
     {
         PlayerPrefs.SetInt("selectedOptionP1", selectedOptionP1);

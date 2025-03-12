@@ -10,6 +10,24 @@ public class GameManager : MonoBehaviour
 
     private int lastCorrectPlayer = 0;
 
+    public Character SelectedCharacterP1 { get; private set; }
+    public Character SelectedCharacterP2 { get; private set; }
+    public CharacterDatabase characterDB;
+
+    private void Start()
+    {
+        LoadSelectedCharacters();
+    }
+
+    private void LoadSelectedCharacters()
+    {
+        int selectedIndexP1 = PlayerPrefs.GetInt("selectedOptionP1", 0);
+        int selectedIndexP2 = PlayerPrefs.GetInt("selectedOptionP2", 0);
+
+        SelectedCharacterP1 = characterDB.GetCharacter(selectedIndexP1);
+        SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -62,27 +80,11 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToQuizScene()
     {
-        // Use TransitionManager if available
-        if (TransitionManager.Instance != null)
-        {
-            TransitionManager.Instance.TransitionToScene("QuizScene");
-        }
-        else
-        {
             SceneManager.LoadScene("QuizScene");
-        }
     }
 
     public void GoToBattleScene()
     {
-        // Use TransitionManager if available
-        if (TransitionManager.Instance != null)
-        {
-            TransitionManager.Instance.TransitionToScene("BattleScene");
-        }
-        else
-        {
             SceneManager.LoadScene("BattleScene");
-        }
     }
 }

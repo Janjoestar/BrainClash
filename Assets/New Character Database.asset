@@ -16,20 +16,20 @@ MonoBehaviour:
   - characterName: Samurai
     characterSprite: {fileID: -774134865, guid: 3265837ba755f6a4fb65ead9d043ecdb, type: 3}
     scaleFactor: 10
-    Player1positionOffset: {x: -4.32, y: 1.95, z: 0}
-    Player2positionOffset: {x: 4.670454, y: 1.870679, z: 0}
+    Player1positionOffset: {x: -4.32, y: 1.95, z: -0.0952692}
+    Player2positionOffset: {x: 4.670454, y: 1.870679, z: -0.0952692}
   - characterName: Knight
     characterSprite: {fileID: -256371126, guid: 465f315484ebe0a469d5c2ae112c96e6, type: 3}
     scaleFactor: 3
-    Player1positionOffset: {x: -4.28, y: 0.72, z: 0}
-    Player2positionOffset: {x: 4.74, y: 0.72, z: 0}
+    Player1positionOffset: {x: -4.28, y: 0.72, z: -0.0952692}
+    Player2positionOffset: {x: 4.74, y: 0.72, z: -0.0952692}
   - characterName: Archer
     characterSprite: {fileID: 21300000, guid: 921829387776d4143abd8f5a60388af1, type: 3}
     scaleFactor: 7.6
-    Player1positionOffset: {x: -4.25, y: 2.77, z: 0}
-    Player2positionOffset: {x: 4.81, y: 2.77, z: 0}
+    Player1positionOffset: {x: -4.25, y: 2.77, z: -0.0952692}
+    Player2positionOffset: {x: 4.81, y: 2.77, z: -0.0952692}
   - characterName: Water Princress
     characterSprite: {fileID: 21300000, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     scaleFactor: 8.2
-    Player1positionOffset: {x: -4.41, y: 3.23, z: 0}
-    Player2positionOffset: {x: 4.67, y: 3.23, z: 0}
+    Player1positionOffset: {x: -4.41, y: 3.23, z: -0.0952692}
+    Player2positionOffset: {x: 4.67, y: 3.23, z: -0.0952692}

@@ -45,8 +45,30 @@ public class QuizManager : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.Instance != null)
+        {
+            Character p1Character = GameManager.Instance.SelectedCharacterP1;
+            Character p2Character = GameManager.Instance.SelectedCharacterP2;
+
+            SetCharacter(Player1, p1Character);
+            SetCharacter(Player2, p2Character);
+        }
+
         ShuffleQuestions();
         ShowBuzzerPanel();
+    }
+
+    private void SetCharacter(GameObject playerObject, Character character)
+    {
+        if (character == null) return;
+
+        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = character.characterSprite;
+            playerObject.transform.localScale = Vector3.one * character.scaleFactor;
+            playerObject.transform.localPosition = (playerObject == Player1) ? character.Player1positionOffset : character.Player2positionOffset;
+        }
     }
 
     private void Update()
@@ -134,10 +156,6 @@ public class QuizManager : MonoBehaviour
 
         if (GameManager.Instance != null)
             GameManager.Instance.GoToBattleScene();
-        else if (TransitionManager.Instance != null)
-            TransitionManager.Instance.TransitionToScene("BattleScene");
-        else
-            UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
     }
 
     private IEnumerator ResetBuzzer()
