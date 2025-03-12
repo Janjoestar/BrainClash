@@ -182,14 +182,6 @@ public class BattleManager : MonoBehaviour
         {
             GameManager.Instance.ReturnToQuizScene();
         }
-        else if (TransitionManager.Instance != null)
-        {
-            TransitionManager.Instance.TransitionToScene("QuizScene");
-        }
-        else
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("QuizScene");
-        }
     }
 
     private void InitializeExampleAttacks()
