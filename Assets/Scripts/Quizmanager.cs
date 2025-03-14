@@ -66,7 +66,6 @@ public class QuizManager : MonoBehaviour
         if (spriteRenderer != null)
         {
             spriteRenderer.sprite = character.characterSprite;
-            playerObject.transform.localScale = Vector3.one * character.scaleFactor;
             playerObject.transform.localPosition = (playerObject == Player1) ? character.Player1positionOffset : character.Player2positionOffset;
         }
     }
