@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player1Character;
-    [SerializeField] private GameObject player2Character;
+    [SerializeField] private GameObject Player1;
+    [SerializeField] private GameObject Player2;
 
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player2HealthText;
@@ -19,41 +20,63 @@ public class BattleManager : MonoBehaviour
 
     private int attackingPlayer;
 
-    private void Awake()
+
+    private void OnEnable()
     {
-        InitializeExampleAttacks();
+        GameManager.OnGameManagerReady += InitializeBattle;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameManagerReady -= InitializeBattle;
     }
 
     private void Start()
     {
-        // Set the attacking player based on who got the question right
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && GameManager.Instance.SelectedCharacterP1 != null)
         {
-            attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
-
-            // Fallback if no player is set
-            if (attackingPlayer == 0)
-            {
-                attackingPlayer = 1;
-            }
+            InitializeBattle();
         }
-        else
+    }
+
+    private void InitializeBattle()
+    {
+        if (GameManager.Instance == null)
         {
-            attackingPlayer = 1; // Default to player 1 for testing
+            Debug.LogError("GameManager instance is null in BattleManager.");
+            return;
         }
 
-        // Update health displays
+        Character p1Character = GameManager.Instance.SelectedCharacterP1;
+        Character p2Character = GameManager.Instance.SelectedCharacterP2;
+
+        SetCharacter(Player1, p1Character);
+        SetCharacter(Player2, p2Character);
+
+        attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
+        if (attackingPlayer == 0) attackingPlayer = 1;
+
         UpdateHealthDisplays();
 
-        // Show battle status
         if (battleStatusText != null)
         {
             battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
         }
-
-        // Show attack options
+        InitializeExampleAttacks();
         ShowAttackOptions();
     }
+
+    private void SetCharacter(GameObject playerObject, Character character)
+    {
+        if (character == null) return;
+
+        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = character.characterSprite;
+        }
+    }
+
 
     private void UpdateHealthDisplays()
     {
@@ -157,7 +180,7 @@ public class BattleManager : MonoBehaviour
     private IEnumerator ShowAttackAnimation(int attacker, int target, AttackData attack)
     {
         // Simple animation - flash the target character with attack color
-        GameObject targetCharacter = target == 1 ? player1Character : player2Character;
+        GameObject targetCharacter = target == 1 ? Player1 : Player2;
         SpriteRenderer renderer = targetCharacter.GetComponent<SpriteRenderer>();
 
         if (renderer != null)
