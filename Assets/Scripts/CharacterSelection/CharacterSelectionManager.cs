@@ -53,14 +53,12 @@ public class CharacterSelectionManager : MonoBehaviour
         {
             artworkSpriteP1.sprite = character.characterSprite;
             nameTextP1.text = character.characterName;
-            artworkSpriteP1.transform.localScale = Vector3.one * character.scaleFactor;
             artworkSpriteP1.transform.localPosition = character.Player1positionOffset;
         }
         else if (player == 2)
         {
             artworkSpriteP2.sprite = character.characterSprite;
             nameTextP2.text = character.characterName;
-            artworkSpriteP2.transform.localScale = Vector3.one * character.scaleFactor;
             artworkSpriteP2.transform.localPosition = character.Player2positionOffset;
         }
     }
