@@ -15,8 +15,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Color player1Color = new Color(0.2f, 0.2f, 0.8f); // Blue
     [SerializeField] private Color player2Color = new Color(0.2f, 0.8f, 0.2f); // Green
-    [SerializeField] private GameObject Player1;
-    [SerializeField] private GameObject Player2;
+    [SerializeField] internal GameObject Player1;
+    [SerializeField] internal GameObject Player2;
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
@@ -66,6 +66,35 @@ public class QuizManager : MonoBehaviour
         if (spriteRenderer != null)
         {
             spriteRenderer.sprite = character.characterSprite;
+        }
+
+        ApplyCharacterAnimation(playerObject, character.characterName);
+    }
+
+    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
+    {
+        Animator animator = playerObject.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component missing on " + playerObject.name);
+            return;
+        }
+
+        // Reset animator before applying the new one
+        animator.runtimeAnimatorController = null;
+        animator.Rebind();
+        animator.Update(0);
+
+        string overridePath = "Animations/" + characterName + "Override";
+        AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else
+        {
+            Debug.LogError("Override Controller not found for " + characterName);
         }
     }
 

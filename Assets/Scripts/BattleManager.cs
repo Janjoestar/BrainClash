@@ -6,8 +6,8 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] private GameObject Player1;
-    [SerializeField] private GameObject Player2;
+    [SerializeField] internal GameObject Player1;
+    [SerializeField] internal GameObject Player2;
 
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player2HealthText;
@@ -70,10 +70,55 @@ public class BattleManager : MonoBehaviour
     {
         if (character == null) return;
 
+        // Change sprite
         SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             spriteRenderer.sprite = character.characterSprite;
+        }
+
+        // Change Animator Override Controller
+        Animator animator = playerObject.GetComponent<Animator>();
+        if (animator != null)
+        {
+            string overridePath = "Animations/" + character.characterName + "Override";
+            AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+
+            if (overrideController != null)
+            {
+                animator.runtimeAnimatorController = overrideController;
+            }
+            else
+            {
+                Debug.LogWarning("No Animator Override Controller found for " + character.characterName);
+            }
+        }
+    }
+
+    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
+    {
+        Animator animator = playerObject.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component missing on " + playerObject.name);
+            return;
+        }
+
+        // Reset animator before applying the new one
+        animator.runtimeAnimatorController = null;
+        animator.Rebind();
+        animator.Update(0);
+
+        string overridePath = "Animations/" + characterName + "Override";
+        AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else
+        {
+            Debug.LogError("Override Controller not found for " + characterName);
         }
     }
 
@@ -132,10 +177,6 @@ public class BattleManager : MonoBehaviour
                 buttonText.enabled = true;
             }
             buttonText.gameObject.SetActive(true);
-
-            // Add tooltip description (optional)
-            Tooltip tooltip = buttonObj.AddComponent<Tooltip>();
-            tooltip.tooltipText = attack.description;
 
             button.onClick.AddListener(() => {
                 PerformAttack(attack);

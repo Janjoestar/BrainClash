@@ -41,9 +41,42 @@ public class GameManager : MonoBehaviour
         SelectedCharacterP1 = characterDB.GetCharacter(selectedIndexP1);
         SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
 
+
         OnGameManagerReady?.Invoke(); // Notify BattleManager that characters are ready
+                                      // Force reapply animations after loading to fix glitches
+        if (SceneManager.GetActiveScene().name == "CharacterSelectionScene")
+        {
+            CharacterSelectionManager selectionManager = FindObjectOfType<CharacterSelectionManager>();
+            if (selectionManager != null)
+            {
+                selectionManager.ApplyCharacterAnimation(selectionManager.artworkSpriteP1.gameObject, SelectedCharacterP1.characterName);
+                selectionManager.ApplyCharacterAnimation(selectionManager.artworkSpriteP2.gameObject, SelectedCharacterP2.characterName);
+            }
+        }
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Apply animations when the QuizScene or BattleScene loads
+        if (scene.name == "QuizScene")
+        {
+            QuizManager quizManager = FindObjectOfType<QuizManager>();
+            if (quizManager != null)
+            {
+                quizManager.ApplyCharacterAnimation(quizManager.Player1, SelectedCharacterP1.characterName);
+                quizManager.ApplyCharacterAnimation(quizManager.Player2, SelectedCharacterP2.characterName);
+            }
+        }
+        else if (scene.name == "BattleScene")
+        {
+            BattleManager battleManager = FindObjectOfType<BattleManager>();
+            if (battleManager != null)
+            {
+                battleManager.ApplyCharacterAnimation(battleManager.Player1, SelectedCharacterP1.characterName);
+                battleManager.ApplyCharacterAnimation(battleManager.Player2, SelectedCharacterP2.characterName);
+            }
+        }
+    }
 
     public void SetLastCorrectPlayer(int playerNumber)
     {
