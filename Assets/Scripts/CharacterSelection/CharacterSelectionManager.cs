@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
@@ -53,11 +54,41 @@ public class CharacterSelectionManager : MonoBehaviour
         {
             artworkSpriteP1.sprite = character.characterSprite;
             nameTextP1.text = character.characterName;
+            ApplyCharacterAnimation(artworkSpriteP1.gameObject, character.characterName);
         }
         else if (player == 2)
         {
             artworkSpriteP2.sprite = character.characterSprite;
             nameTextP2.text = character.characterName;
+            ApplyCharacterAnimation(artworkSpriteP2.gameObject, character.characterName);
+        }
+    }
+
+    internal void ApplyCharacterAnimation(GameObject characterPreview, string characterName)
+    {
+        Animator animator = characterPreview.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component missing on " + characterPreview.name);
+            return;
+        }
+
+        // Reset Animator to prevent glitches
+        animator.runtimeAnimatorController = null;
+        animator.Rebind(); // Ensures animation system resets before applying new animation
+        animator.Update(0); // Forces Unity to refresh
+
+        // Load Override Controller from Resources
+        string overridePath = "Animations/" + characterName + "Override";
+        AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+
+        if (overrideController != null)
+        {
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else
+        {
+            Debug.LogError("Override Controller not found for " + characterName + " at " + overridePath);
         }
     }
 

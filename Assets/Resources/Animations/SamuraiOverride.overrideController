@@ -6,8 +6,8 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArcherOverride
-  m_Controller: {fileID: 9100000, guid: c4770048d2c8c8d429fbd924fb57daef, type: 2}
+  m_Name: SamuraiOverride
+  m_Controller: {fileID: 9100000, guid: 2c654b7acc6a7fe4aabd0c58b4f219c2, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: ee2dbc0ade379db41aa5c8375719e639, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 44633aa486bae0d48aeb640a1b6a62dc, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: ee2dbc0ade379db41aa5c8375719e639, type: 2}
