@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] internal GameObject Player1;
-    [SerializeField] internal GameObject Player2;
+    [SerializeField] public GameObject Player1;
+    [SerializeField] public GameObject Player2;
 
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player2HealthText;
@@ -15,21 +15,15 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private GameObject attackPanel;
     [SerializeField] private GameObject attackButtonPrefab;
-    private List<AttackData> player1Attacks = new List<AttackData>(); // Samurai Attacks
-    private List<AttackData> player2Attacks = new List<AttackData>(); // Knight Attacks
+    [SerializeField] private Transform foregroundPosition;
+    [SerializeField] private Transform backgroundPosition;
 
-    private int attackingPlayer;
+    private List<AttackData> player1Attacks = new List<AttackData>();
+    private List<AttackData> player2Attacks = new List<AttackData>();
+    private int attackingPlayer = 1;
 
-
-    private void OnEnable()
-    {
-        GameManager.OnGameManagerReady += InitializeBattle;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnGameManagerReady -= InitializeBattle;
-    }
+    private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
+    private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
 
     private void Start()
     {
@@ -53,15 +47,12 @@ public class BattleManager : MonoBehaviour
         SetCharacter(Player1, p1Character);
         SetCharacter(Player2, p2Character);
 
-        attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
-        if (attackingPlayer == 0) attackingPlayer = 1;
+        int attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
 
+        SwapPositions(attackingPlayer);
         UpdateHealthDisplays();
+        battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
 
-        if (battleStatusText != null)
-        {
-            battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
-        }
         InitializeExampleAttacks();
         ShowAttackOptions();
     }
@@ -70,78 +61,54 @@ public class BattleManager : MonoBehaviour
     {
         if (character == null) return;
 
-        // Change sprite
         SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
-        {
             spriteRenderer.sprite = character.characterSprite;
-        }
 
-        // Change Animator Override Controller
         Animator animator = playerObject.GetComponent<Animator>();
         if (animator != null)
         {
             string overridePath = "Animations/" + character.characterName + "Override";
             AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
-
             if (overrideController != null)
-            {
                 animator.runtimeAnimatorController = overrideController;
-            }
             else
-            {
                 Debug.LogWarning("No Animator Override Controller found for " + character.characterName);
-            }
         }
     }
 
-    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
+    private void SwapPositions(int attackingPlayer)
     {
-        Animator animator = playerObject.GetComponent<Animator>();
-        if (animator == null)
+        Vector3 forwardPos = foregroundPosition.position;
+        Vector3 backPos = backgroundPosition.position;
+
+        if (attackingPlayer == 1)
         {
-            Debug.LogError("Animator component missing on " + playerObject.name);
-            return;
-        }
-
-        // Reset animator before applying the new one
-        animator.runtimeAnimatorController = null;
-        animator.Rebind();
-        animator.Update(0);
-
-        string overridePath = "Animations/" + characterName + "Override";
-        AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
-
-        if (overrideController != null)
-        {
-            animator.runtimeAnimatorController = overrideController;
+            Player1.transform.position = forwardPos;
+            Player2.transform.position = backPos;
+            FlipSprites(Player1, true);
+            FlipSprites(Player2, false);
         }
         else
         {
-            Debug.LogError("Override Controller not found for " + characterName);
+            Player2.transform.position = forwardPos;
+            Player1.transform.position = backPos;
+            FlipSprites(Player1, false);
+            FlipSprites(Player2, true);
         }
     }
 
+    private void FlipSprites(GameObject player, bool faceRight)
+    {
+        SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+        if (sprite != null)
+            sprite.flipX = faceRight;
+    }
 
     private void UpdateHealthDisplays()
     {
-        if (GameManager.Instance != null)
-        {
-            if (player1HealthText != null)
-                player1HealthText.text = "Player 1 HP: " + GameManager.Instance.GetPlayerHealth(1);
-
-            if (player2HealthText != null)
-                player2HealthText.text = "Player 2 HP: " + GameManager.Instance.GetPlayerHealth(2);
-        }
-        else
-        {
-            // Debug mode
-            if (player1HealthText != null)
-                player1HealthText.text = "Player 1 HP: 100";
-
-            if (player2HealthText != null)
-                player2HealthText.text = "Player 2 HP: 100";
-        }
+        player1HealthText.text = "Player 1 HP: " + GameManager.Instance.GetPlayerHealth(1);
+        player2HealthText.text = "Player 2 HP: " + GameManager.Instance.GetPlayerHealth(2);
     }
 
     private void ShowAttackOptions()
@@ -196,124 +163,49 @@ public class BattleManager : MonoBehaviour
 
     private void PerformAttack(AttackData attack)
     {
-        // Determine target (opposite of attacker)
-        int targetPlayer = attackingPlayer == 1 ? 2 : 1;
+        // Current code incorrectly targets the opposite of attackingPlayer
+        // int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
 
-        // Apply damage
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
-        }
-
-        // Update battle status
-        if (battleStatusText != null)
-        {
-            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
-        }
-
-        // Update displays
+        // Fixed version - the non-attacking player should take damage
+        int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
+        GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+        battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         UpdateHealthDisplays();
 
-        // Show attack animation
-        StartCoroutine(ShowAttackAnimation(attackingPlayer, targetPlayer, attack));
+        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
+        Animator animator = attacker.GetComponent<Animator>();
+        if (animator != null)
+            animator.SetTrigger(attack.animationTrigger);
+
+        StartCoroutine(ShowAttackAnimation(animator));
     }
 
-    private IEnumerator ShowAttackAnimation(int attacker, int target, AttackData attack)
+        public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
     {
-        // Simple animation - flash the target character with attack color
-        GameObject targetCharacter = target == 1 ? Player1 : Player2;
-        SpriteRenderer renderer = targetCharacter.GetComponent<SpriteRenderer>();
+        CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
+    }
 
-        if (renderer != null)
-        {
-            Color originalColor = renderer.color;
+    private IEnumerator ShowAttackAnimation(Animator animator)
+    {
+        if (animator != null)
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-            // Flash 3 times
-            for (int i = 0; i < 3; i++)
-            {
-                renderer.color = attack.effectColor;
-                yield return new WaitForSeconds(0.1f);
-                renderer.color = originalColor;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-
-        // Wait a bit before returning to quiz
         yield return new WaitForSeconds(1f);
-
-        // Return to quiz scene for next question
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ReturnToQuizScene();
-        }
+        SceneManager.LoadScene("QuizScene");
     }
 
     private void InitializeExampleAttacks()
     {
-        // Samurai Attacks (Player 1)
-        player1Attacks.Add(new AttackData
+        player1Attacks = new List<AttackData>
         {
-            attackName = "Quick Slash",
-            damage = 12,
-            description = "A swift sword slash that deals moderate damage.",
-            effectColor = new Color(1f, 0f, 0f) // Red
-        });
+            new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1"),
+            new AttackData("Focused Strike", 18, "A powerful attack.", "Attack1")
+        };
 
-        player1Attacks.Add(new AttackData
+        player2Attacks = new List<AttackData>
         {
-            attackName = "Focused Strike",
-            damage = 18,
-            description = "A focused attack that deals high damage.",
-            effectColor = new Color(1f, 0.5f, 0f) // Orange
-        });
-
-        player1Attacks.Add(new AttackData
-        {
-            attackName = "Parry",
-            damage = 0,
-            description = "Block the next attack and counterattack.",
-            effectColor = new Color(0.5f, 0.5f, 1f) // Blue
-        });
-
-        player1Attacks.Add(new AttackData
-        {
-            attackName = "Blade Dance",
-            damage = 25,
-            description = "A spinning sword attack hitting multiple times.",
-            effectColor = new Color(1f, 1f, 0f) // Yellow
-        });
-
-        // Knight Attacks (Player 2)
-        player2Attacks.Add(new AttackData
-        {
-            attackName = "Shield Bash",
-            damage = 10,
-            description = "Bash the enemy with a shield, stunning them.",
-            effectColor = new Color(0f, 1f, 1f) // Cyan
-        });
-
-        player2Attacks.Add(new AttackData
-        {
-            attackName = "Heavy Strike",
-            damage = 20,
-            description = "A slow but powerful attack with a greatsword.",
-            effectColor = new Color(0.5f, 0.3f, 0.1f) // Brown
-        });
-
-        player2Attacks.Add(new AttackData
-        {
-            attackName = "Defensive Stance",
-            damage = 0,
-            description = "Reduce damage taken on the next turn.",
-            effectColor = new Color(0.3f, 0.3f, 1f) // Dark Blue
-        });
-
-        player2Attacks.Add(new AttackData
-        {
-            attackName = "Divine Strike",
-            damage = 22,
-            description = "A holy attack that deals extra damage to evil foes.",
-            effectColor = new Color(1f, 1f, 0.5f) // Light Yellow
-        });
+            new AttackData("Shield Bash", 10, "Stun with a shield.", "Attack1"),
+            new AttackData("Heavy Strike", 20, "A slow but strong attack.", "Attack1")
+        };
     }
 }
