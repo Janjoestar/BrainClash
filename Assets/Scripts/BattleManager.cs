@@ -243,7 +243,7 @@ public class BattleManager : MonoBehaviour
         Vector3 direction = targetPosition - attack.effectOffset;
 
         // Animate the effect moving towards the target position
-        float speed = 5f; // Adjust speed as needed
+        float speed = 8f; // Adjust speed as needed
         float distanceCovered = 0;
         float totalDistance = direction.magnitude;
         Vector3 normalizedDirection = direction.normalized;
@@ -451,21 +451,28 @@ public class BattleManager : MonoBehaviour
         // Format: name, damage, description, animation trigger, type, 
         // effect prefab, position offset, effect delay, hit effect prefab, hit offset
         new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1",
-                      AttackType.Slash, "SlashEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
+                      AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f),
 
-        new AttackData("Fire Arrow", 15, "A flaming projectile.", "Attack2",
-                      AttackType.Projectile, "FireArrowEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f, "PoisonArrow 1", new Vector3(-4.809998f, -5.049188f, -4.116615f)),
+        new AttackData("Warrior Slash", 15, "A flaming projectile.", "Attack1",
+                      AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f),
 
-        new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack1",
-                      AttackType.Magic, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
+        new AttackData("Dragon Slash", 20, "A bolt of lightning.", "Attack2",
+                      AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f),
+
+        new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Attack3",
+                      AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f),
     };
 
         player2Attacks = new List<AttackData>
     {
         new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
                       AttackType.Projectile, "FrostBoltEffect", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
+
         new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
                       AttackType.DirectHit, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 2f),
+
+                new AttackData("Vine Arrow", 15, "A freezing projectile.", "Attack1",
+                      AttackType.Projectile, "VineArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
     };
     }
 }
