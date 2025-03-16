@@ -236,13 +236,6 @@ public class BattleManager : MonoBehaviour
         // Position the effect at the attacker's position WITH the custom offset
         attackEffect.transform.position = attack.effectOffset;
 
-        // Determine if we need to flip the effect based on direction
-        SpriteRenderer effectRenderer = attackEffect.GetComponent<SpriteRenderer>();
-        if (effectRenderer != null)
-        {
-            effectRenderer.flipX = attackingPlayer == 2;
-        }
-
         // Calculate the target hit position (defender position + hit offset)
         Vector3 targetPosition = attack.targetHitOffset;
 
@@ -250,7 +243,7 @@ public class BattleManager : MonoBehaviour
         Vector3 direction = targetPosition - attack.effectOffset;
 
         // Animate the effect moving towards the target position
-        float speed = 3f; // Adjust speed as needed
+        float speed = 5f; // Adjust speed as needed
         float distanceCovered = 0;
         float totalDistance = direction.magnitude;
         Vector3 normalizedDirection = direction.normalized;
@@ -269,35 +262,16 @@ public class BattleManager : MonoBehaviour
         // Play projectile hit animation if it exists
         if (!string.IsNullOrEmpty(attack.hitEffectPrefabName))
         {
-            Debug.Log("Exists");
-
-            // Destroy the traveling projectile
             Destroy(attackEffect);
-            Debug.Log("Destroyed");
-
-            // Load and instantiate the hit effect
-            GameObject hitEffectPrefab = Resources.Load<GameObject>("Effects/" + attack.hitEffectPrefabName);
+            string pathToHitEffect = "Effects/" + attack.hitEffectPrefabName;
+            GameObject hitEffectPrefab = Resources.Load<GameObject>(pathToHitEffect);
             if (hitEffectPrefab != null)
             {
-                Debug.Log("hiteffect animating");
-
                 GameObject hitEffect = Instantiate(hitEffectPrefab, targetPosition, Quaternion.identity);
 
-                // Determine if we need to flip the hit effect
-                SpriteRenderer hitRenderer = hitEffect.GetComponent<SpriteRenderer>();
-                if (hitRenderer != null)
-                {
-                    Debug.Log("Flipped");
-
-                    hitRenderer.flipX = attackingPlayer == 2;
-                }
-
-                // If the hit effect has an animator, play it
                 Animator hitAnimator = hitEffect.GetComponent<Animator>();
                 if (hitAnimator != null)
                 {
-                    Debug.Log("Animator found");
-                    // Wait for the hit animation to complete
                     float hitAnimationLength = 2f; // Default duration
 
                     // Try to get actual animation length
@@ -308,16 +282,12 @@ public class BattleManager : MonoBehaviour
                     }
 
                     yield return new WaitForSeconds(hitAnimationLength);
-                    yield return new WaitForSeconds(2f);
 
-                    // Destroy the hit effect after animation completes
                     Destroy(hitEffect);
                 }
                 else
                 {
                     Debug.Log("No animator");
-
-                    // If no animator, destroy after a short delay
                     yield return new WaitForSeconds(0.5f);
                     Destroy(hitEffect);
                 }
@@ -329,13 +299,10 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            // If no hit effect, just destroy the projectile
             Debug.Log("No hit effect");
-
             Destroy(attackEffect);
         }
 
-        // Play an impact effect on the defender
         PlayImpactEffect(defender);
     }
 
@@ -484,10 +451,10 @@ public class BattleManager : MonoBehaviour
         // Format: name, damage, description, animation trigger, type, 
         // effect prefab, position offset, effect delay, hit effect prefab, hit offset
         new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1",
-                      AttackType.Slash, "SlashEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f, "PoisonArrowHitEffect", new Vector3(-4.809998f, -5.049188f, -4.116615f)),
+                      AttackType.Slash, "SlashEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
 
         new AttackData("Fire Arrow", 15, "A flaming projectile.", "Attack2",
-                      AttackType.Projectile, "FireArrowEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
+                      AttackType.Projectile, "FireArrowEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f, "PoisonArrow 1", new Vector3(-4.809998f, -5.049188f, -4.116615f)),
 
         new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack1",
                       AttackType.Magic, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
@@ -495,13 +462,10 @@ public class BattleManager : MonoBehaviour
 
         player2Attacks = new List<AttackData>
     {
-        new AttackData("Shield Bash", 10, "Stun with a shield.", "Attack1",
-                      AttackType.DirectHit, "ShieldBashEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 0.2f),
-
         new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                      AttackType.Projectile, "FrostBoltEffect", new Vector3(-0.4f, -5.23f, -4.116615f), 1f, "PoisonArrowHitEffect", new Vector3(-3.25f, -5.049188f, -4.116615f)),
+                      AttackType.Projectile, "FrostBoltEffect", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
         new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
-                      AttackType.DirectHit, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 1.5f),
+                      AttackType.DirectHit, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 2f),
     };
     }
 }
