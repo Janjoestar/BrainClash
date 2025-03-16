@@ -81,12 +81,10 @@ public class GameManager : MonoBehaviour
     public void SetLastCorrectPlayer(int playerNumber)
     {
         lastCorrectPlayer = playerNumber;
-        Debug.Log("Last correct player set to: " + lastCorrectPlayer);
     }
 
     public int GetLastCorrectPlayer()
     {
-        Debug.Log("Getting last correct player: " + lastCorrectPlayer);
         return lastCorrectPlayer;
     }
 
