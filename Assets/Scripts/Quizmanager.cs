@@ -157,6 +157,14 @@ public class QuizManager : MonoBehaviour
     private IEnumerator TransitionToBattle()
     {
         questionText.text = "Correct! Preparing for battle...";
+
+        // Let's add a debug log here to see which player answered correctly
+        Debug.Log("Quiz answered correctly by Player: " + playerWhoBuzzed);
+
+        // Make sure we're setting the last correct player
+        if (GameManager.Instance != null)
+            GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
+
         yield return new WaitForSeconds(1f);
 
         if (GameManager.Instance != null)

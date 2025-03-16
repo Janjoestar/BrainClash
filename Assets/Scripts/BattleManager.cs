@@ -47,7 +47,9 @@ public class BattleManager : MonoBehaviour
         SetCharacter(Player1, p1Character);
         SetCharacter(Player2, p2Character);
 
-        int attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
+        // Get the player who correctly answered the quiz
+        attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
+        Debug.Log("InitializeBattle - AttackingPlayer set to: " + attackingPlayer);
 
         SwapPositions(attackingPlayer);
         UpdateHealthDisplays();
@@ -56,6 +58,7 @@ public class BattleManager : MonoBehaviour
         InitializeExampleAttacks();
         ShowAttackOptions();
     }
+
 
     private void SetCharacter(GameObject playerObject, Character character)
     {
@@ -82,6 +85,7 @@ public class BattleManager : MonoBehaviour
         Vector3 forwardPos = foregroundPosition.position;
         Vector3 backPos = backgroundPosition.position;
 
+        // Only change their positions, not their identities
         if (attackingPlayer == 1)
         {
             Player1.transform.position = forwardPos;
@@ -107,10 +111,47 @@ public class BattleManager : MonoBehaviour
 
     private void UpdateHealthDisplays()
     {
-        player1HealthText.text = "Player 1 HP: " + GameManager.Instance.GetPlayerHealth(1);
-        player2HealthText.text = "Player 2 HP: " + GameManager.Instance.GetPlayerHealth(2);
+        // Get health values
+        int p1Health = GameManager.Instance.GetPlayerHealth(1);
+        int p2Health = GameManager.Instance.GetPlayerHealth(2);
+
+        // Show health with context of who's attacking/defending
+        if (attackingPlayer == 1)
+        {
+            player1HealthText.text = "Attacker (P1) HP: " + p1Health;
+            player2HealthText.text = "Defender (P2) HP: " + p2Health;
+        }
+        else
+        {
+            player1HealthText.text = "Attacker (P2) HP: " + p2Health;
+            player2HealthText.text = "Defender (P1) HP: " + p1Health;
+        }
     }
 
+    private void PerformAttack(AttackData attack)
+    {
+        // The non-attacking player should take damage
+        int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
+
+        Debug.Log("Before attack - Player 1 Health: " + GameManager.Instance.GetPlayerHealth(1));
+        Debug.Log("Before attack - Player 2 Health: " + GameManager.Instance.GetPlayerHealth(2));
+        Debug.Log("Attacking Player: " + attackingPlayer + ", Target Player: " + targetPlayer);
+
+        GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+
+        Debug.Log("After attack - Player 1 Health: " + GameManager.Instance.GetPlayerHealth(1));
+        Debug.Log("After attack - Player 2 Health: " + GameManager.Instance.GetPlayerHealth(2));
+
+        battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
+        UpdateHealthDisplays();
+
+        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
+        Animator animator = attacker.GetComponent<Animator>();
+        if (animator != null)
+            animator.SetTrigger(attack.animationTrigger);
+
+        StartCoroutine(ShowAttackAnimation(animator));
+    }
     private void ShowAttackOptions()
     {
         // Clear previous attack buttons
@@ -161,26 +202,8 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void PerformAttack(AttackData attack)
-    {
-        // Current code incorrectly targets the opposite of attackingPlayer
-        // int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
 
-        // Fixed version - the non-attacking player should take damage
-        int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
-        GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
-        battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
-        UpdateHealthDisplays();
-
-        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
-        Animator animator = attacker.GetComponent<Animator>();
-        if (animator != null)
-            animator.SetTrigger(attack.animationTrigger);
-
-        StartCoroutine(ShowAttackAnimation(animator));
-    }
-
-        public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
+    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
     {
         CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
