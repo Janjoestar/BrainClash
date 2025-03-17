@@ -466,13 +466,13 @@ public class BattleManager : MonoBehaviour
         player2Attacks = new List<AttackData>
     {
         new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                      AttackType.Projectile, "FrostBoltEffect", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                      AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
 
         new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
                       AttackType.DirectHit, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 2f),
 
-                new AttackData("Vine Arrow", 15, "A freezing projectile.", "Attack1",
-                      AttackType.Projectile, "VineArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
+        new AttackData("Special", 15, "A freezing projectile.", "Attack3",
+                      AttackType.DirectHit, "BeamHitEffect 2", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f)
     };
     }
 }
