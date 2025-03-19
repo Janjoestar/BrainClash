@@ -57,6 +57,17 @@ public class BattleManager : MonoBehaviour
         SetCharacter(Player1, p1Character);
         SetCharacter(Player2, p2Character);
 
+        // Load character-specific attacks
+        player1Attacks = p1Character.characterAttacks;
+        player2Attacks = p2Character.characterAttacks;
+
+        // If a character doesn't have attacks defined, use default attacks
+        if (player1Attacks == null || player1Attacks.Count == 0)
+            player1Attacks = GetDefaultAttacks(p1Character.characterName);
+
+        if (player2Attacks == null || player2Attacks.Count == 0)
+            player2Attacks = GetDefaultAttacks(p2Character.characterName);
+
         // Get the player who correctly answered the quiz
         attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
 
@@ -64,7 +75,6 @@ public class BattleManager : MonoBehaviour
         UpdateHealthDisplays();
         battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
 
-        InitializeExampleAttacks();
         ShowAttackOptions();
     }
 
@@ -137,6 +147,10 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
+    {
+        CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
+    }
 
     private void PerformAttack(AttackData attack)
     {
@@ -151,22 +165,11 @@ public class BattleManager : MonoBehaviour
 
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
 
-        // Trigger the attack animation
+        // Get animator but DON'T trigger animation yet for MoveAndHit
         Animator attackerAnimator = attacker.GetComponent<Animator>();
-        if (attackerAnimator != null)
-        {
-            attackerAnimator.SetTrigger(attack.animationTrigger);
-        }
 
-        // Show attack animation and effects
+        // Handle attack logic based on type
         StartCoroutine(ShowAttackAnimation(attackerAnimator, attack));
-    }
-
-
-
-    public void ApplyCharacterAnimation(GameObject playerObject, string characterName)
-    {
-        CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
 
     private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack)
@@ -175,40 +178,105 @@ public class BattleManager : MonoBehaviour
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
         GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
 
-        // Wait for the specific delay for this attack before showing effect
-        yield return new WaitForSeconds(attack.effectDelay);
-
-        // Show the appropriate effect based on attack type
-        if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
+        // Handle different attack types
+        if (attack.attackType == AttackType.MoveAndHit)
         {
-            yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
+            // For MoveAndHit, we need a special sequence
+            yield return StartCoroutine(HandleMoveAndHit(attacker, attack, animator));
         }
         else
         {
-            yield return StartCoroutine(ShowDirectEffect(defender, attack));
-        }
+            // For all other attacks, trigger animation immediately
+            if (animator != null)
+            {
+                animator.SetTrigger(attack.animationTrigger);
+            }
 
-        // Wait for attacker's animation to fully complete
-        if (animator != null)
-        {
-            // Get remaining time in current animation
-            float remainingAnimTime = animator.GetCurrentAnimatorStateInfo(0).length -
-                                     animator.GetCurrentAnimatorStateInfo(0).normalizedTime *
-                                     animator.GetCurrentAnimatorStateInfo(0).length;
+            // Wait for effect delay
+            yield return new WaitForSeconds(attack.effectDelay);
 
-            // Add a small buffer to ensure animation completes
-            remainingAnimTime = Mathf.Max(remainingAnimTime, 0) + 0.1f;
-            yield return new WaitForSeconds(remainingAnimTime);
+            // Show appropriate effect
+            if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
+            {
+                yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
+            }
+            else
+            {
+                yield return StartCoroutine(ShowDirectEffect(defender, attack));
+            }
+
+            // Wait for animation to complete
+            if (animator != null)
+            {
+                float remainingAnimTime = animator.GetCurrentAnimatorStateInfo(0).length -
+                                         animator.GetCurrentAnimatorStateInfo(0).normalizedTime *
+                                         animator.GetCurrentAnimatorStateInfo(0).length;
+                remainingAnimTime = Mathf.Max(remainingAnimTime, 0) + 0.1f;
+                yield return new WaitForSeconds(remainingAnimTime);
+            }
         }
 
         // Add a short pause after everything is complete
         yield return new WaitForSeconds(0.5f);
 
-        // Re-enable attack buttons if staying in this scene
-        // SetAttackButtonsInteractable(true);
+        // Re-enable attack buttons for testing
+        //SetAttackButtonsInteractable(true);
 
-        // Finally transition to next scene
         SceneManager.LoadScene("QuizScene");
+    }
+
+    private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator)
+    {
+        Vector3 originalPosition = attacker.transform.position;
+        Vector3 attackPosition = new Vector3(0f, -2.290813f, originalPosition.z);
+
+        // First move to attack position
+        float moveSpeed = 10f;
+        while (Vector3.Distance(attacker.transform.position, attackPosition) > 0.05f)
+        {
+            attacker.transform.position = Vector3.MoveTowards(attacker.transform.position, attackPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Now that we're in position, TRIGGER the animation
+        if (animator != null)
+        {
+            animator.SetTrigger(attack.animationTrigger);
+        }
+
+        // Get defender reference
+        GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
+
+        // Wait for effect delay
+        yield return new WaitForSeconds(attack.effectDelay);
+
+        // Show impact effect on defender
+        PlayImpactEffect(defender, attack);
+
+        // Wait for animation to complete
+        if (animator != null)
+        {
+
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName("Idle")) // If not idle, wait for current animation
+            {
+                float animLength = stateInfo.length;
+                float normalizedTimeRemaining = 1f - stateInfo.normalizedTime % 1f;
+                float timeRemaining = normalizedTimeRemaining * animLength;
+
+                yield return new WaitForSeconds(timeRemaining + 0.4f); // Add buffer
+            }
+        }
+
+        // Move back to original position
+        while (Vector3.Distance(attacker.transform.position, originalPosition) > 0.05f)
+        {
+            attacker.transform.position = Vector3.MoveTowards(attacker.transform.position, originalPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Ensure we're exactly at original position
+        attacker.transform.position = originalPosition;
     }
 
     // Helper method to enable/disable all attack buttons
@@ -303,7 +371,7 @@ public class BattleManager : MonoBehaviour
             Destroy(attackEffect);
         }
 
-        PlayImpactEffect(defender);
+        PlayImpactEffect(defender, attack);
     }
 
 
@@ -339,7 +407,7 @@ public class BattleManager : MonoBehaviour
         }
 
         // Make the target flash
-        PlayImpactEffect(target);
+        PlayImpactEffect(target, attack);
 
         // Wait for the effect to complete
         yield return new WaitForSeconds(effectDuration);
@@ -376,25 +444,30 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void PlayImpactEffect(GameObject target)
+    private void PlayImpactEffect(GameObject target, AttackData attack)
     {
         // You can instantiate a different effect for impact
         // For now, we'll just make the target flash
         SpriteRenderer targetRenderer = target.GetComponent<SpriteRenderer>();
         if (targetRenderer != null)
         {
-            StartCoroutine(FlashSprite(targetRenderer));
+            StartCoroutine(FlashSprite(targetRenderer, attack));
         }
     }
 
-    private IEnumerator FlashSprite(SpriteRenderer renderer)
+    private IEnumerator FlashSprite(SpriteRenderer renderer, AttackData attack)
     {
         Color originalColor = renderer.color;
-        renderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        renderer.color = originalColor;
+        for (int i = 0; i < 3; i++)
+        {
+            renderer.color = attack.flashColor;
+            yield return new WaitForSeconds(attack.flashInterval);
+            renderer.color = originalColor;
+            yield return new WaitForSeconds(attack.flashInterval);
+        }
     }
 
+    // In BattleManager.cs, update the ShowAttackOptions method
     private void ShowAttackOptions()
     {
         // Clear previous attack buttons
@@ -405,6 +478,14 @@ public class BattleManager : MonoBehaviour
 
         // Determine which attack list to use
         List<AttackData> currentAttacks = (attackingPlayer == 1) ? player1Attacks : player2Attacks;
+
+        // Get current character name
+        string characterName = (attackingPlayer == 1) ?
+            GameManager.Instance.SelectedCharacterP1.characterName :
+            GameManager.Instance.SelectedCharacterP2.characterName;
+
+        // Update battle status text to include character name
+        battleStatusText.text = characterName + "'s turn to attack!";
 
         float startY = -75; // Starting Y position
         float xPosition = -692; // Fixed X position
@@ -424,7 +505,7 @@ public class BattleManager : MonoBehaviour
             Text buttonText = buttonObj.GetComponentInChildren<Text>();
             if (buttonText != null)
             {
-                buttonText.text = attack.attackName + " (" + attack.damage + " dmg)";
+                buttonText.text = attack.attackName + " (" + attack.damage + " dmg) - " + attack.attackType;
                 buttonText.enabled = true;
             }
             buttonText.gameObject.SetActive(true);
@@ -444,35 +525,65 @@ public class BattleManager : MonoBehaviour
             index++;
         }
     }
-    private void InitializeExampleAttacks()
+    private List<AttackData> GetDefaultAttacks(string characterName)
     {
-        player1Attacks = new List<AttackData>
-    {
-        // Format: name, damage, description, animation trigger, type, 
-        // effect prefab, position offset, effect delay, hit effect prefab, hit offset
-        new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1",
-                      AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f),
-
-        new AttackData("Warrior Slash", 15, "A flaming projectile.", "Attack1",
-                      AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f),
-
-        new AttackData("Dragon Slash", 20, "A bolt of lightning.", "Attack2",
-                      AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f),
-
-        new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Attack3",
-                      AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f),
-    };
-
-        player2Attacks = new List<AttackData>
-    {
-        new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                      AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
-
-        new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
-                      AttackType.DirectHit, "LightningEffect", new Vector3(-3.2f, -3.46f, -4.116615f), 2f),
-
-        new AttackData("Special", 15, "A freezing projectile.", "Attack3",
-                      AttackType.DirectHit, "BeamHitEffect 2", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f)
-    };
+        // Structure for a new attack:
+        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, HitEffectPrefab, HitEffectOffset
+        switch (characterName)
+        {
+            case "Knight":
+                return new List<AttackData>
+            {
+                new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1",
+                              AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Warrior Slash", 15, "A flaming projectile.", "Attack1",
+                              AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Dragon Slash", 20, "A bolt of lightning.", "Attack2",
+                              AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Attack3",
+                              AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+            };
+            case "Archer":
+                return new List<AttackData>
+            {
+                new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
+                              AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
+                              AttackType.DirectHit, "Base", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
+                new AttackData("Special", 15, "A freezing projectile.", "Attack3",
+                              AttackType.DirectHit, "None", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f, 0.1f, Color.green)
+            };
+            case "Water":
+                return new List<AttackData>
+            {
+                new AttackData("Fireball", 18, "A ball of fire.", "Attack1",
+                              AttackType.Projectile, "Fireball", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.red, "FireExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                new AttackData("Ice Spike", 16, "A freezing spike of ice.", "Attack2",
+                              AttackType.Projectile, "IceSpike", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue, "IceExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                new AttackData("Special Attack", 30, "A bolt of lightning.", "Attack3",
+                              AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue)
+            };
+            case "Samurai":
+                return new List<AttackData>
+            {
+                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
+                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
+            default:
+                // Default attacks if character name doesn't match
+                return new List<AttackData>
+            {
+                new AttackData("Basic Attack", 10, "A basic attack.", "Attack1",
+                              AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Special Attack", 15, "A special attack.", "Attack2",
+                              AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
+        }
     }
+
+    // Remove or comment out the InitializeExampleAttacks() method since it's no longer needed
 }
