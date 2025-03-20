@@ -558,8 +558,8 @@ public class BattleManager : MonoBehaviour
             {
                 new AttackData("Fireball", 18, "A ball of fire.", "Attack1",
                               AttackType.Projectile, "Fireball", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.red, "FireExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
-                new AttackData("Ice Spike", 16, "A freezing spike of ice.", "Attack2",
-                              AttackType.Projectile, "IceSpike", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue, "IceExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                new AttackData("WaterBall", 25, "A freezing spike of ice.", "Attack2",
+                              AttackType.MoveAndHit, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue, "IceExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
                 new AttackData("Special Attack", 30, "A bolt of lightning.", "Attack3",
                               AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue)
             };
