@@ -158,9 +158,21 @@ public class BattleManager : MonoBehaviour
         SetAttackButtonsInteractable(false);
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
-        GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
 
-        battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
+        // Handle healing differently from damage
+        if (attack.attackType == AttackType.Heal)
+        {
+            // Heal the attacker instead of damaging the opponent
+            GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
+            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + attack.damage + " HP!";
+        }
+        else
+        {
+            // Standard damage logic
+            GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
+        }
+
         UpdateHealthDisplays();
 
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
@@ -195,10 +207,15 @@ public class BattleManager : MonoBehaviour
             // Wait for effect delay
             yield return new WaitForSeconds(attack.effectDelay);
 
-            // Show appropriate effect
+            // Show appropriate effect based on attack type
             if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
             {
                 yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
+            }
+            else if (attack.attackType == AttackType.Heal)
+            {
+                // Special handling for heal effects
+                yield return StartCoroutine(ShowDirectEffect(attacker, attack));
             }
             else
             {
@@ -223,6 +240,36 @@ public class BattleManager : MonoBehaviour
         //SetAttackButtonsInteractable(true);
 
         SceneManager.LoadScene("QuizScene");
+    }
+
+    // Helper method to get the appropriate effect prefab - add HEAL support
+    private GameObject GetEffectPrefabForAttack(AttackData attack)
+    {
+        if (!string.IsNullOrEmpty(attack.effectPrefabName))
+        {
+            GameObject customEffect = Resources.Load<GameObject>("Effects/" + attack.effectPrefabName);
+            if (customEffect != null)
+                return customEffect;
+        }
+
+        // Fall back to default effects if custom one not found
+        switch (attack.attackType)
+        {
+            case AttackType.Slash:
+                return slashEffectPrefab;
+            case AttackType.Projectile:
+                return projectileEffectPrefab;
+            case AttackType.Magic:
+                return magicEffectPrefab;
+            case AttackType.AreaEffect:
+                return areaEffectPrefab;
+            case AttackType.DirectHit:
+                return directHitEffectPrefab;
+            case AttackType.Heal:
+                return magicEffectPrefab;
+            default:
+                return slashEffectPrefab;
+        }
     }
 
     private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator)
@@ -416,33 +463,6 @@ public class BattleManager : MonoBehaviour
         Destroy(attackEffect);
     }
 
-    // Helper method to get the appropriate effect prefab
-    private GameObject GetEffectPrefabForAttack(AttackData attack)
-    {
-        if (!string.IsNullOrEmpty(attack.effectPrefabName))
-        {
-            GameObject customEffect = Resources.Load<GameObject>("Effects/" + attack.effectPrefabName);
-            if (customEffect != null)
-                return customEffect;
-        }
-
-        // Fall back to default effects if custom one not found
-        switch (attack.attackType)
-        {
-            case AttackType.Slash:
-                return slashEffectPrefab;
-            case AttackType.Projectile:
-                return projectileEffectPrefab;
-            case AttackType.Magic:
-                return magicEffectPrefab;
-            case AttackType.AreaEffect:
-                return areaEffectPrefab;
-            case AttackType.DirectHit:
-                return directHitEffectPrefab;
-            default:
-                return slashEffectPrefab;
-        }
-    }
 
     private void PlayImpactEffect(GameObject target, AttackData attack)
     {
@@ -540,7 +560,7 @@ public class BattleManager : MonoBehaviour
                               AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
                 new AttackData("Dragon Slash", 20, "A bolt of lightning.", "Attack2",
                               AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Attack3",
+                new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Special",
                               AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
             };
             case "Archer":
@@ -550,17 +570,17 @@ public class BattleManager : MonoBehaviour
                               AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
                 new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
                               AttackType.DirectHit, "Base", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
-                new AttackData("Special", 15, "A freezing projectile.", "Attack3",
+                new AttackData("GreenBeam", 15, "A freezing projectile.", "Special",
                               AttackType.DirectHit, "None", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f, 0.1f, Color.green)
             };
             case "Water":
                 return new List<AttackData>
             {
-                new AttackData("Fireball", 18, "A ball of fire.", "Attack1",
-                              AttackType.Projectile, "Fireball", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.red, "FireExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
-                new AttackData("WaterBall", 25, "A freezing spike of ice.", "Attack2",
+                new AttackData("Heal", 20, "A ball of fire.", "Attack2",
+                              AttackType.Heal, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.green),
+                new AttackData("WaterBall", 25, "A freezing spike of ice.", "Special",
                               AttackType.MoveAndHit, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue, "IceExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
-                new AttackData("Special Attack", 30, "A bolt of lightning.", "Attack3",
+                new AttackData("WaterDance", 30, "A bolt of lightning.", "Attack3",
                               AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue)
             };
             case "Samurai":

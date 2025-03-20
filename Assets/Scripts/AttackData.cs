@@ -7,7 +7,8 @@ public enum AttackType
     Magic,      // Magical projectiles that travel
     AreaEffect, // Effects that appear on or around the target (explosions, etc.)
     DirectHit,  // Effects that appear directly on the target (hammer hit, etc.)
-    MoveAndHit  // Character moves to target, attacks, then returns to position
+    MoveAndHit,  // Character moves to target, attacks, then returns to position
+    Heal
 }
 
 public class AttackData

@@ -489,7 +489,7 @@ Animator:
   m_GameObject: {fileID: 848862460}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c654b7acc6a7fe4aabd0c58b4f219c2, type: 2}
+  m_Controller: {fileID: 22100000, guid: 2ba55f359fb4cfd4a9984369326a7822, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1155,8 +1155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815ac2cc6649a62488f364930e941989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Health: 100
-  player2Health: 100
+  player1Health: 80
+  player2Health: 80
   characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
 --- !u!4 &1417186111
 Transform:

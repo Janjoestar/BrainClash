@@ -103,6 +103,18 @@ public class GameManager : MonoBehaviour
             player2Health -= damage;
     }
 
+    public void HealPlayer(int playerNum, int amount)
+    {
+        if (playerNum == 1)
+        {
+            player1Health = Mathf.Min(player1Health + amount, 100);
+        }
+        else if (playerNum == 2)
+        {
+            player2Health = Mathf.Min(player2Health + amount, 100);
+        }
+    }
+
     public void ReturnToQuizScene()
     {
             SceneManager.LoadScene("QuizScene");
