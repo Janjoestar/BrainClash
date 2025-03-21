@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static event Action OnGameManagerReady; // Event for when GameManager finishes loading characters
 
-    [SerializeField] private int player1Health = 100;
-    [SerializeField] private int player2Health = 100;
+    [SerializeField] private int player1Health = 1;
+    [SerializeField] private int player2Health = 1;
 
     private int lastCorrectPlayer = 0;
 
@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
 
         SelectedCharacterP1 = characterDB.GetCharacter(selectedIndexP1);
         SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
+        player1Health = SelectedCharacterP1.maxHealth;
+        player2Health = SelectedCharacterP2.maxHealth;
 
 
         OnGameManagerReady?.Invoke(); // Notify BattleManager that characters are ready
@@ -107,11 +109,11 @@ public class GameManager : MonoBehaviour
     {
         if (playerNum == 1)
         {
-            player1Health = Mathf.Min(player1Health + amount, 100);
+            player1Health = Mathf.Min(player1Health + amount, SelectedCharacterP1.maxHealth);
         }
         else if (playerNum == 2)
         {
-            player2Health = Mathf.Min(player2Health + amount, 100);
+            player2Health = Mathf.Min(player2Health + amount, SelectedCharacterP2.maxHealth);
         }
     }
 

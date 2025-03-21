@@ -8,4 +8,5 @@ public class Character
     public string characterName;
     public Sprite characterSprite;
     public List<AttackData> characterAttacks = new List<AttackData>();
+    public int maxHealth;
 }
