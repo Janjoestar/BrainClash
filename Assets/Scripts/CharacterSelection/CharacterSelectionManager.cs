@@ -4,10 +4,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using TMPro; // For TextMeshPro InputField
+using UnityEngine.Networking;
+using System.Text;
+
 
 public class CharacterSelectionManager : MonoBehaviour
 {
     public CharacterDatabase characterDB;
+    [SerializeField] private TMP_InputField promptInput;
+    [SerializeField] private GameObject loadingPanel; // Optional loading UI
+
+    [System.Serializable]
+    public class AIResponse
+    {
+        public string question;
+        public string[] options;
+        public int answer;
+    }
+
+    [System.Serializable]
+    public class OllamaResponseWrapper
+    {
+        public string response;
+        public string model;
+        public long created_at;
+        // Add any other fields that might be in the response
+    }
 
     // Player 1 Variables
     public Text nameTextP1;
@@ -138,11 +161,91 @@ public class CharacterSelectionManager : MonoBehaviour
         SaveCharacters();
     }
 
+    private static int numberOfQuestionsToGenerate = 10;
     public void ConfirmSelection()
     {
         SaveCharacters();
 
+        string topic = promptInput.text;
+        if (string.IsNullOrEmpty(topic))
+        {
+            Debug.LogWarning("Prompt is empty. Please enter a topic.");
+            return;
+        }
+
+        if (loadingPanel != null) loadingPanel.SetActive(true);
+
+        StartCoroutine(AIQuestionGenerator.GenerateQuestions(topic, OnQuestionsReady, OnAIError, numberOfQuestionsToGenerate));
+    }
+
+    private void OnQuestionsReady(List<Question> questions)
+    {
+        if (questions == null)
+        {
+            Debug.LogError("OnQuestionsReady received null questions list");
+            if (loadingPanel != null) loadingPanel.SetActive(false);
+            return;
+        }
+
+        Debug.Log("OnQuestionsReady received " + questions.Count + " questions");
+
+        if (questions.Count == 0)
+        {
+            Debug.LogWarning("OnQuestionsReady received empty questions list");
+            if (loadingPanel != null) loadingPanel.SetActive(false);
+            return;
+        }
+
+        // Log the first question to verify format
+        if (questions.Count > 0)
+        {
+            Question firstQ = questions[0];
+            Debug.Log("First question: " + firstQ.questionText);
+            Debug.Log("Options count: " + (firstQ.answerOptions != null ? firstQ.answerOptions.Length : 0));
+            Debug.Log("Correct answer index: " + firstQ.correctAnswerIndex);
+        }
+
+        GeneratedQuestionHolder.generatedQuestions = questions;
+        Debug.Log("Questions stored in GeneratedQuestionHolder, count: " +
+                  GeneratedQuestionHolder.generatedQuestions.Count);
+
+        if (loadingPanel != null) loadingPanel.SetActive(false);
+
+        Debug.Log("About to load QuizScene");
         SceneManager.LoadScene("QuizScene");
+    }
+
+    // In CharacterSelectionManager.cs
+    private void OnAIError(string error)
+    {
+        Debug.LogError("AI error: " + error);
+
+        // If the error mentions JSON, try a different model as fallback
+        if (error.Contains("JSON") || error.Contains("parse"))
+        {
+            Debug.Log("Trying with fallback questions...");
+            List<Question> fallbackQuestions = CreateBasicQuestions(promptInput.text, 5);
+            OnQuestionsReady(fallbackQuestions);
+        }
+        else
+        {
+            if (loadingPanel != null) loadingPanel.SetActive(false);
+        }
+    }
+
+    private List<Question> CreateBasicQuestions(string topic, int count)
+    {
+        List<Question> questions = new List<Question>();
+        for (int i = 0; i < count; i++)
+        {
+            questions.Add(new Question
+            {
+                questionText = $"Question {i + 1} about {topic}",
+                answerOptions = new[] { "Option A", "Option B", "Option C", "Option D" },
+                correctAnswerIndex = 0
+            });
+        }
+        return questions;
     }
 
     public void SaveCharacters() //call before switch scenes
