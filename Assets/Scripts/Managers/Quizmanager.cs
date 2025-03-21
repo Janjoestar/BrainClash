@@ -49,16 +49,26 @@ public class QuizManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            Character p1Character = GameManager.Instance.SelectedCharacterP1;
-            Character p2Character = GameManager.Instance.SelectedCharacterP2;
+            SetCharacter(Player1, GameManager.Instance.SelectedCharacterP1);
+            SetCharacter(Player2, GameManager.Instance.SelectedCharacterP2);
+        }
 
-            SetCharacter(Player1, p1Character);
-            SetCharacter(Player2, p2Character);
+        Debug.Log(GeneratedQuestionHolder.generatedQuestions[1] + "" + GeneratedQuestionHolder.generatedQuestions[2]);
+        if (GeneratedQuestionHolder.generatedQuestions != null && GeneratedQuestionHolder.generatedQuestions.Count > 0)
+        {
+            questions.Clear();
+            questions = new List<Question>(GeneratedQuestionHolder.generatedQuestions);
+        }
+        else
+        {
+            InitializeExampleQuestions();
+            ShuffleQuestions();
         }
 
         ShuffleQuestions();
         ShowBuzzerPanel();
     }
+
 
     private void SetCharacter(GameObject playerObject, Character character)
     {
