@@ -24,6 +24,8 @@ public class QuizManager : MonoBehaviour
 
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
+    
+
 
     private void Awake()
     {

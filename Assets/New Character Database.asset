@@ -15,9 +15,13 @@ MonoBehaviour:
   character:
   - characterName: Samurai
     characterSprite: {fileID: -774134865, guid: 3265837ba755f6a4fb65ead9d043ecdb, type: 3}
+    maxHealth: 90
   - characterName: Knight
     characterSprite: {fileID: -256371126, guid: 465f315484ebe0a469d5c2ae112c96e6, type: 3}
+    maxHealth: 160
   - characterName: Archer
     characterSprite: {fileID: 1268940452, guid: 921829387776d4143abd8f5a60388af1, type: 3}
+    maxHealth: 120
   - characterName: Water
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 80
