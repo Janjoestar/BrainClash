@@ -7,13 +7,18 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 using TMPro; // For TextMeshPro InputField
 using UnityEngine.Networking;
 using System.Text;
+using UnityEngine.EventSystems;
 
 
 public class CharacterSelectionManager : MonoBehaviour
 {
     public CharacterDatabase characterDB;
-    [SerializeField] private TMP_InputField promptInput;
+    [SerializeField] private InputField promptInput;
     [SerializeField] private GameObject loadingPanel; // Optional loading UI
+    [SerializeField] private Button confirmButton; // Optional loading UI
+    public Text[] Texts; // Array of all menu button texts
+    public Color normalColor = Color.white;
+    public Color hoverColor = Color.yellow;
 
     [System.Serializable]
     public class AIResponse
@@ -32,6 +37,8 @@ public class CharacterSelectionManager : MonoBehaviour
         // Add any other fields that might be in the response
     }
 
+    string gameMode = StartScreenManager.GetSelectedGameMode();
+
     // Player 1 Variables
     public Text nameTextP1;
     public SpriteRenderer artworkSpriteP1;
@@ -42,10 +49,27 @@ public class CharacterSelectionManager : MonoBehaviour
     public SpriteRenderer artworkSpriteP2;
     private int selectedOptionP2 = 0;
 
-    private int selectedOption = 0;
-
     void Start()
     {
+        // Get the game mode from the previous screen
+        gameMode = StartScreenManager.GetSelectedGameMode();
+
+        onTextHover();
+
+        // Set up the UI based on game mode
+        SetupPromptField();
+
+        // Disable confirm button until requirements are met
+        confirmButton.interactable = false;
+
+        if(gameMode == "AITrivia")
+        {
+            RectTransform confirmButtonRect = confirmButton.GetComponent<RectTransform>();
+            Vector3 confirmButtonPos = confirmButtonRect.anchoredPosition;
+            confirmButtonPos.y = -350f;
+            confirmButtonRect.anchoredPosition = confirmButtonPos;
+        }
+
         if (!PlayerPrefs.HasKey("selectedOptionP1"))
         {
             selectedOptionP1 = 0;
@@ -67,6 +91,77 @@ public class CharacterSelectionManager : MonoBehaviour
         LoadCharacters();
         UpdateCharacter(1, selectedOptionP1);
         UpdateCharacter(2, selectedOptionP2);
+    }
+
+    void onTextHover()
+    {
+        // Add hover listeners to menu buttons
+        if (Texts != null)
+        {
+            foreach (Text buttonText in Texts)
+            {
+                Button button = buttonText.GetComponentInParent<Button>();
+                if (button != null)
+                {
+                    // Add EventTrigger component if it doesn't exist
+                    EventTrigger trigger = button.GetComponent<EventTrigger>();
+                    if (trigger == null)
+                        trigger = button.gameObject.AddComponent<EventTrigger>();
+
+                    // Create entry for pointer enter
+                    EventTrigger.Entry enterEntry = new EventTrigger.Entry();
+                    enterEntry.eventID = EventTriggerType.PointerEnter;
+                    enterEntry.callback.AddListener((data) => { OnButtonHover(buttonText, true); });
+                    trigger.triggers.Add(enterEntry);
+
+                    // Create entry for pointer exit
+                    EventTrigger.Entry exitEntry = new EventTrigger.Entry();
+                    exitEntry.eventID = EventTriggerType.PointerExit;
+                    exitEntry.callback.AddListener((data) => { OnButtonHover(buttonText, false); });
+                    trigger.triggers.Add(exitEntry);
+                }
+            }
+        }
+    }
+
+    public void OnButtonHover(Text buttonText, bool isHovering)
+    {
+        buttonText.color = isHovering ? hoverColor : normalColor;
+    }
+
+
+    void SetupPromptField()
+    {
+        if (gameMode == "PromptPlay")
+        {
+            // Show prompt input field with instructions
+            promptInput.gameObject.SetActive(true);
+
+            // Add listener for input changes
+            promptInput.onValueChanged.AddListener(OnPromptChanged);
+        }
+        else
+        {
+            // For other game modes, hide prompt field
+            promptInput.gameObject.SetActive(false);
+
+            // Enable confirm since no prompt is needed
+            confirmButton.interactable = true;
+        }
+    }
+
+    void OnPromptChanged(string newText)
+    {
+        CheckRequirements();
+    }
+
+    void CheckRequirements()
+    {
+        // In Prompt Play mode, require both character selection and prompt
+        if (gameMode == "PromptPlay")
+        {
+            confirmButton.interactable = !string.IsNullOrEmpty(promptInput.text);
+        }
     }
 
     private void UpdateCharacter(int player, int selectedOption)
