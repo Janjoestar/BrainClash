@@ -136,12 +136,19 @@ public class QuizManager : MonoBehaviour
         Question q = questions[currentQuestionIndex];
 
         questionText.text = q.questionText;
+        SetDynamicFontSizeForQuestion(questionText, questionText.text);
 
         for (int i = 0; i < answerTexts.Length; i++)
         {
             if (i < q.answerOptions.Length)
             {
-                answerTexts[i].text = q.answerOptions[i];
+                // Add option letter prefix (A, B, C, D)
+                string optionLetter = ((char)('A' + i)).ToString() + ". ";
+                answerTexts[i].text = optionLetter + q.answerOptions[i];
+
+                // Dynamically set font size based on text length
+                SetDynamicFontSize(answerTexts[i], q.answerOptions[i]);
+
                 answerTexts[i].transform.parent.gameObject.SetActive(true);
             }
             else
@@ -149,6 +156,60 @@ public class QuizManager : MonoBehaviour
                 answerTexts[i].transform.parent.gameObject.SetActive(false);
             }
         }
+    }
+    private void SetDynamicFontSizeForQuestion(Text textComponent, string content)
+    {
+        if (content.Length < 50)
+        {
+            textComponent.fontSize = 70;
+        }
+        else if (content.Length < 75)
+        {
+            textComponent.fontSize = 60;
+        }
+        else if (content.Length < 100)
+        {
+            textComponent.fontSize = 50;
+        }
+        else
+        {
+            textComponent.fontSize = 35; // Minimum readable size
+        }
+
+        textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
+        textComponent.verticalOverflow = VerticalWrapMode.Truncate;
+        textComponent.alignment = TextAnchor.MiddleCenter;
+    }
+    private void SetDynamicFontSize(Text textComponent, string content)
+    {
+        // Scale font size based on content length
+        if (content.Length < 10)
+        {
+            textComponent.fontSize = 50;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Overflow;
+            textComponent.verticalOverflow = VerticalWrapMode.Overflow;
+        }
+        else if (content.Length < 25)
+        {
+            textComponent.fontSize = 44;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Overflow;
+            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
+        }
+        else if (content.Length < 50)
+        {
+            textComponent.fontSize = 30;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
+            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
+        }
+        else
+        {
+            textComponent.fontSize = 14;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
+            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
+        }
+
+        // Ensure alignment is centered
+        textComponent.alignment = TextAnchor.MiddleCenter;
     }
 
     public void SelectAnswer(int answerIndex)
