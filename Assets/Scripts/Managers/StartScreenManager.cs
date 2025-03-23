@@ -125,7 +125,7 @@ public class StartScreenManager : MonoBehaviour
     {
         // Store the selected game mode
         selectedGameMode = "AITrivia";
-
+        Debug.Log(selectedGameMode);
         // Load the character selection scene
         SceneManager.LoadScene("CharacterSelection");
     }

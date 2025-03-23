@@ -54,13 +54,13 @@ public class CharacterSelectionManager : MonoBehaviour
         // Get the game mode from the previous screen
         gameMode = StartScreenManager.GetSelectedGameMode();
 
+        Debug.Log(gameMode);
+
         onTextHover();
 
         // Set up the UI based on game mode
         SetupPromptField();
 
-        // Disable confirm button until requirements are met
-        confirmButton.interactable = false;
 
         if(gameMode == "AITrivia")
         {
@@ -68,6 +68,7 @@ public class CharacterSelectionManager : MonoBehaviour
             Vector3 confirmButtonPos = confirmButtonRect.anchoredPosition;
             confirmButtonPos.y = -350f;
             confirmButtonRect.anchoredPosition = confirmButtonPos;
+            promptInput.interactable = false;
         }
 
         if (!PlayerPrefs.HasKey("selectedOptionP1"))
@@ -257,20 +258,53 @@ public class CharacterSelectionManager : MonoBehaviour
     }
 
     private static int numberOfQuestionsToGenerate = 10;
+    // Add this method to your CharacterSelectionManager class
     public void ConfirmSelection()
     {
         SaveCharacters();
-
-        string topic = promptInput.text;
-        if (string.IsNullOrEmpty(topic))
+        // Handle different game modes
+        if (gameMode == "AITrivia")
         {
-            Debug.LogWarning("Prompt is empty. Please enter a topic.");
-            return;
+            // For AI Trivia, use predetermined questions
+            List<Question> aiQuestions = AIQuestionsHolder.GetAIQuestions();
+
+            // Shuffle questions
+            ShuffleQuestions(aiQuestions);
+
+            // Store in holder
+            GeneratedQuestionHolder.generatedQuestions = aiQuestions;
+
+            Debug.Log("AI Trivia questions loaded: " + GeneratedQuestionHolder.generatedQuestions.Count);
+
+            // Load quiz scene
+            SceneManager.LoadScene("QuizScene");
         }
+        else if (gameMode == "PromptPlay")
+        {
+            string topic = promptInput.text;
+            if (string.IsNullOrEmpty(topic))
+            {
+                Debug.LogWarning("Prompt is empty. Please enter a topic.");
+                return;
+            }
 
-        if (loadingPanel != null) loadingPanel.SetActive(true);
+            if (loadingPanel != null) loadingPanel.SetActive(true);
 
-        StartCoroutine(AIQuestionGenerator.GenerateQuestions(topic, OnQuestionsReady, OnAIError, numberOfQuestionsToGenerate));
+            StartCoroutine(AIQuestionGenerator.GenerateQuestions(topic, OnQuestionsReady, OnAIError, numberOfQuestionsToGenerate));
+        }
+    }
+
+
+    // Add this utility method for shuffling questions
+    private void ShuffleQuestions(List<Question> questions)
+    {
+        for (int i = questions.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            Question temp = questions[i];
+            questions[i] = questions[randomIndex];
+            questions[randomIndex] = temp;
+        }
     }
 
     private void OnQuestionsReady(List<Question> questions)
