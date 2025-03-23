@@ -130,9 +130,16 @@ public class QuizManager : MonoBehaviour
         ShowNextQuestion();
     }
 
+    // Add these variables to your QuizManager class at the top
+    private List<int> usedQuestionIndices = new List<int>();
+
+    // Replace ShowNextQuestion method with this version
     private void ShowNextQuestion()
     {
-        currentQuestionIndex = (currentQuestionIndex + 1) % questions.Count;
+        // Get a question that hasn't been shown yet
+        int nextIndex = GetNextUniqueQuestionIndex();
+        currentQuestionIndex = nextIndex;
+
         Question q = questions[currentQuestionIndex];
 
         questionText.text = q.questionText;
@@ -157,6 +164,29 @@ public class QuizManager : MonoBehaviour
             }
         }
     }
+
+    // Add this method to get unique question indices
+    private int GetNextUniqueQuestionIndex()
+    {
+        // If we've used all questions, reset the used list
+        if (usedQuestionIndices.Count >= questions.Count)
+        {
+            usedQuestionIndices.Clear();
+        }
+
+        // Find an index we haven't used yet
+        int randomIndex;
+        do
+        {
+            randomIndex = Random.Range(0, questions.Count);
+        } while (usedQuestionIndices.Contains(randomIndex));
+
+        // Mark this index as used
+        usedQuestionIndices.Add(randomIndex);
+
+        return randomIndex;
+    }
+
     private void SetDynamicFontSizeForQuestion(Text textComponent, string content)
     {
         if (content.Length < 50)
