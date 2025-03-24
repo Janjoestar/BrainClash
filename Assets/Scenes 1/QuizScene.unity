@@ -899,7 +899,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Text
-      value: B
+      value: C
       objectReference: {fileID: 0}
     - target: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_FontData.m_Font
@@ -919,7 +919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357329, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Name
-      value: AnswerButton1
+      value: AnswerButton2
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Color.b
@@ -1775,8 +1775,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 536076169}
-  - {fileID: 473018289}
   - {fileID: 2130106445}
+  - {fileID: 473018289}
   - {fileID: 238596460}
   m_Father: {fileID: 549949808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2399,7 +2399,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Text
-      value: C
+      value: B
       objectReference: {fileID: 0}
     - target: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_FontData.m_Font
@@ -2419,7 +2419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357329, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Name
-      value: AnswerButton2
+      value: AnswerButton1
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Color.b
