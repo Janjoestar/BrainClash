@@ -593,6 +593,56 @@ public class BattleManager : MonoBehaviour
                 new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
                               AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
             };
+            case "Fire":
+                return new List<AttackData>
+            {
+                new AttackData("Fire Necro", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.MoveAndHit, "ShieldBash", new Vector3(1.01f, -3.7f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Special", 24, "A charging attack.", "Special",
+                              AttackType.MoveAndHit, "CrusaderCharge", new Vector3(1.01f, -3.7f, -4.116615f), 0.8f, 0.2f, Color.red)
+            };
+            case "Wind":
+                return new List<AttackData>
+            {
+                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
+                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
+            case "Necromancer":
+                return new List<AttackData>
+            {
+                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
+                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
+            case "Crystal":
+                return new List<AttackData>
+            {
+                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
+                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
+            case "Ground":
+                return new List<AttackData>
+            {
+                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
+                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
+                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
+                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+            };
             default:
                 // Default attacks if character name doesn't match
                 return new List<AttackData>
@@ -604,6 +654,4 @@ public class BattleManager : MonoBehaviour
             };
         }
     }
-
-    // Remove or comment out the InitializeExampleAttacks() method since it's no longer needed
 }

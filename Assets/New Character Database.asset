@@ -25,3 +25,18 @@ MonoBehaviour:
   - characterName: Water
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+  - characterName: Fire
+    characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 140
+  - characterName: Wind
+    characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 80
+  - characterName: Crystal
+    characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 80
+  - characterName: Ground
+    characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 80
+  - characterName: Necromancer
+    characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
+    maxHealth: 80
