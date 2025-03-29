@@ -16,27 +16,36 @@ MonoBehaviour:
   - characterName: Samurai
     characterSprite: {fileID: -774134865, guid: 3265837ba755f6a4fb65ead9d043ecdb, type: 3}
     maxHealth: 90
+    characterColor: {r: 0.2928088, g: 0.28653434, b: 0.4433962, a: 1}
   - characterName: Knight
     characterSprite: {fileID: -256371126, guid: 465f315484ebe0a469d5c2ae112c96e6, type: 3}
     maxHealth: 160
+    characterColor: {r: 0.6850303, g: 0.73360354, b: 0.8113208, a: 1}
   - characterName: Archer
     characterSprite: {fileID: 1268940452, guid: 921829387776d4143abd8f5a60388af1, type: 3}
     maxHealth: 120
+    characterColor: {r: 0.255518, g: 0.6226415, b: 0.43302825, a: 1}
   - characterName: Water
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+    characterColor: {r: 0.28421274, g: 0.24038802, b: 0.6981132, a: 1}
   - characterName: Fire
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 140
+    characterColor: {r: 0.735849, g: 0.46331677, b: 0.3922214, a: 1}
   - characterName: Wind
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+    characterColor: {r: 0.9056604, g: 0.8550455, b: 0.7390531, a: 1}
   - characterName: Crystal
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+    characterColor: {r: 0.735849, g: 0.4408152, b: 0.50871986, a: 1}
   - characterName: Ground
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+    characterColor: {r: 0.735849, g: 0.471801, b: 0.35751158, a: 1}
   - characterName: Necromancer
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
     maxHealth: 80
+    characterColor: {r: 0.6415094, g: 0.30562478, b: 0.31317273, a: 1}

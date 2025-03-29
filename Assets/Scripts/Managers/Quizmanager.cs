@@ -12,20 +12,22 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text[] answerTexts;
     [SerializeField] private GameObject quizPanel;
     [SerializeField] private GameObject buzzerPanel;
+    [SerializeField] private GameObject answerPanel;
     [SerializeField] private Image backgroundImage;
-    [SerializeField] private Color player1Color = new Color(0.2f, 0.2f, 0.8f); // Blue
-    [SerializeField] private Color player2Color = new Color(0.2f, 0.8f, 0.2f); // Green
     [SerializeField] internal GameObject Player1;
     [SerializeField] internal GameObject Player2;
+    [SerializeField] private float readingTime = 3f;
+    [SerializeField] private Text timerText;
+    [SerializeField] private Text LogoText;
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
     private int playerWhoBuzzed = 0; // 0 = none, 1 = player1, 2 = player2
+    private float currentReadingTime;
 
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
-    
-
+    private List<int> usedQuestionIndices = new List<int>();
 
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class QuizManager : MonoBehaviour
             InitializeExampleQuestions();
 
         // Cache the "Game" object transform
-        gameTransform = quizPanel.transform.Find("Game");
+        gameTransform = answerPanel.transform.Find("Game");
         if (gameTransform != null)
         {
             quizPanelGameOBJ = gameTransform.GetComponent<RectTransform>();
@@ -53,7 +55,8 @@ public class QuizManager : MonoBehaviour
             SetCharacter(Player2, GameManager.Instance.SelectedCharacterP2);
         }
 
-        Debug.Log(GeneratedQuestionHolder.generatedQuestions[1] + "" + GeneratedQuestionHolder.generatedQuestions[2]);
+        Debug.Log(GeneratedQuestionHolder.generatedQuestions.Count > 0 ? GeneratedQuestionHolder.generatedQuestions[1] + "" + GeneratedQuestionHolder.generatedQuestions[2] : "No generated questions");
+
         if (GeneratedQuestionHolder.generatedQuestions != null && GeneratedQuestionHolder.generatedQuestions.Count > 0)
         {
             questions.Clear();
@@ -66,9 +69,10 @@ public class QuizManager : MonoBehaviour
         }
 
         ShuffleQuestions();
-        ShowBuzzerPanel();
-    }
 
+        // Start with the quiz panel and display a question
+        StartQuizPhase();
+    }
 
     private void SetCharacter(GameObject playerObject, Character character)
     {
@@ -108,42 +112,123 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    private void PlayerBuzzed(int playerNumber)
+    private void StartQuizPhase()
+    {
+        // Reset player visibility
+        Player1.SetActive(true);
+        Player2.SetActive(true);
+
+        // Get a new question
+        int nextIndex = GetNextUniqueQuestionIndex();
+        currentQuestionIndex = nextIndex;
+
+        // Show quiz panel with question
+        quizPanel.SetActive(true);
+        buzzerPanel.SetActive(false);
+        answerPanel.SetActive(false);
+
+        // Display the question
+        Question q = questions[currentQuestionIndex];
+        questionText.text = q.questionText;
+        SetDynamicFontSizeForQuestion(questionText, questionText.text);
+
+        // Initialize and start the reading timer
+        currentReadingTime = readingTime;
+        StartCoroutine(QuizPhaseTimer());
+    }
+
+    private IEnumerator QuizPhaseTimer()
+    {
+        Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
+        Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
+
+        // Variable to alternate colors between Player1 and Player2
+        bool usePlayer1Color = true;
+
+        // Track how much time has passed to switch colors every 1 second
+        float colorChangeInterval = 1f; // Change color every 1 second
+        float lastColorChangeTime = 0f;
+
+        while (currentReadingTime > 0)
+        {
+            // Update timer text
+            timerText.text = "Time: " + Mathf.Ceil(currentReadingTime).ToString();
+
+            // Switch color at the defined interval
+            if (Time.time - lastColorChangeTime >= colorChangeInterval)
+            {
+                timerText.color = usePlayer1Color ? player1Color : player2Color;
+                usePlayer1Color = !usePlayer1Color; // Alternate color
+                lastColorChangeTime = Time.time; // Reset the time tracker
+            }
+
+            currentReadingTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        // Timer finished - move to buzzer phase
+        timerText.text = "Time's up!";
+        timerText.color = Color.white; // Reset the color to default when time's up
+        yield return new WaitForSeconds(0.5f);
+
+        // Move to buzzer panel
+        MoveToBuzzerPhase();
+    }
+
+    private void MoveToBuzzerPhase()
+    {
+        quizPanel.SetActive(false);
+        buzzerPanel.SetActive(true);
+        answerPanel.SetActive(false);
+
+        // Reset for buzzing
+        backgroundImage.color = Color.white;
+        Player1.SetActive(true);
+        Player2.SetActive(true);
+
+        // Allow buzzing
+        canBuzz = true;
+        playerWhoBuzzed = 0;
+    }
+
+    public void PlayerBuzzed(int playerNumber)
     {
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
-        backgroundImage.color = playerNumber == 1 ? player1Color : player2Color;
+
+        // Use the color of the player who buzzed
+        Color playerColor = playerNumber == 1 ? GameManager.Instance.SelectedCharacterP1.characterColor : GameManager.Instance.SelectedCharacterP2.characterColor;
+
+        backgroundImage.color = playerColor;
+        questionText.color = playerColor;
+        LogoText.color = playerColor;
 
         Player1.SetActive(playerNumber == 1);
         Player2.SetActive(playerNumber == 2);
 
         buzzerPanel.SetActive(false);
-        quizPanel.SetActive(true);
+        quizPanel.SetActive(false);
+        answerPanel.SetActive(true);
 
-        // Move the "Game" object left for player 1 and right for player 2
-        if (quizPanelGameOBJ != null)
+        // If Player 1 answered, set the answerPanel's x value to 1225
+        RectTransform answerPanelRect = answerPanel.GetComponent<RectTransform>();
+        if (playerNumber == 1 && answerPanel != null)
         {
-            float newX = playerNumber == 2 ? -Mathf.Abs(quizPanelGameOBJ.anchoredPosition.x) : Mathf.Abs(quizPanelGameOBJ.anchoredPosition.x);
-            quizPanelGameOBJ.anchoredPosition = new Vector2(newX, quizPanelGameOBJ.anchoredPosition.y);
+            answerPanelRect.localPosition = new Vector2(600f, answerPanelRect.anchoredPosition.y);
+        }
+        else
+        {
+            answerPanelRect.localPosition = new Vector2(0f, answerPanelRect.anchoredPosition.y);
         }
 
-        ShowNextQuestion();
+        ShowAnswerOptions();
     }
 
-    // Add these variables to your QuizManager class at the top
-    private List<int> usedQuestionIndices = new List<int>();
-
-    // Replace ShowNextQuestion method with this version
-    private void ShowNextQuestion()
+    private void ShowAnswerOptions()
     {
-        // Get a question that hasn't been shown yet
-        int nextIndex = GetNextUniqueQuestionIndex();
-        currentQuestionIndex = nextIndex;
-
+        // Make sure the question is displayed on the answer panel
+        // You might need to reference a different text component if you have one specifically for the answer panel
         Question q = questions[currentQuestionIndex];
-
-        questionText.text = q.questionText;
-        SetDynamicFontSizeForQuestion(questionText, questionText.text);
 
         for (int i = 0; i < answerTexts.Length; i++)
         {
@@ -165,7 +250,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    // Add this method to get unique question indices
+    // Get a unique question index
     private int GetNextUniqueQuestionIndex()
     {
         // If we've used all questions, reset the used list
@@ -210,6 +295,7 @@ public class QuizManager : MonoBehaviour
         textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
+
     private void SetDynamicFontSize(Text textComponent, string content)
     {
         // Scale font size based on content length
@@ -261,37 +347,33 @@ public class QuizManager : MonoBehaviour
     {
         questionText.text = "Correct! Preparing for battle...";
 
+        // Display the correct message for a moment
+        yield return new WaitForSeconds(1f); // Wait for 1 second to show "Correct!"
+
         // Make sure we're setting the last correct player
         if (GameManager.Instance != null)
             GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
 
-        yield return new WaitForSeconds(1f);
-
+        // Then transition to the battle scene
         if (GameManager.Instance != null)
             GameManager.Instance.GoToBattleScene();
     }
 
+
     private IEnumerator ResetBuzzer()
     {
         questionText.text = "Incorrect! Try again...";
+
+        // Reset the background color after an incorrect answer
         yield return new WaitForSeconds(1f);
 
-        quizPanel.SetActive(false);
-        buzzerPanel.SetActive(true);
+        backgroundImage.color = Color.white;  // Reset to the original color
+        questionText.color = Color.white;
+        LogoText.color = Color.white;
 
-        backgroundImage.color = Color.white;
-        Player1.SetActive(true);
-        Player2.SetActive(true);
 
-        canBuzz = true;
-        playerWhoBuzzed = 0;
-    }
-
-    private void ShowBuzzerPanel()
-    {
-        quizPanel.SetActive(false);
-        buzzerPanel.SetActive(true);
-        canBuzz = true;
+        // Start a new question phase
+        StartQuizPhase();
     }
 
     private void InitializeExampleQuestions()

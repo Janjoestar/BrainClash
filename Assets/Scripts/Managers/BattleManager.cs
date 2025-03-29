@@ -237,9 +237,9 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // Re-enable attack buttons for testing
-        SetAttackButtonsInteractable(true);
+        //SetAttackButtonsInteractable(true);
 
-        //SceneManager.LoadScene("QuizScene");
+        SceneManager.LoadScene("QuizScene");
     }
 
     // Helper method to get the appropriate effect prefab - add HEAL support
