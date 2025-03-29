@@ -9,4 +9,5 @@ public class Character
     public Sprite characterSprite;
     public List<AttackData> characterAttacks = new List<AttackData>();
     public int maxHealth;
+    public Color characterColor;
 }
