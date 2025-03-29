@@ -237,9 +237,9 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // Re-enable attack buttons for testing
-        //SetAttackButtonsInteractable(true);
+        SetAttackButtonsInteractable(true);
 
-        SceneManager.LoadScene("QuizScene");
+        //SceneManager.LoadScene("QuizScene");
     }
 
     // Helper method to get the appropriate effect prefab - add HEAL support
@@ -596,52 +596,62 @@ public class BattleManager : MonoBehaviour
             case "Fire":
                 return new List<AttackData>
             {
-                new AttackData("Fire Necro", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "ShieldBash", new Vector3(1.01f, -3.7f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Special", 24, "A charging attack.", "Special",
-                              AttackType.MoveAndHit, "CrusaderCharge", new Vector3(1.01f, -3.7f, -4.116615f), 0.8f, 0.2f, Color.red)
+                new AttackData("Fire Slash", 14, "A powerful shield attack.", "Attack1",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.red),
+                new AttackData("Spin Slash", 20, "A powerful shield attack.", "Attack2",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.2f, Color.red),
+                new AttackData("Fire Combo", 25, "A light-infused attack.", "Attack3",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.9f, 0.38f, Color.red),
+                new AttackData("Fire Slam", 40, "A charging attack.", "Special",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 2f, 0.2f, Color.red)
             };
             case "Wind":
                 return new List<AttackData>
             {
-                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
-                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+                new AttackData("Wind Slash", 20, "A powerful shield attack.", "Attack1",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, new Color(0.659f, 0.592f, 0.447f)),
+                new AttackData("Wind Barrage", 20, "A powerful shield attack.", "Attack2",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.2f, 0.1f, new Color(0.659f, 0.592f, 0.447f)),
+                new AttackData("Tornado", 35, "A light-infused attack.", "Attack3",
+                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.15f, new Color(0.659f, 0.592f, 0.447f)),
+                new AttackData("Telporting Slash", 45, "A charging attack.", "Special",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.25f, new Color(0.659f, 0.592f, 0.447f))
             };
             case "Necromancer":
                 return new List<AttackData>
             {
-                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
-                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+                new AttackData("Soul Rise", 20, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "SoulRise", new Vector3(-3.26f, -1.92f, -0.05191165f), 0.8f, 0.1f, Color.red),
+                new AttackData("Blood Spike", 20, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "BloodSpike", new Vector3(-3.25f, -2.25f, -0.05191165f), 1.2f, 0.1f, Color.red),
+                new AttackData("Red Lightning", 35, "A light-infused attack.", "Attack1",
+                              AttackType.DirectHit, "RedLightning", new Vector3(-3.33f, -1.7f, -0.05191165f), 1.5f, 0.15f, Color.red),
+                new AttackData("Blood Tornado", 45, "A charging attack.", "Attack1",
+                              AttackType.DirectHit, "BloodTornado", new Vector3(-3.27f, -0.97f, -0.05191165f), 1.5f, 0.25f, Color.red)
             };
             case "Crystal":
                 return new List<AttackData>
             {
-                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
-                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+                new AttackData("Crystal Crusher", 20, "A powerful shield attack.", "Attack1",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
+                new AttackData("Phantom Shatter", 20, "A powerful shield attack.", "Attack1",
+                              AttackType.DirectHit, "PhantomShatter", new Vector3(-3.19f, -1.47f, -0.03036325f), 1.2f, 0.1f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
+                new AttackData("Crystal Eruption", 35, "A light-infused attack.", "Attack3",
+                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.6f, 0.15f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
+                new AttackData("Crystalline Surge", 45, "A charging attack.", "Special",
+                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.65f, 0.15f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f)))
             };
             case "Ground":
                 return new List<AttackData>
             {
-                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
-                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
+                new AttackData("Quick Punch", 15, "A powerful shield attack.", "Attack1",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
+                new AttackData("Punch Combo", 20, "A light-infused attack.", "Attack2",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
+                new AttackData("Rock Slide", 30, "A charging attack.", "Attack3",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.35f, new Color32(165, 42, 42, 255)),
+                new AttackData("Rock Smash", 50, "A charging attack.", "Special",
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.8f, 0.25f, new Color32(165, 42, 42, 255))
             };
             default:
                 // Default attacks if character name doesn't match
