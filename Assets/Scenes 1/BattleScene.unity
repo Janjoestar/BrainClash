@@ -1583,6 +1583,10 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 4643035236469343067, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357329, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Name
       value: AttackButton
@@ -1596,16 +1600,20 @@ PrefabInstance:
       value: AttackButton
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -432290538, guid: 9b260648e47fe2c4c9da68cb66d730b0, type: 3}
+    - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Color.b
-      value: 0.36862746
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357340, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Color.r
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357342, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_Pivot.x

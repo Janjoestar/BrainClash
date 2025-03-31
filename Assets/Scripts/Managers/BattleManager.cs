@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
-
-//CHANGE ATTACKTRIGGERS IN ATTACKDATA FOR EACH CHARACTER;
 
 public class BattleManager : MonoBehaviour
 {
@@ -21,6 +19,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Transform foregroundPosition;
     [SerializeField] private Transform backgroundPosition;
 
+    // Audio components
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource backgroundMusicSource;
+
     private List<AttackData> player1Attacks = new List<AttackData>();
     private List<AttackData> player2Attacks = new List<AttackData>();
     private int attackingPlayer = 1;
@@ -34,6 +36,32 @@ public class BattleManager : MonoBehaviour
 
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
+
+    private void Awake()
+    {
+        // Create audio source if not assigned
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+
+        if (backgroundMusicSource == null)
+        {
+            backgroundMusicSource = new GameObject("BackgroundMusicSource").AddComponent<AudioSource>();
+            backgroundMusicSource.transform.parent = transform;
+            backgroundMusicSource.playOnAwake = true;
+            backgroundMusicSource.loop = true;
+
+            // Optional: Load and play background music
+            AudioClip backgroundMusic = Resources.Load<AudioClip>("Sounds/BattleMusic");
+            if (backgroundMusic != null)
+            {
+                backgroundMusicSource.clip = backgroundMusic;
+                backgroundMusicSource.Play();
+            }
+        }
+    }
 
     private void Start()
     {
@@ -75,9 +103,9 @@ public class BattleManager : MonoBehaviour
         UpdateHealthDisplays();
         battleStatusText.text = "Player " + attackingPlayer + "'s turn to attack!";
 
+
         ShowAttackOptions();
     }
-
 
     private void SetCharacter(GameObject playerObject, Character character)
     {
@@ -152,12 +180,16 @@ public class BattleManager : MonoBehaviour
         CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
 
+    // Add this to your BattleManager class at the top of the PerformAttack method
     private void PerformAttack(AttackData attack)
     {
         // Disable attack buttons during animation to prevent multiple clicks
         SetAttackButtonsInteractable(false);
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
+
+        // Play the attack's sound effect if specified
+        PlaySound(attack.soundEffectName);
 
         // Handle healing differently from damage
         if (attack.attackType == AttackType.Heal)
@@ -182,6 +214,22 @@ public class BattleManager : MonoBehaviour
 
         // Handle attack logic based on type
         StartCoroutine(ShowAttackAnimation(attackerAnimator, attack));
+    }
+
+    private void PlaySound(string soundName)
+    {
+        if (string.IsNullOrEmpty(soundName))
+            return;
+
+        AudioClip clip = Resources.Load<AudioClip>("SFX/" + soundName);
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning("Sound effect not found: " + soundName);
+        }
     }
 
     private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack)
@@ -303,7 +351,6 @@ public class BattleManager : MonoBehaviour
         // Wait for animation to complete
         if (animator != null)
         {
-
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (!stateInfo.IsName("Idle")) // If not idle, wait for current animation
             {
@@ -421,10 +468,9 @@ public class BattleManager : MonoBehaviour
         PlayImpactEffect(defender, attack);
     }
 
-
     private IEnumerator ShowDirectEffect(GameObject target, AttackData attack)
     {
-        // Select appropriate effect prefab
+
         // Select appropriate effect prefab
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
@@ -463,7 +509,6 @@ public class BattleManager : MonoBehaviour
         Destroy(attackEffect);
     }
 
-
     private void PlayImpactEffect(GameObject target, AttackData attack)
     {
         // You can instantiate a different effect for impact
@@ -490,6 +535,7 @@ public class BattleManager : MonoBehaviour
     // In BattleManager.cs, update the ShowAttackOptions method
     private void ShowAttackOptions()
     {
+
         // Clear previous attack buttons
         foreach (Transform child in attackPanel.transform)
         {
@@ -545,10 +591,11 @@ public class BattleManager : MonoBehaviour
             index++;
         }
     }
+
     private List<AttackData> GetDefaultAttacks(string characterName)
     {
         // Structure for a new attack:
-        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, HitEffectPrefab, HitEffectOffset
+        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, HitEffectPrefab, HitEffectOffset, SoundEffect
         switch (characterName)
         {
             case "Knight":
@@ -567,7 +614,7 @@ public class BattleManager : MonoBehaviour
                 return new List<AttackData>
             {
                 new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                              AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta, "PoisonArrow 1", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                              AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta),
                 new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
                               AttackType.DirectHit, "Base", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
                 new AttackData("GreenBeam", 15, "A freezing projectile.", "Special",
@@ -577,9 +624,9 @@ public class BattleManager : MonoBehaviour
                 return new List<AttackData>
             {
                 new AttackData("Heal", 20, "A ball of fire.", "Attack2",
-                              AttackType.Heal, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.green),
+                              AttackType.Heal, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.green, "Heal"),
                 new AttackData("WaterBall", 25, "A freezing spike of ice.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue, "IceExplosion", new Vector3(-2.38f, -3.34f, -4.116615f)),
+                              AttackType.MoveAndHit, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue),
                 new AttackData("WaterDance", 30, "A bolt of lightning.", "Attack3",
                               AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue)
             };
@@ -597,13 +644,13 @@ public class BattleManager : MonoBehaviour
                 return new List<AttackData>
             {
                 new AttackData("Fire Slash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.red),
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.red, "FireSlash"),
                 new AttackData("Spin Slash", 20, "A powerful shield attack.", "Attack2",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.2f, Color.red),
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.2f, Color.red, "FireSpin"),
                 new AttackData("Fire Combo", 25, "A light-infused attack.", "Attack3",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.9f, 0.38f, Color.red),
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.9f, 0.38f, Color.red, "FireSpin"),
                 new AttackData("Fire Slam", 40, "A charging attack.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 2f, 0.2f, Color.red)
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 2f, 0.2f, Color.red, "FireCharge")
             };
             case "Wind":
                 return new List<AttackData>
@@ -613,7 +660,7 @@ public class BattleManager : MonoBehaviour
                 new AttackData("Wind Barrage", 20, "A powerful shield attack.", "Attack2",
                               AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.2f, 0.1f, new Color(0.659f, 0.592f, 0.447f)),
                 new AttackData("Tornado", 35, "A light-infused attack.", "Attack3",
-                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.15f, new Color(0.659f, 0.592f, 0.447f)),
+                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.15f, new Color(0.659f, 0.592f, 0.447f), "WindTornado"),
                 new AttackData("Telporting Slash", 45, "A charging attack.", "Special",
                               AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.25f, new Color(0.659f, 0.592f, 0.447f))
             };
@@ -621,13 +668,13 @@ public class BattleManager : MonoBehaviour
                 return new List<AttackData>
             {
                 new AttackData("Soul Rise", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "SoulRise", new Vector3(-3.26f, -1.92f, -0.05191165f), 0.8f, 0.1f, Color.red),
+                              AttackType.DirectHit, "SoulRise", new Vector3(-3.26f, -1.92f, -0.05191165f), 0.8f, 0.1f, Color.red, "SoulRise"),
                 new AttackData("Blood Spike", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "BloodSpike", new Vector3(-3.25f, -2.25f, -0.05191165f), 1.2f, 0.1f, Color.red),
+                              AttackType.DirectHit, "BloodSpike", new Vector3(-3.25f, -2.25f, -0.05191165f), 1.2f, 0.1f, Color.red, "BloodSpike"),
                 new AttackData("Red Lightning", 35, "A light-infused attack.", "Attack1",
-                              AttackType.DirectHit, "RedLightning", new Vector3(-3.33f, -1.7f, -0.05191165f), 1.5f, 0.15f, Color.red),
+                              AttackType.DirectHit, "RedLightning", new Vector3(-3.33f, -1.7f, -0.05191165f), 1.5f, 0.15f, Color.red, "ThunderBolt"),
                 new AttackData("Blood Tornado", 45, "A charging attack.", "Attack1",
-                              AttackType.DirectHit, "BloodTornado", new Vector3(-3.27f, -0.97f, -0.05191165f), 1.5f, 0.25f, Color.red)
+                              AttackType.DirectHit, "BloodTornado", new Vector3(-3.27f, -0.97f, -0.05191165f), 1.5f, 0.25f, Color.red, "Hurricane")
             };
             case "Crystal":
                 return new List<AttackData>

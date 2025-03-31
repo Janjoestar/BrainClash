@@ -7,7 +7,7 @@ public enum AttackType
     Magic,      // Magical projectiles that travel
     AreaEffect, // Effects that appear on or around the target (explosions, etc.)
     DirectHit,  // Effects that appear directly on the target (hammer hit, etc.)
-    MoveAndHit,  // Character moves to target, attacks, then returns to position
+    MoveAndHit, // Character moves to target, attacks, then returns to position
     Heal
 }
 
@@ -25,10 +25,12 @@ public class AttackData
     public Vector3 targetHitOffset;    // Where to position hit effects on target
     public float flashInterval;        // Time between flashes for defense indicators
     public Color flashColor;
+    public string soundEffectName;     // Sound effect file name (without extension)
 
     public AttackData(string name, int dmg, string desc, string animTrigger,
                     AttackType type, string effectName, Vector3 offset, float delay,
-                    float _flashInterval, Color _flashColor, string hitEffectName = "", Vector3 hitOffset = default)
+                    float flashInterval, Color flashColor, string sound = "",
+                    string hitEffectName = "", Vector3 hitOffset = default)
     {
         attackName = name;
         damage = dmg;
@@ -38,8 +40,9 @@ public class AttackData
         effectPrefabName = effectName;
         effectOffset = offset;
         effectDelay = delay;
-        flashInterval = _flashInterval;
-        flashColor = _flashColor;
+        this.flashInterval = flashInterval;
+        this.flashColor = flashColor;
+        soundEffectName = sound;
         hitEffectPrefabName = hitEffectName;
         targetHitOffset = hitOffset == default ? Vector3.zero : hitOffset;
     }
