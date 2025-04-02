@@ -571,7 +571,7 @@ public class BattleManager : MonoBehaviour
             Text buttonText = buttonObj.GetComponentInChildren<Text>();
             if (buttonText != null)
             {
-                buttonText.text = attack.attackName + " (" + attack.damage + " dmg) - " + attack.attackType;
+                buttonText.text = attack.attackName + " (" + attack.damage + " dmg)";
                 buttonText.enabled = true;
             }
             buttonText.gameObject.SetActive(true);

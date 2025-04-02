@@ -425,6 +425,8 @@ MonoBehaviour:
   attackButtonPrefab: {fileID: 2027834416}
   foregroundPosition: {fileID: 848862461}
   backgroundPosition: {fileID: 1207384836}
+  audioSource: {fileID: 0}
+  backgroundMusicSource: {fileID: 0}
   attackEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
   slashEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
   projectileEffectPrefab: {fileID: 5753445447514968441, guid: bbbf0def54878b140a69bff8b6b661ac, type: 3}
@@ -1581,7 +1583,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_FontData.m_FontSize
-      value: 70
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4643035236469343067, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 396.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4643035236469343067, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4643035236469343067, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4643035236469343067, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_AnchoredPosition.y
