@@ -27,13 +27,6 @@ public class BattleManager : MonoBehaviour
     private List<AttackData> player2Attacks = new List<AttackData>();
     private int attackingPlayer = 1;
 
-    [SerializeField] private GameObject attackEffectPrefab;
-    [SerializeField] private GameObject slashEffectPrefab;
-    [SerializeField] private GameObject projectileEffectPrefab;
-    [SerializeField] private GameObject magicEffectPrefab;
-    [SerializeField] private GameObject areaEffectPrefab;
-    [SerializeField] private GameObject directHitEffectPrefab;
-
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
 
@@ -92,9 +85,7 @@ public class BattleManager : MonoBehaviour
 
     private GameObject GetEffectPrefabForAttack(AttackData attack)
     {
-        return AttackDataManager.Instance.GetEffectPrefabForAttack(attack,
-            slashEffectPrefab, projectileEffectPrefab, magicEffectPrefab,
-            areaEffectPrefab, directHitEffectPrefab);
+        return AttackDataManager.Instance.GetEffectPrefabForAttack(attack);
     }
 
     private void SetCharacter(GameObject playerObject, Character character)
