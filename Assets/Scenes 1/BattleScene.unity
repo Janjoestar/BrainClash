@@ -427,12 +427,6 @@ MonoBehaviour:
   backgroundPosition: {fileID: 1207384836}
   audioSource: {fileID: 0}
   backgroundMusicSource: {fileID: 0}
-  attackEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
-  slashEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
-  projectileEffectPrefab: {fileID: 5753445447514968441, guid: bbbf0def54878b140a69bff8b6b661ac, type: 3}
-  magicEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
-  areaEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
-  directHitEffectPrefab: {fileID: 5901657390241621677, guid: 115b9e73027ea3049b7dd7524777d369, type: 3}
 --- !u!4 &547178149
 Transform:
   m_ObjectHideFlags: 0
@@ -1283,6 +1277,37 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'PLAYER USED: BLABLA'
+--- !u!1 &1526071185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526071186}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1526071186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526071185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.81, y: -3.23, z: 0.0023475909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1635947271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,3 +1856,4 @@ SceneRoots:
   - {fileID: 452771680}
   - {fileID: 547178149}
   - {fileID: 1635947272}
+  - {fileID: 1526071186}

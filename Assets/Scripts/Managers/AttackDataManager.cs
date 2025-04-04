@@ -87,7 +87,7 @@ public class AttackDataManager : MonoBehaviour
     public List<AttackData> GetAttacksForCharacter(string characterName)
     {
         // Structure for a new attack:
-        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, HitEffectPrefab, SoundEffect
+        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, SoundEffect, HitEffectPrefab, HitOffset
         switch (characterName)
         {
             case "Knight":
@@ -106,9 +106,9 @@ public class AttackDataManager : MonoBehaviour
                 return new List<AttackData>
                 {
                     new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                                  AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta),
+                                  AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1f, 0.1f, Color.magenta, "SoundEffect", "PoisonArrowHitEffect", new Vector3(-2.43f,-3.291f,0.1f)),
                     new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
-                                  AttackType.DirectHit, "Base", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
+                                  AttackType.DirectHit, "ArrowShower", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
                     new AttackData("GreenBeam", 15, "A freezing projectile.", "Special",
                                   AttackType.DirectHit, "None", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f, 0.1f, Color.green),
                     new AttackData("GreenBeam", 15, "A freezing projectile.", "Special",
@@ -214,8 +214,7 @@ public class AttackDataManager : MonoBehaviour
     }
 
     // Get effect prefab based on attack type
-    public GameObject GetEffectPrefabForAttack(AttackData attack, GameObject slashEffectPrefab, GameObject projectileEffectPrefab,
-        GameObject magicEffectPrefab, GameObject areaEffectPrefab, GameObject directHitEffectPrefab)
+    public GameObject GetEffectPrefabForAttack(AttackData attack)
     {
         if (!string.IsNullOrEmpty(attack.effectPrefabName))
         {
@@ -224,24 +223,8 @@ public class AttackDataManager : MonoBehaviour
                 return customEffect;
         }
 
-        // Fall back to default effects if custom one not found
-        switch (attack.attackType)
-        {
-            case AttackType.Slash:
-                return slashEffectPrefab;
-            case AttackType.Projectile:
-                return projectileEffectPrefab;
-            case AttackType.Magic:
-                return magicEffectPrefab;
-            case AttackType.AreaEffect:
-                return areaEffectPrefab;
-            case AttackType.DirectHit:
-                return directHitEffectPrefab;
-            case AttackType.Heal:
-                return magicEffectPrefab;
-            default:
-                return slashEffectPrefab;
-        }
+        GameObject defaultEffect = Resources.Load<GameObject>("Effects/" + "BloodSpike");
+                return defaultEffect;
     }
 
     public Color GetColorForAttackType(AttackType type)

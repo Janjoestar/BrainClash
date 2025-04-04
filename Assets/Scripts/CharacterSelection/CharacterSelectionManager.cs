@@ -253,6 +253,7 @@ public class CharacterSelectionManager : MonoBehaviour
         GameObject characterObject;
         Animator animator;
         string attackTrigger;
+        AttackData attackData = null;
 
         // Determine the correct trigger name based on the attack index
         if (attackIndex < 3)
@@ -271,19 +272,35 @@ public class CharacterSelectionManager : MonoBehaviour
             characterObject = artworkSpriteP1.gameObject;
             animator = characterObject.GetComponent<Animator>();
 
+            if (currentAttacksP1 != null && attackIndex < currentAttacksP1.Count)
+                attackData = currentAttacksP1[attackIndex];
+
             if (animator != null)
             {
                 animator.SetTrigger(attackTrigger);
             }
         }
-        else if (playerNum == 2)
+        else
         {
             characterObject = artworkSpriteP2.gameObject;
             animator = characterObject.GetComponent<Animator>();
 
+            if (currentAttacksP2 != null && attackIndex < currentAttacksP2.Count)
+                attackData = currentAttacksP2[attackIndex];
+
             if (animator != null)
             {
                 animator.SetTrigger(attackTrigger);
+            }
+        }
+
+        // If we have attack data and an EffectSpawner, show the effect
+        if (attackData != null)
+        {
+            EffectSpawner effectSpawner = FindObjectOfType<EffectSpawner>();
+            if (effectSpawner != null)
+            {
+                StartCoroutine(effectSpawner.SpawnEffect(characterObject, attackData, true));
             }
         }
     }
