@@ -39,15 +39,26 @@ public class CharacterSelectionManager : MonoBehaviour
 
     string gameMode = StartScreenManager.GetSelectedGameMode();
 
-    // Player 1 Variables
+    [Header("Player 1 UI")]
     public Text nameTextP1;
     public SpriteRenderer artworkSpriteP1;
     private int selectedOptionP1 = 0;
+    public Button[] attackButtonsP1;
+    public Text[] attackNamesP1;
 
-    // Player 2 Variables
+    [Header("Player 2 UI")]
     public Text nameTextP2;
     public SpriteRenderer artworkSpriteP2;
     private int selectedOptionP2 = 0;
+    public Button[] attackButtonsP2;
+    public Text[] attackNamesP2;
+
+    // Reference to the AttackDataManager
+    private AttackDataManager attackDataManager;
+
+    // Lists to store the current attacks for each player
+    private List<AttackData> currentAttacksP1;
+    private List<AttackData> currentAttacksP2;
 
     void Start()
     {
@@ -64,10 +75,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
         if(gameMode == "AITrivia")
         {
-            RectTransform confirmButtonRect = confirmButton.GetComponent<RectTransform>();
-            Vector3 confirmButtonPos = confirmButtonRect.anchoredPosition;
-            confirmButtonPos.y = -350f;
-            confirmButtonRect.anchoredPosition = confirmButtonPos;
             promptInput.interactable = false;
         }
 
@@ -90,8 +97,14 @@ public class CharacterSelectionManager : MonoBehaviour
         }
 
         LoadCharacters();
+
+        attackDataManager = AttackDataManager.Instance;
+
+        // Update characters with attack data
         UpdateCharacter(1, selectedOptionP1);
         UpdateCharacter(2, selectedOptionP2);
+
+        SetupAttackButtonListeners();
     }
 
     void onTextHover()
@@ -174,12 +187,119 @@ public class CharacterSelectionManager : MonoBehaviour
             artworkSpriteP1.sprite = character.characterSprite;
             nameTextP1.text = character.characterName;
             ApplyCharacterAnimation(artworkSpriteP1.gameObject, character.characterName);
+
+            UpdateAttackInfo(1, character.characterName);
         }
         else if (player == 2)
         {
             artworkSpriteP2.sprite = character.characterSprite;
             nameTextP2.text = character.characterName;
             ApplyCharacterAnimation(artworkSpriteP2.gameObject, character.characterName);
+
+            UpdateAttackInfo(2, character.characterName);
+        }
+    }
+
+    private void UpdateAttackInfo(int player, string characterName)
+    {
+        List<AttackData> attacks = attackDataManager.GetAttacksForCharacter(characterName);
+
+        if (player == 1)
+        {
+            currentAttacksP1 = attacks;
+            UpdateAttackUI(attacks, attackButtonsP1, attackNamesP1);
+        }
+        else if (player == 2)
+        {
+            currentAttacksP2 = attacks;
+            UpdateAttackUI(attacks, attackButtonsP2, attackNamesP2);
+        }
+    }
+
+    private void UpdateAttackUI(List<AttackData> attacks, Button[] buttons, Text[] names)
+    {
+        // Make sure we have all the UI elements before proceeding
+        if (buttons == null || names == null)
+        {
+            Debug.LogError("Attack UI elements not assigned in inspector");
+            return;
+        }
+
+
+        // Update each attack button
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (i < 4)
+            {
+                // This slot has an attack to display
+                buttons[i].gameObject.SetActive(true);
+
+                if (i < names.Length && names[i] != null)
+                    names[i].text = attacks[i].attackName;
+
+                ColorBlock colors = buttons[i].colors;
+                colors.normalColor = AttackDataManager.Instance.GetColorForAttackType(attacks[i].attackType);
+                buttons[i].colors = colors;
+            }
+            else
+            {
+                buttons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void PlayAttackAnimation(int playerNum, int attackIndex)
+    {
+        GameObject characterObject;
+        Animator animator;
+        string attackTrigger;
+
+        // Determine the correct trigger name based on the attack index
+        if (attackIndex < 3)
+        {
+            // For buttons 0-2, use Attack1, Attack2, Attack3
+            attackTrigger = "Attack" + (attackIndex + 1);
+        }
+        else
+        {
+            // For button 3 (4th button), use Special
+            attackTrigger = "Special";
+        }
+
+        if (playerNum == 1)
+        {
+            characterObject = artworkSpriteP1.gameObject;
+            animator = characterObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetTrigger(attackTrigger);
+            }
+        }
+        else if (playerNum == 2)
+        {
+            characterObject = artworkSpriteP2.gameObject;
+            animator = characterObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetTrigger(attackTrigger);
+            }
+        }
+    }
+
+    private void SetupAttackButtonListeners()
+    {
+        for (int i = 0; i < attackButtonsP1.Length; i++)
+        {
+            int index = i; // Important: Create a local copy for the lambda
+            attackButtonsP1[i].onClick.AddListener(() => PlayAttackAnimation(1, index));
+        }
+
+        for (int i = 0; i < attackButtonsP2.Length; i++)
+        {
+            int index = i; // Important: Create a local copy for the lambda
+            attackButtonsP2[i].onClick.AddListener(() => PlayAttackAnimation(2, index));
         }
     }
 
@@ -265,10 +385,8 @@ public class CharacterSelectionManager : MonoBehaviour
         // Handle different game modes
         if (gameMode == "AITrivia")
         {
-            // For AI Trivia, use predetermined questions
             List<Question> aiQuestions = AIQuestionsHolder.GetAIQuestions();
 
-            // Shuffle questions
             ShuffleQuestions(aiQuestions);
 
             // Store in holder
@@ -276,7 +394,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
             Debug.Log("AI Trivia questions loaded: " + GeneratedQuestionHolder.generatedQuestions.Count);
 
-            // Load quiz scene
             SceneManager.LoadScene("QuizScene");
         }
         else if (gameMode == "PromptPlay")
@@ -295,7 +412,6 @@ public class CharacterSelectionManager : MonoBehaviour
     }
 
 
-    // Add this utility method for shuffling questions
     private void ShuffleQuestions(List<Question> questions)
     {
         for (int i = questions.Count - 1; i > 0; i--)
@@ -344,12 +460,10 @@ public class CharacterSelectionManager : MonoBehaviour
         SceneManager.LoadScene("QuizScene");
     }
 
-    // In CharacterSelectionManager.cs
     private void OnAIError(string error)
     {
         Debug.LogError("AI error: " + error);
 
-        // If the error mentions JSON, try a different model as fallback
         if (error.Contains("JSON") || error.Contains("parse"))
         {
             Debug.Log("Trying with fallback questions...");
@@ -377,7 +491,7 @@ public class CharacterSelectionManager : MonoBehaviour
         return questions;
     }
 
-    public void SaveCharacters() //call before switch scenes
+    public void SaveCharacters()
     {
         PlayerPrefs.SetInt("selectedOptionP1", selectedOptionP1);
         PlayerPrefs.SetInt("selectedOptionP2", selectedOptionP2);
