@@ -19,6 +19,11 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private float readingTime = 3f;
     [SerializeField] private Text timerText;
     [SerializeField] private Text LogoText;
+    [SerializeField] private float earlyBuzzPenaltyTime = 1.5f; // Time penalty for buzzing too early
+
+    // New freeze timer text objects
+    [SerializeField] private Text player1FreezeTimerText;
+    [SerializeField] private Text player2FreezeTimerText;
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
@@ -28,6 +33,12 @@ public class QuizManager : MonoBehaviour
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
     private List<int> usedQuestionIndices = new List<int>();
+
+    private bool isReadingTime = true;
+    private bool isBuzzLocked = false;
+    private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
+    private float[] playerFreezeTimeRemaining = new float[3]; // Remaining freeze time for each player
+    private Color frozenColor = new Color(0.7f, 0.9f, 1f); // Light blue "frozen" color
 
     private void Awake()
     {
@@ -70,6 +81,9 @@ public class QuizManager : MonoBehaviour
 
         ShuffleQuestions();
 
+        // Initialize freeze timer texts
+        HideFreezeTimers();
+
         // Start with the quiz panel and display a question
         StartQuizPhase();
     }
@@ -94,12 +108,125 @@ public class QuizManager : MonoBehaviour
 
     private void Update()
     {
-        if (canBuzz)
+        // Handle buzzer input with proper checks
+        HandleBuzzerInput();
+
+        // Update freeze timers
+        UpdateFreezeTimers();
+    }
+
+    private void UpdateFreezeTimers()
+    {
+        // Update Player 1 freeze timer
+        if (playerFrozen[1])
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            playerFreezeTimeRemaining[1] -= Time.deltaTime;
+            if (playerFreezeTimeRemaining[1] <= 0)
+            {
+                playerFrozen[1] = false;
+                player1FreezeTimerText.gameObject.SetActive(false);
+            }
+            else
+            {
+                player1FreezeTimerText.text = $"Player 1 is frozen for {playerFreezeTimeRemaining[1]:F1} seconds";
+            }
+        }
+
+        // Update Player 2 freeze timer
+        if (playerFrozen[2])
+        {
+            playerFreezeTimeRemaining[2] -= Time.deltaTime;
+            if (playerFreezeTimeRemaining[2] <= 0)
+            {
+                playerFrozen[2] = false;
+                player2FreezeTimerText.gameObject.SetActive(false);
+            }
+            else
+            {
+                player2FreezeTimerText.text = $"Player 2 is frozen for {playerFreezeTimeRemaining[2]:F1} seconds";
+            }
+        }
+    }
+
+    private void HideFreezeTimers()
+    {
+        if (player1FreezeTimerText != null)
+            player1FreezeTimerText.gameObject.SetActive(false);
+
+        if (player2FreezeTimerText != null)
+            player2FreezeTimerText.gameObject.SetActive(false);
+    }
+
+    private void HandleBuzzerInput()
+    {
+        // If the game isn't in a state where buzzing is allowed, don't process inputs
+        if (isBuzzLocked)
+            return;
+
+        // Player 1 input
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (isReadingTime)
+            {
+                // Player buzzed too early - apply penalty
+                ApplyEarlyBuzzPenalty(1);
+            }
+            else if (canBuzz && !playerFrozen[1])
+            {
+                // Valid buzz
                 PlayerBuzzed(1);
-            else if (Input.GetKeyDown(KeyCode.K))
+            }
+        }
+        // Player 2 input
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (isReadingTime)
+            {
+                // Player buzzed too early - apply penalty
+                ApplyEarlyBuzzPenalty(2);
+            }
+            else if (canBuzz && !playerFrozen[2])
+            {
+                // Valid buzz
                 PlayerBuzzed(2);
+            }
+        }
+    }
+
+    private void ApplyEarlyBuzzPenalty(int playerNumber)
+    {
+        // Don't apply penalty if player is already frozen
+        if (playerFrozen[playerNumber])
+            return;
+
+        // Set player as frozen
+        playerFrozen[playerNumber] = true;
+        playerFreezeTimeRemaining[playerNumber] = earlyBuzzPenaltyTime;
+
+        // Show freeze timer text
+        if (playerNumber == 1 && player1FreezeTimerText != null)
+        {
+            player1FreezeTimerText.gameObject.SetActive(true);
+            player1FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
+            StartCoroutine(FlashPlayerFreeze(Player1));
+        }
+        else if (playerNumber == 2 && player2FreezeTimerText != null)
+        {
+            player2FreezeTimerText.gameObject.SetActive(true);
+            player2FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
+            StartCoroutine(FlashPlayerFreeze(Player2));
+        }
+    }
+
+    private IEnumerator FlashPlayerFreeze(GameObject playerObject)
+    {
+        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            Color originalColor = spriteRenderer.color;
+            spriteRenderer.color = frozenColor;
+            yield return new WaitForSeconds(0.2f); // Flash briefly
+            spriteRenderer.color = originalColor;
         }
     }
 
@@ -114,6 +241,16 @@ public class QuizManager : MonoBehaviour
 
     private void StartQuizPhase()
     {
+        // Reset buzz state
+        isBuzzLocked = false;
+        canBuzz = true;
+        playerWhoBuzzed = 0;
+        playerFrozen[1] = false;
+        playerFrozen[2] = false;
+
+        // Hide freeze timer texts
+        HideFreezeTimers();
+
         // Reset player visibility
         Player1.SetActive(true);
         Player2.SetActive(true);
@@ -134,6 +271,7 @@ public class QuizManager : MonoBehaviour
 
         // Initialize and start the reading timer
         currentReadingTime = readingTime;
+        isReadingTime = true;
         StartCoroutine(QuizPhaseTimer());
     }
 
@@ -168,7 +306,11 @@ public class QuizManager : MonoBehaviour
 
         // Timer finished - move to buzzer phase
         timerText.text = "Time's up!";
-        timerText.color = Color.white; // Reset the color to default when time's up
+        timerText.color = Color.white;
+
+        // Let buzzing be allowed now
+        isReadingTime = false;
+
         yield return new WaitForSeconds(0.5f);
 
         // Move to buzzer panel
@@ -186,13 +328,20 @@ public class QuizManager : MonoBehaviour
         Player1.SetActive(true);
         Player2.SetActive(true);
 
-        // Allow buzzing
+        // Allow buzzing, but keep any active freeze penalties
         canBuzz = true;
         playerWhoBuzzed = 0;
+        isBuzzLocked = false;
     }
 
     public void PlayerBuzzed(int playerNumber)
     {
+        // Don't allow buzzing if the system is locked or player is frozen
+        if (isBuzzLocked || isReadingTime || !canBuzz || playerFrozen[playerNumber])
+            return;
+
+        // Lock the buzzer system to prevent multiple players from buzzing
+        isBuzzLocked = true;
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
 
@@ -205,6 +354,9 @@ public class QuizManager : MonoBehaviour
 
         Player1.SetActive(playerNumber == 1);
         Player2.SetActive(playerNumber == 2);
+
+        // Hide freeze timer texts when a player successfully buzzes
+        HideFreezeTimers();
 
         buzzerPanel.SetActive(false);
         quizPanel.SetActive(false);
@@ -227,7 +379,6 @@ public class QuizManager : MonoBehaviour
     private void ShowAnswerOptions()
     {
         // Make sure the question is displayed on the answer panel
-        // You might need to reference a different text component if you have one specifically for the answer panel
         Question q = questions[currentQuestionIndex];
 
         for (int i = 0; i < answerTexts.Length; i++)
@@ -302,13 +453,13 @@ public class QuizManager : MonoBehaviour
         if (content.Length < 10)
         {
             textComponent.fontSize = 50;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Overflow;
-            textComponent.verticalOverflow = VerticalWrapMode.Overflow;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
+            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         }
         else if (content.Length < 25)
         {
             textComponent.fontSize = 44;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Overflow;
+            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
             textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         }
         else if (content.Length < 50)
@@ -319,7 +470,7 @@ public class QuizManager : MonoBehaviour
         }
         else
         {
-            textComponent.fontSize = 14;
+            textComponent.fontSize = 25;
             textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
             textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         }
@@ -345,6 +496,9 @@ public class QuizManager : MonoBehaviour
 
     private IEnumerator TransitionToBattle()
     {
+        // Ensure the buzzer stays locked during transition
+        isBuzzLocked = true;
+
         questionText.text = "Correct! Preparing for battle...";
 
         // Display the correct message for a moment
@@ -359,9 +513,11 @@ public class QuizManager : MonoBehaviour
             GameManager.Instance.GoToBattleScene();
     }
 
-
     private IEnumerator ResetBuzzer()
     {
+        // Ensure the buzzer stays locked during transition
+        isBuzzLocked = true;
+
         questionText.text = "Incorrect! Try again...";
 
         // Reset the background color after an incorrect answer
@@ -370,7 +526,6 @@ public class QuizManager : MonoBehaviour
         backgroundImage.color = Color.white;  // Reset to the original color
         questionText.color = Color.white;
         LogoText.color = Color.white;
-
 
         // Start a new question phase
         StartQuizPhase();

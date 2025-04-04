@@ -351,7 +351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &74214437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -884,8 +884,6 @@ Transform:
   m_Children:
   - {fileID: 2006361758}
   - {fileID: 1942804383}
-  - {fileID: 839825511}
-  - {fileID: 2147135916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357062959
@@ -1079,11 +1077,11 @@ Transform:
   m_GameObject: {fileID: 839825510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3099976, y: -6.2491875, z: -0.07877636}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 100}
+  m_LocalPosition: {x: 0.07999992, y: -0.51666677, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 254998690}
+  m_Father: {fileID: 2006361758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &839825512
 SpriteRenderer:
@@ -1683,7 +1681,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Which of these is a type of machine learning?
---- !u!1 &1218532217
+--- !u!1 &1354420916
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1691,45 +1689,156 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1218532219}
-  - component: {fileID: 1218532218}
-  m_Layer: 0
-  m_Name: GameManager
+  - component: {fileID: 1354420919}
+  - component: {fileID: 1354420918}
+  - component: {fileID: 1354420917}
+  m_Layer: 5
+  m_Name: 'player2FreezeTimerText '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1218532218
+  m_IsActive: 0
+--- !u!114 &1354420917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218532217}
+  m_GameObject: {fileID: 1354420916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 815ac2cc6649a62488f364930e941989, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Health: 100
-  player2Health: 100
-  characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
---- !u!4 &1218532219
-Transform:
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Frozen For: 5 Seconds'
+--- !u!222 &1354420918
+CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218532217}
-  serializedVersion: 2
+  m_GameObject: {fileID: 1354420916}
+  m_CullTransparentMesh: 1
+--- !u!224 &1354420919
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354420916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.46444714, y: 0.22984564, z: 0.009648323}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1944615459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 541, y: -462}
+  m_SizeDelta: {x: 600, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1749539804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749539805}
+  - component: {fileID: 1749539806}
+  - component: {fileID: 1749539807}
+  m_Layer: 5
+  m_Name: 'player1FreezeTimerText '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1749539805
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749539804}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1944615459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -541, y: -462}
+  m_SizeDelta: {x: 600, y: 75}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1749539806
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749539804}
+  m_CullTransparentMesh: 1
+--- !u!114 &1749539807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749539804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Frozen For: 5 Seconds'
 --- !u!1001 &1826993112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1985,6 +2094,9 @@ MonoBehaviour:
   readingTime: 3
   timerText: {fileID: 212136228}
   LogoText: {fileID: 76577398}
+  earlyBuzzPenaltyTime: 2
+  player1FreezeTimerText: {fileID: 1749539807}
+  player2FreezeTimerText: {fileID: 1354420917}
 --- !u!4 &1835962244
 Transform:
   m_ObjectHideFlags: 0
@@ -2292,7 +2404,8 @@ Transform:
   m_LocalPosition: {x: 3.7000024, y: -4.679188, z: -0.1351819}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2147135916}
   m_Father: {fileID: 254998690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1942804384
@@ -2411,6 +2524,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 357062960}
+  - {fileID: 1749539805}
+  - {fileID: 1354420919}
   - {fileID: 229269633}
   - {fileID: 1978970372}
   - {fileID: 76577397}
@@ -2440,7 +2555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1978970372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2583,7 +2698,8 @@ Transform:
   m_LocalPosition: {x: -6.5499973, y: -4.6991873, z: -0.07877636}
   m_LocalScale: {x: 3, y: 3, z: 100}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 839825511}
   m_Father: {fileID: 254998690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2006361759
@@ -2788,11 +2904,11 @@ Transform:
   m_GameObject: {fileID: 2147135915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5900028, y: -6.2691875, z: -0.07877636}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 100}
+  m_LocalPosition: {x: -0.036666553, y: -0.5299999, z: 0.056405544}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 254998690}
+  m_Father: {fileID: 1942804383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2147135917
 SpriteRenderer:
@@ -2854,6 +2970,5 @@ SceneRoots:
   - {fileID: 1131523245}
   - {fileID: 1944615459}
   - {fileID: 2146359605}
-  - {fileID: 1218532219}
   - {fileID: 1835962244}
   - {fileID: 254998690}
