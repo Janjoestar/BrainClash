@@ -69,16 +69,15 @@ public class BattleManager : MonoBehaviour
         SetCharacter(Player1, p1Character);
         SetCharacter(Player2, p2Character);
 
-        // Load character-specific attacks
         player1Attacks = p1Character.characterAttacks;
         player2Attacks = p2Character.characterAttacks;
 
-        // If a character doesn't have attacks defined, use default attacks
+        // If a character doesn't have attacks defined, use attacks from the AttackSystem
         if (player1Attacks == null || player1Attacks.Count == 0)
-            player1Attacks = GetDefaultAttacks(p1Character.characterName);
+            player1Attacks = AttackDataManager.Instance.GetAttacksForCharacter(p1Character.characterName);
 
         if (player2Attacks == null || player2Attacks.Count == 0)
-            player2Attacks = GetDefaultAttacks(p2Character.characterName);
+            player2Attacks = AttackDataManager.Instance.GetAttacksForCharacter(p2Character.characterName);
 
         // Get the player who correctly answered the quiz
         attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
@@ -89,6 +88,13 @@ public class BattleManager : MonoBehaviour
 
 
         ShowAttackOptions();
+    }
+
+    private GameObject GetEffectPrefabForAttack(AttackData attack)
+    {
+        return AttackDataManager.Instance.GetEffectPrefabForAttack(attack,
+            slashEffectPrefab, projectileEffectPrefab, magicEffectPrefab,
+            areaEffectPrefab, directHitEffectPrefab);
     }
 
     private void SetCharacter(GameObject playerObject, Character character)
@@ -164,7 +170,6 @@ public class BattleManager : MonoBehaviour
         CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
 
-    // Add this to your BattleManager class at the top of the PerformAttack method
     private void PerformAttack(AttackData attack)
     {
         // Disable attack buttons during animation to prevent multiple clicks
@@ -172,19 +177,15 @@ public class BattleManager : MonoBehaviour
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
 
-        // Play the attack's sound effect if specified
         PlaySound(attack.soundEffectName);
 
-        // Handle healing differently from damage
         if (attack.attackType == AttackType.Heal)
         {
-            // Heal the attacker instead of damaging the opponent
             GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + attack.damage + " HP!";
         }
         else
         {
-            // Standard damage logic
             GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         }
@@ -219,14 +220,11 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack)
     {
-        // Get references to attacker and defender
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
         GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
 
-        // Handle different attack types
         if (attack.attackType == AttackType.MoveAndHit)
         {
-            // For MoveAndHit, we need a special sequence
             yield return StartCoroutine(HandleMoveAndHit(attacker, attack, animator));
         }
         else
@@ -237,17 +235,14 @@ public class BattleManager : MonoBehaviour
                 animator.SetTrigger(attack.animationTrigger);
             }
 
-            // Wait for effect delay
             yield return new WaitForSeconds(attack.effectDelay);
 
-            // Show appropriate effect based on attack type
             if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
             {
                 yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
             }
             else if (attack.attackType == AttackType.Heal)
             {
-                // Special handling for heal effects
                 yield return StartCoroutine(ShowDirectEffect(attacker, attack));
             }
             else
@@ -266,43 +261,12 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        // Add a short pause after everything is complete
         yield return new WaitForSeconds(0.5f);
 
         // Re-enable attack buttons for testing
         //SetAttackButtonsInteractable(true);
 
         SceneManager.LoadScene("QuizScene");
-    }
-
-    // Helper method to get the appropriate effect prefab - add HEAL support
-    private GameObject GetEffectPrefabForAttack(AttackData attack)
-    {
-        if (!string.IsNullOrEmpty(attack.effectPrefabName))
-        {
-            GameObject customEffect = Resources.Load<GameObject>("Effects/" + attack.effectPrefabName);
-            if (customEffect != null)
-                return customEffect;
-        }
-
-        // Fall back to default effects if custom one not found
-        switch (attack.attackType)
-        {
-            case AttackType.Slash:
-                return slashEffectPrefab;
-            case AttackType.Projectile:
-                return projectileEffectPrefab;
-            case AttackType.Magic:
-                return magicEffectPrefab;
-            case AttackType.AreaEffect:
-                return areaEffectPrefab;
-            case AttackType.DirectHit:
-                return directHitEffectPrefab;
-            case AttackType.Heal:
-                return magicEffectPrefab;
-            default:
-                return slashEffectPrefab;
-        }
     }
 
     private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator)
@@ -324,13 +288,11 @@ public class BattleManager : MonoBehaviour
             animator.SetTrigger(attack.animationTrigger);
         }
 
-        // Get defender reference
         GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
 
         // Wait for effect delay
         yield return new WaitForSeconds(attack.effectDelay);
 
-        // Show impact effect on defender
         PlayImpactEffect(defender, attack);
 
         // Wait for animation to complete
@@ -358,7 +320,6 @@ public class BattleManager : MonoBehaviour
         attacker.transform.position = originalPosition;
     }
 
-    // Helper method to enable/disable all attack buttons
     private void SetAttackButtonsInteractable(bool interactable)
     {
         foreach (Transform child in attackPanel.transform)
@@ -371,10 +332,8 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // For projectiles that travel from attacker to defender
     private IEnumerator ShowTravelingEffect(GameObject attacker, GameObject defender, AttackData attack)
     {
-        // Select appropriate effect prefab
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
         // Spawn the attack effect
@@ -390,7 +349,7 @@ public class BattleManager : MonoBehaviour
         Vector3 direction = targetPosition - attack.effectOffset;
 
         // Animate the effect moving towards the target position
-        float speed = 8f; // Adjust speed as needed
+        float speed = 8f;
         float distanceCovered = 0;
         float totalDistance = direction.magnitude;
         Vector3 normalizedDirection = direction.normalized;
@@ -574,126 +533,6 @@ public class BattleManager : MonoBehaviour
             buttonObj.SetActive(true);
 
             index++;
-        }
-    }
-
-    private List<AttackData> GetDefaultAttacks(string characterName)
-    {
-        // Structure for a new attack:
-        // Name, Damage, Description, AnimationTrigger, AttackType, EffectPrefab, EffectOffset, EffectDelay, FlashInterval, FlashColor, HitEffectPrefab, HitEffectOffset, SoundEffect
-        switch (characterName)
-        {
-            case "Knight":
-                return new List<AttackData>
-            {
-                new AttackData("Quick Slash", 12, "A swift sword slash.", "Attack1",
-                              AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Warrior Slash", 15, "A flaming projectile.", "Attack1",
-                              AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Dragon Slash", 20, "A bolt of lightning.", "Attack2",
-                              AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Judgement Impact", 20, "A bolt of lightning.", "Special",
-                              AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-            };
-            case "Archer":
-                return new List<AttackData>
-            {
-                new AttackData("Poison Arrow", 15, "A freezing projectile.", "Attack1",
-                              AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 0.55f, 0.1f, Color.magenta),
-                new AttackData("Arrow Shower", 20, "A bolt of lightning.", "Attack2",
-                              AttackType.DirectHit, "Base", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red),
-                new AttackData("GreenBeam", 15, "A freezing projectile.", "Special",
-                              AttackType.DirectHit, "None", new Vector3(-2.16f, -2.62f, -4.116615f), 1.595f, 0.1f, Color.green)
-            };
-            case "Water":
-                return new List<AttackData>
-            {
-                new AttackData("Heal", 20, "A ball of fire.", "Attack2",
-                              AttackType.Heal, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.green, "Heal"),
-                new AttackData("WaterBall", 25, "A freezing spike of ice.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.blue),
-                new AttackData("WaterDance", 30, "A bolt of lightning.", "Attack3",
-                              AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue)
-            };
-            case "Samurai":
-                return new List<AttackData>
-            {
-                new AttackData("Shield Bash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "ShieldBash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Holy Strike", 19, "A light-infused attack.", "Attack2",
-                              AttackType.DirectHit, "HolyStrike", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Crusader's Charge", 24, "A charging attack.", "Attack3",
-                              AttackType.DirectHit, "CrusaderCharge", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red)
-            };
-            case "Fire":
-                return new List<AttackData>
-            {
-                new AttackData("Fire Slash", 14, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.red, "FireSlash"),
-                new AttackData("Spin Slash", 20, "A powerful shield attack.", "Attack2",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.2f, Color.red, "FireSpin"),
-                new AttackData("Fire Combo", 25, "A light-infused attack.", "Attack3",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.9f, 0.38f, Color.red, "FireSpin"),
-                new AttackData("Fire Slam", 40, "A charging attack.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 2f, 0.2f, Color.red, "FireCharge")
-            };
-            case "Wind":
-                return new List<AttackData>
-            {
-                new AttackData("Wind Slash", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, new Color(0.659f, 0.592f, 0.447f)),
-                new AttackData("Wind Barrage", 20, "A powerful shield attack.", "Attack2",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.2f, 0.1f, new Color(0.659f, 0.592f, 0.447f)),
-                new AttackData("Tornado", 35, "A light-infused attack.", "Attack3",
-                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.15f, new Color(0.659f, 0.592f, 0.447f), "WindTornado"),
-                new AttackData("Telporting Slash", 45, "A charging attack.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.25f, new Color(0.659f, 0.592f, 0.447f))
-            };
-            case "Necromancer":
-                return new List<AttackData>
-            {
-                new AttackData("Soul Rise", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "SoulRise", new Vector3(-3.26f, -1.92f, -0.05191165f), 0.8f, 0.1f, Color.red, "SoulRise"),
-                new AttackData("Blood Spike", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "BloodSpike", new Vector3(-3.25f, -2.25f, -0.05191165f), 1.2f, 0.1f, Color.red, "BloodSpike"),
-                new AttackData("Red Lightning", 35, "A light-infused attack.", "Attack1",
-                              AttackType.DirectHit, "RedLightning", new Vector3(-3.33f, -1.7f, -0.05191165f), 1.5f, 0.15f, Color.red, "ThunderBolt"),
-                new AttackData("Blood Tornado", 45, "A charging attack.", "Attack1",
-                              AttackType.DirectHit, "BloodTornado", new Vector3(-3.27f, -0.97f, -0.05191165f), 1.5f, 0.25f, Color.red, "Hurricane")
-            };
-            case "Crystal":
-                return new List<AttackData>
-            {
-                new AttackData("Crystal Crusher", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
-                new AttackData("Phantom Shatter", 20, "A powerful shield attack.", "Attack1",
-                              AttackType.DirectHit, "PhantomShatter", new Vector3(-3.19f, -1.47f, -0.03036325f), 1.2f, 0.1f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
-                new AttackData("Crystal Eruption", 35, "A light-infused attack.", "Attack3",
-                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.6f, 0.15f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f))),
-                new AttackData("Crystalline Surge", 45, "A charging attack.", "Special",
-                              AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.65f, 0.15f, Color.Lerp(Color.green, Color.blue, Mathf.PingPong(Time.time, 0.5f)))
-            };
-            case "Ground":
-                return new List<AttackData>
-            {
-                new AttackData("Quick Punch", 15, "A powerful shield attack.", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
-                new AttackData("Punch Combo", 20, "A light-infused attack.", "Attack2",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
-                new AttackData("Rock Slide", 30, "A charging attack.", "Attack3",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.35f, new Color32(165, 42, 42, 255)),
-                new AttackData("Rock Smash", 50, "A charging attack.", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.8f, 0.25f, new Color32(165, 42, 42, 255))
-            };
-            default:
-                // Default attacks if character name doesn't match
-                return new List<AttackData>
-            {
-                new AttackData("Basic Attack", 10, "A basic attack.", "Attack1",
-                              AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red),
-                new AttackData("Special Attack", 15, "A special attack.", "Attack2",
-                              AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red)
-            };
         }
     }
 }
