@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,12 +17,22 @@ public class GameManager : MonoBehaviour
     public Character SelectedCharacterP1 { get; private set; }
     public Character SelectedCharacterP2 { get; private set; }
     public CharacterDatabase characterDB;
+
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+
+    [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private AudioClip battleMusic;
+
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Prevents GameManager from resetting
+            SetupMusicSource();
+            SceneManager.sceneLoaded += OnSceneLoaded; // Listen for scene changes
         }
         else
         {
@@ -33,6 +44,27 @@ public class GameManager : MonoBehaviour
     {
         LoadSelectedCharacters();
     }
+
+    private void SetupMusicSource()
+    {
+        if (musicSource == null)
+        {
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.loop = true;
+            musicSource.playOnAwake = false;
+            musicSource.volume = 0.6f; // Music shouldn't drown out SFX
+        }
+
+        if (sfxSource == null)
+        {
+            sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.loop = false;
+            sfxSource.playOnAwake = false;
+            sfxSource.volume = 1.5f; // 🔊 Boost SFX volume here
+        }
+    }
+
+
 
     private void LoadSelectedCharacters()
     {
@@ -79,7 +111,69 @@ public class GameManager : MonoBehaviour
                 battleManager.ApplyCharacterAnimation(battleManager.Player2, SelectedCharacterP2.characterName);
             }
         }
+
+        string name = scene.name;
+
+        if (name == "StartScreen" || name == "CharacterSelection")
+        {
+            PlayMusic(menuMusic);
+        }
+        else if (name == "QuizScene" || name == "BattleScene")
+        {
+            PlayMusic(battleMusic);
+        }
     }
+
+    private void PlayMusic(AudioClip clip)
+    {
+        if (clip == null)
+        {
+            Debug.LogWarning("Music clip is null.");
+            return;
+        }
+
+        if (musicSource.clip == clip && musicSource.isPlaying)
+            return;
+
+        musicSource.clip = clip;
+        musicSource.Play();
+    }
+
+
+    public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
+    {
+        if (string.IsNullOrEmpty(sfxName)) return;
+
+        AudioClip clip = Resources.Load<AudioClip>("SFX/" + sfxName);
+        if (clip != null)
+        {
+            StartCoroutine(DuckMusicThenPlaySFX(clip, volume, musicDuckVolume));
+        }
+        else
+        {
+            Debug.LogWarning("SFX not found: " + sfxName);
+        }
+    }
+
+    private IEnumerator DuckMusicThenPlaySFX(AudioClip clip, float sfxVolume, float musicDuckVolume)
+    {
+        float originalMusicVolume = musicSource.volume;
+
+        // Lower music volume
+        musicSource.volume = musicDuckVolume;
+
+        // Play the SFX
+        sfxSource.PlayOneShot(clip, sfxVolume);
+
+        // Wait for the clip to finish
+        yield return new WaitForSeconds(clip.length);
+
+        // Restore music volume
+        musicSource.volume = originalMusicVolume;
+    }
+
+
+
 
     public void SetLastCorrectPlayer(int playerNumber)
     {

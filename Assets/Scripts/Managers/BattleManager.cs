@@ -45,22 +45,6 @@ public class BattleManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
-
-        if (backgroundMusicSource == null)
-        {
-            backgroundMusicSource = new GameObject("BackgroundMusicSource").AddComponent<AudioSource>();
-            backgroundMusicSource.transform.parent = transform;
-            backgroundMusicSource.playOnAwake = true;
-            backgroundMusicSource.loop = true;
-
-            // Optional: Load and play background music
-            AudioClip backgroundMusic = Resources.Load<AudioClip>("Sounds/BattleMusic");
-            if (backgroundMusic != null)
-            {
-                backgroundMusicSource.clip = backgroundMusic;
-                backgroundMusicSource.Play();
-            }
-        }
     }
 
     private void Start()
@@ -224,7 +208,8 @@ public class BattleManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>("SFX/" + soundName);
         if (clip != null)
         {
-            audioSource.PlayOneShot(clip);
+            GameManager.Instance.PlaySFX(soundName);
+
         }
         else
         {
