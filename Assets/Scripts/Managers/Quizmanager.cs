@@ -13,17 +13,28 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private GameObject quizPanel;
     [SerializeField] private GameObject buzzerPanel;
     [SerializeField] private GameObject answerPanel;
-    [SerializeField] private Image backgroundImage;
     [SerializeField] internal GameObject Player1;
     [SerializeField] internal GameObject Player2;
     [SerializeField] private float readingTime = 3f;
     [SerializeField] private Text timerText;
     [SerializeField] private Text LogoText;
     [SerializeField] private float earlyBuzzPenaltyTime = 1.5f; // Time penalty for buzzing too early
+    [SerializeField] private float colorTransitionSpeed = 2f;
+    [SerializeField] private float initialSlideInTime = 0.75f; // How long the initial animation takes
 
-    // New freeze timer text objects
+    [Header("Player 1 UI")]
+    [SerializeField] private RectTransform leftColorPanel;  // Panel for Player 1 color
+    private Coroutine leftPanelAnimation;
+    [SerializeField] private Image leftBackgroundImage;
+    private Coroutine player1ColorTransition;
     [SerializeField] private Text player1FreezeTimerText;
+
+    [Header("Player 2 UI")]
+    [SerializeField] private RectTransform rightColorPanel; // Panel for Player 2 color
+    private Coroutine rightPanelAnimation;
     [SerializeField] private Text player2FreezeTimerText;
+    [SerializeField] private Image rightBackgroundImage;
+    private Coroutine player2ColorTransition;
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
@@ -34,6 +45,7 @@ public class QuizManager : MonoBehaviour
     private RectTransform quizPanelGameOBJ;
     private List<int> usedQuestionIndices = new List<int>();
 
+    [Header("Freeze UI")]
     private bool isReadingTime = true;
     private bool isBuzzLocked = false;
     private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
@@ -64,6 +76,16 @@ public class QuizManager : MonoBehaviour
         {
             SetCharacter(Player1, GameManager.Instance.SelectedCharacterP1);
             SetCharacter(Player2, GameManager.Instance.SelectedCharacterP2);
+
+            Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
+            Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
+
+            leftBackgroundImage.color = player1Color;
+            rightBackgroundImage.color = player2Color;
+
+            InitializeColorPanels();
+
+            StartCoroutine(InitialColorPanelSlideIn());
         }
 
         Debug.Log(GeneratedQuestionHolder.generatedQuestions.Count > 0 ? GeneratedQuestionHolder.generatedQuestions[1] + "" + GeneratedQuestionHolder.generatedQuestions[2] : "No generated questions");
@@ -81,11 +103,85 @@ public class QuizManager : MonoBehaviour
 
         ShuffleQuestions();
 
-        // Initialize freeze timer texts
         HideFreezeTimers();
 
-        // Start with the quiz panel and display a question
         StartQuizPhase();
+    }
+
+    private void InitializeColorPanels()
+    {
+        leftColorPanel.GetComponent<Image>().color = GameManager.Instance.SelectedCharacterP1.characterColor;
+        rightColorPanel.GetComponent<Image>().color = GameManager.Instance.SelectedCharacterP2.characterColor;
+
+        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+
+        leftColorPanel.anchoredPosition = new Vector2(-480,0);
+
+        rightColorPanel.anchoredPosition = new Vector2(480, 0);
+    }
+
+    private IEnumerator InitialColorPanelSlideIn()
+    {
+        Vector2 leftPanelTarget = new Vector2(480, 0);
+        Vector2 rightPanelTarget = new Vector2(-480, 0);
+
+        Vector2 leftPanelStart = leftColorPanel.anchoredPosition;
+        Vector2 rightPanelStart = rightColorPanel.anchoredPosition;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < initialSlideInTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / initialSlideInTime;
+
+            float smoothT = Mathf.SmoothStep(0, 1, t);
+
+            leftColorPanel.anchoredPosition = Vector2.Lerp(leftPanelStart, leftPanelTarget, smoothT);
+            rightColorPanel.anchoredPosition = Vector2.Lerp(rightPanelStart, rightPanelTarget, smoothT);
+
+            yield return null;
+        }
+
+        leftColorPanel.anchoredPosition = leftPanelTarget;
+        rightColorPanel.anchoredPosition = rightPanelTarget;
+    }
+
+    private IEnumerator AnimateColorPanelsToBuzz(int playerNumber)
+    {
+        Vector2 leftPanelTarget, rightPanelTarget;
+
+        if (playerNumber == 1)
+        {
+            leftPanelTarget = new Vector2(Screen.width / 2f, 0);
+            rightPanelTarget = new Vector2(Screen.width * 1.5f, 0);
+        }
+        else
+        {
+            leftPanelTarget = new Vector2(-Screen.width / 2f, 0);
+            rightPanelTarget = new Vector2(0, 0);
+        }
+
+        Vector2 leftPanelStart = leftColorPanel.anchoredPosition;
+        Vector2 rightPanelStart = rightColorPanel.anchoredPosition;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < colorTransitionSpeed)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / colorTransitionSpeed;
+
+            float smoothT = Mathf.SmoothStep(0, 1, t);
+
+            leftColorPanel.anchoredPosition = Vector2.Lerp(leftPanelStart, leftPanelTarget, smoothT);
+            rightColorPanel.anchoredPosition = Vector2.Lerp(rightPanelStart, rightPanelTarget, smoothT);
+
+            yield return null;
+        }
+
+        leftColorPanel.anchoredPosition = leftPanelTarget;
+        rightColorPanel.anchoredPosition = rightPanelTarget;
     }
 
     private void SetCharacter(GameObject playerObject, Character character)
@@ -117,7 +213,6 @@ public class QuizManager : MonoBehaviour
 
     private void UpdateFreezeTimers()
     {
-        // Update Player 1 freeze timer
         if (playerFrozen[1])
         {
             playerFreezeTimeRemaining[1] -= Time.deltaTime;
@@ -132,7 +227,6 @@ public class QuizManager : MonoBehaviour
             }
         }
 
-        // Update Player 2 freeze timer
         if (playerFrozen[2])
         {
             playerFreezeTimeRemaining[2] -= Time.deltaTime;
@@ -280,40 +374,20 @@ public class QuizManager : MonoBehaviour
         Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
         Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
 
-        // Variable to alternate colors between Player1 and Player2
-        bool usePlayer1Color = true;
-
-        // Track how much time has passed to switch colors every 1 second
-        float colorChangeInterval = 1f; // Change color every 1 second
-        float lastColorChangeTime = 0f;
-
         while (currentReadingTime > 0)
         {
-            // Update timer text
             timerText.text = "Time: " + Mathf.Ceil(currentReadingTime).ToString();
-
-            // Switch color at the defined interval
-            if (Time.time - lastColorChangeTime >= colorChangeInterval)
-            {
-                timerText.color = usePlayer1Color ? player1Color : player2Color;
-                usePlayer1Color = !usePlayer1Color; // Alternate color
-                lastColorChangeTime = Time.time; // Reset the time tracker
-            }
 
             currentReadingTime -= Time.deltaTime;
             yield return null;
         }
 
-        // Timer finished - move to buzzer phase
         timerText.text = "Time's up!";
-        timerText.color = Color.white;
 
-        // Let buzzing be allowed now
         isReadingTime = false;
 
         yield return new WaitForSeconds(0.5f);
 
-        // Move to buzzer panel
         MoveToBuzzerPhase();
     }
 
@@ -323,8 +397,6 @@ public class QuizManager : MonoBehaviour
         buzzerPanel.SetActive(true);
         answerPanel.SetActive(false);
 
-        // Reset for buzzing
-        backgroundImage.color = Color.white;
         Player1.SetActive(true);
         Player2.SetActive(true);
 
@@ -336,33 +408,35 @@ public class QuizManager : MonoBehaviour
 
     public void PlayerBuzzed(int playerNumber)
     {
-        // Don't allow buzzing if the system is locked or player is frozen
         if (isBuzzLocked || isReadingTime || !canBuzz || playerFrozen[playerNumber])
             return;
 
-        // Lock the buzzer system to prevent multiple players from buzzing
         isBuzzLocked = true;
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
 
-        // Use the color of the player who buzzed
         Color playerColor = playerNumber == 1 ? GameManager.Instance.SelectedCharacterP1.characterColor : GameManager.Instance.SelectedCharacterP2.characterColor;
 
-        backgroundImage.color = playerColor;
+        if (player1ColorTransition != null)
+            StopCoroutine(player1ColorTransition);
+        if (player2ColorTransition != null)
+            StopCoroutine(player2ColorTransition);
+
+        player1ColorTransition = StartCoroutine(TransitionColor(leftBackgroundImage, playerColor));
+        player2ColorTransition = StartCoroutine(TransitionColor(rightBackgroundImage, playerColor));
+
         questionText.color = playerColor;
         LogoText.color = playerColor;
 
         Player1.SetActive(playerNumber == 1);
         Player2.SetActive(playerNumber == 2);
 
-        // Hide freeze timer texts when a player successfully buzzes
         HideFreezeTimers();
 
         buzzerPanel.SetActive(false);
         quizPanel.SetActive(false);
         answerPanel.SetActive(true);
 
-        // If Player 1 answered, set the answerPanel's x value to 1225
         RectTransform answerPanelRect = answerPanel.GetComponent<RectTransform>();
         if (playerNumber == 1 && answerPanel != null)
         {
@@ -376,20 +450,32 @@ public class QuizManager : MonoBehaviour
         ShowAnswerOptions();
     }
 
+    private IEnumerator TransitionColor(Image image, Color targetColor)
+    {
+        Color startColor = image.color;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * colorTransitionSpeed;
+            image.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+
+        image.color = targetColor;
+    }
+
     private void ShowAnswerOptions()
     {
-        // Make sure the question is displayed on the answer panel
         Question q = questions[currentQuestionIndex];
 
         for (int i = 0; i < answerTexts.Length; i++)
         {
             if (i < q.answerOptions.Length)
             {
-                // Add option letter prefix (A, B, C, D)
                 string optionLetter = ((char)('A' + i)).ToString() + ". ";
                 answerTexts[i].text = optionLetter + q.answerOptions[i];
 
-                // Dynamically set font size based on text length
                 SetDynamicFontSize(answerTexts[i], q.answerOptions[i]);
 
                 answerTexts[i].transform.parent.gameObject.SetActive(true);
@@ -401,23 +487,19 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    // Get a unique question index
     private int GetNextUniqueQuestionIndex()
     {
-        // If we've used all questions, reset the used list
         if (usedQuestionIndices.Count >= questions.Count)
         {
             usedQuestionIndices.Clear();
         }
 
-        // Find an index we haven't used yet
         int randomIndex;
         do
         {
             randomIndex = Random.Range(0, questions.Count);
         } while (usedQuestionIndices.Contains(randomIndex));
 
-        // Mark this index as used
         usedQuestionIndices.Add(randomIndex);
 
         return randomIndex;
@@ -449,7 +531,6 @@ public class QuizManager : MonoBehaviour
 
     private void SetDynamicFontSize(Text textComponent, string content)
     {
-        // Scale font size based on content length
         if (content.Length < 10)
         {
             textComponent.fontSize = 50;
@@ -475,7 +556,6 @@ public class QuizManager : MonoBehaviour
             textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         }
 
-        // Ensure alignment is centered
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
 
@@ -496,40 +576,47 @@ public class QuizManager : MonoBehaviour
 
     private IEnumerator TransitionToBattle()
     {
-        // Ensure the buzzer stays locked during transition
         isBuzzLocked = true;
 
         questionText.text = "Correct! Preparing for battle...";
 
-        // Display the correct message for a moment
-        yield return new WaitForSeconds(1f); // Wait for 1 second to show "Correct!"
+        yield return new WaitForSeconds(1f);
 
-        // Make sure we're setting the last correct player
         if (GameManager.Instance != null)
             GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
 
-        // Then transition to the battle scene
         if (GameManager.Instance != null)
             GameManager.Instance.GoToBattleScene();
     }
 
     private IEnumerator ResetBuzzer()
     {
-        // Ensure the buzzer stays locked during transition
         isBuzzLocked = true;
 
         questionText.text = "Incorrect! Try again...";
 
-        // Reset the background color after an incorrect answer
         yield return new WaitForSeconds(1f);
 
-        backgroundImage.color = Color.white;  // Reset to the original color
+        if (GameManager.Instance != null)
+        {
+            Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
+            Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
+
+            if (player1ColorTransition != null)
+                StopCoroutine(player1ColorTransition);
+            if (player2ColorTransition != null)
+                StopCoroutine(player2ColorTransition);
+
+            player1ColorTransition = StartCoroutine(TransitionColor(leftBackgroundImage, player1Color));
+            player2ColorTransition = StartCoroutine(TransitionColor(rightBackgroundImage, player2Color));
+        }
+
         questionText.color = Color.white;
         LogoText.color = Color.white;
 
-        // Start a new question phase
         StartQuizPhase();
     }
+
 
     private void InitializeExampleQuestions()
     {
