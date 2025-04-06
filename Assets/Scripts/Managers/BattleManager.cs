@@ -167,19 +167,23 @@ public class BattleManager : MonoBehaviour
     private IEnumerator HandlePlayerDeath(int defeatedPlayer)
     {
         GameObject defeatedPlayerObj = defeatedPlayer == 1 ? Player1 : Player2;
-
         Animator animator = defeatedPlayerObj.GetComponent<Animator>();
+
         if (animator != null)
         {
             animator.SetTrigger("Death");
 
-            while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Death") ||
-                   animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            yield return null;
+
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            while (stateInfo.normalizedTime < 1.0f)
             {
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 yield return null;
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
         else
         {
@@ -226,12 +230,18 @@ public class BattleManager : MonoBehaviour
 
             if (returnToMenuButton != null)
             {
+                ColorBlock cb = returnToMenuButton.colors;
+                cb.highlightedColor = winnerCharacter.characterColor;
+                returnToMenuButton.colors = cb;
                 returnToMenuButton.onClick.AddListener(() => {
                     SceneManager.LoadScene("StartScreen");
                 });
             }
             if (playAgainButton != null)
             {
+                ColorBlock cb = playAgainButton.colors;
+                cb.highlightedColor = winnerCharacter.characterColor;
+                playAgainButton.colors = cb;
                 playAgainButton.onClick.AddListener(() => {
                     SceneManager.LoadScene("CharacterSelection");
                 });
@@ -525,10 +535,6 @@ public class BattleManager : MonoBehaviour
     private void PlayImpactEffect(GameObject target, AttackData attack)
     {
         int targetPlayer = target == Player1 ? 1 : 2;
-        if (GameManager.Instance.GetPlayerHealth(targetPlayer) <= 0)
-        {
-            return;
-        }
 
         Animator targetAnimator = target.GetComponent<Animator>();
         if (targetAnimator != null)
