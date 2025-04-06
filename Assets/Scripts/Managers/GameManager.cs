@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
             sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.loop = false;
             sfxSource.playOnAwake = false;
-            sfxSource.volume = 1.5f; // 🔊 Boost SFX volume here
+            sfxSource.volume = 1.1f; // 🔊 Boost SFX volume here
         }
     }
 
@@ -159,16 +159,12 @@ public class GameManager : MonoBehaviour
     {
         float originalMusicVolume = musicSource.volume;
 
-        // Lower music volume
         musicSource.volume = musicDuckVolume;
 
-        // Play the SFX
         sfxSource.PlayOneShot(clip, sfxVolume);
 
-        // Wait for the clip to finish
         yield return new WaitForSeconds(clip.length);
 
-        // Restore music volume
         musicSource.volume = originalMusicVolume;
     }
 
@@ -191,24 +187,42 @@ public class GameManager : MonoBehaviour
         return player == 1 ? player1Health : player2Health;
     }
 
-    public void DamagePlayer(int player, int damage)
+    public int DamagePlayer(int player, int damage)
     {
+        int actualDamage = damage;
+
         if (player == 1)
-            player1Health -= damage;
+        {
+            actualDamage = Mathf.Min(player1Health, damage);
+            player1Health = Mathf.Max(0, player1Health - damage);
+        }
         else
-            player2Health -= damage;
+        {
+            actualDamage = Mathf.Min(player2Health, damage);
+            player2Health = Mathf.Max(0, player2Health - damage);
+        }
+
+        return actualDamage;
     }
 
-    public void HealPlayer(int playerNum, int amount)
+    public int HealPlayer(int playerNum, int amount)
     {
+        int actualHealing = 0;
+
         if (playerNum == 1)
         {
+            int oldHealth = player1Health;
             player1Health = Mathf.Min(player1Health + amount, SelectedCharacterP1.maxHealth);
+            actualHealing = player1Health - oldHealth;
         }
         else if (playerNum == 2)
         {
+            int oldHealth = player2Health;
             player2Health = Mathf.Min(player2Health + amount, SelectedCharacterP2.maxHealth);
+            actualHealing = player2Health - oldHealth;
         }
+
+        return actualHealing;
     }
 
     public void ReturnToQuizScene()

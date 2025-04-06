@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] public GameObject Player1;
     [SerializeField] public GameObject Player2;
 
+    [SerializeField] private GameObject battlePanel;
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player2HealthText;
     [SerializeField] private Text battleStatusText;
@@ -19,7 +21,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Transform foregroundPosition;
     [SerializeField] private Transform backgroundPosition;
 
-    // Audio components
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource backgroundMusicSource;
 
@@ -27,12 +28,26 @@ public class BattleManager : MonoBehaviour
     private List<AttackData> player2Attacks = new List<AttackData>();
     private int attackingPlayer = 1;
 
+    [Header("End Screen Elements")]
+    [SerializeField] private GameObject endScreenPanel;
+    [SerializeField] private Text winnerText;
+    [SerializeField] private Button returnToMenuButton;
+    [SerializeField] private Button playAgainButton;
+    [SerializeField] private GameObject winEmblem;
+    [SerializeField] private GameObject winnerSprite;
+    [SerializeField] private Text damageDealtText;
+    [SerializeField] private Text damageTakenText;
+    [SerializeField] private Text healingDoneText;
+
+    private Dictionary<int, int> damageDealt = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<int, int> damageTaken = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<int, int> healingDone = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
+
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
 
     private void Awake()
     {
-        // Create audio source if not assigned
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -65,14 +80,12 @@ public class BattleManager : MonoBehaviour
         player1Attacks = p1Character.characterAttacks;
         player2Attacks = p2Character.characterAttacks;
 
-        // If a character doesn't have attacks defined, use attacks from the AttackSystem
         if (player1Attacks == null || player1Attacks.Count == 0)
             player1Attacks = AttackDataManager.Instance.GetAttacksForCharacter(p1Character.characterName);
 
         if (player2Attacks == null || player2Attacks.Count == 0)
             player2Attacks = AttackDataManager.Instance.GetAttacksForCharacter(p2Character.characterName);
 
-        // Get the player who correctly answered the quiz
         attackingPlayer = GameManager.Instance.GetLastCorrectPlayer();
 
         SwapPositions(attackingPlayer);
@@ -113,7 +126,6 @@ public class BattleManager : MonoBehaviour
         Vector3 forwardPos = foregroundPosition.position;
         Vector3 backPos = backgroundPosition.position;
 
-        // Only change their positions, not their identities
         if (attackingPlayer == 1)
         {
             Player1.transform.position = forwardPos;
@@ -137,13 +149,107 @@ public class BattleManager : MonoBehaviour
             sprite.flipX = faceRight;
     }
 
-    private void UpdateHealthDisplays()
+    private void CheckForGameOver()
     {
-        // Get health values
         int p1Health = GameManager.Instance.GetPlayerHealth(1);
         int p2Health = GameManager.Instance.GetPlayerHealth(2);
 
-        // Show health with context of who's attacking/defending
+        if (p1Health <= 0 || p2Health <= 0)
+        {
+            StartCoroutine(HandlePlayerDeath(p1Health <= 0 ? 1 : 2));
+        }
+        else
+        {
+            SceneManager.LoadScene("QuizScene");
+        }
+    }
+
+    private IEnumerator HandlePlayerDeath(int defeatedPlayer)
+    {
+        GameObject defeatedPlayerObj = defeatedPlayer == 1 ? Player1 : Player2;
+
+        Animator animator = defeatedPlayerObj.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+
+            while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Death") ||
+                   animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        ShowEndScreen(defeatedPlayer);
+    }
+
+    private void ShowEndScreen(int defeatedPlayer)
+    {
+        if (endScreenPanel != null)
+        {
+            battlePanel.SetActive(false);
+            endScreenPanel.SetActive(true);
+
+            int winnerPlayer = defeatedPlayer == 1 ? 2 : 1;
+            Character winnerCharacter = winnerPlayer == 1 ?
+                GameManager.Instance.SelectedCharacterP1 :
+                GameManager.Instance.SelectedCharacterP2;
+
+            winnerText.text = winnerCharacter.characterName + " WINS!";
+            winEmblem.GetComponent<SpriteRenderer>().color = winnerCharacter.characterColor;
+            winnerSprite.GetComponent<SpriteRenderer>().sprite = winnerCharacter.characterSprite;
+
+            damageDealtText.text = "Damage Dealt: " + damageDealt[winnerPlayer];
+            damageTakenText.text = "Damage Taken: " + damageTaken[winnerPlayer];
+            healingDoneText.text = "Healing Done: " + healingDone[winnerPlayer];
+
+            SpriteRenderer spriteRenderer = winnerSprite.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+                spriteRenderer.sprite = winnerCharacter.characterSprite;
+
+            Animator animator = winnerSprite.GetComponent<Animator>();
+            if (animator != null)
+            {
+                string overridePath = "Animations/" + winnerCharacter.characterName + "Override";
+                AnimatorOverrideController overrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+                if (overrideController != null)
+                    animator.runtimeAnimatorController = overrideController;
+                else
+                    Debug.LogWarning("No Animator Override Controller found for " + winnerCharacter.characterName);
+            }
+
+            if (returnToMenuButton != null)
+            {
+                returnToMenuButton.onClick.AddListener(() => {
+                    SceneManager.LoadScene("StartScreen");
+                });
+            }
+            if (playAgainButton != null)
+            {
+                playAgainButton.onClick.AddListener(() => {
+                    SceneManager.LoadScene("CharacterSelection");
+                });
+            }
+        }
+        else
+        {
+            Debug.LogError("End Screen Panel is not assigned in the inspector!");
+            SceneManager.LoadScene("StartScreen");
+        }
+    }
+
+
+    private void UpdateHealthDisplays()
+    {
+        int p1Health = GameManager.Instance.GetPlayerHealth(1);
+        int p2Health = GameManager.Instance.GetPlayerHealth(2);
+
         if (attackingPlayer == 1)
         {
             player1HealthText.text = "Attacker (P1) HP: " + p1Health;
@@ -163,7 +269,6 @@ public class BattleManager : MonoBehaviour
 
     private void PerformAttack(AttackData attack)
     {
-        // Disable attack buttons during animation to prevent multiple clicks
         SetAttackButtonsInteractable(false);
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
@@ -172,23 +277,23 @@ public class BattleManager : MonoBehaviour
 
         if (attack.attackType == AttackType.Heal)
         {
-            GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
-            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + attack.damage + " HP!";
+            int healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
+            healingDone[attackingPlayer] += healAmount;
+            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + healAmount + " HP!";
         }
         else
         {
-            GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+            int actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+            damageDealt[attackingPlayer] += actualDamage;
+            damageTaken[targetPlayer] += actualDamage;
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         }
 
         UpdateHealthDisplays();
 
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
-
-        // Get animator but DON'T trigger animation yet for MoveAndHit
         Animator attackerAnimator = attacker.GetComponent<Animator>();
 
-        // Handle attack logic based on type
         StartCoroutine(ShowAttackAnimation(attackerAnimator, attack));
     }
 
@@ -220,7 +325,6 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            // For all other attacks, trigger animation immediately
             if (animator != null)
             {
                 animator.SetTrigger(attack.animationTrigger);
@@ -241,7 +345,6 @@ public class BattleManager : MonoBehaviour
                 yield return StartCoroutine(ShowDirectEffect(defender, attack));
             }
 
-            // Wait for animation to complete
             if (animator != null)
             {
                 float remainingAnimTime = animator.GetCurrentAnimatorStateInfo(0).length -
@@ -254,10 +357,7 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // Re-enable attack buttons for testing
-        //SetAttackButtonsInteractable(true);
-
-        SceneManager.LoadScene("QuizScene");
+        CheckForGameOver();
     }
 
     private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator)
@@ -265,7 +365,6 @@ public class BattleManager : MonoBehaviour
         Vector3 originalPosition = attacker.transform.position;
         Vector3 attackPosition = new Vector3(0f, -2.290813f, originalPosition.z);
 
-        // First move to attack position
         float moveSpeed = 10f;
         while (Vector3.Distance(attacker.transform.position, attackPosition) > 0.05f)
         {
@@ -273,7 +372,6 @@ public class BattleManager : MonoBehaviour
             yield return null;
         }
 
-        // Now that we're in position, TRIGGER the animation
         if (animator != null)
         {
             animator.SetTrigger(attack.animationTrigger);
@@ -281,33 +379,29 @@ public class BattleManager : MonoBehaviour
 
         GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
 
-        // Wait for effect delay
         yield return new WaitForSeconds(attack.effectDelay);
 
         PlayImpactEffect(defender, attack);
 
-        // Wait for animation to complete
         if (animator != null)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName("Idle")) // If not idle, wait for current animation
+            if (!stateInfo.IsName("Idle"))
             {
                 float animLength = stateInfo.length;
                 float normalizedTimeRemaining = 1f - stateInfo.normalizedTime % 1f;
                 float timeRemaining = normalizedTimeRemaining * animLength;
 
-                yield return new WaitForSeconds(timeRemaining + 0.4f); // Add buffer
+                yield return new WaitForSeconds(timeRemaining + 0.4f);
             }
         }
 
-        // Move back to original position
         while (Vector3.Distance(attacker.transform.position, originalPosition) > 0.05f)
         {
             attacker.transform.position = Vector3.MoveTowards(attacker.transform.position, originalPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // Ensure we're exactly at original position
         attacker.transform.position = originalPosition;
     }
 
@@ -327,19 +421,14 @@ public class BattleManager : MonoBehaviour
     {
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
-        // Spawn the attack effect
         GameObject attackEffect = Instantiate(effectPrefab);
 
-        // Position the effect at the attacker's position WITH the custom offset
         attackEffect.transform.position = attack.effectOffset;
 
-        // Calculate the target hit position (defender position + hit offset)
         Vector3 targetPosition = attack.targetHitOffset;
 
-        // Get the direction vector from current position to target position
         Vector3 direction = targetPosition - attack.effectOffset;
 
-        // Animate the effect moving towards the target position
         float speed = 8f;
         float distanceCovered = 0;
         float totalDistance = direction.magnitude;
@@ -353,10 +442,8 @@ public class BattleManager : MonoBehaviour
             yield return null;
         }
 
-        // Position exactly at the target hit position
         attackEffect.transform.position = targetPosition;
 
-        // Play projectile hit animation if it exists
         if (!string.IsNullOrEmpty(attack.hitEffectPrefabName))
         {
             Destroy(attackEffect);
@@ -369,9 +456,8 @@ public class BattleManager : MonoBehaviour
                 Animator hitAnimator = hitEffect.GetComponent<Animator>();
                 if (hitAnimator != null)
                 {
-                    float hitAnimationLength = 2f; // Default duration
+                    float hitAnimationLength = 2f;
 
-                    // Try to get actual animation length
                     AnimatorClipInfo[] clipInfo = hitAnimator.GetCurrentAnimatorClipInfo(0);
                     if (clipInfo.Length > 0)
                     {
@@ -406,22 +492,17 @@ public class BattleManager : MonoBehaviour
     private IEnumerator ShowDirectEffect(GameObject target, AttackData attack)
     {
 
-        // Select appropriate effect prefab
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
-        // Spawn the effect directly on the target WITH the custom offset
         GameObject attackEffect = Instantiate(effectPrefab,
                                             attack.effectOffset,
                                             Quaternion.identity);
 
-        // For slashes, position slightly offset from the target
         if (attack.attackType == AttackType.Slash)
         {
-            // Position slightly in front of the target
             attackEffect.transform.position += new Vector3(attackingPlayer == 1 ? 0.5f : -0.5f, 0, 0);
         }
 
-        // Get the animation/particle duration
         float effectDuration = 0.5f;
         Animator effectAnimator = attackEffect.GetComponent<Animator>();
         if (effectAnimator != null)
@@ -434,20 +515,27 @@ public class BattleManager : MonoBehaviour
             effectDuration = particleSystem.main.duration;
         }
 
-        // Make the target flash
         PlayImpactEffect(target, attack);
 
-        // Wait for the effect to complete
         yield return new WaitForSeconds(effectDuration);
 
-        // Destroy the effect
         Destroy(attackEffect);
     }
 
     private void PlayImpactEffect(GameObject target, AttackData attack)
     {
-        // You can instantiate a different effect for impact
-        // For now, we'll just make the target flash
+        int targetPlayer = target == Player1 ? 1 : 2;
+        if (GameManager.Instance.GetPlayerHealth(targetPlayer) <= 0)
+        {
+            return;
+        }
+
+        Animator targetAnimator = target.GetComponent<Animator>();
+        if (targetAnimator != null)
+        {
+            targetAnimator.SetTrigger("Hit");
+        }
+
         SpriteRenderer targetRenderer = target.GetComponent<SpriteRenderer>();
         if (targetRenderer != null)
         {
@@ -467,37 +555,31 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // In BattleManager.cs, update the ShowAttackOptions method
     private void ShowAttackOptions()
     {
 
-        // Clear previous attack buttons
         foreach (Transform child in attackPanel.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // Determine which attack list to use
         List<AttackData> currentAttacks = (attackingPlayer == 1) ? player1Attacks : player2Attacks;
 
-        // Get current character name
         string characterName = (attackingPlayer == 1) ?
             GameManager.Instance.SelectedCharacterP1.characterName :
             GameManager.Instance.SelectedCharacterP2.characterName;
 
-        // Update battle status text to include character name
         battleStatusText.text = characterName + "'s turn to attack!";
 
-        float startY = -75; // Starting Y position
-        float xPosition = -692; // Fixed X position
-        float yStep = -100; // Distance between buttons
+        float startY = -75;
+        float xPosition = -692; 
+        float yStep = -100;
 
         int index = 0;
         foreach (AttackData attack in currentAttacks)
         {
             GameObject buttonObj = Instantiate(attackButtonPrefab, attackPanel.transform);
 
-            // Ensure components are enabled
             Button button = buttonObj.GetComponent<Button>();
             Image image = buttonObj.GetComponent<Image>();
             if (button != null) button.enabled = true;
@@ -515,11 +597,9 @@ public class BattleManager : MonoBehaviour
                 PerformAttack(attack);
             });
 
-            // Position adjustment
             RectTransform buttonRect = buttonObj.GetComponent<RectTransform>();
             buttonRect.anchoredPosition = new Vector2(xPosition, startY + (yStep * index));
 
-            // Ensure the button is interactive
             button.interactable = true;
             buttonObj.SetActive(true);
 
