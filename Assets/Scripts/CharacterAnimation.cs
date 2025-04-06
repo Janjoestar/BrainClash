@@ -28,4 +28,21 @@ public static class CharacterAnimation
             Debug.LogError("Override Controller not found for " + characterName);
         }
     }
+
+    public static void PlayHitAnimation(GameObject playerObject)
+    {
+        Animator animator = playerObject.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
+        }
+    }
+    public static void PlayDeathAnimation(GameObject playerObject)
+    {
+        Animator animator = playerObject.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+        }
+    }
 }
