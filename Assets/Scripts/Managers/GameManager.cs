@@ -225,6 +225,17 @@ public class GameManager : MonoBehaviour
         return actualHealing;
     }
 
+    public void ReloadSelectedCharacters()
+    {
+        int selectedIndexP1 = PlayerPrefs.GetInt("selectedOptionP1", 0);
+        int selectedIndexP2 = PlayerPrefs.GetInt("selectedOptionP2", 0);
+
+        SelectedCharacterP1 = characterDB.GetCharacter(selectedIndexP1);
+        SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
+        player1Health = SelectedCharacterP1.maxHealth;
+        player2Health = SelectedCharacterP2.maxHealth;
+    }
+
     public void ReturnToQuizScene()
     {
             SceneManager.LoadScene("QuizScene");

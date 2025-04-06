@@ -7,7 +7,9 @@ public class Character
 {
     public string characterName;
     public Sprite characterSprite;
-    public List<AttackData> characterAttacks = new List<AttackData>();
     public int maxHealth;
+    public List<AttackData> characterAttacks = new List<AttackData>();
     public Color characterColor;
+    public Color secondaryColor;
+    public Color primaryColor;
 }

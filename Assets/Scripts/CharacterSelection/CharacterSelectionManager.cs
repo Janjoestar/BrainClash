@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using TMPro; // For TextMeshPro InputField
-using UnityEngine.Networking;
-using System.Text;
 using UnityEngine.EventSystems;
 
 
@@ -14,9 +10,9 @@ public class CharacterSelectionManager : MonoBehaviour
 {
     public CharacterDatabase characterDB;
     [SerializeField] private InputField promptInput;
-    [SerializeField] private GameObject loadingPanel; // Optional loading UI
-    [SerializeField] private Button confirmButton; // Optional loading UI
-    public Text[] Texts; // Array of all menu button texts
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private Button confirmButton;
+    public Text[] Texts;
     public Color normalColor = Color.white;
     public Color hoverColor = Color.yellow;
 
@@ -34,7 +30,6 @@ public class CharacterSelectionManager : MonoBehaviour
         public string response;
         public string model;
         public long created_at;
-        // Add any other fields that might be in the response
     }
 
     string gameMode = StartScreenManager.GetSelectedGameMode();
@@ -53,23 +48,19 @@ public class CharacterSelectionManager : MonoBehaviour
     public Button[] attackButtonsP2;
     public Text[] attackNamesP2;
 
-    // Reference to the AttackDataManager
     private AttackDataManager attackDataManager;
 
-    // Lists to store the current attacks for each player
     private List<AttackData> currentAttacksP1;
     private List<AttackData> currentAttacksP2;
 
     void Start()
     {
-        // Get the game mode from the previous screen
         gameMode = StartScreenManager.GetSelectedGameMode();
 
         Debug.Log(gameMode);
 
         onTextHover();
 
-        // Set up the UI based on game mode
         SetupPromptField();
 
 
@@ -100,7 +91,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
         attackDataManager = AttackDataManager.Instance;
 
-        // Update characters with attack data
         UpdateCharacter(1, selectedOptionP1);
         UpdateCharacter(2, selectedOptionP2);
 
@@ -148,18 +138,14 @@ public class CharacterSelectionManager : MonoBehaviour
     {
         if (gameMode == "PromptPlay")
         {
-            // Show prompt input field with instructions
             promptInput.gameObject.SetActive(true);
 
-            // Add listener for input changes
             promptInput.onValueChanged.AddListener(OnPromptChanged);
         }
         else
         {
-            // For other game modes, hide prompt field
             promptInput.gameObject.SetActive(false);
 
-            // Enable confirm since no prompt is needed
             confirmButton.interactable = true;
         }
     }
@@ -171,7 +157,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
     void CheckRequirements()
     {
-        // In Prompt Play mode, require both character selection and prompt
         if (gameMode == "PromptPlay")
         {
             confirmButton.interactable = !string.IsNullOrEmpty(promptInput.text);
@@ -218,20 +203,16 @@ public class CharacterSelectionManager : MonoBehaviour
 
     private void UpdateAttackUI(List<AttackData> attacks, Button[] buttons, Text[] names)
     {
-        // Make sure we have all the UI elements before proceeding
         if (buttons == null || names == null)
         {
             Debug.LogError("Attack UI elements not assigned in inspector");
             return;
         }
 
-
-        // Update each attack button
         for (int i = 0; i < buttons.Length; i++)
         {
             if (i < 4)
             {
-                // This slot has an attack to display
                 buttons[i].gameObject.SetActive(true);
 
                 if (i < names.Length && names[i] != null)
@@ -255,15 +236,12 @@ public class CharacterSelectionManager : MonoBehaviour
         string attackTrigger;
         AttackData attackData = null;
 
-        // Determine the correct trigger name based on the attack index
         if (attackIndex < 3)
         {
-            // For buttons 0-2, use Attack1, Attack2, Attack3
             attackTrigger = "Attack" + (attackIndex + 1);
         }
         else
         {
-            // For button 3 (4th button), use Special
             attackTrigger = "Special";
         }
 
@@ -294,7 +272,6 @@ public class CharacterSelectionManager : MonoBehaviour
             }
         }
 
-        // If we have attack data and an EffectSpawner, show the effect
         if (attackData != null)
         {
             EffectSpawner effectSpawner = FindObjectOfType<EffectSpawner>();
@@ -395,18 +372,21 @@ public class CharacterSelectionManager : MonoBehaviour
     }
 
     private static int numberOfQuestionsToGenerate = 10;
-    // Add this method to your CharacterSelectionManager class
     public void ConfirmSelection()
     {
         SaveCharacters();
-        // Handle different game modes
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReloadSelectedCharacters();
+        }
+
         if (gameMode == "AITrivia")
         {
             List<Question> aiQuestions = AIQuestionsHolder.GetAIQuestions();
 
             ShuffleQuestions(aiQuestions);
 
-            // Store in holder
             GeneratedQuestionHolder.generatedQuestions = aiQuestions;
 
             Debug.Log("AI Trivia questions loaded: " + GeneratedQuestionHolder.generatedQuestions.Count);
