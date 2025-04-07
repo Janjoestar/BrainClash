@@ -33,7 +33,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text winnerText;
     [SerializeField] private Button returnToMenuButton;
     [SerializeField] private Button playAgainButton;
-    [SerializeField] private GameObject winEmblem;
+    [SerializeField] private GameObject emblemBottom;
+    [SerializeField] private GameObject emblemMiddle;
+    [SerializeField] private GameObject emblemBorder;
     [SerializeField] private GameObject winnerSprite;
     [SerializeField] private Text damageDealtText;
     [SerializeField] private Text damageTakenText;
@@ -206,7 +208,9 @@ public class BattleManager : MonoBehaviour
                 GameManager.Instance.SelectedCharacterP2;
 
             winnerText.text = winnerCharacter.characterName + " WINS!";
-            winEmblem.GetComponent<SpriteRenderer>().color = winnerCharacter.characterColor;
+            emblemBottom.GetComponent<SpriteRenderer>().color = winnerCharacter.characterColor;
+            emblemMiddle.GetComponent<SpriteRenderer>().color = winnerCharacter.primaryColor;
+            emblemBorder.GetComponent<SpriteRenderer>().color = winnerCharacter.secondaryColor;
             winnerSprite.GetComponent<SpriteRenderer>().sprite = winnerCharacter.characterSprite;
 
             damageDealtText.text = "Damage Dealt: " + damageDealt[winnerPlayer];
@@ -231,7 +235,7 @@ public class BattleManager : MonoBehaviour
             if (returnToMenuButton != null)
             {
                 ColorBlock cb = returnToMenuButton.colors;
-                cb.highlightedColor = winnerCharacter.characterColor;
+                cb.highlightedColor = winnerCharacter.primaryColor;
                 returnToMenuButton.colors = cb;
                 returnToMenuButton.onClick.AddListener(() => {
                     SceneManager.LoadScene("StartScreen");
@@ -240,7 +244,7 @@ public class BattleManager : MonoBehaviour
             if (playAgainButton != null)
             {
                 ColorBlock cb = playAgainButton.colors;
-                cb.highlightedColor = winnerCharacter.characterColor;
+                cb.highlightedColor = winnerCharacter.primaryColor;
                 playAgainButton.colors = cb;
                 playAgainButton.onClick.AddListener(() => {
                     SceneManager.LoadScene("CharacterSelection");
