@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 1
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -105,6 +106,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -126,6 +128,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -21}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 132
@@ -146,6 +149,7 @@ ScriptedImporter:
     pivot: {x: 0.4814815, y: -5.5454545}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 147
@@ -166,6 +170,7 @@ ScriptedImporter:
     pivot: {x: 0.4814815, y: -7.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 141
@@ -186,6 +191,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -8.714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -206,6 +212,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -8.714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 132
@@ -226,6 +233,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -8.714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -246,6 +254,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -8.714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -266,6 +275,7 @@ ScriptedImporter:
     pivot: {x: 0.4814815, y: -5.5454545}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -286,6 +296,7 @@ ScriptedImporter:
     pivot: {x: 0.32500002, y: -3.9285717}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 453
@@ -306,6 +317,7 @@ ScriptedImporter:
     pivot: {x: 0.24561404, y: -1.0285715}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -326,6 +338,7 @@ ScriptedImporter:
     pivot: {x: 0.1891892, y: -0.81578946}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -346,6 +359,7 @@ ScriptedImporter:
     pivot: {x: 0.18181819, y: -0.81578946}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -366,6 +380,7 @@ ScriptedImporter:
     pivot: {x: 0.17721519, y: -0.77500004}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -386,6 +401,7 @@ ScriptedImporter:
     pivot: {x: 0.17721519, y: -0.77500004}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -406,6 +422,7 @@ ScriptedImporter:
     pivot: {x: 0.17721519, y: -0.77500004}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -426,6 +443,7 @@ ScriptedImporter:
     pivot: {x: 0.4814815, y: -5.5454545}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 131
@@ -446,6 +464,7 @@ ScriptedImporter:
     pivot: {x: 0.35135135, y: -5.9}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -466,6 +485,7 @@ ScriptedImporter:
     pivot: {x: 0.33333334, y: -2.4545455}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -486,6 +506,7 @@ ScriptedImporter:
     pivot: {x: 0.24561404, y: -1.2105263}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -506,6 +527,7 @@ ScriptedImporter:
     pivot: {x: 0.24561404, y: -0.95652175}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -526,6 +548,7 @@ ScriptedImporter:
     pivot: {x: 0.22950819, y: -0.7777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -546,6 +569,7 @@ ScriptedImporter:
     pivot: {x: 0.21875, y: -0.6451613}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -566,6 +590,7 @@ ScriptedImporter:
     pivot: {x: 0.33333334, y: -2.4545455}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -586,6 +611,7 @@ ScriptedImporter:
     pivot: {x: 0.5185185, y: -1.888889}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 154
@@ -606,6 +632,7 @@ ScriptedImporter:
     pivot: {x: 0.1764706, y: -2.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 161
@@ -626,6 +653,7 @@ ScriptedImporter:
     pivot: {x: 0.4615385, y: -3.6000001}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 151
@@ -646,6 +674,7 @@ ScriptedImporter:
     pivot: {x: 0.36363637, y: -2.5714285}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 151
@@ -666,6 +695,7 @@ ScriptedImporter:
     pivot: {x: 0.4615385, y: -2.8421054}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 154
@@ -686,6 +716,7 @@ ScriptedImporter:
     pivot: {x: 0.44, y: -2.5714285}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 154
@@ -706,6 +737,7 @@ ScriptedImporter:
     pivot: {x: 0.44, y: -2.5714285}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 154
@@ -726,6 +758,7 @@ ScriptedImporter:
     pivot: {x: 0.1764706, y: -2.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 161
@@ -746,6 +779,7 @@ ScriptedImporter:
     pivot: {x: 0.42857146, y: -3.6000001}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 151
@@ -766,6 +800,7 @@ ScriptedImporter:
     pivot: {x: 0.30769232, y: -2.5714285}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 146
@@ -786,6 +821,7 @@ ScriptedImporter:
     pivot: {x: 0.3529412, y: -2.8421054}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 146
@@ -806,6 +842,7 @@ ScriptedImporter:
     pivot: {x: 0.26, y: -1.5882353}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -826,6 +863,7 @@ ScriptedImporter:
     pivot: {x: 0.26, y: -1.5882353}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -846,6 +884,7 @@ ScriptedImporter:
     pivot: {x: 0.26, y: -1.5882353}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -866,6 +905,7 @@ ScriptedImporter:
     pivot: {x: 0.26, y: -1.5882353}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -886,6 +926,7 @@ ScriptedImporter:
     pivot: {x: 0.34042552, y: -0.6216216}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -906,6 +947,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -926,6 +968,7 @@ ScriptedImporter:
     pivot: {x: 0.4848485, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -946,6 +989,7 @@ ScriptedImporter:
     pivot: {x: 0.4925373, y: -0.008403362}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -966,6 +1010,7 @@ ScriptedImporter:
     pivot: {x: 0.6, y: -0.008474576}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -986,6 +1031,7 @@ ScriptedImporter:
     pivot: {x: 0.5595238, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1006,6 +1052,7 @@ ScriptedImporter:
     pivot: {x: 0.45714286, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1026,6 +1073,7 @@ ScriptedImporter:
     pivot: {x: 0.43037975, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1046,6 +1094,7 @@ ScriptedImporter:
     pivot: {x: 0.44444445, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1066,6 +1115,7 @@ ScriptedImporter:
     pivot: {x: 0.48529413, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -1086,6 +1136,7 @@ ScriptedImporter:
     pivot: {x: 0.47058824, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -1106,6 +1157,7 @@ ScriptedImporter:
     pivot: {x: 0.5081967, y: -0.05263158}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -1126,6 +1178,7 @@ ScriptedImporter:
     pivot: {x: 0.76744187, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 96
@@ -1146,6 +1199,7 @@ ScriptedImporter:
     pivot: {x: 1.5714287, y: -0.11111111}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 166
@@ -1166,6 +1220,7 @@ ScriptedImporter:
     pivot: {x: 2.857143, y: -0.14285715}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 168
@@ -1186,6 +1241,7 @@ ScriptedImporter:
     pivot: {x: 2.625, y: -0.33333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 172
@@ -1206,6 +1262,7 @@ ScriptedImporter:
     pivot: {x: 4, y: -1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 176
@@ -1226,6 +1283,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -3.8000002}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -1246,6 +1304,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -15.75}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -1266,6 +1325,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -64}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -1286,6 +1346,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -64}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 189
@@ -1304,478 +1365,537 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -363727035
+    guid: -1569607015
     name: projectiles_and_effects
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: projectiles_and_effects_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 63
         width: 32
         height: 3
       spriteId: d2fe4c197d9983b48a8126f677823bd5
-    - name: projectiles_and_effects_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 61
         width: 27
         height: 11
       spriteId: c55a8d110a399c44299a0066ad34ed10
-    - name: projectiles_and_effects_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 60
         width: 27
         height: 8
       spriteId: 0a801ff468913444f9fe2c7ccf328fcc
-    - name: projectiles_and_effects_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 61
         width: 28
         height: 7
       spriteId: 76d56aee400d2264e9e4f074addc1fdf
-    - name: projectiles_and_effects_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 61
         width: 28
         height: 7
       spriteId: 53dc17cefb1eca7408a169a31ba23574
-    - name: projectiles_and_effects_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 61
         width: 28
         height: 7
       spriteId: 0a610d38362210044ac84e062cf63168
-    - name: projectiles_and_effects_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 61
         width: 28
         height: 7
       spriteId: 3f726fe68e19aed4fb668524096b09f9
-    - name: projectiles_and_effects_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 61
         width: 27
         height: 11
       spriteId: b094e589f24f33a4087024b945809c10
-    - name: projectiles_and_effects_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 55
         width: 40
         height: 14
       spriteId: fe056dfaa8676e94b9fba7165c388574
-    - name: projectiles_and_effects_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 36
         width: 57
         height: 35
       spriteId: dd7e60b43f35415489b2c1f4eccc4bd7
-    - name: projectiles_and_effects_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 31
         width: 74
         height: 38
       spriteId: 0d79ebfc4ee4c394f9411581e9282245
-    - name: projectiles_and_effects_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 31
         width: 77
         height: 38
       spriteId: b04011b69611e244fb56ebcb7415b351
-    - name: projectiles_and_effects_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 31
         width: 79
         height: 40
       spriteId: 79d5946dbe54e914c9a134d5165a4dbf
-    - name: projectiles_and_effects_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 31
         width: 79
         height: 40
       spriteId: 978d884e65be51648a5b10fc2ff63364
-    - name: projectiles_and_effects_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 31
         width: 79
         height: 40
       spriteId: f58c7160ae9c55842a5f87a5c73051f1
-    - name: projectiles_and_effects_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 61
         width: 27
         height: 11
       spriteId: 89642871066c5584390d965e0950da27
-    - name: projectiles_and_effects_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 59
         width: 37
         height: 10
       spriteId: 5ace71687569fa542bfdec569cb041e2
-    - name: projectiles_and_effects_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 54
         width: 42
         height: 22
       spriteId: 5155c4bf1a62684408a4c840c0e3f058
-    - name: projectiles_and_effects_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 46
         width: 57
         height: 38
       spriteId: 15495a6122a2ae041a9e20a9a356a8e6
-    - name: projectiles_and_effects_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 44
         width: 57
         height: 46
       spriteId: affdca6fc9e7c78418a4bf7af3ee1fae
-    - name: projectiles_and_effects_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 42
         width: 61
         height: 54
       spriteId: 46c4df58278c80148b9ec622482ea9ff
-    - name: projectiles_and_effects_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 40
         width: 64
         height: 62
       spriteId: 551e78659bc8d47469bff97b3585c413
-    - name: projectiles_and_effects_Frame_22
+    - name: Frame_22
       frameIndex: 22
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 54
         width: 42
         height: 22
       spriteId: 7fec62443e9014c408ed5943b9174cf1
-    - name: projectiles_and_effects_Frame_23
+    - name: Frame_23
       frameIndex: 23
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 51
         width: 27
         height: 27
       spriteId: 99c80166e174f5741839c6cc99732726
-    - name: projectiles_and_effects_Frame_24
+    - name: Frame_24
       frameIndex: 24
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 54
         width: 17
         height: 24
       spriteId: b801d28923579d346be965cf56320e99
-    - name: projectiles_and_effects_Frame_25
+    - name: Frame_25
       frameIndex: 25
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 54
         width: 26
         height: 15
       spriteId: 467ac8041081a294ea576d360faf6946
-    - name: projectiles_and_effects_Frame_26
+    - name: Frame_26
       frameIndex: 26
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 54
         width: 22
         height: 21
       spriteId: 9711f51c30913c0478d9f190025f821f
-    - name: projectiles_and_effects_Frame_27
+    - name: Frame_27
       frameIndex: 27
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 54
         width: 26
         height: 19
       spriteId: 60a7960880d810f44a6e07cdecaf25c8
-    - name: projectiles_and_effects_Frame_28
+    - name: Frame_28
       frameIndex: 28
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 54
         width: 25
         height: 21
       spriteId: 41273c089f17d1940a34734bafd0aeb8
-    - name: projectiles_and_effects_Frame_29
+    - name: Frame_29
       frameIndex: 29
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 54
         width: 25
         height: 21
       spriteId: 00a6bd3553c4dbb49a58f213245e1000
-    - name: projectiles_and_effects_Frame_30
+    - name: Frame_30
       frameIndex: 30
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 54
         width: 17
         height: 24
       spriteId: 703664f94a109bd41b7f0db0a4577518
-    - name: projectiles_and_effects_Frame_31
+    - name: Frame_31
       frameIndex: 31
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 54
         width: 28
         height: 15
       spriteId: 039348ce159210745baa35d25df8de5b
-    - name: projectiles_and_effects_Frame_32
+    - name: Frame_32
       frameIndex: 32
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 54
         width: 26
         height: 21
       spriteId: 08a0a09495da6204f89b31e7d3909d9f
-    - name: projectiles_and_effects_Frame_33
+    - name: Frame_33
       frameIndex: 33
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 54
         width: 34
         height: 19
       spriteId: 583ea6d788c451e4a85bc5d216e9f5c7
-    - name: projectiles_and_effects_Frame_34
+    - name: Frame_34
       frameIndex: 34
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 54
         width: 50
         height: 34
       spriteId: f9187346720124447916a4ab616e5ce0
-    - name: projectiles_and_effects_Frame_35
+    - name: Frame_35
       frameIndex: 35
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 54
         width: 50
         height: 34
       spriteId: c8669777949aadc458648d402c8a03c5
-    - name: projectiles_and_effects_Frame_36
+    - name: Frame_36
       frameIndex: 36
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 54
         width: 50
         height: 34
       spriteId: 6e01ce43369022a4a8632684451fb508
-    - name: projectiles_and_effects_Frame_37
+    - name: Frame_37
       frameIndex: 37
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 54
         width: 50
         height: 34
       spriteId: 2b2c7921fa6d5b34d90095f1e99ed159
-    - name: projectiles_and_effects_Frame_38
+    - name: Frame_38
       frameIndex: 38
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 46
         width: 47
         height: 74
       spriteId: e6ae41e08e13b43488dfd336b5732c4e
-    - name: projectiles_and_effects_Frame_39
+    - name: Frame_39
       frameIndex: 39
+      additiveSortOrder: 0
       cellRect:
         x: 94
         y: 1
         width: 68
         height: 122
       spriteId: 39aee579d98336949bbf02de9b336b69
-    - name: projectiles_and_effects_Frame_40
+    - name: Frame_40
       frameIndex: 40
+      additiveSortOrder: 0
       cellRect:
         x: 96
         y: 1
         width: 66
         height: 120
       spriteId: 1a34fdacf2b125f45bf8bab029eae78e
-    - name: projectiles_and_effects_Frame_41
+    - name: Frame_41
       frameIndex: 41
+      additiveSortOrder: 0
       cellRect:
         x: 95
         y: 1
         width: 67
         height: 119
       spriteId: cbcaafad730769f408deb21906277c2b
-    - name: projectiles_and_effects_Frame_42
+    - name: Frame_42
       frameIndex: 42
+      additiveSortOrder: 0
       cellRect:
         x: 77
         y: 1
         width: 85
         height: 118
       spriteId: daae4dba79f425b4aa08822f4774415f
-    - name: projectiles_and_effects_Frame_43
+    - name: Frame_43
       frameIndex: 43
+      additiveSortOrder: 0
       cellRect:
         x: 81
         y: 1
         width: 84
         height: 122
       spriteId: abbb1bde28674924381e0420a2dff162
-    - name: projectiles_and_effects_Frame_44
+    - name: Frame_44
       frameIndex: 44
+      additiveSortOrder: 0
       cellRect:
         x: 96
         y: 1
         width: 70
         height: 122
       spriteId: e1e1ccbad76908144bee1305a69a9c3c
-    - name: projectiles_and_effects_Frame_45
+    - name: Frame_45
       frameIndex: 45
+      additiveSortOrder: 0
       cellRect:
         x: 94
         y: 1
         width: 79
         height: 120
       spriteId: 127c0dd88418e3143a3ceac418f320c0
-    - name: projectiles_and_effects_Frame_46
+    - name: Frame_46
       frameIndex: 46
+      additiveSortOrder: 0
       cellRect:
         x: 96
         y: 1
         width: 72
         height: 120
       spriteId: 846b4182d07bc0d47926398e8ef7b8d8
-    - name: projectiles_and_effects_Frame_47
+    - name: Frame_47
       frameIndex: 47
+      additiveSortOrder: 0
       cellRect:
         x: 95
         y: 1
         width: 68
         height: 53
       spriteId: ab5493ac95c52e34eae61affa7668250
-    - name: projectiles_and_effects_Frame_48
+    - name: Frame_48
       frameIndex: 48
+      additiveSortOrder: 0
       cellRect:
         x: 96
         y: 1
         width: 68
         height: 13
       spriteId: c69c66cac166d4a4ea71e648e1b4e9d0
-    - name: projectiles_and_effects_Frame_49
+    - name: Frame_49
       frameIndex: 49
+      additiveSortOrder: 0
       cellRect:
         x: 97
         y: 1
         width: 61
         height: 19
       spriteId: caa1eac3170ff5f4095670d7eb55c25f
-    - name: projectiles_and_effects_Frame_50
+    - name: Frame_50
       frameIndex: 50
+      additiveSortOrder: 0
       cellRect:
         x: 95
         y: 1
         width: 43
         height: 12
       spriteId: 461713a688733f44bacca69ef6ac3620
-    - name: projectiles_and_effects_Frame_51
+    - name: Frame_51
       frameIndex: 51
+      additiveSortOrder: 0
       cellRect:
         x: 106
         y: 1
         width: 14
         height: 9
       spriteId: ea2019eb37404154fbb29e651f1f8c72
-    - name: projectiles_and_effects_Frame_52
+    - name: Frame_52
       frameIndex: 52
+      additiveSortOrder: 0
       cellRect:
         x: 108
         y: 1
         width: 7
         height: 7
       spriteId: db6258953ae846b4bbe692373e23820c
-    - name: projectiles_and_effects_Frame_53
+    - name: Frame_53
       frameIndex: 53
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 8
         height: 3
       spriteId: 3db08ac5216aaaa4b94c030da6a21134
-    - name: projectiles_and_effects_Frame_54
+    - name: Frame_54
       frameIndex: 54
+      additiveSortOrder: 0
       cellRect:
         x: 108
         y: 1
         width: 5
         height: 1
       spriteId: 6649ae21991dbe940bfc2fab7ecd6fd2
-    - name: projectiles_and_effects_Frame_56
+    - name: Frame_56
       frameIndex: 56
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 57
         width: 256
         height: 15
       spriteId: 0fe91380c017cc64bb994cddd79f2bfe
-    - name: projectiles_and_effects_Frame_57
+    - name: Frame_57
       frameIndex: 57
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 63
         width: 256
         height: 4
       spriteId: 369fcb2cbfce65c44966b59ac9331a3a
-    - name: projectiles_and_effects_Frame_58
+    - name: Frame_58
       frameIndex: 58
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 64
         width: 256
         height: 1
       spriteId: fb1d35fc95a49be4e9fccf14f91bdf29
-    - name: projectiles_and_effects_Frame_59
+    - name: Frame_59
       frameIndex: 59
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 64
@@ -1789,3 +1909,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 256, y: 128}
+  previousTextureSize: {x: 512, y: 1024}

@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 1
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -105,6 +106,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -126,6 +128,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 419
@@ -146,6 +149,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 470
@@ -166,6 +170,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 521
@@ -186,6 +191,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 878
@@ -206,6 +212,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 929
@@ -226,6 +233,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 99
@@ -246,6 +254,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 150
@@ -266,6 +275,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 201
@@ -286,6 +296,7 @@ ScriptedImporter:
     pivot: {x: 0.29999992, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 848
@@ -306,6 +317,7 @@ ScriptedImporter:
     pivot: {x: 0.34883726, y: -0.06818182}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 539
@@ -326,6 +338,7 @@ ScriptedImporter:
     pivot: {x: 0.2820513, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 107
@@ -346,6 +359,7 @@ ScriptedImporter:
     pivot: {x: 0.2820513, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 245
@@ -366,6 +380,7 @@ ScriptedImporter:
     pivot: {x: 0.37777787, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 116
@@ -386,6 +401,7 @@ ScriptedImporter:
     pivot: {x: 0.4166667, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 60
@@ -406,6 +422,7 @@ ScriptedImporter:
     pivot: {x: 0.37777787, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 169
@@ -426,6 +443,7 @@ ScriptedImporter:
     pivot: {x: 0.2820513, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 292
@@ -446,6 +464,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 339
@@ -466,6 +485,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 386
@@ -486,6 +506,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 433
@@ -506,6 +527,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 693
@@ -526,6 +548,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 739
@@ -546,6 +569,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 785
@@ -566,6 +590,7 @@ ScriptedImporter:
     pivot: {x: 0.47368422, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 831
@@ -586,6 +611,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 480
@@ -606,6 +632,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -626,6 +653,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 574
@@ -646,6 +674,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 621
@@ -666,6 +695,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 668
@@ -686,6 +716,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 715
@@ -706,6 +737,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.046511628}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 252
@@ -726,6 +758,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07317073}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 980
@@ -746,6 +779,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.102564104}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 877
@@ -766,6 +800,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 923
@@ -786,6 +821,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 969
@@ -806,6 +842,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 46
@@ -826,6 +863,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 92
@@ -846,6 +884,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 138
@@ -866,6 +905,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 184
@@ -886,6 +926,7 @@ ScriptedImporter:
     pivot: {x: 0.51851845, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 759
@@ -906,6 +947,7 @@ ScriptedImporter:
     pivot: {x: 0.50909084, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 506
@@ -926,6 +968,7 @@ ScriptedImporter:
     pivot: {x: 0.49180323, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 293
@@ -946,6 +989,7 @@ ScriptedImporter:
     pivot: {x: 0.46478876, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 810
@@ -966,6 +1010,7 @@ ScriptedImporter:
     pivot: {x: 0.42222214, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 942
@@ -986,6 +1031,7 @@ ScriptedImporter:
     pivot: {x: 0.47368422, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 230
@@ -1006,6 +1052,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 762
@@ -1026,6 +1073,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 809
@@ -1046,6 +1094,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 856
@@ -1066,6 +1115,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 903
@@ -1086,6 +1136,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 950
@@ -1106,6 +1157,7 @@ ScriptedImporter:
     pivot: {x: 0.4102564, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1126,6 +1178,7 @@ ScriptedImporter:
     pivot: {x: 0.47058824, y: -0.041666668}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1146,6 +1199,7 @@ ScriptedImporter:
     pivot: {x: 0.4324324, y: -0.06818182}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 298
@@ -1166,6 +1220,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -0.071428575}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 51
@@ -1186,6 +1241,7 @@ ScriptedImporter:
     pivot: {x: 0.2678572, y: -0.03508772}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 671
@@ -1206,6 +1262,7 @@ ScriptedImporter:
     pivot: {x: 0.2678572, y: -0.04761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 632
@@ -1226,6 +1283,7 @@ ScriptedImporter:
     pivot: {x: 0.2727273, y: -0.04761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 696
@@ -1246,6 +1304,7 @@ ScriptedImporter:
     pivot: {x: 0.26415092, y: -0.3030303}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 788
@@ -1266,6 +1325,7 @@ ScriptedImporter:
     pivot: {x: 0.29999992, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 59
@@ -1286,6 +1346,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 276
@@ -1306,6 +1367,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 322
@@ -1326,6 +1388,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 368
@@ -1346,6 +1409,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 414
@@ -1366,6 +1430,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 460
@@ -1386,6 +1451,7 @@ ScriptedImporter:
     pivot: {x: 0.39473692, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 506
@@ -1406,6 +1472,7 @@ ScriptedImporter:
     pivot: {x: 0.51851845, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 821
@@ -1426,6 +1493,7 @@ ScriptedImporter:
     pivot: {x: 0.50909084, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 569
@@ -1446,6 +1514,7 @@ ScriptedImporter:
     pivot: {x: 0.49180323, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 362
@@ -1466,6 +1535,7 @@ ScriptedImporter:
     pivot: {x: 0.46478876, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 889
@@ -1486,6 +1556,7 @@ ScriptedImporter:
     pivot: {x: 0.42222214, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 324
@@ -1506,6 +1577,7 @@ ScriptedImporter:
     pivot: {x: 0.38297874, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 690
@@ -1526,6 +1598,7 @@ ScriptedImporter:
     pivot: {x: 0.23999995, y: -0.03125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 849
@@ -1546,6 +1619,7 @@ ScriptedImporter:
     pivot: {x: 0.21739122, y: -0.03448276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 288
@@ -1566,6 +1640,7 @@ ScriptedImporter:
     pivot: {x: 0.3333333, y: -0.03448276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 232
@@ -1586,6 +1661,7 @@ ScriptedImporter:
     pivot: {x: 0.54545456, y: -0.03125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 928
@@ -1606,6 +1682,7 @@ ScriptedImporter:
     pivot: {x: 0.6216216, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 552
@@ -1626,6 +1703,7 @@ ScriptedImporter:
     pivot: {x: 0.6, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 377
@@ -1646,6 +1724,7 @@ ScriptedImporter:
     pivot: {x: 0.34883726, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 572
@@ -1666,6 +1745,7 @@ ScriptedImporter:
     pivot: {x: 0.4999999, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 154
@@ -1686,6 +1766,7 @@ ScriptedImporter:
     pivot: {x: 0.59459466, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 200
@@ -1706,6 +1787,7 @@ ScriptedImporter:
     pivot: {x: 0.31249988, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1726,6 +1808,7 @@ ScriptedImporter:
     pivot: {x: 0.4029851, y: -0.020833334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -1746,6 +1829,7 @@ ScriptedImporter:
     pivot: {x: 0.43749994, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 293
@@ -1766,6 +1850,7 @@ ScriptedImporter:
     pivot: {x: 0.41791043, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 431
@@ -1786,6 +1871,7 @@ ScriptedImporter:
     pivot: {x: 0.60869557, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 365
@@ -1806,6 +1892,7 @@ ScriptedImporter:
     pivot: {x: 0.7000001, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 481
@@ -1826,6 +1913,7 @@ ScriptedImporter:
     pivot: {x: 0.7058824, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 883
@@ -1846,6 +1934,7 @@ ScriptedImporter:
     pivot: {x: 0.63636357, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 272
@@ -1866,6 +1955,7 @@ ScriptedImporter:
     pivot: {x: 0.34042552, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1886,6 +1976,7 @@ ScriptedImporter:
     pivot: {x: 0.26666662, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 968
@@ -1906,6 +1997,7 @@ ScriptedImporter:
     pivot: {x: 0.24999994, y: -0.020408163}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1926,6 +2018,7 @@ ScriptedImporter:
     pivot: {x: 0.29268286, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 343
@@ -1946,6 +2039,7 @@ ScriptedImporter:
     pivot: {x: 0.5749999, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 896
@@ -1966,6 +2060,7 @@ ScriptedImporter:
     pivot: {x: 0.6000001, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 800
@@ -1986,6 +2081,7 @@ ScriptedImporter:
     pivot: {x: 0.358209, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 735
@@ -2006,6 +2102,7 @@ ScriptedImporter:
     pivot: {x: 0.27272722, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 511
@@ -2026,6 +2123,7 @@ ScriptedImporter:
     pivot: {x: 0.22093019, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 417
@@ -2046,6 +2144,7 @@ ScriptedImporter:
     pivot: {x: 0.21359226, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 306
@@ -2066,6 +2165,7 @@ ScriptedImporter:
     pivot: {x: 0.16071428, y: -0.016666668}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 378
@@ -2086,6 +2186,7 @@ ScriptedImporter:
     pivot: {x: 0.07258064, y: -0.015625}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 100
@@ -2106,6 +2207,7 @@ ScriptedImporter:
     pivot: {x: 0.031007769, y: -0.03125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 648
@@ -2126,6 +2228,7 @@ ScriptedImporter:
     pivot: {x: 0.031007769, y: -0.03125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 498
@@ -2146,6 +2249,7 @@ ScriptedImporter:
     pivot: {x: 0.02898552, y: -0.013513514}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 648
@@ -2166,6 +2270,7 @@ ScriptedImporter:
     pivot: {x: 0.028571444, y: -0.013888889}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 794
@@ -2186,6 +2291,7 @@ ScriptedImporter:
     pivot: {x: 0.02898552, y: -0.016666668}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2206,6 +2312,7 @@ ScriptedImporter:
     pivot: {x: 0.028169027, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 498
@@ -2226,6 +2333,7 @@ ScriptedImporter:
     pivot: {x: 0.07432433, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 150
@@ -2246,6 +2354,7 @@ ScriptedImporter:
     pivot: {x: 0.10000002, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 788
@@ -2266,6 +2375,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 623
@@ -2286,6 +2396,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 674
@@ -2306,6 +2417,7 @@ ScriptedImporter:
     pivot: {x: 0.68085104, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 944
@@ -2326,6 +2438,7 @@ ScriptedImporter:
     pivot: {x: 0.69135803, y: -0.010869565}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2346,6 +2459,7 @@ ScriptedImporter:
     pivot: {x: 0.6704545, y: -0.010989011}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2366,6 +2480,7 @@ ScriptedImporter:
     pivot: {x: 0.75862074, y: -0.014084507}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 926
@@ -2386,6 +2501,7 @@ ScriptedImporter:
     pivot: {x: 0.66666657, y: -0.020833334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 222
@@ -2406,6 +2522,7 @@ ScriptedImporter:
     pivot: {x: 0.68085104, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 745
@@ -2426,6 +2543,7 @@ ScriptedImporter:
     pivot: {x: 0.2051282, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 942
@@ -2446,6 +2564,7 @@ ScriptedImporter:
     pivot: {x: 0.08496733, y: -0.012048192}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 167
@@ -2466,6 +2585,7 @@ ScriptedImporter:
     pivot: {x: 0.08387098, y: -0.012048192}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2486,6 +2606,7 @@ ScriptedImporter:
     pivot: {x: 0.08552633, y: -0.013513514}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 328
@@ -2506,6 +2627,7 @@ ScriptedImporter:
     pivot: {x: 0.08552633, y: -0.013513514}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 488
@@ -2526,6 +2648,7 @@ ScriptedImporter:
     pivot: {x: 0.09420291, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 232
@@ -2546,6 +2669,7 @@ ScriptedImporter:
     pivot: {x: 0.09848487, y: -0.020408163}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 648
@@ -2566,6 +2690,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 725
@@ -2586,6 +2711,7 @@ ScriptedImporter:
     pivot: {x: 0.33333328, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 590
@@ -2606,6 +2732,7 @@ ScriptedImporter:
     pivot: {x: 0.38095236, y: -0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 93
@@ -2626,6 +2753,7 @@ ScriptedImporter:
     pivot: {x: 0.38095236, y: -0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 143
@@ -2646,6 +2774,7 @@ ScriptedImporter:
     pivot: {x: 0.38095236, y: -0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 193
@@ -2666,6 +2795,7 @@ ScriptedImporter:
     pivot: {x: 0.38095236, y: -0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 243
@@ -2686,6 +2816,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 430
@@ -2706,6 +2837,7 @@ ScriptedImporter:
     pivot: {x: 0.5333333, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 681
@@ -2726,6 +2858,7 @@ ScriptedImporter:
     pivot: {x: 0.33333328, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 640
@@ -2746,6 +2879,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 776
@@ -2766,6 +2900,7 @@ ScriptedImporter:
     pivot: {x: 0.2647059, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 597
@@ -2786,6 +2921,7 @@ ScriptedImporter:
     pivot: {x: 0.2647059, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 639
@@ -2806,6 +2942,7 @@ ScriptedImporter:
     pivot: {x: 0.51612896, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 805
@@ -2826,6 +2963,7 @@ ScriptedImporter:
     pivot: {x: 0.5312501, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 719
@@ -2846,6 +2984,7 @@ ScriptedImporter:
     pivot: {x: 0.51612896, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 844
@@ -2866,6 +3005,7 @@ ScriptedImporter:
     pivot: {x: 0.4210526, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 392
@@ -2886,6 +3026,7 @@ ScriptedImporter:
     pivot: {x: 0.372093, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 827
@@ -2906,6 +3047,7 @@ ScriptedImporter:
     pivot: {x: 0.3023256, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 438
@@ -2926,6 +3068,7 @@ ScriptedImporter:
     pivot: {x: 0.3023256, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 489
@@ -2946,6 +3089,7 @@ ScriptedImporter:
     pivot: {x: 0.3023256, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 540
@@ -2966,6 +3110,7 @@ ScriptedImporter:
     pivot: {x: 0.3023256, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 591
@@ -2986,6 +3131,7 @@ ScriptedImporter:
     pivot: {x: 0.3023256, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 642
@@ -3006,6 +3152,7 @@ ScriptedImporter:
     pivot: {x: 0.2631578, y: -0.029411765}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 759
@@ -3026,6 +3173,7 @@ ScriptedImporter:
     pivot: {x: 0.27027017, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 883
@@ -3046,6 +3194,7 @@ ScriptedImporter:
     pivot: {x: 0.27777767, y: -0.041666668}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 969
@@ -3066,6 +3215,7 @@ ScriptedImporter:
     pivot: {x: 0.22727264, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 969
@@ -3086,6 +3236,7 @@ ScriptedImporter:
     pivot: {x: 0.20370373, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 100
@@ -3106,6 +3257,7 @@ ScriptedImporter:
     pivot: {x: 0.2, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 378
@@ -3126,6 +3278,7 @@ ScriptedImporter:
     pivot: {x: 0.21311478, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 926
@@ -3146,6 +3299,7 @@ ScriptedImporter:
     pivot: {x: 0.2253521, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 942
@@ -3166,6 +3320,7 @@ ScriptedImporter:
     pivot: {x: 0.22727264, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 441
@@ -3184,1230 +3339,1383 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -716222886
+    guid: 560760898
     name: crystal_mauler_free_v1.0
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: crystal_mauler_free_v1.0_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: 27268c101471e6f459421d0e5caa768b
-    - name: crystal_mauler_free_v1.0_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: 0bfb490fc315b6346bb5badbc4809eae
-    - name: crystal_mauler_free_v1.0_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: a110964c1dff4d549b739169bc0633c0
-    - name: crystal_mauler_free_v1.0_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 38
       spriteId: e2549f73d1fee1948bb1c88b59ecfa00
-    - name: crystal_mauler_free_v1.0_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 38
       spriteId: b5595dec25defb9428090a449fb3f298
-    - name: crystal_mauler_free_v1.0_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 38
       spriteId: 6c9fbc40980312344aa911bb4fbc589d
-    - name: crystal_mauler_free_v1.0_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 38
       spriteId: 364ee7dc5983fc04b81c2ba11fd6334e
-    - name: crystal_mauler_free_v1.0_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 38
       spriteId: cf484137a1752274fb1cda9616f3cf5c
-    - name: crystal_mauler_free_v1.0_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 40
         height: 45
       spriteId: 48a714d468cea6e4cbb804c0e57a1876
-    - name: crystal_mauler_free_v1.0_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 43
         height: 44
       spriteId: 220145fc47db9eb4c8e254a0c2ec2d34
-    - name: crystal_mauler_free_v1.0_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 39
         height: 45
       spriteId: de617af86387f834aa8c8a4220ecb46b
-    - name: crystal_mauler_free_v1.0_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 39
         height: 44
       spriteId: 06c0834bc32d6c646b5b0571329e70e4
-    - name: crystal_mauler_free_v1.0_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 127
         y: 1
         width: 45
         height: 45
       spriteId: 5583571d8b5f110409586cbcd6db226b
-    - name: crystal_mauler_free_v1.0_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 1
         width: 48
         height: 46
       spriteId: 3ed8d873c08e1e448855e8d6610dfdf0
-    - name: crystal_mauler_free_v1.0_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 127
         y: 1
         width: 45
         height: 45
       spriteId: 8bb5c09b04b6a0d478af6ea7a62cd99b
-    - name: crystal_mauler_free_v1.0_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 39
         height: 44
       spriteId: 4e4503f63f4b5f043a2060f264b41bf5
-    - name: crystal_mauler_free_v1.0_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: d35f310922117e44cbb2b82ad9869e7e
-    - name: crystal_mauler_free_v1.0_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 80c3959b50219e84294b728bbfaffce8
-    - name: crystal_mauler_free_v1.0_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 73455d7a9e01e0340842afe2a9b35325
-    - name: crystal_mauler_free_v1.0_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 8ba85d04aa4f2aa43b113d6431440b15
-    - name: crystal_mauler_free_v1.0_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: bfd44441950b4614a8993c32d0308ac7
-    - name: crystal_mauler_free_v1.0_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 246c4170c87d8b740835a1fac1db1ecf
-    - name: crystal_mauler_free_v1.0_Frame_22
+    - name: Frame_22
       frameIndex: 22
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 38
         height: 39
       spriteId: ff7a8f7c6fbf7c14cbb470382445cdcb
-    - name: crystal_mauler_free_v1.0_Frame_23
+    - name: Frame_23
       frameIndex: 23
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 377293cf208876a4d84350517b560c0b
-    - name: crystal_mauler_free_v1.0_Frame_24
+    - name: Frame_24
       frameIndex: 24
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 0c1f2446fd737a24295bda50676cdb3b
-    - name: crystal_mauler_free_v1.0_Frame_25
+    - name: Frame_25
       frameIndex: 25
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: b6d9e0c3692c5974089b676aa021467e
-    - name: crystal_mauler_free_v1.0_Frame_26
+    - name: Frame_26
       frameIndex: 26
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: f0d2c2130406c9f419b9b2b1a1454155
-    - name: crystal_mauler_free_v1.0_Frame_27
+    - name: Frame_27
       frameIndex: 27
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 378ab831e782ab844b09bbea325f14e1
-    - name: crystal_mauler_free_v1.0_Frame_28
+    - name: Frame_28
       frameIndex: 28
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 777d78334092cca4fbf33b6e0eb07084
-    - name: crystal_mauler_free_v1.0_Frame_29
+    - name: Frame_29
       frameIndex: 29
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 2
         width: 38
         height: 43
       spriteId: 73d5c94e2dd8e3b45b6160ebf6526397
-    - name: crystal_mauler_free_v1.0_Frame_30
+    - name: Frame_30
       frameIndex: 30
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 41
       spriteId: b5e8aeb1215109a4e8ed979883d0f291
-    - name: crystal_mauler_free_v1.0_Frame_31
+    - name: Frame_31
       frameIndex: 31
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 4
         width: 38
         height: 39
       spriteId: a8633b54fecfc284ca09664a302119ae
-    - name: crystal_mauler_free_v1.0_Frame_32
+    - name: Frame_32
       frameIndex: 32
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: abdba04a9f7bfde49bbce4aa6059f3bc
-    - name: crystal_mauler_free_v1.0_Frame_33
+    - name: Frame_33
       frameIndex: 33
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: e16aa2613b32c8941aadb2134119453d
-    - name: crystal_mauler_free_v1.0_Frame_34
+    - name: Frame_34
       frameIndex: 34
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: a0a9249db072bd8409161ac6f75c9626
-    - name: crystal_mauler_free_v1.0_Frame_35
+    - name: Frame_35
       frameIndex: 35
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: a48f1f15b145af14bb75dcac2c3c56c0
-    - name: crystal_mauler_free_v1.0_Frame_36
+    - name: Frame_36
       frameIndex: 36
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: f8d191e5712b93d479818e4bf998c711
-    - name: crystal_mauler_free_v1.0_Frame_37
+    - name: Frame_37
       frameIndex: 37
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 96f37d3e1d4e3324987e850961fe8998
-    - name: crystal_mauler_free_v1.0_Frame_38
+    - name: Frame_38
       frameIndex: 38
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 54
         height: 40
       spriteId: 9d45c575a102e9242b6095adda7b7313
-    - name: crystal_mauler_free_v1.0_Frame_39
+    - name: Frame_39
       frameIndex: 39
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 55
         height: 43
       spriteId: 354d38f4bb4b7c04ba200cf24ae30e40
-    - name: crystal_mauler_free_v1.0_Frame_40
+    - name: Frame_40
       frameIndex: 40
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 61
         height: 43
       spriteId: 58d2b4739cc33ac4cbbefaed0e7499f3
-    - name: crystal_mauler_free_v1.0_Frame_41
+    - name: Frame_41
       frameIndex: 41
+      additiveSortOrder: 0
       cellRect:
         x: 111
         y: 1
         width: 71
         height: 43
       spriteId: 2ab666c320477d045805751c4c9f705e
-    - name: crystal_mauler_free_v1.0_Frame_42
+    - name: Frame_42
       frameIndex: 42
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 45
         height: 43
       spriteId: 7773a77ac0b73814482d3457f48f1a90
-    - name: crystal_mauler_free_v1.0_Frame_43
+    - name: Frame_43
       frameIndex: 43
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 38
         height: 39
       spriteId: 52980a71e66d7644cbf6e769c91aeb16
-    - name: crystal_mauler_free_v1.0_Frame_44
+    - name: Frame_44
       frameIndex: 44
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 05ab80ed264cb9b4493dc5ca4a2172de
-    - name: crystal_mauler_free_v1.0_Frame_45
+    - name: Frame_45
       frameIndex: 45
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: e2d25be8d3996674991b1a6c98b2a7ec
-    - name: crystal_mauler_free_v1.0_Frame_46
+    - name: Frame_46
       frameIndex: 46
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 721e040a62ccd5a47b9e0708f8386ec9
-    - name: crystal_mauler_free_v1.0_Frame_47
+    - name: Frame_47
       frameIndex: 47
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: a789e9f6e4d4b6f4a81b8d5ab1b35019
-    - name: crystal_mauler_free_v1.0_Frame_48
+    - name: Frame_48
       frameIndex: 48
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: cff85daa7aa303c448b8290845da4d65
-    - name: crystal_mauler_free_v1.0_Frame_49
+    - name: Frame_49
       frameIndex: 49
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 39
         height: 44
       spriteId: 2bf3656739b4b9c409bf4fb76e907441
-    - name: crystal_mauler_free_v1.0_Frame_50
+    - name: Frame_50
       frameIndex: 50
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 2
         width: 34
         height: 48
       spriteId: 6b3d96f6b08aa7a4ebceb3b69eabc1e3
-    - name: crystal_mauler_free_v1.0_Frame_51
+    - name: Frame_51
       frameIndex: 51
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 3
         width: 37
         height: 44
       spriteId: 95d1aeb449070194e8ffbfa09ddf961b
-    - name: crystal_mauler_free_v1.0_Frame_52
+    - name: Frame_52
       frameIndex: 52
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 3
         width: 40
         height: 42
       spriteId: b8c01091f3d518e46bad91e33806d681
-    - name: crystal_mauler_free_v1.0_Frame_53
+    - name: Frame_53
       frameIndex: 53
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 2
         width: 56
         height: 57
       spriteId: b3368ba63370a5746a25f07c8d6e5d3b
-    - name: crystal_mauler_free_v1.0_Frame_54
+    - name: Frame_54
       frameIndex: 54
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 2
         width: 56
         height: 42
       spriteId: b19619a310519c84caf7290c8d76a9a5
-    - name: crystal_mauler_free_v1.0_Frame_55
+    - name: Frame_55
       frameIndex: 55
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 2
         width: 55
         height: 42
       spriteId: 8584b955b0fff62488cee7e2bd8b635f
-    - name: crystal_mauler_free_v1.0_Frame_56
+    - name: Frame_56
       frameIndex: 56
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 10
         width: 53
         height: 33
       spriteId: 2bf9cfd19bd6e9d4ba38b185475225c3
-    - name: crystal_mauler_free_v1.0_Frame_57
+    - name: Frame_57
       frameIndex: 57
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 8
         width: 40
         height: 44
       spriteId: 170c42730743e11418cf2068753e7bb2
-    - name: crystal_mauler_free_v1.0_Frame_58
+    - name: Frame_58
       frameIndex: 58
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: a89db718719bc91488f13dcd96e59a17
-    - name: crystal_mauler_free_v1.0_Frame_59
+    - name: Frame_59
       frameIndex: 59
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: de9b13f29df9fad43b13181dd66715c0
-    - name: crystal_mauler_free_v1.0_Frame_60
+    - name: Frame_60
       frameIndex: 60
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 8d5050ad21af02444b4481ef49cda1d0
-    - name: crystal_mauler_free_v1.0_Frame_61
+    - name: Frame_61
       frameIndex: 61
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: f337a1439ad8fc049abcc1337ae2280b
-    - name: crystal_mauler_free_v1.0_Frame_62
+    - name: Frame_62
       frameIndex: 62
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 4c8644d0dbbb5074a8b213e1cbf2fa9e
-    - name: crystal_mauler_free_v1.0_Frame_63
+    - name: Frame_63
       frameIndex: 63
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 38
         height: 39
       spriteId: 2810da9dc26ab7943a50e8d471d46b3a
-    - name: crystal_mauler_free_v1.0_Frame_64
+    - name: Frame_64
       frameIndex: 64
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 54
         height: 40
       spriteId: 35a9b7f44612d8641bb4ce6dc1d52f99
-    - name: crystal_mauler_free_v1.0_Frame_65
+    - name: Frame_65
       frameIndex: 65
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 55
         height: 43
       spriteId: 1d51747d9dba6394eb3e9ce4364d709b
-    - name: crystal_mauler_free_v1.0_Frame_66
+    - name: Frame_66
       frameIndex: 66
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 61
         height: 43
       spriteId: 5dbd83c44b9e1ce40a8e4c0443896909
-    - name: crystal_mauler_free_v1.0_Frame_67
+    - name: Frame_67
       frameIndex: 67
+      additiveSortOrder: 0
       cellRect:
         x: 111
         y: 1
         width: 71
         height: 43
       spriteId: 5ea9682cde320a1409ff3d39d0175c32
-    - name: crystal_mauler_free_v1.0_Frame_68
+    - name: Frame_68
       frameIndex: 68
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 45
         height: 43
       spriteId: 7bfbeea54106cf64494daf0a9b9658f0
-    - name: crystal_mauler_free_v1.0_Frame_69
+    - name: Frame_69
       frameIndex: 69
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 47
         height: 40
       spriteId: e29553578ee07e54e9bc97790e683b8c
-    - name: crystal_mauler_free_v1.0_Frame_70
+    - name: Frame_70
       frameIndex: 70
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 50
         height: 32
       spriteId: 6ca893eafa7544b4a997e9f6aefd0f22
-    - name: crystal_mauler_free_v1.0_Frame_71
+    - name: Frame_71
       frameIndex: 71
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 46
         height: 29
       spriteId: e170482c3e36be245b4e0ceda7cc6be4
-    - name: crystal_mauler_free_v1.0_Frame_72
+    - name: Frame_72
       frameIndex: 72
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 48
         height: 29
       spriteId: 6d57ee696d786e3428e19c7ddfad1d1a
-    - name: crystal_mauler_free_v1.0_Frame_73
+    - name: Frame_73
       frameIndex: 73
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 33
         height: 32
       spriteId: db846c1c33c5c0d47b6d07b080ae6eff
-    - name: crystal_mauler_free_v1.0_Frame_74
+    - name: Frame_74
       frameIndex: 74
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 37
         height: 38
       spriteId: 6d364f5feb51ca948ba5de7b43118cb4
-    - name: crystal_mauler_free_v1.0_Frame_75
+    - name: Frame_75
       frameIndex: 75
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 1
         width: 45
         height: 43
       spriteId: 763463edbe3b2be48b9a30241916f066
-    - name: crystal_mauler_free_v1.0_Frame_76
+    - name: Frame_76
       frameIndex: 76
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 1
         width: 43
         height: 39
       spriteId: b6952256b3d24d14183a40ddf3107b64
-    - name: crystal_mauler_free_v1.0_Frame_77
+    - name: Frame_77
       frameIndex: 77
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 38
         height: 46
       spriteId: c1d0104379464ca47bc0b095a8148c38
-    - name: crystal_mauler_free_v1.0_Frame_78
+    - name: Frame_78
       frameIndex: 78
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 37
         height: 47
       spriteId: 370057f5d0f87d64e91c873a6c6a522d
-    - name: crystal_mauler_free_v1.0_Frame_79
+    - name: Frame_79
       frameIndex: 79
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 32
         height: 50
       spriteId: a9e9fc9dca0885d43b91871d6b1f3e6f
-    - name: crystal_mauler_free_v1.0_Frame_80
+    - name: Frame_80
       frameIndex: 80
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 1
         width: 67
         height: 48
       spriteId: f903ca8b30acab34fab0da7bbaccfd6d
-    - name: crystal_mauler_free_v1.0_Frame_81
+    - name: Frame_81
       frameIndex: 81
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 64
         height: 41
       spriteId: ed3150c1b125a6044b5dfbf1ab9b4287
-    - name: crystal_mauler_free_v1.0_Frame_82
+    - name: Frame_82
       frameIndex: 82
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 67
         height: 38
       spriteId: 7051176cf8385a24b8c0a592b4a67403
-    - name: crystal_mauler_free_v1.0_Frame_83
+    - name: Frame_83
       frameIndex: 83
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 46
         height: 38
       spriteId: 7a3467325c41ebb428c5d1106c2bf66a
-    - name: crystal_mauler_free_v1.0_Frame_84
+    - name: Frame_84
       frameIndex: 84
+      additiveSortOrder: 0
       cellRect:
         x: 109
         y: 1
         width: 50
         height: 38
       spriteId: 9d6edd13090cb74489ee4d7b66350a94
-    - name: crystal_mauler_free_v1.0_Frame_85
+    - name: Frame_85
       frameIndex: 85
+      additiveSortOrder: 0
       cellRect:
         x: 108
         y: 1
         width: 51
         height: 38
       spriteId: 708839572066c354a923af0b3a14e404
-    - name: crystal_mauler_free_v1.0_Frame_86
+    - name: Frame_86
       frameIndex: 86
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 44
         height: 45
       spriteId: 00ef47529e166d7449784a13a8c06f01
-    - name: crystal_mauler_free_v1.0_Frame_87
+    - name: Frame_87
       frameIndex: 87
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 47
         height: 50
       spriteId: 176be6ca12b515947be62cd6a77cd9a8
-    - name: crystal_mauler_free_v1.0_Frame_88
+    - name: Frame_88
       frameIndex: 88
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 45
         height: 53
       spriteId: 663d058b5e39a37489ce8d37b078c269
-    - name: crystal_mauler_free_v1.0_Frame_89
+    - name: Frame_89
       frameIndex: 89
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 48
         height: 49
       spriteId: 70c60f6168a707e4f84f225f8cc909be
-    - name: crystal_mauler_free_v1.0_Frame_90
+    - name: Frame_90
       frameIndex: 90
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 41
         height: 38
       spriteId: 1491d4eb9669550449d718eae45283e5
-    - name: crystal_mauler_free_v1.0_Frame_91
+    - name: Frame_91
       frameIndex: 91
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 40
         height: 45
       spriteId: d95a5d189e97dff448b60b03f185a6f1
-    - name: crystal_mauler_free_v1.0_Frame_92
+    - name: Frame_92
       frameIndex: 92
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 40
         height: 46
       spriteId: 933a84c5b8340314da1c6ad06fd3d152
-    - name: crystal_mauler_free_v1.0_Frame_93
+    - name: Frame_93
       frameIndex: 93
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 67
         height: 46
       spriteId: 0e9bdf54137d691428f0d0d63b9c9581
-    - name: crystal_mauler_free_v1.0_Frame_94
+    - name: Frame_94
       frameIndex: 94
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 77
         height: 46
       spriteId: f2ae56b5fffb2a74b8b8682203cc1ce3
-    - name: crystal_mauler_free_v1.0_Frame_95
+    - name: Frame_95
       frameIndex: 95
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 86
         height: 46
       spriteId: d39b9aab8c5c1de45807c8134bf61c1a
-    - name: crystal_mauler_free_v1.0_Frame_96
+    - name: Frame_96
       frameIndex: 96
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 103
         height: 47
       spriteId: f128d4790001105468cb6286eec88e46
-    - name: crystal_mauler_free_v1.0_Frame_97
+    - name: Frame_97
       frameIndex: 97
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 112
         height: 60
       spriteId: b3e48964417fc594abbde4bcf508ef44
-    - name: crystal_mauler_free_v1.0_Frame_98
+    - name: Frame_98
       frameIndex: 98
+      additiveSortOrder: 0
       cellRect:
         x: 135
         y: 1
         width: 124
         height: 64
       spriteId: 4d45e9737884e794fa0b13d05e943875
-    - name: crystal_mauler_free_v1.0_Frame_99
+    - name: Frame_99
       frameIndex: 99
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 129
         height: 32
       spriteId: 6de24606d4ba12e43b5a8d2e5da8bb72
-    - name: crystal_mauler_free_v1.0_Frame_100
+    - name: Frame_100
       frameIndex: 100
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 129
         height: 32
       spriteId: d340f03188a455e458f9b3919af0038f
-    - name: crystal_mauler_free_v1.0_Frame_101
+    - name: Frame_101
       frameIndex: 101
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 138
         height: 74
       spriteId: ada2d80a9b2c3554e90a95fa3a1f730b
-    - name: crystal_mauler_free_v1.0_Frame_102
+    - name: Frame_102
       frameIndex: 102
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 140
         height: 72
       spriteId: f8a278fe05b2b3d46b37ad2ea6c628f2
-    - name: crystal_mauler_free_v1.0_Frame_103
+    - name: Frame_103
       frameIndex: 103
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 138
         height: 60
       spriteId: 8442038c3c2aadf49af49ccf0877a0e9
-    - name: crystal_mauler_free_v1.0_Frame_104
+    - name: Frame_104
       frameIndex: 104
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 142
         height: 46
       spriteId: 8028b21ffaa1a784ea76d7615b2f13c4
-    - name: crystal_mauler_free_v1.0_Frame_105
+    - name: Frame_105
       frameIndex: 105
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 148
         height: 40
       spriteId: d9933447c87512b4fbcd9655b0987cd5
-    - name: crystal_mauler_free_v1.0_Frame_106
+    - name: Frame_106
       frameIndex: 106
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 130
         height: 46
       spriteId: 709f1560554329641a96e0358ecf4e01
-    - name: crystal_mauler_free_v1.0_Frame_107
+    - name: Frame_107
       frameIndex: 107
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: 73c048662eb895444981adb021892b2a
-    - name: crystal_mauler_free_v1.0_Frame_108
+    - name: Frame_108
       frameIndex: 108
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: 00b82d72dc258874dad0aeee64f0aa94
-    - name: crystal_mauler_free_v1.0_Frame_109
+    - name: Frame_109
       frameIndex: 109
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 1
         width: 47
         height: 38
       spriteId: 1018c2b8802f86e45a4f368f93cd1e4a
-    - name: crystal_mauler_free_v1.0_Frame_110
+    - name: Frame_110
       frameIndex: 110
+      additiveSortOrder: 0
       cellRect:
         x: 88
         y: 1
         width: 81
         height: 92
       spriteId: 53b230cc265972344b5471561aeeca10
-    - name: crystal_mauler_free_v1.0_Frame_111
+    - name: Frame_111
       frameIndex: 111
+      additiveSortOrder: 0
       cellRect:
         x: 85
         y: 1
         width: 88
         height: 91
       spriteId: 513adf8e952e6474ab838ad8c10d6dac
-    - name: crystal_mauler_free_v1.0_Frame_112
+    - name: Frame_112
       frameIndex: 112
+      additiveSortOrder: 0
       cellRect:
         x: 100
         y: 1
         width: 58
         height: 71
       spriteId: 2848a5d3a1031c44a871615e20ab661a
-    - name: crystal_mauler_free_v1.0_Frame_113
+    - name: Frame_113
       frameIndex: 113
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 42
         height: 48
       spriteId: 4d4a0fd045fa4d74da474c3d6399caa9
-    - name: crystal_mauler_free_v1.0_Frame_114
+    - name: Frame_114
       frameIndex: 114
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 1
         width: 47
         height: 40
       spriteId: 5cc7a04f9baaf2d42b895643fbef7730
-    - name: crystal_mauler_free_v1.0_Frame_115
+    - name: Frame_115
       frameIndex: 115
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 78
         height: 53
       spriteId: a495e684b2da8b146b735e1be3c177a3
-    - name: crystal_mauler_free_v1.0_Frame_116
+    - name: Frame_116
       frameIndex: 116
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 153
         height: 83
       spriteId: 1af1a4c6d1fd73a43948f3cd501046d5
-    - name: crystal_mauler_free_v1.0_Frame_117
+    - name: Frame_117
       frameIndex: 117
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 155
         height: 83
       spriteId: 794111a1f3b5b7e4e8d25bb1d475b2c2
-    - name: crystal_mauler_free_v1.0_Frame_118
+    - name: Frame_118
       frameIndex: 118
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 152
         height: 74
       spriteId: 602b2219c05f0b343b33859889b0e66e
-    - name: crystal_mauler_free_v1.0_Frame_119
+    - name: Frame_119
       frameIndex: 119
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 152
         height: 74
       spriteId: 355d6745f93711046a1fc0d50d3c04f8
-    - name: crystal_mauler_free_v1.0_Frame_120
+    - name: Frame_120
       frameIndex: 120
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 138
         height: 52
       spriteId: 79b5030beecfda541a029ef0dcb97716
-    - name: crystal_mauler_free_v1.0_Frame_121
+    - name: Frame_121
       frameIndex: 121
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 132
         height: 49
       spriteId: 1a48753192891cf4092596ff2456047a
-    - name: crystal_mauler_free_v1.0_Frame_122
+    - name: Frame_122
       frameIndex: 122
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: e5c356a7b91aed74690b9b679d913e3f
-    - name: crystal_mauler_free_v1.0_Frame_123
+    - name: Frame_123
       frameIndex: 123
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 42
         height: 45
       spriteId: 2e9df68d184d44d4fb649eeb184d45f7
-    - name: crystal_mauler_free_v1.0_Frame_124
+    - name: Frame_124
       frameIndex: 124
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 42
         height: 63
       spriteId: 78266bbeba55bad4bba2e908d4b14afd
-    - name: crystal_mauler_free_v1.0_Frame_125
+    - name: Frame_125
       frameIndex: 125
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 42
         height: 63
       spriteId: 59a63f86b1341b041adfc9c56e08ec68
-    - name: crystal_mauler_free_v1.0_Frame_126
+    - name: Frame_126
       frameIndex: 126
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 42
         height: 63
       spriteId: a9288ae7afe8bf94ca2ef2e7d57c0145
-    - name: crystal_mauler_free_v1.0_Frame_127
+    - name: Frame_127
       frameIndex: 127
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 42
         height: 63
       spriteId: 4ab768bea14a08040a3fc7cb58c74171
-    - name: crystal_mauler_free_v1.0_Frame_128
+    - name: Frame_128
       frameIndex: 128
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 45
       spriteId: b5596dd29743a3e49a3b98144aac4299
-    - name: crystal_mauler_free_v1.0_Frame_129
+    - name: Frame_129
       frameIndex: 129
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 30
         height: 45
       spriteId: 6c829cdf6d6329542a75408134d20436
-    - name: crystal_mauler_free_v1.0_Frame_130
+    - name: Frame_130
       frameIndex: 130
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 42
         height: 45
       spriteId: 0498b2d23f5c85c4483dae91cb4ba39d
-    - name: crystal_mauler_free_v1.0_Frame_131
+    - name: Frame_131
       frameIndex: 131
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: d597bc1d6028b28498e8b8eba49142ea
-    - name: crystal_mauler_free_v1.0_Frame_132
+    - name: Frame_132
       frameIndex: 132
+      additiveSortOrder: 0
       cellRect:
         x: 135
         y: 1
         width: 34
         height: 41
       spriteId: 70cca544de581b04896f5dc7d53e8c80
-    - name: crystal_mauler_free_v1.0_Frame_133
+    - name: Frame_133
       frameIndex: 133
+      additiveSortOrder: 0
       cellRect:
         x: 135
         y: 1
         width: 34
         height: 41
       spriteId: 67a9c20499bf60141a56707dad534e28
-    - name: crystal_mauler_free_v1.0_Frame_134
+    - name: Frame_134
       frameIndex: 134
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 31
         height: 41
       spriteId: 44c7305f432d4704998ad2ac85991365
-    - name: crystal_mauler_free_v1.0_Frame_135
+    - name: Frame_135
       frameIndex: 135
+      additiveSortOrder: 0
       cellRect:
         x: 127
         y: 1
         width: 32
         height: 41
       spriteId: 6b5e8d9c27bae9446bdbfc2b530d6524
-    - name: crystal_mauler_free_v1.0_Frame_136
+    - name: Frame_136
       frameIndex: 136
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 31
         height: 41
       spriteId: 2804f1be8928cd14c8efdeff2fe85791
-    - name: crystal_mauler_free_v1.0_Frame_137
+    - name: Frame_137
       frameIndex: 137
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 38
         height: 41
       spriteId: 2ee548119cb9ab6408175eb54db19d17
-    - name: crystal_mauler_free_v1.0_Frame_138
+    - name: Frame_138
       frameIndex: 138
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 43
         height: 39
       spriteId: 710cedd55e620e84cb5d5128429ef17e
-    - name: crystal_mauler_free_v1.0_Frame_139
+    - name: Frame_139
       frameIndex: 139
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 43
         height: 35
       spriteId: eeadcb03418cb8641a3cc2d9b7165b7f
-    - name: crystal_mauler_free_v1.0_Frame_140
+    - name: Frame_140
       frameIndex: 140
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 43
         height: 35
       spriteId: a43e93e6484eb804688128aff99c0bf4
-    - name: crystal_mauler_free_v1.0_Frame_141
+    - name: Frame_141
       frameIndex: 141
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 43
         height: 35
       spriteId: 089e991b45919354e832186b6f456e9f
-    - name: crystal_mauler_free_v1.0_Frame_142
+    - name: Frame_142
       frameIndex: 142
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 43
         height: 35
       spriteId: e0c986c48f7a01843a5570d1b45ed475
-    - name: crystal_mauler_free_v1.0_Frame_143
+    - name: Frame_143
       frameIndex: 143
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 43
         height: 35
       spriteId: 2006759249317884fadb75228178ed67
-    - name: crystal_mauler_free_v1.0_Frame_144
+    - name: Frame_144
       frameIndex: 144
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 38
         height: 34
       spriteId: 7d46a5597fd3701458a24c16b9f80a17
-    - name: crystal_mauler_free_v1.0_Frame_145
+    - name: Frame_145
       frameIndex: 145
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 37
         height: 33
       spriteId: 37ef5ce1a6dc3df47aaa8f0673a78dcf
-    - name: crystal_mauler_free_v1.0_Frame_146
+    - name: Frame_146
       frameIndex: 146
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 36
         height: 24
       spriteId: f246510928cbd0a4ba3b70e7b3835bba
-    - name: crystal_mauler_free_v1.0_Frame_147
+    - name: Frame_147
       frameIndex: 147
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 44
         height: 12
       spriteId: 3279a71d9db6513469a4050f8aaf3e86
-    - name: crystal_mauler_free_v1.0_Frame_148
+    - name: Frame_148
       frameIndex: 148
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 54
         height: 12
       spriteId: 572bf989438295847957466d7408a36e
-    - name: crystal_mauler_free_v1.0_Frame_149
+    - name: Frame_149
       frameIndex: 149
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 55
         height: 12
       spriteId: 87cee7b3efbdda048b2297c044b7d3a7
-    - name: crystal_mauler_free_v1.0_Frame_150
+    - name: Frame_150
       frameIndex: 150
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 61
         height: 12
       spriteId: ad53eadfb7fbca245a14e9388c371709
-    - name: crystal_mauler_free_v1.0_Frame_151
+    - name: Frame_151
       frameIndex: 151
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 71
         height: 12
       spriteId: 2f6a93e5e7a43774fa554529df856900
-    - name: crystal_mauler_free_v1.0_Frame_152
+    - name: Frame_152
       frameIndex: 152
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
@@ -4421,3 +4729,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 288, y: 128}
+  previousTextureSize: {x: 1024, y: 1024}

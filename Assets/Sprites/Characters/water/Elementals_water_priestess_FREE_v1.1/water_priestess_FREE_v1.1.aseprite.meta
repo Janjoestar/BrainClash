@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 1
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -105,6 +106,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -126,6 +128,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -146,6 +149,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -166,6 +170,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -186,6 +191,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -206,6 +212,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -226,6 +233,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -246,6 +254,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -266,6 +275,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -286,6 +296,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -306,6 +317,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -326,6 +338,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -346,6 +359,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -366,6 +380,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -386,6 +401,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -406,6 +422,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -426,6 +443,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -446,6 +464,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -466,6 +485,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -486,6 +506,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -506,6 +527,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -526,6 +548,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -546,6 +569,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -566,6 +590,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -586,6 +611,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -606,6 +632,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -626,6 +653,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -646,6 +674,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -666,6 +695,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -686,6 +716,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -706,6 +737,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -726,6 +758,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -746,6 +779,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -766,6 +800,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -786,6 +821,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -806,6 +842,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -826,6 +863,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -846,6 +884,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -866,6 +905,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -886,6 +926,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -906,6 +947,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -926,6 +968,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -946,6 +989,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -966,6 +1010,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -986,6 +1031,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -1006,6 +1052,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -1026,6 +1073,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -1046,6 +1094,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -1066,6 +1115,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -1086,6 +1136,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -1106,6 +1157,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -1126,6 +1178,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -1146,6 +1199,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -1166,6 +1220,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1186,6 +1241,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -1206,6 +1262,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -1226,6 +1283,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -1246,6 +1304,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -1266,6 +1325,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -1286,6 +1346,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -1306,6 +1367,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -1326,6 +1388,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -1346,6 +1409,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -1366,6 +1430,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -1386,6 +1451,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -1406,6 +1472,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -1426,6 +1493,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1446,6 +1514,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -1466,6 +1535,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -1486,6 +1556,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -1506,6 +1577,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -1526,6 +1598,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -1546,6 +1619,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -1566,6 +1640,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -1586,6 +1661,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -1606,6 +1682,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -1626,6 +1703,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -1646,6 +1724,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -1666,6 +1745,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -1686,6 +1766,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1706,6 +1787,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -1726,6 +1808,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -1746,6 +1829,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -1766,6 +1850,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -1786,6 +1871,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -1806,6 +1892,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -1826,6 +1913,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -1846,6 +1934,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -1866,6 +1955,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -1886,6 +1976,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -1906,6 +1997,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -1926,6 +2018,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -1946,6 +2039,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1966,6 +2060,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -1986,6 +2081,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -2006,6 +2102,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -2026,6 +2123,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -2046,6 +2144,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -2066,6 +2165,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -2086,6 +2186,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -2106,6 +2207,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -2126,6 +2228,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -2146,6 +2249,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -2166,6 +2270,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -2186,6 +2291,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -2206,6 +2312,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2226,6 +2333,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -2246,6 +2354,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -2266,6 +2375,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -2286,6 +2396,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -2306,6 +2417,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -2326,6 +2438,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -2346,6 +2459,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -2366,6 +2480,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -2386,6 +2501,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -2406,6 +2522,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -2426,6 +2543,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -2446,6 +2564,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -2466,6 +2585,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2486,6 +2606,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -2506,6 +2627,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -2526,6 +2648,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -2546,6 +2669,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -2566,6 +2690,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -2586,6 +2711,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -2606,6 +2732,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -2626,6 +2753,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -2646,6 +2774,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -2666,6 +2795,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -2686,6 +2816,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -2706,6 +2837,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -2726,6 +2858,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2746,6 +2879,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -2766,6 +2900,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -2786,6 +2921,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -2806,6 +2942,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -2826,6 +2963,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -2846,6 +2984,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -2866,6 +3005,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -2886,6 +3026,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -2906,6 +3047,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -2926,6 +3068,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -2946,6 +3089,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -2966,6 +3110,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -2986,6 +3131,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3006,6 +3152,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -3026,6 +3173,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -3046,6 +3194,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -3066,6 +3215,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -3086,6 +3236,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -3106,6 +3257,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -3126,6 +3278,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -3146,6 +3299,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -3166,6 +3320,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -3186,6 +3341,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -3206,6 +3362,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -3226,6 +3383,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -3246,6 +3404,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3266,6 +3425,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -3286,6 +3446,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -3306,6 +3467,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -3326,6 +3488,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -3346,6 +3509,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -3366,6 +3530,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -3386,6 +3551,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -3406,6 +3572,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -3426,6 +3593,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -3446,6 +3614,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -3466,6 +3635,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -3486,6 +3656,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -3506,6 +3677,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3526,6 +3698,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -3546,6 +3719,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -3566,6 +3740,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -3586,6 +3761,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -3606,6 +3782,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -3626,6 +3803,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -3646,6 +3824,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -3666,6 +3845,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -3686,6 +3866,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -3706,6 +3887,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2964
@@ -3726,6 +3908,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3260
@@ -3746,6 +3929,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 3556
@@ -3766,6 +3950,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3786,6 +3971,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 300
@@ -3806,6 +3992,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 596
@@ -3826,6 +4013,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 892
@@ -3846,6 +4034,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1188
@@ -3866,6 +4055,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1484
@@ -3886,6 +4076,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 1780
@@ -3906,6 +4097,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2076
@@ -3926,6 +4118,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2372
@@ -3946,6 +4139,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 2668
@@ -3964,1542 +4158,1734 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 928115906
+    guid: 1971315274
     name: water_priestess_FREE_v1.1
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: water_priestess_FREE_v1.1_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e440f28f2f5ed7c44a45ba605c7fdbac
-    - name: water_priestess_FREE_v1.1_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2b01f0bbbe92fdd4196ca355143bcb37
-    - name: water_priestess_FREE_v1.1_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 79ebc3336801fff41a494d46aefe5657
-    - name: water_priestess_FREE_v1.1_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 28318f14201c76548b75758ceb196f4c
-    - name: water_priestess_FREE_v1.1_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: dd9d952376db155478fb9a8d2ea1a1a3
-    - name: water_priestess_FREE_v1.1_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9b340678651686540bec93cc250d729c
-    - name: water_priestess_FREE_v1.1_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 90a182399a022cf4c83926374d507340
-    - name: water_priestess_FREE_v1.1_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 671ec1cf692be8644920497db2e186dd
-    - name: water_priestess_FREE_v1.1_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3b699282c74e6c74da9f0d9e2340b62d
-    - name: water_priestess_FREE_v1.1_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3796c0f1fb99ede4699ea4d1c324d4ad
-    - name: water_priestess_FREE_v1.1_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0d80e2defd539184c9bdeafd894ffa44
-    - name: water_priestess_FREE_v1.1_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 80b9aee8964c3804c9f93a91f5e11803
-    - name: water_priestess_FREE_v1.1_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 75495ff0effae3145b72dfdda89b5c16
-    - name: water_priestess_FREE_v1.1_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 260baa8b6a01fe149940f75efb212615
-    - name: water_priestess_FREE_v1.1_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9027cb0c478614241963483867fdc1f2
-    - name: water_priestess_FREE_v1.1_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: dbc4aef34e32466429a5cba23070d65b
-    - name: water_priestess_FREE_v1.1_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: bd7a37f2bab1bed4f9de821f7db5bff4
-    - name: water_priestess_FREE_v1.1_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 170a8c16e57340c4180fbb34900a167f
-    - name: water_priestess_FREE_v1.1_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8b0211a19604140438e88d7afeb56574
-    - name: water_priestess_FREE_v1.1_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 69087b303f9a4b547b58bad2d213efd9
-    - name: water_priestess_FREE_v1.1_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a361713245b8bfa44b4e18d1e1031d48
-    - name: water_priestess_FREE_v1.1_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 596af67a9d84f7c498c00369a33fc169
-    - name: water_priestess_FREE_v1.1_Frame_22
+    - name: Frame_22
       frameIndex: 22
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2c2ea5310c43412418e599208f2b92b6
-    - name: water_priestess_FREE_v1.1_Frame_23
+    - name: Frame_23
       frameIndex: 23
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3126695398f41dd4b8162c9f9fd426c3
-    - name: water_priestess_FREE_v1.1_Frame_24
+    - name: Frame_24
       frameIndex: 24
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 1eb57c1b845b14544a7ef19106801285
-    - name: water_priestess_FREE_v1.1_Frame_25
+    - name: Frame_25
       frameIndex: 25
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 926cec76da701db4ca7d7967956775a8
-    - name: water_priestess_FREE_v1.1_Frame_26
+    - name: Frame_26
       frameIndex: 26
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 550e3321e94d942468df4bb3b8c35f29
-    - name: water_priestess_FREE_v1.1_Frame_27
+    - name: Frame_27
       frameIndex: 27
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 16bb3308937087a4b92a887e20a10e93
-    - name: water_priestess_FREE_v1.1_Frame_28
+    - name: Frame_28
       frameIndex: 28
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: edfa59975fa9b274cafc69b1c640fa01
-    - name: water_priestess_FREE_v1.1_Frame_29
+    - name: Frame_29
       frameIndex: 29
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: ce0a4167e761d5a4ea8e8297cfc48caf
-    - name: water_priestess_FREE_v1.1_Frame_30
+    - name: Frame_30
       frameIndex: 30
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0c5e5d7e5b1c71c498351fff1e7f1962
-    - name: water_priestess_FREE_v1.1_Frame_31
+    - name: Frame_31
       frameIndex: 31
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2de7cf51861efef47ba6a15bb702f561
-    - name: water_priestess_FREE_v1.1_Frame_32
+    - name: Frame_32
       frameIndex: 32
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: eadec28983e945d41b83d0bbf8c20588
-    - name: water_priestess_FREE_v1.1_Frame_33
+    - name: Frame_33
       frameIndex: 33
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 61b9d5c1b90fb7a4e81a127dac8f9f22
-    - name: water_priestess_FREE_v1.1_Frame_34
+    - name: Frame_34
       frameIndex: 34
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: bb48f279105803047bb7d225f06e8c6e
-    - name: water_priestess_FREE_v1.1_Frame_35
+    - name: Frame_35
       frameIndex: 35
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7cd8628b5e22587448a12882030162ba
-    - name: water_priestess_FREE_v1.1_Frame_36
+    - name: Frame_36
       frameIndex: 36
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9d2ba670fdc93e24ab161ef13f4eeb4d
-    - name: water_priestess_FREE_v1.1_Frame_37
+    - name: Frame_37
       frameIndex: 37
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 4ab81dd0d878b4344b7961958d77edda
-    - name: water_priestess_FREE_v1.1_Frame_38
+    - name: Frame_38
       frameIndex: 38
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0881f8e24a789914ab58654c27296422
-    - name: water_priestess_FREE_v1.1_Frame_39
+    - name: Frame_39
       frameIndex: 39
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8a439b1b1c666064b8c28ddeace2915e
-    - name: water_priestess_FREE_v1.1_Frame_40
+    - name: Frame_40
       frameIndex: 40
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8ab3a5ae3de18a04c8f10fe19ebeb244
-    - name: water_priestess_FREE_v1.1_Frame_41
+    - name: Frame_41
       frameIndex: 41
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: ac3939b24590d554dace8753a8198fd3
-    - name: water_priestess_FREE_v1.1_Frame_42
+    - name: Frame_42
       frameIndex: 42
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 04b232c2e250cd548bfea2f41cbc1c0b
-    - name: water_priestess_FREE_v1.1_Frame_43
+    - name: Frame_43
       frameIndex: 43
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: d6ac380bb0eaa7141b643b59b7146b1d
-    - name: water_priestess_FREE_v1.1_Frame_44
+    - name: Frame_44
       frameIndex: 44
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b445e247bbeb0ac438902a1c5d583648
-    - name: water_priestess_FREE_v1.1_Frame_45
+    - name: Frame_45
       frameIndex: 45
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2ab06266a0d69b148b28eff25de57c58
-    - name: water_priestess_FREE_v1.1_Frame_46
+    - name: Frame_46
       frameIndex: 46
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8c358f0b9db21fd4398fcf7d053512cf
-    - name: water_priestess_FREE_v1.1_Frame_47
+    - name: Frame_47
       frameIndex: 47
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f5ccf928c1ec30b48a93e3935f948509
-    - name: water_priestess_FREE_v1.1_Frame_48
+    - name: Frame_48
       frameIndex: 48
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 071d0a04d071078498065d9ba4e947f3
-    - name: water_priestess_FREE_v1.1_Frame_49
+    - name: Frame_49
       frameIndex: 49
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c5c474a60bed78b4e9595c0cdf215674
-    - name: water_priestess_FREE_v1.1_Frame_50
+    - name: Frame_50
       frameIndex: 50
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2966ca9f157f53f498e515498334fdbc
-    - name: water_priestess_FREE_v1.1_Frame_51
+    - name: Frame_51
       frameIndex: 51
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: de54019a288d13349ac4e07b323f9628
-    - name: water_priestess_FREE_v1.1_Frame_52
+    - name: Frame_52
       frameIndex: 52
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c88f07bf878318d459303ef21cfbd1c2
-    - name: water_priestess_FREE_v1.1_Frame_53
+    - name: Frame_53
       frameIndex: 53
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2baef6b7608f7da438003ba5e4765384
-    - name: water_priestess_FREE_v1.1_Frame_54
+    - name: Frame_54
       frameIndex: 54
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: dd0791859e9bbdf48b77782b576f9298
-    - name: water_priestess_FREE_v1.1_Frame_55
+    - name: Frame_55
       frameIndex: 55
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7b005408ca03e0d449d25e5ca5ea4b1e
-    - name: water_priestess_FREE_v1.1_Frame_56
+    - name: Frame_56
       frameIndex: 56
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f8001917d76a60b4192a4862495d2ca0
-    - name: water_priestess_FREE_v1.1_Frame_57
+    - name: Frame_57
       frameIndex: 57
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 11a35d9c5b60ba049836b5e40dbbc2af
-    - name: water_priestess_FREE_v1.1_Frame_58
+    - name: Frame_58
       frameIndex: 58
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 87b9faa5becdb0f47afb1b6f20e8f2c4
-    - name: water_priestess_FREE_v1.1_Frame_59
+    - name: Frame_59
       frameIndex: 59
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8f0e2f5a088ed5a42a19f88d26ec589c
-    - name: water_priestess_FREE_v1.1_Frame_60
+    - name: Frame_60
       frameIndex: 60
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7ea4b43de1029ef4794f6a826d3965f1
-    - name: water_priestess_FREE_v1.1_Frame_61
+    - name: Frame_61
       frameIndex: 61
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0cb9931b132d30f40b9e53e6a010bca1
-    - name: water_priestess_FREE_v1.1_Frame_62
+    - name: Frame_62
       frameIndex: 62
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 1adfd2e27ea2bdd45826174d5308d1e2
-    - name: water_priestess_FREE_v1.1_Frame_63
+    - name: Frame_63
       frameIndex: 63
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0b7795f1d50d4734e847c291827d06e6
-    - name: water_priestess_FREE_v1.1_Frame_64
+    - name: Frame_64
       frameIndex: 64
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9d0d6e624767ca94d8fde90c5d5babc7
-    - name: water_priestess_FREE_v1.1_Frame_65
+    - name: Frame_65
       frameIndex: 65
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 912e55ac50a02074083963d3712ee63f
-    - name: water_priestess_FREE_v1.1_Frame_66
+    - name: Frame_66
       frameIndex: 66
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 4eaf68b56ef5777489febc5cf9e6f497
-    - name: water_priestess_FREE_v1.1_Frame_67
+    - name: Frame_67
       frameIndex: 67
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f9b685611f9f40341bd3d509521fdd8b
-    - name: water_priestess_FREE_v1.1_Frame_68
+    - name: Frame_68
       frameIndex: 68
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 41e19c927d232744abab65c8f4a59aab
-    - name: water_priestess_FREE_v1.1_Frame_69
+    - name: Frame_69
       frameIndex: 69
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 21a03fd5ad3cdcb4881b24dc9dcb248b
-    - name: water_priestess_FREE_v1.1_Frame_70
+    - name: Frame_70
       frameIndex: 70
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 141cd1ffb903ca4408f4a4e62f9c78ff
-    - name: water_priestess_FREE_v1.1_Frame_71
+    - name: Frame_71
       frameIndex: 71
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0c6393fb5fe362b469bb64a9775aab8c
-    - name: water_priestess_FREE_v1.1_Frame_72
+    - name: Frame_72
       frameIndex: 72
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9ae61455bff1df84d8cc17d961d5e7b5
-    - name: water_priestess_FREE_v1.1_Frame_73
+    - name: Frame_73
       frameIndex: 73
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3105f1a7878d7fe4193be7835ff322be
-    - name: water_priestess_FREE_v1.1_Frame_74
+    - name: Frame_74
       frameIndex: 74
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 65864233544a616408bde73c1aacb495
-    - name: water_priestess_FREE_v1.1_Frame_75
+    - name: Frame_75
       frameIndex: 75
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: dc39ab48cfbf6e045bc46c9e19062d2f
-    - name: water_priestess_FREE_v1.1_Frame_76
+    - name: Frame_76
       frameIndex: 76
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9663d8b894ac0964da737b0e6c8ef91f
-    - name: water_priestess_FREE_v1.1_Frame_77
+    - name: Frame_77
       frameIndex: 77
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6322af7d0bd3abb478c9de44e7840cda
-    - name: water_priestess_FREE_v1.1_Frame_78
+    - name: Frame_78
       frameIndex: 78
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: cf1611e357519614d916e7407110d9b9
-    - name: water_priestess_FREE_v1.1_Frame_79
+    - name: Frame_79
       frameIndex: 79
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e4fc5588d0069af46867b24c871c3090
-    - name: water_priestess_FREE_v1.1_Frame_80
+    - name: Frame_80
       frameIndex: 80
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7af807b13df4e01409f8f61b8c8e196e
-    - name: water_priestess_FREE_v1.1_Frame_81
+    - name: Frame_81
       frameIndex: 81
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: de03ecf5b9853a744ba6b5633817a974
-    - name: water_priestess_FREE_v1.1_Frame_82
+    - name: Frame_82
       frameIndex: 82
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 1ed04cc4dbe235547aeceece98b956df
-    - name: water_priestess_FREE_v1.1_Frame_83
+    - name: Frame_83
       frameIndex: 83
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 78b676a07254fd848b152e69e994d880
-    - name: water_priestess_FREE_v1.1_Frame_84
+    - name: Frame_84
       frameIndex: 84
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b48fd41f6facc084bac6421d1d2d2415
-    - name: water_priestess_FREE_v1.1_Frame_85
+    - name: Frame_85
       frameIndex: 85
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e7544fd0061d2674eaceee36757c6713
-    - name: water_priestess_FREE_v1.1_Frame_86
+    - name: Frame_86
       frameIndex: 86
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 64174df93635d0440a3b01009711543a
-    - name: water_priestess_FREE_v1.1_Frame_87
+    - name: Frame_87
       frameIndex: 87
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 65582a814eff1874eb36fc4ce82b6eed
-    - name: water_priestess_FREE_v1.1_Frame_88
+    - name: Frame_88
       frameIndex: 88
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: bb7878bc1000b514abda229e796c2763
-    - name: water_priestess_FREE_v1.1_Frame_89
+    - name: Frame_89
       frameIndex: 89
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a107eee6a69bc7341a107628ce73083e
-    - name: water_priestess_FREE_v1.1_Frame_90
+    - name: Frame_90
       frameIndex: 90
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f0d5fbe0e6f3e18499f4e9c122f9ebe0
-    - name: water_priestess_FREE_v1.1_Frame_91
+    - name: Frame_91
       frameIndex: 91
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6e5f7fc78b204b74aa413d75fa8e1fc6
-    - name: water_priestess_FREE_v1.1_Frame_92
+    - name: Frame_92
       frameIndex: 92
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: fb9036925d553fd4c9489c370e5cec56
-    - name: water_priestess_FREE_v1.1_Frame_93
+    - name: Frame_93
       frameIndex: 93
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 15646f7e67f136647b00bb8ac18e723d
-    - name: water_priestess_FREE_v1.1_Frame_94
+    - name: Frame_94
       frameIndex: 94
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 194647b2e52dff94b8fe941fc52e394a
-    - name: water_priestess_FREE_v1.1_Frame_95
+    - name: Frame_95
       frameIndex: 95
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: dcb8d30d10856be468d679614870be46
-    - name: water_priestess_FREE_v1.1_Frame_96
+    - name: Frame_96
       frameIndex: 96
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 980f1ca40462d7941a6d611de694ac73
-    - name: water_priestess_FREE_v1.1_Frame_97
+    - name: Frame_97
       frameIndex: 97
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: fd18cc9bd4f610749bba53ce9586135e
-    - name: water_priestess_FREE_v1.1_Frame_98
+    - name: Frame_98
       frameIndex: 98
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6a127db3f4acf8d499e10cc89876d9d8
-    - name: water_priestess_FREE_v1.1_Frame_99
+    - name: Frame_99
       frameIndex: 99
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b852e63951561a3488bca60687718f73
-    - name: water_priestess_FREE_v1.1_Frame_100
+    - name: Frame_100
       frameIndex: 100
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e6a6641d1982baf43915c78e67b27eb9
-    - name: water_priestess_FREE_v1.1_Frame_101
+    - name: Frame_101
       frameIndex: 101
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 94f5cdf06317040488c8d298dc44f837
-    - name: water_priestess_FREE_v1.1_Frame_102
+    - name: Frame_102
       frameIndex: 102
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e6e261dd100c9b4409d3e27d842f282b
-    - name: water_priestess_FREE_v1.1_Frame_103
+    - name: Frame_103
       frameIndex: 103
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: d098d47e11b733049833491ec2d53fae
-    - name: water_priestess_FREE_v1.1_Frame_104
+    - name: Frame_104
       frameIndex: 104
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9cd745ce8ef4c9b42ad57088b49cc2b8
-    - name: water_priestess_FREE_v1.1_Frame_105
+    - name: Frame_105
       frameIndex: 105
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: bc5d4aa711e5593439e2bca3f770e31a
-    - name: water_priestess_FREE_v1.1_Frame_106
+    - name: Frame_106
       frameIndex: 106
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 354328b5a7d689b4789eaf0a3685ee2b
-    - name: water_priestess_FREE_v1.1_Frame_107
+    - name: Frame_107
       frameIndex: 107
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e0a0533320175c444b1224aa8e105378
-    - name: water_priestess_FREE_v1.1_Frame_108
+    - name: Frame_108
       frameIndex: 108
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0ae3ddbc48ba4854e858858b59931d26
-    - name: water_priestess_FREE_v1.1_Frame_109
+    - name: Frame_109
       frameIndex: 109
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6c1cb88974e6bf845bfb34cdb98429d3
-    - name: water_priestess_FREE_v1.1_Frame_110
+    - name: Frame_110
       frameIndex: 110
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 5259a9753c5fc174cba6a3de086df845
-    - name: water_priestess_FREE_v1.1_Frame_111
+    - name: Frame_111
       frameIndex: 111
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a3257f34def8a634795b7a0f64b8a2d0
-    - name: water_priestess_FREE_v1.1_Frame_112
+    - name: Frame_112
       frameIndex: 112
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8245cf088f1974f409937f930f6470eb
-    - name: water_priestess_FREE_v1.1_Frame_113
+    - name: Frame_113
       frameIndex: 113
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3461ff872ba4c35449cbb995a0b274e2
-    - name: water_priestess_FREE_v1.1_Frame_114
+    - name: Frame_114
       frameIndex: 114
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6375b848f6587384e978c2d6990a54f0
-    - name: water_priestess_FREE_v1.1_Frame_115
+    - name: Frame_115
       frameIndex: 115
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3405fd54fa4489641a23858a6b5ffcdf
-    - name: water_priestess_FREE_v1.1_Frame_116
+    - name: Frame_116
       frameIndex: 116
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: cfbee83939032324a82f505cdd47b697
-    - name: water_priestess_FREE_v1.1_Frame_117
+    - name: Frame_117
       frameIndex: 117
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c366f490cdc4acb4e98357468416901a
-    - name: water_priestess_FREE_v1.1_Frame_118
+    - name: Frame_118
       frameIndex: 118
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 5b6b145e431de134f922b28cdc005ada
-    - name: water_priestess_FREE_v1.1_Frame_119
+    - name: Frame_119
       frameIndex: 119
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 60a82f198068f024583e3f9923f6f325
-    - name: water_priestess_FREE_v1.1_Frame_120
+    - name: Frame_120
       frameIndex: 120
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 80cdb227f7939624e9110b21eec4bbb3
-    - name: water_priestess_FREE_v1.1_Frame_121
+    - name: Frame_121
       frameIndex: 121
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f1f1ccf1bddc92546a92ba26de463c46
-    - name: water_priestess_FREE_v1.1_Frame_122
+    - name: Frame_122
       frameIndex: 122
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7f9843e0c78767040ab6466620cbcefe
-    - name: water_priestess_FREE_v1.1_Frame_123
+    - name: Frame_123
       frameIndex: 123
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b2be63abb5afd6f4ebc2e40ef422c130
-    - name: water_priestess_FREE_v1.1_Frame_124
+    - name: Frame_124
       frameIndex: 124
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 0c398c74d7194b64d99d820cdb83b9c5
-    - name: water_priestess_FREE_v1.1_Frame_125
+    - name: Frame_125
       frameIndex: 125
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: d50ac87aae5500547b81542e164ded9a
-    - name: water_priestess_FREE_v1.1_Frame_126
+    - name: Frame_126
       frameIndex: 126
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b2e02f7f0d1ba1040bbbf38b2f0c001a
-    - name: water_priestess_FREE_v1.1_Frame_127
+    - name: Frame_127
       frameIndex: 127
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 935a850f2ae00e84da7607c9f9083048
-    - name: water_priestess_FREE_v1.1_Frame_128
+    - name: Frame_128
       frameIndex: 128
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3aa15638033a4e34d90680f2e427e4bc
-    - name: water_priestess_FREE_v1.1_Frame_129
+    - name: Frame_129
       frameIndex: 129
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c38cbc357cfba8341ab3731f433db181
-    - name: water_priestess_FREE_v1.1_Frame_130
+    - name: Frame_130
       frameIndex: 130
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 5ee417c7ec0ee6447ab96c0240d9d58b
-    - name: water_priestess_FREE_v1.1_Frame_131
+    - name: Frame_131
       frameIndex: 131
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c4158d12500a38940ae732484a295a23
-    - name: water_priestess_FREE_v1.1_Frame_132
+    - name: Frame_132
       frameIndex: 132
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f35bb7b45423eb74b8c2ef58365889cd
-    - name: water_priestess_FREE_v1.1_Frame_133
+    - name: Frame_133
       frameIndex: 133
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e4b65d067e8196f46b9bb602397cffaf
-    - name: water_priestess_FREE_v1.1_Frame_134
+    - name: Frame_134
       frameIndex: 134
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e68a94172e256f448acffa84b17f5c15
-    - name: water_priestess_FREE_v1.1_Frame_135
+    - name: Frame_135
       frameIndex: 135
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: efa416720f1382741a1664da238acaf8
-    - name: water_priestess_FREE_v1.1_Frame_136
+    - name: Frame_136
       frameIndex: 136
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c1df9d00d27adb54fba6338c3efd192f
-    - name: water_priestess_FREE_v1.1_Frame_137
+    - name: Frame_137
       frameIndex: 137
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b8be872f74e9d5f4c97d187c2d9d7743
-    - name: water_priestess_FREE_v1.1_Frame_138
+    - name: Frame_138
       frameIndex: 138
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a3c34cf30d4eed44ca6ccd2996978edd
-    - name: water_priestess_FREE_v1.1_Frame_139
+    - name: Frame_139
       frameIndex: 139
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f55c9ab767ba4a8409eb8f415f37d192
-    - name: water_priestess_FREE_v1.1_Frame_140
+    - name: Frame_140
       frameIndex: 140
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 59ff743b8eb90624d896396cf91333d3
-    - name: water_priestess_FREE_v1.1_Frame_141
+    - name: Frame_141
       frameIndex: 141
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8045ffef59a733f4382dbb91249ceb7f
-    - name: water_priestess_FREE_v1.1_Frame_142
+    - name: Frame_142
       frameIndex: 142
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9b04ce01a3e36ce42aca333fcf00de05
-    - name: water_priestess_FREE_v1.1_Frame_143
+    - name: Frame_143
       frameIndex: 143
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: aba5841c01065f844873bea117a4653c
-    - name: water_priestess_FREE_v1.1_Frame_144
+    - name: Frame_144
       frameIndex: 144
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 47d471cceac69a34eb81eb250c8d27ef
-    - name: water_priestess_FREE_v1.1_Frame_145
+    - name: Frame_145
       frameIndex: 145
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: d636e826a58242d4aa8cb663d5ae2f5c
-    - name: water_priestess_FREE_v1.1_Frame_146
+    - name: Frame_146
       frameIndex: 146
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 9e2ed4d040bc4844d8fe1c0c9c9a0199
-    - name: water_priestess_FREE_v1.1_Frame_147
+    - name: Frame_147
       frameIndex: 147
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 62d6ea4ebdcace743bf67b85392b304a
-    - name: water_priestess_FREE_v1.1_Frame_148
+    - name: Frame_148
       frameIndex: 148
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7707fe92691426d4793cd5855274ecfd
-    - name: water_priestess_FREE_v1.1_Frame_149
+    - name: Frame_149
       frameIndex: 149
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 249976813d33a5c4599f39819685d2c0
-    - name: water_priestess_FREE_v1.1_Frame_150
+    - name: Frame_150
       frameIndex: 150
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 378f3db8300ff2e41885b1326dbce070
-    - name: water_priestess_FREE_v1.1_Frame_151
+    - name: Frame_151
       frameIndex: 151
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 641c8d9735b9625439de4d86dd122747
-    - name: water_priestess_FREE_v1.1_Frame_152
+    - name: Frame_152
       frameIndex: 152
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8fabc7675c4e684439d3c3f3fc8e508c
-    - name: water_priestess_FREE_v1.1_Frame_153
+    - name: Frame_153
       frameIndex: 153
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: fa812c4ca9bc60947bac8bfa3636fe47
-    - name: water_priestess_FREE_v1.1_Frame_154
+    - name: Frame_154
       frameIndex: 154
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 857b40c8fbfb5e54fa0fd5ab5fbf0e3e
-    - name: water_priestess_FREE_v1.1_Frame_155
+    - name: Frame_155
       frameIndex: 155
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: d6dc153ab153645488613e85955fff68
-    - name: water_priestess_FREE_v1.1_Frame_156
+    - name: Frame_156
       frameIndex: 156
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 3316733c582ae92419d1c2406b9c2a81
-    - name: water_priestess_FREE_v1.1_Frame_157
+    - name: Frame_157
       frameIndex: 157
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7bfa53f1c9d0f7544807062c016236a2
-    - name: water_priestess_FREE_v1.1_Frame_158
+    - name: Frame_158
       frameIndex: 158
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 82bfe839528fdb546b50baf6bb69e349
-    - name: water_priestess_FREE_v1.1_Frame_159
+    - name: Frame_159
       frameIndex: 159
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a190b5543cd5e3d49a69c2e52371e437
-    - name: water_priestess_FREE_v1.1_Frame_160
+    - name: Frame_160
       frameIndex: 160
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 683b1bf11c02808498e0d3cf4f382c51
-    - name: water_priestess_FREE_v1.1_Frame_161
+    - name: Frame_161
       frameIndex: 161
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: f538ebb2ffe1bda409e9bfd57f15bf63
-    - name: water_priestess_FREE_v1.1_Frame_162
+    - name: Frame_162
       frameIndex: 162
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8be01a1787e182d4888d8b275ecacea5
-    - name: water_priestess_FREE_v1.1_Frame_163
+    - name: Frame_163
       frameIndex: 163
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 646acd7986e35f64297dbc0143c3c959
-    - name: water_priestess_FREE_v1.1_Frame_164
+    - name: Frame_164
       frameIndex: 164
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 7cd2cc7cf60b787428dbbbcabf199728
-    - name: water_priestess_FREE_v1.1_Frame_165
+    - name: Frame_165
       frameIndex: 165
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6f4b55370f2690b479dd8b74b87be52f
-    - name: water_priestess_FREE_v1.1_Frame_166
+    - name: Frame_166
       frameIndex: 166
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c089097e9a762034e81d1fedea5cb9f2
-    - name: water_priestess_FREE_v1.1_Frame_167
+    - name: Frame_167
       frameIndex: 167
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 08e1c6cc28d8bc6428e37660854310f7
-    - name: water_priestess_FREE_v1.1_Frame_168
+    - name: Frame_168
       frameIndex: 168
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2037849d6eaa9004ab80c8fc046a1982
-    - name: water_priestess_FREE_v1.1_Frame_169
+    - name: Frame_169
       frameIndex: 169
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 622ce28679c9b784292326a72e9eb984
-    - name: water_priestess_FREE_v1.1_Frame_170
+    - name: Frame_170
       frameIndex: 170
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: af09b51f3743a8740b31bcd952e1ed69
-    - name: water_priestess_FREE_v1.1_Frame_171
+    - name: Frame_171
       frameIndex: 171
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 20b7f8aec8e556d4d920b6f59a66df37
-    - name: water_priestess_FREE_v1.1_Frame_172
+    - name: Frame_172
       frameIndex: 172
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 788384a2c41376f45a1d7889553b761e
-    - name: water_priestess_FREE_v1.1_Frame_173
+    - name: Frame_173
       frameIndex: 173
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 2bd07ac30cd78a74495f9b6662d2341d
-    - name: water_priestess_FREE_v1.1_Frame_174
+    - name: Frame_174
       frameIndex: 174
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 65dda600f19b7f149b38c181af7bc5b9
-    - name: water_priestess_FREE_v1.1_Frame_175
+    - name: Frame_175
       frameIndex: 175
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 511e9ba5d68154e4bb16398f8a4472e1
-    - name: water_priestess_FREE_v1.1_Frame_176
+    - name: Frame_176
       frameIndex: 176
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8cc2b718f93b61c46a3b9db7e85608cd
-    - name: water_priestess_FREE_v1.1_Frame_177
+    - name: Frame_177
       frameIndex: 177
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 510d3a59b7387034e943adea9d51758c
-    - name: water_priestess_FREE_v1.1_Frame_178
+    - name: Frame_178
       frameIndex: 178
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 42466f8d91217f24abbd8e24fa1beeee
-    - name: water_priestess_FREE_v1.1_Frame_179
+    - name: Frame_179
       frameIndex: 179
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 475ce137056bdfe4e8a620d3ed836597
-    - name: water_priestess_FREE_v1.1_Frame_180
+    - name: Frame_180
       frameIndex: 180
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 6c3918aa518d55b4b8fab56ca7a0b5a1
-    - name: water_priestess_FREE_v1.1_Frame_181
+    - name: Frame_181
       frameIndex: 181
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: e5c348c06b67b96409416d6392a653e2
-    - name: water_priestess_FREE_v1.1_Frame_182
+    - name: Frame_182
       frameIndex: 182
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: aa0abf8ba161ccc4ea416f84d541877f
-    - name: water_priestess_FREE_v1.1_Frame_183
+    - name: Frame_183
       frameIndex: 183
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: b6ee1719e2f19cf419f626e236cd997e
-    - name: water_priestess_FREE_v1.1_Frame_184
+    - name: Frame_184
       frameIndex: 184
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 26c5e4abdf165374dbcc5344a5588e1d
-    - name: water_priestess_FREE_v1.1_Frame_185
+    - name: Frame_185
       frameIndex: 185
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8082c1f0fea59d144800a0576a7f6e97
-    - name: water_priestess_FREE_v1.1_Frame_186
+    - name: Frame_186
       frameIndex: 186
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 062f4a074d9d1694781357667574a150
-    - name: water_priestess_FREE_v1.1_Frame_187
+    - name: Frame_187
       frameIndex: 187
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: a5e5c22a57fddf6418ca07bc2c2ec0c0
-    - name: water_priestess_FREE_v1.1_Frame_188
+    - name: Frame_188
       frameIndex: 188
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 4ae814728a6157a4a84305f39b114adb
-    - name: water_priestess_FREE_v1.1_Frame_189
+    - name: Frame_189
       frameIndex: 189
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: 8e873aed5f026984b93b6440aa89537d
-    - name: water_priestess_FREE_v1.1_Frame_190
+    - name: Frame_190
       frameIndex: 190
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 288
         height: 128
       spriteId: c040f4b78f04240479b456d4a004b628
-    - name: water_priestess_FREE_v1.1_Frame_191
+    - name: Frame_191
       frameIndex: 191
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
@@ -5513,3 +5899,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 288, y: 128}
+  previousTextureSize: {x: 4096, y: 2048}
