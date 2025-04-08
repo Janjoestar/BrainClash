@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 1
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -105,6 +106,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -126,6 +128,7 @@ ScriptedImporter:
     pivot: {x: 0.53061235, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -146,6 +149,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -166,6 +170,7 @@ ScriptedImporter:
     pivot: {x: 0.53061235, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -186,6 +191,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -206,6 +212,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -226,6 +233,7 @@ ScriptedImporter:
     pivot: {x: 0.5111111, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -246,6 +254,7 @@ ScriptedImporter:
     pivot: {x: 0.5111111, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -266,6 +275,7 @@ ScriptedImporter:
     pivot: {x: 0.48888895, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -286,6 +296,7 @@ ScriptedImporter:
     pivot: {x: 0.48888895, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -306,6 +317,7 @@ ScriptedImporter:
     pivot: {x: 0.48888895, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -326,6 +338,7 @@ ScriptedImporter:
     pivot: {x: 0.49999994, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -346,6 +359,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -366,6 +380,7 @@ ScriptedImporter:
     pivot: {x: 0.50000006, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -386,6 +401,7 @@ ScriptedImporter:
     pivot: {x: 0.509804, y: -0.18421052}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -406,6 +422,7 @@ ScriptedImporter:
     pivot: {x: 0.5217392, y: -0.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -426,6 +443,7 @@ ScriptedImporter:
     pivot: {x: 0.46808517, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -446,6 +464,7 @@ ScriptedImporter:
     pivot: {x: 0.44186038, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 584
@@ -466,6 +485,7 @@ ScriptedImporter:
     pivot: {x: 0.4318181, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 584
@@ -486,6 +506,7 @@ ScriptedImporter:
     pivot: {x: 0.46808517, y: -0.18421052}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -506,6 +527,7 @@ ScriptedImporter:
     pivot: {x: 0.48888895, y: -0.125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -526,6 +548,7 @@ ScriptedImporter:
     pivot: {x: 0.45652166, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -546,6 +569,7 @@ ScriptedImporter:
     pivot: {x: 0.45652166, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -566,6 +590,7 @@ ScriptedImporter:
     pivot: {x: 0.5555555, y: -0.027777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -586,6 +611,7 @@ ScriptedImporter:
     pivot: {x: 0.59183675, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -606,6 +632,7 @@ ScriptedImporter:
     pivot: {x: 0.4651163, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -626,6 +653,7 @@ ScriptedImporter:
     pivot: {x: 0.37837833, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -646,6 +674,7 @@ ScriptedImporter:
     pivot: {x: 0.47727266, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -666,6 +695,7 @@ ScriptedImporter:
     pivot: {x: 0.4651163, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -686,6 +716,7 @@ ScriptedImporter:
     pivot: {x: 0.37837833, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -706,6 +737,7 @@ ScriptedImporter:
     pivot: {x: 0.47727266, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -726,6 +758,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.15555556}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -746,6 +779,7 @@ ScriptedImporter:
     pivot: {x: 0.48936167, y: -0.23809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -766,6 +800,7 @@ ScriptedImporter:
     pivot: {x: 0.4716981, y: -0.17021276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -786,6 +821,7 @@ ScriptedImporter:
     pivot: {x: 0.54347825, y: -0.107142866}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -806,6 +842,7 @@ ScriptedImporter:
     pivot: {x: 0.37500006, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -826,6 +863,7 @@ ScriptedImporter:
     pivot: {x: 0.30555558, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -846,6 +884,7 @@ ScriptedImporter:
     pivot: {x: 0.34210533, y: -0.037974685}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -866,6 +905,7 @@ ScriptedImporter:
     pivot: {x: 0.37500006, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -886,6 +926,7 @@ ScriptedImporter:
     pivot: {x: 0.30555558, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -906,6 +947,7 @@ ScriptedImporter:
     pivot: {x: 0.34210533, y: -0.037974685}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -926,6 +968,7 @@ ScriptedImporter:
     pivot: {x: 0.34146336, y: -0.014705882}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -946,6 +989,7 @@ ScriptedImporter:
     pivot: {x: 0.4561404, y: -0.027777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -966,6 +1010,7 @@ ScriptedImporter:
     pivot: {x: 0.48979598, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -986,6 +1031,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1006,6 +1052,7 @@ ScriptedImporter:
     pivot: {x: 0.5555555, y: -0.027777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1026,6 +1073,7 @@ ScriptedImporter:
     pivot: {x: 0.59183675, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1046,6 +1094,7 @@ ScriptedImporter:
     pivot: {x: 0.4651163, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -1066,6 +1115,7 @@ ScriptedImporter:
     pivot: {x: 0.37837833, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1086,6 +1136,7 @@ ScriptedImporter:
     pivot: {x: 0.47727266, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1106,6 +1157,7 @@ ScriptedImporter:
     pivot: {x: 0.4651163, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -1126,6 +1178,7 @@ ScriptedImporter:
     pivot: {x: 0.37837833, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1146,6 +1199,7 @@ ScriptedImporter:
     pivot: {x: 0.47727266, y: -0.083333336}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1166,6 +1220,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.15555556}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -1186,6 +1241,7 @@ ScriptedImporter:
     pivot: {x: 0.47916663, y: -0.23809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -1206,6 +1262,7 @@ ScriptedImporter:
     pivot: {x: 0.49122798, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1226,6 +1283,7 @@ ScriptedImporter:
     pivot: {x: 0.48214287, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1246,6 +1304,7 @@ ScriptedImporter:
     pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1266,6 +1325,7 @@ ScriptedImporter:
     pivot: {x: 0.35802472, y: -0.019607844}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1286,6 +1346,7 @@ ScriptedImporter:
     pivot: {x: 0.35714284, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1306,6 +1367,7 @@ ScriptedImporter:
     pivot: {x: 0.30000004, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1326,6 +1388,7 @@ ScriptedImporter:
     pivot: {x: 0.29411763, y: -0.016949153}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1346,6 +1409,7 @@ ScriptedImporter:
     pivot: {x: 0.25, y: -0.016393442}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -1366,6 +1430,7 @@ ScriptedImporter:
     pivot: {x: 0.1666667, y: -0.0125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1386,6 +1451,7 @@ ScriptedImporter:
     pivot: {x: 0.12790698, y: -0.0125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -1406,6 +1472,7 @@ ScriptedImporter:
     pivot: {x: 0.1477273, y: -0.012345679}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1426,6 +1493,7 @@ ScriptedImporter:
     pivot: {x: 0.37500006, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1446,6 +1514,7 @@ ScriptedImporter:
     pivot: {x: 0.30555558, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1466,6 +1535,7 @@ ScriptedImporter:
     pivot: {x: 0.34210533, y: -0.037974685}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -1486,6 +1556,7 @@ ScriptedImporter:
     pivot: {x: 0.34146336, y: -0.014705882}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -1506,6 +1577,7 @@ ScriptedImporter:
     pivot: {x: 0.4561404, y: -0.027777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -1526,6 +1598,7 @@ ScriptedImporter:
     pivot: {x: 0.48979598, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1546,6 +1619,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1566,6 +1640,7 @@ ScriptedImporter:
     pivot: {x: 0.40740746, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -1586,6 +1661,7 @@ ScriptedImporter:
     pivot: {x: 0.4871794, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1606,6 +1682,7 @@ ScriptedImporter:
     pivot: {x: 0.5526315, y: -0.071428575}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1626,6 +1703,7 @@ ScriptedImporter:
     pivot: {x: 0.7619047, y: -0.03125}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1646,6 +1724,7 @@ ScriptedImporter:
     pivot: {x: 0.7499999, y: -0.03846154}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 249
@@ -1666,6 +1745,7 @@ ScriptedImporter:
     pivot: {x: 0.7380953, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1686,6 +1766,7 @@ ScriptedImporter:
     pivot: {x: 0.5813953, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1706,6 +1787,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1726,6 +1808,7 @@ ScriptedImporter:
     pivot: {x: 0.47272733, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1746,6 +1829,7 @@ ScriptedImporter:
     pivot: {x: 0.53521127, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 637
@@ -1766,6 +1850,7 @@ ScriptedImporter:
     pivot: {x: 0.5285714, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 83
@@ -1786,6 +1871,7 @@ ScriptedImporter:
     pivot: {x: 0.51470596, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1806,6 +1892,7 @@ ScriptedImporter:
     pivot: {x: 0.5285714, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1826,6 +1913,7 @@ ScriptedImporter:
     pivot: {x: 0.53521127, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -1846,6 +1934,7 @@ ScriptedImporter:
     pivot: {x: 0.5285714, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1866,6 +1955,7 @@ ScriptedImporter:
     pivot: {x: 0.51470596, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1886,6 +1976,7 @@ ScriptedImporter:
     pivot: {x: 0.5285714, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1906,6 +1997,7 @@ ScriptedImporter:
     pivot: {x: 0.48076922, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 659
@@ -1926,6 +2018,7 @@ ScriptedImporter:
     pivot: {x: 0.5813953, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1946,6 +2039,7 @@ ScriptedImporter:
     pivot: {x: 0.45454547, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -1966,6 +2060,7 @@ ScriptedImporter:
     pivot: {x: 0.53061235, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -1986,6 +2081,7 @@ ScriptedImporter:
     pivot: {x: 0.49999994, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2006,6 +2102,7 @@ ScriptedImporter:
     pivot: {x: 0.54347825, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2026,6 +2123,7 @@ ScriptedImporter:
     pivot: {x: 0.54347825, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2046,6 +2144,7 @@ ScriptedImporter:
     pivot: {x: 0.41860464, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2066,6 +2165,7 @@ ScriptedImporter:
     pivot: {x: 0.2253521, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 641
@@ -2086,6 +2186,7 @@ ScriptedImporter:
     pivot: {x: -0.07999992, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 637
@@ -2106,6 +2207,7 @@ ScriptedImporter:
     pivot: {x: -0.26984134, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2126,6 +2228,7 @@ ScriptedImporter:
     pivot: {x: -0.26984134, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2146,6 +2249,7 @@ ScriptedImporter:
     pivot: {x: 0.23684211, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 590
@@ -2166,6 +2270,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -2186,6 +2291,7 @@ ScriptedImporter:
     pivot: {x: 0.52272725, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 584
@@ -2206,6 +2312,7 @@ ScriptedImporter:
     pivot: {x: 0.4782609, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -2226,6 +2333,7 @@ ScriptedImporter:
     pivot: {x: 0.44680846, y: -0.016393442}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2246,6 +2354,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01754386}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 458
@@ -2266,6 +2375,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2286,6 +2396,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2306,6 +2417,7 @@ ScriptedImporter:
     pivot: {x: 0.42105266, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2326,6 +2438,7 @@ ScriptedImporter:
     pivot: {x: 0.44067803, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2346,6 +2459,7 @@ ScriptedImporter:
     pivot: {x: 0.32394361, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -2366,6 +2480,7 @@ ScriptedImporter:
     pivot: {x: 0.31428576, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -2386,6 +2501,7 @@ ScriptedImporter:
     pivot: {x: 0.29577458, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -2406,6 +2522,7 @@ ScriptedImporter:
     pivot: {x: 0.37999994, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -2426,6 +2543,7 @@ ScriptedImporter:
     pivot: {x: 0.4749999, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 588
@@ -2446,6 +2564,7 @@ ScriptedImporter:
     pivot: {x: 0.46341455, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2466,6 +2585,7 @@ ScriptedImporter:
     pivot: {x: 0.5217392, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -2486,6 +2606,7 @@ ScriptedImporter:
     pivot: {x: 0.52272725, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 584
@@ -2506,6 +2627,7 @@ ScriptedImporter:
     pivot: {x: 0.4782609, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -2526,6 +2648,7 @@ ScriptedImporter:
     pivot: {x: 0.44680846, y: -0.016393442}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2546,6 +2669,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01754386}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2566,6 +2690,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2586,6 +2711,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2606,6 +2732,7 @@ ScriptedImporter:
     pivot: {x: 0.42105266, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2626,6 +2753,7 @@ ScriptedImporter:
     pivot: {x: 0.44067803, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2646,6 +2774,7 @@ ScriptedImporter:
     pivot: {x: 0.19999999, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2666,6 +2795,7 @@ ScriptedImporter:
     pivot: {x: 0.17322837, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2686,6 +2816,7 @@ ScriptedImporter:
     pivot: {x: 0.14788729, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2706,6 +2837,7 @@ ScriptedImporter:
     pivot: {x: 0.12101909, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2726,6 +2858,7 @@ ScriptedImporter:
     pivot: {x: 0.118749976, y: -0.02173913}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2746,6 +2879,7 @@ ScriptedImporter:
     pivot: {x: 0.117283925, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2766,6 +2900,7 @@ ScriptedImporter:
     pivot: {x: 0.14371258, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -2786,6 +2921,7 @@ ScriptedImporter:
     pivot: {x: 0.15384617, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2806,6 +2942,7 @@ ScriptedImporter:
     pivot: {x: 0.52272725, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 584
@@ -2826,6 +2963,7 @@ ScriptedImporter:
     pivot: {x: 0.4782609, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -2846,6 +2984,7 @@ ScriptedImporter:
     pivot: {x: 0.44680846, y: -0.016393442}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2866,6 +3005,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01754386}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2886,6 +3026,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2906,6 +3047,7 @@ ScriptedImporter:
     pivot: {x: 0.36538455, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -2926,6 +3068,7 @@ ScriptedImporter:
     pivot: {x: 0.42105266, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2946,6 +3089,7 @@ ScriptedImporter:
     pivot: {x: 0.44067803, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -2966,6 +3110,7 @@ ScriptedImporter:
     pivot: {x: 0.17692307, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -2986,6 +3131,7 @@ ScriptedImporter:
     pivot: {x: 0.15827338, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3006,6 +3152,7 @@ ScriptedImporter:
     pivot: {x: 0.14788729, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3026,6 +3173,7 @@ ScriptedImporter:
     pivot: {x: 0.122580625, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3046,6 +3194,7 @@ ScriptedImporter:
     pivot: {x: 0.122580625, y: -0.01754386}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3066,6 +3215,7 @@ ScriptedImporter:
     pivot: {x: 0.11949683, y: -0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3086,6 +3236,7 @@ ScriptedImporter:
     pivot: {x: 0.14371258, y: -0.014492754}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3106,6 +3257,7 @@ ScriptedImporter:
     pivot: {x: 0.17687078, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -3126,6 +3278,7 @@ ScriptedImporter:
     pivot: {x: 0.5277777, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 592
@@ -3146,6 +3299,7 @@ ScriptedImporter:
     pivot: {x: 0.66666675, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 680
@@ -3166,6 +3320,7 @@ ScriptedImporter:
     pivot: {x: 0.58974355, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -3186,6 +3341,7 @@ ScriptedImporter:
     pivot: {x: 0.6600001, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3206,6 +3362,7 @@ ScriptedImporter:
     pivot: {x: 0.6511627, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 585
@@ -3226,6 +3383,7 @@ ScriptedImporter:
     pivot: {x: 0.7499999, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 587
@@ -3246,6 +3404,7 @@ ScriptedImporter:
     pivot: {x: 0.7499999, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -3266,6 +3425,7 @@ ScriptedImporter:
     pivot: {x: 0.61224484, y: -0.01369863}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 102
@@ -3286,6 +3446,7 @@ ScriptedImporter:
     pivot: {x: 0.46268663, y: -0.011363637}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -3306,6 +3467,7 @@ ScriptedImporter:
     pivot: {x: 0.469697, y: -0.00990099}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3326,6 +3488,7 @@ ScriptedImporter:
     pivot: {x: 0.68750006, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 593
@@ -3346,6 +3509,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -3366,6 +3530,7 @@ ScriptedImporter:
     pivot: {x: 0.5277777, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -3386,6 +3551,7 @@ ScriptedImporter:
     pivot: {x: 0.66666675, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 593
@@ -3406,6 +3572,7 @@ ScriptedImporter:
     pivot: {x: 0.58974355, y: -0.024390243}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -3426,6 +3593,7 @@ ScriptedImporter:
     pivot: {x: 0.6600001, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3446,6 +3614,7 @@ ScriptedImporter:
     pivot: {x: 0.6511627, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -3466,6 +3635,7 @@ ScriptedImporter:
     pivot: {x: 0.7499999, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -3486,6 +3656,7 @@ ScriptedImporter:
     pivot: {x: 0.7499999, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -3506,6 +3677,7 @@ ScriptedImporter:
     pivot: {x: 0.61224484, y: -0.01369863}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 100
@@ -3526,6 +3698,7 @@ ScriptedImporter:
     pivot: {x: 0.46268663, y: -0.011363637}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -3546,6 +3719,7 @@ ScriptedImporter:
     pivot: {x: 0.469697, y: -0.00990099}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3566,6 +3740,7 @@ ScriptedImporter:
     pivot: {x: 0.68750006, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 681
@@ -3586,6 +3761,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3606,6 +3782,7 @@ ScriptedImporter:
     pivot: {x: 0.53061235, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -3626,6 +3803,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3646,6 +3824,7 @@ ScriptedImporter:
     pivot: {x: 0.53061235, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -3666,6 +3845,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3686,6 +3866,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3706,6 +3887,7 @@ ScriptedImporter:
     pivot: {x: 0.5111111, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -3726,6 +3908,7 @@ ScriptedImporter:
     pivot: {x: 0.5111111, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -3746,6 +3929,7 @@ ScriptedImporter:
     pivot: {x: 0.15172414, y: -0.008403362}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3766,6 +3950,7 @@ ScriptedImporter:
     pivot: {x: 0.14864866, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3786,6 +3971,7 @@ ScriptedImporter:
     pivot: {x: 0.14864866, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3806,6 +3992,7 @@ ScriptedImporter:
     pivot: {x: 0.1543624, y: -0.008403362}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3826,6 +4013,7 @@ ScriptedImporter:
     pivot: {x: 0.1655629, y: -0.008474576}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3846,6 +4034,7 @@ ScriptedImporter:
     pivot: {x: 0.16774195, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3866,6 +4055,7 @@ ScriptedImporter:
     pivot: {x: 0.16129032, y: -0.008196721}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3886,6 +4076,7 @@ ScriptedImporter:
     pivot: {x: 0.15950923, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3906,6 +4097,7 @@ ScriptedImporter:
     pivot: {x: 0.15923567, y: -0.008333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3926,6 +4118,7 @@ ScriptedImporter:
     pivot: {x: 0.16447368, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -3946,6 +4139,7 @@ ScriptedImporter:
     pivot: {x: 0.15231787, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -3966,6 +4160,7 @@ ScriptedImporter:
     pivot: {x: 0.15862067, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -3986,6 +4181,7 @@ ScriptedImporter:
     pivot: {x: 0.17741936, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4006,6 +4202,7 @@ ScriptedImporter:
     pivot: {x: 0.20754719, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4026,6 +4223,7 @@ ScriptedImporter:
     pivot: {x: 0.2178218, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4046,6 +4244,7 @@ ScriptedImporter:
     pivot: {x: 0.22549018, y: -0.023255814}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4066,6 +4265,7 @@ ScriptedImporter:
     pivot: {x: 0.24509804, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4086,6 +4286,7 @@ ScriptedImporter:
     pivot: {x: 0.4871794, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4106,6 +4307,7 @@ ScriptedImporter:
     pivot: {x: 0.5675675, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 591
@@ -4126,6 +4328,7 @@ ScriptedImporter:
     pivot: {x: 0.57446814, y: -0.027777778}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4146,6 +4349,7 @@ ScriptedImporter:
     pivot: {x: 0.72131157, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -4166,6 +4370,7 @@ ScriptedImporter:
     pivot: {x: 0.6779661, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4186,6 +4391,7 @@ ScriptedImporter:
     pivot: {x: 0.7090908, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4206,6 +4412,7 @@ ScriptedImporter:
     pivot: {x: 0.58730155, y: -0.022222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -4226,6 +4433,7 @@ ScriptedImporter:
     pivot: {x: 0.54687506, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -4246,6 +4454,7 @@ ScriptedImporter:
     pivot: {x: 0.48611116, y: -0.01724138}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 269
@@ -4266,6 +4475,7 @@ ScriptedImporter:
     pivot: {x: 0.2, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4286,6 +4496,7 @@ ScriptedImporter:
     pivot: {x: 0.22580646, y: -0.028571429}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4306,6 +4517,7 @@ ScriptedImporter:
     pivot: {x: 0.25773194, y: -0.03448276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 721
@@ -4326,6 +4538,7 @@ ScriptedImporter:
     pivot: {x: 0.26153848, y: -0.03448276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 721
@@ -4346,6 +4559,7 @@ ScriptedImporter:
     pivot: {x: 1.2439026, y: -0.03448276}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 924
@@ -4366,6 +4580,7 @@ ScriptedImporter:
     pivot: {x: 0.9148936, y: -0.02631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4386,6 +4601,7 @@ ScriptedImporter:
     pivot: {x: 0.5641026, y: -0.025}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4406,6 +4622,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4426,6 +4643,7 @@ ScriptedImporter:
     pivot: {x: 0.51428574, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4446,6 +4664,7 @@ ScriptedImporter:
     pivot: {x: 0.5757575, y: -0.021276595}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 679
@@ -4466,6 +4685,7 @@ ScriptedImporter:
     pivot: {x: 0.30769223, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4486,6 +4706,7 @@ ScriptedImporter:
     pivot: {x: 0.11111107, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -4506,6 +4727,7 @@ ScriptedImporter:
     pivot: {x: 0.09090913, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 582
@@ -4526,6 +4748,7 @@ ScriptedImporter:
     pivot: {x: 0.085106425, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4546,6 +4769,7 @@ ScriptedImporter:
     pivot: {x: 0.07547174, y: -0.018518519}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -4566,6 +4790,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4586,6 +4811,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4606,6 +4832,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4626,6 +4853,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4646,6 +4874,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4666,6 +4895,7 @@ ScriptedImporter:
     pivot: {x: 0.09615381, y: -0.015384615}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 425
@@ -4686,6 +4916,7 @@ ScriptedImporter:
     pivot: {x: 0.07547174, y: -0.018518519}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 350
@@ -4706,6 +4937,7 @@ ScriptedImporter:
     pivot: {x: 0.085106425, y: -0.018867925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4726,6 +4958,7 @@ ScriptedImporter:
     pivot: {x: 0.09090913, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 582
@@ -4746,6 +4979,7 @@ ScriptedImporter:
     pivot: {x: 0.09090913, y: -0.01923077}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -4766,6 +5000,7 @@ ScriptedImporter:
     pivot: {x: 0.27027017, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 591
@@ -4786,6 +5021,7 @@ ScriptedImporter:
     pivot: {x: 0.48888895, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 583
@@ -4806,6 +5042,7 @@ ScriptedImporter:
     pivot: {x: 0.58974355, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4826,6 +5063,7 @@ ScriptedImporter:
     pivot: {x: 0.58974355, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -4846,6 +5084,7 @@ ScriptedImporter:
     pivot: {x: 0.79487187, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 473
@@ -4866,6 +5105,7 @@ ScriptedImporter:
     pivot: {x: 0.88888884, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4886,6 +5126,7 @@ ScriptedImporter:
     pivot: {x: 0.86111116, y: -0.02}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4906,6 +5147,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4926,6 +5168,7 @@ ScriptedImporter:
     pivot: {x: 0.5208333, y: -0.022727273}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 175
@@ -4946,6 +5189,7 @@ ScriptedImporter:
     pivot: {x: 0.37931037, y: -0.023809524}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4966,6 +5210,7 @@ ScriptedImporter:
     pivot: {x: 0.33928564, y: -0.025641026}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 527
@@ -4986,6 +5231,7 @@ ScriptedImporter:
     pivot: {x: 0.29166663, y: -0.029411765}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5006,6 +5252,7 @@ ScriptedImporter:
     pivot: {x: 0.30434778, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5026,6 +5273,7 @@ ScriptedImporter:
     pivot: {x: 0.31914902, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5046,6 +5294,7 @@ ScriptedImporter:
     pivot: {x: 0.3265306, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5066,6 +5315,7 @@ ScriptedImporter:
     pivot: {x: 0.3333333, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5086,6 +5336,7 @@ ScriptedImporter:
     pivot: {x: 0.34042552, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5106,6 +5357,7 @@ ScriptedImporter:
     pivot: {x: 0.34042552, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5126,6 +5378,7 @@ ScriptedImporter:
     pivot: {x: 0.31111106, y: -0.030303031}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5146,6 +5399,7 @@ ScriptedImporter:
     pivot: {x: 0.2790697, y: -0.037037037}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 973
@@ -5166,6 +5420,7 @@ ScriptedImporter:
     pivot: {x: 0.23529407, y: -0.09090909}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 269
@@ -5186,6 +5441,7 @@ ScriptedImporter:
     pivot: {x: 0.21428566, y: -0.14285715}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5206,6 +5462,7 @@ ScriptedImporter:
     pivot: {x: 0.21052626, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 249
@@ -5226,6 +5483,7 @@ ScriptedImporter:
     pivot: {x: 0.2068965, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 636
@@ -5246,6 +5504,7 @@ ScriptedImporter:
     pivot: {x: 0.2068965, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 249
@@ -5266,6 +5525,7 @@ ScriptedImporter:
     pivot: {x: 0.2068965, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 249
@@ -5286,6 +5546,7 @@ ScriptedImporter:
     pivot: {x: 0.2068965, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 249
@@ -5304,2078 +5565,2337 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1421543156
+    guid: 645532732
     name: Elementals_leaf_ranger_free_v1.0
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 49
         height: 44
       spriteId: 6098a707eab0e8343a662f7a303ccdb8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: e7e5bdca94843c349b875ef6b591082f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 49
         height: 44
       spriteId: 82b3a6420ea74974c93dfc4637404355
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 6829d69d617447b4c9ead509d670382a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: d4c05f486bdf7bf4cbf5787cb8fe455f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 45
         height: 44
       spriteId: d1f1d2d9e28b217409a84b449b47188d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 45
         height: 43
       spriteId: 8929b4d4498d2a44eae143b6bc50fbfd
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 45
         height: 43
       spriteId: 61ff2a14f92b3b04daf42e9ae60a3cf9
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 45
         height: 43
       spriteId: ee9f88b1d4ae84e4d8f129439c7aea99
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 45
         height: 43
       spriteId: d05e405092febdf45939eb676cf7f2bd
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 46
         height: 43
       spriteId: 178cc80add7664849bbbcc50394787fa
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 486af8f38a5511845aa0de97344453a8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 48
         height: 43
       spriteId: ad2b5c6464394b242aaa78946db63893
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 7
         width: 51
         height: 38
       spriteId: e8e46d79b036da34ea79a0f53c308b69
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 9
         width: 46
         height: 36
       spriteId: 44cad24a0ae899b49b2b3f87d0e24171
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 47
         height: 43
       spriteId: 72bc23cadc79cc849a16270737a1ee72
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 43
         height: 42
       spriteId: 84912faec5ee94f4b8ecae0479a1a473
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 44
         height: 43
       spriteId: 02775ee1840cd5b41ab52e5919f146d6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 7
         width: 47
         height: 38
       spriteId: f4cacdf4704a8de419e98061ca1ddd08
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 5
         width: 45
         height: 40
       spriteId: bcb6af09d877ff649b089fb8fbc6d255
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 46
         height: 43
       spriteId: c0194de0eea08be4c99fe56c9777105a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 46
         height: 42
       spriteId: 21bb48324eff583409ae540fac03670a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_22
+    - name: Frame_22
       frameIndex: 22
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 45
         height: 36
       spriteId: 6fd0d40e254ed9c4fbba5d0af088f384
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_23
+    - name: Frame_23
       frameIndex: 23
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 1
         width: 49
         height: 35
       spriteId: 2b4ba47226173bc4a89c07e86b4e7a1f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_24
+    - name: Frame_24
       frameIndex: 24
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 4
         width: 43
         height: 48
       spriteId: 1a3df034775a22a48bd76e502f41b019
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_25
+    - name: Frame_25
       frameIndex: 25
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 4
         width: 37
         height: 48
       spriteId: 43ebb8b1437205f47b4ad3a611040f0d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_26
+    - name: Frame_26
       frameIndex: 26
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 4
         width: 44
         height: 48
       spriteId: ae22860c2eda1f742b284d05f36fde29
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_27
+    - name: Frame_27
       frameIndex: 27
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 4
         width: 43
         height: 48
       spriteId: 0a9b345666e204c4185d608209252a88
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_28
+    - name: Frame_28
       frameIndex: 28
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 4
         width: 37
         height: 48
       spriteId: 3d0c2729e1a39ba489890425859207c0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_29
+    - name: Frame_29
       frameIndex: 29
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 4
         width: 44
         height: 48
       spriteId: 94b297897c42c104da11242e73081154
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_30
+    - name: Frame_30
       frameIndex: 30
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 7
         width: 44
         height: 45
       spriteId: ad5c45e0fdafb54469d4fdb1632f4ccc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_31
+    - name: Frame_31
       frameIndex: 31
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 10
         width: 47
         height: 42
       spriteId: 913b713bcef571445bc854e8eafa3e30
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_32
+    - name: Frame_32
       frameIndex: 32
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 8
         width: 53
         height: 47
       spriteId: d1008f558609c344e86a56c238728e97
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_33
+    - name: Frame_33
       frameIndex: 33
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 6
         width: 46
         height: 56
       spriteId: 5e8d69cfc0be6834eb738d819deb40f0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_34
+    - name: Frame_34
       frameIndex: 34
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 40
         height: 78
       spriteId: b72cea8672919924192436dcf3dff4bf
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_35
+    - name: Frame_35
       frameIndex: 35
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 3
         width: 36
         height: 78
       spriteId: facdf1c34b36fb1488762b4c48d333eb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_36
+    - name: Frame_36
       frameIndex: 36
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 3
         width: 38
         height: 79
       spriteId: 33d1dd0e36b95ae448beaa58a6c74a36
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_37
+    - name: Frame_37
       frameIndex: 37
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 40
         height: 78
       spriteId: c76e314574de06e48ac8fc467c9958c6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_38
+    - name: Frame_38
       frameIndex: 38
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 3
         width: 36
         height: 78
       spriteId: 5d7d926e75e08fc4f9c4ecd07e69b738
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_39
+    - name: Frame_39
       frameIndex: 39
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 3
         width: 38
         height: 79
       spriteId: 9dc53a077ccd9bc4386751e9c1aa2dd0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_40
+    - name: Frame_40
       frameIndex: 40
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 41
         height: 68
       spriteId: 159cd21b7bebb574297208db2f28755f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_41
+    - name: Frame_41
       frameIndex: 41
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 57
         height: 36
       spriteId: 17e2c8a12d3227a48943e46be3311d02
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_42
+    - name: Frame_42
       frameIndex: 42
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 49
         height: 35
       spriteId: a802f49cc6fb3354992c4ed1f9f6987c
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_43
+    - name: Frame_43
       frameIndex: 43
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 1
         width: 44
         height: 40
       spriteId: d6a893a03f86881499d59f41d3dc8b55
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_44
+    - name: Frame_44
       frameIndex: 44
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 45
         height: 36
       spriteId: a5038fa6364969e49b8880610668b3ba
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_45
+    - name: Frame_45
       frameIndex: 45
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 1
         width: 49
         height: 35
       spriteId: 8260b8c51bd197942b9c7618a003b5c3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_46
+    - name: Frame_46
       frameIndex: 46
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 4
         width: 43
         height: 48
       spriteId: ec7f8958620ad0b418c036a4ddcbf4d5
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_47
+    - name: Frame_47
       frameIndex: 47
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 4
         width: 37
         height: 48
       spriteId: dc5fb4ba322cb114e8fd807d76e2864a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_48
+    - name: Frame_48
       frameIndex: 48
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 4
         width: 44
         height: 48
       spriteId: 575ca455db175294d9884355ad2dcedd
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_49
+    - name: Frame_49
       frameIndex: 49
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 4
         width: 43
         height: 48
       spriteId: 1da33b091b9064149997fc1846e4d67e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_50
+    - name: Frame_50
       frameIndex: 50
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 4
         width: 37
         height: 48
       spriteId: 65d55e6f099c43f41907539f5d026bca
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_51
+    - name: Frame_51
       frameIndex: 51
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 4
         width: 44
         height: 48
       spriteId: 342507bd6184daf4ca68a8a34c02f781
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_52
+    - name: Frame_52
       frameIndex: 52
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 7
         width: 44
         height: 45
       spriteId: 1099599d2f47fe040b7db4718c33302f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_53
+    - name: Frame_53
       frameIndex: 53
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 10
         width: 48
         height: 42
       spriteId: 645ce748aabc3204380ef5090378e3b6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_54
+    - name: Frame_54
       frameIndex: 54
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 8
         width: 57
         height: 44
       spriteId: fff13253b8a92704b96edfc4227e2a4b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_55
+    - name: Frame_55
       frameIndex: 55
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 8
         width: 56
         height: 44
       spriteId: 562349aab9973544dba42c8b66c7eedf
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_56
+    - name: Frame_56
       frameIndex: 56
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 8
         width: 58
         height: 44
       spriteId: 51ccac147c209cd419aedb4058d992ee
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_57
+    - name: Frame_57
       frameIndex: 57
+      additiveSortOrder: 0
       cellRect:
         x: 115
         y: 1
         width: 81
         height: 51
       spriteId: 66679a7375d2de8479e32509769f65a1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_58
+    - name: Frame_58
       frameIndex: 58
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 84
         height: 52
       spriteId: 4756cdd629b08064db2058c75b03b51c
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_59
+    - name: Frame_59
       frameIndex: 59
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 80
         height: 52
       spriteId: 5b2b3feedcf332a47abf4731e0681d37
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_60
+    - name: Frame_60
       frameIndex: 60
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 85
         height: 59
       spriteId: a0c84e23b4049a146a2ebf824f71f8ce
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_61
+    - name: Frame_61
       frameIndex: 61
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 100
         height: 61
       spriteId: 47ccaa098e15beb4686d420a865073fe
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_62
+    - name: Frame_62
       frameIndex: 62
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 1
         width: 90
         height: 80
       spriteId: 4a24ace42e33f2a4e8ad9bbc11d0428c
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_63
+    - name: Frame_63
       frameIndex: 63
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 1
         width: 86
         height: 80
       spriteId: 08629d05dd7fcf343b184e70f70d53ec
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_64
+    - name: Frame_64
       frameIndex: 64
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 1
         width: 88
         height: 81
       spriteId: 5f6a73c5e6e803b45baf5693ba234cd7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_65
+    - name: Frame_65
       frameIndex: 65
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 3
         width: 40
         height: 78
       spriteId: 487c7c47bdc9eb84f8abb9cead315098
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_66
+    - name: Frame_66
       frameIndex: 66
+      additiveSortOrder: 0
       cellRect:
         x: 133
         y: 3
         width: 36
         height: 78
       spriteId: 68968657c5ebf67418fd97b64333806d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_67
+    - name: Frame_67
       frameIndex: 67
+      additiveSortOrder: 0
       cellRect:
         x: 131
         y: 3
         width: 38
         height: 79
       spriteId: f52eb978491e6f5458da5940b0c35fbc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_68
+    - name: Frame_68
       frameIndex: 68
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 41
         height: 68
       spriteId: 04b85021cd5f765408e35ffd298bf8e1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_69
+    - name: Frame_69
       frameIndex: 69
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 57
         height: 36
       spriteId: fe5bde24113fd114abfa9f9373d5ba20
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_70
+    - name: Frame_70
       frameIndex: 70
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 49
         height: 35
       spriteId: a0ae417cb6f8ea2428e21a1757d7f536
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_71
+    - name: Frame_71
       frameIndex: 71
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 1
         width: 44
         height: 40
       spriteId: 488e7f50a658b884bbf5f753289b5dfe
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_72
+    - name: Frame_72
       frameIndex: 72
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 54
         height: 38
       spriteId: 29dc34317fca8464e92449de86713e5f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_73
+    - name: Frame_73
       frameIndex: 73
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 39
         height: 30
       spriteId: db2156b2c17ff5b42bc6f94d5dca8079
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_74
+    - name: Frame_74
       frameIndex: 74
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 2
         width: 38
         height: 28
       spriteId: b1cdd13890cea4d4ea7b5caf89ed470d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_75
+    - name: Frame_75
       frameIndex: 75
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 1
         width: 42
         height: 32
       spriteId: c3617d6b61a7668448c4a3e4a33afd75
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_76
+    - name: Frame_76
       frameIndex: 76
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 40
         height: 26
       spriteId: 8b6b791c0a0e46c48a6231a13ffa90a8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_77
+    - name: Frame_77
       frameIndex: 77
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 42
         height: 30
       spriteId: 0798f295fd60ae547a7928ea10e35fa0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_78
+    - name: Frame_78
       frameIndex: 78
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 43
         height: 35
       spriteId: b0e62dbebb5756d4a98dacde4d873e26
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_79
+    - name: Frame_79
       frameIndex: 79
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 1
         width: 44
         height: 40
       spriteId: ec1f43e50f5bb864992769a09e91ff87
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_80
+    - name: Frame_80
       frameIndex: 80
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 55
         height: 45
       spriteId: 583ef62a9a6d85148ac0ee6c1dd563c4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_81
+    - name: Frame_81
       frameIndex: 81
+      additiveSortOrder: 0
       cellRect:
         x: 106
         y: 1
         width: 71
         height: 40
       spriteId: 3cd395dd51740494eb4549496f978051
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_82
+    - name: Frame_82
       frameIndex: 82
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 70
         height: 40
       spriteId: 5c0b825794a1b594bb9eba9429e90a16
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_83
+    - name: Frame_83
       frameIndex: 83
+      additiveSortOrder: 0
       cellRect:
         x: 109
         y: 1
         width: 68
         height: 40
       spriteId: 5156f94d346ced54ebc3564eaf1f3bb5
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_84
+    - name: Frame_84
       frameIndex: 84
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 70
         height: 40
       spriteId: 3be5de1312759f0419f596223d701ce8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_85
+    - name: Frame_85
       frameIndex: 85
+      additiveSortOrder: 0
       cellRect:
         x: 106
         y: 1
         width: 71
         height: 40
       spriteId: 85772a953fae18c47b0c3a416e8fa559
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_86
+    - name: Frame_86
       frameIndex: 86
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 70
         height: 40
       spriteId: 5bef71920277ffb429ef03e973cddf85
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_87
+    - name: Frame_87
       frameIndex: 87
+      additiveSortOrder: 0
       cellRect:
         x: 109
         y: 1
         width: 68
         height: 40
       spriteId: b1d7dca89c47994408186bc1af8f97e0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_88
+    - name: Frame_88
       frameIndex: 88
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 70
         height: 40
       spriteId: 6ce7e168fd184c14aa9ead1d5c74f60b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_89
+    - name: Frame_89
       frameIndex: 89
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 52
         height: 41
       spriteId: 5e9beeefc3725b24781d8fef68f0246f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_90
+    - name: Frame_90
       frameIndex: 90
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 43
         height: 35
       spriteId: a79c51e8100f88148a7b09fa7f42f2ee
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_91
+    - name: Frame_91
       frameIndex: 91
+      additiveSortOrder: 0
       cellRect:
         x: 124
         y: 1
         width: 44
         height: 40
       spriteId: ab020e3cf8050a142aa5bbbc000a6eeb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_92
+    - name: Frame_92
       frameIndex: 92
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 49
         height: 44
       spriteId: 7e8a1e43e76dfc049aadfa9458d7b758
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_93
+    - name: Frame_93
       frameIndex: 93
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 42
         height: 43
       spriteId: 8b628af10003a8a4f8abd8b5c2f9c70c
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_94
+    - name: Frame_94
       frameIndex: 94
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 46
         height: 42
       spriteId: b53e8f805e51070448cd1ff29af196f2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_95
+    - name: Frame_95
       frameIndex: 95
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 46
         height: 42
       spriteId: 002f1ee65158c764cb9ba888bfbbc37a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_96
+    - name: Frame_96
       frameIndex: 96
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 43
         height: 42
       spriteId: 3ed45b72f465f92469df1ac49c6c7771
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_97
+    - name: Frame_97
       frameIndex: 97
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 71
         height: 42
       spriteId: b460bda5da992ef478d0e6469a0f3a00
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_98
+    - name: Frame_98
       frameIndex: 98
+      additiveSortOrder: 0
       cellRect:
         x: 150
         y: 1
         width: 75
         height: 42
       spriteId: d3291f948ceb3d847a0f6e9c79eeb4bc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_99
+    - name: Frame_99
       frameIndex: 99
+      additiveSortOrder: 0
       cellRect:
         x: 161
         y: 1
         width: 63
         height: 43
       spriteId: dced4acae595d7e41970e46a95eee8ae
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_100
+    - name: Frame_100
       frameIndex: 100
+      additiveSortOrder: 0
       cellRect:
         x: 161
         y: 1
         width: 63
         height: 43
       spriteId: bdec39b98152dd34383869ecc7b37992
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_101
+    - name: Frame_101
       frameIndex: 101
+      additiveSortOrder: 0
       cellRect:
         x: 135
         y: 1
         width: 38
         height: 42
       spriteId: 18dccd07bfd9bcd4dae0a045f626f0d9
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_102
+    - name: Frame_102
       frameIndex: 102
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 5ebedb9b0868aad4fa7a48017f0b5756
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_103
+    - name: Frame_103
       frameIndex: 103
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 44
         height: 44
       spriteId: 49f94cdcbb6593b458043c2ce5fabff1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_104
+    - name: Frame_104
       frameIndex: 104
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 46
         height: 47
       spriteId: cf3fa764ac3ac7445840f5c77508e70e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_105
+    - name: Frame_105
       frameIndex: 105
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 47
         height: 61
       spriteId: ddc2b4a173554c44f92f7065e2e09e63
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_106
+    - name: Frame_106
       frameIndex: 106
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 57
       spriteId: 17f8853cc63839a49a02c2d7a83fb265
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_107
+    - name: Frame_107
       frameIndex: 107
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 53
       spriteId: 49e304eb82a0ba847a398c5e27c78c21
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_108
+    - name: Frame_108
       frameIndex: 108
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 52
       spriteId: 9be8029f35907f6479f89e6f8d4cffc5
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_109
+    - name: Frame_109
       frameIndex: 109
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 57
         height: 50
       spriteId: 97c2dee83760a184f8ea55c00c837820
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_110
+    - name: Frame_110
       frameIndex: 110
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 59
         height: 50
       spriteId: a8a88a34a492e3c459b074b664800318
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_111
+    - name: Frame_111
       frameIndex: 111
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 71
         height: 53
       spriteId: f7660230d0f017c478f25a8888c54be5
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_112
+    - name: Frame_112
       frameIndex: 112
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 70
         height: 53
       spriteId: 13015ecdface7bb4082d37de32424429
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_113
+    - name: Frame_113
       frameIndex: 113
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 71
         height: 53
       spriteId: 625f19ed61e05ee41a682bb06570bf81
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_114
+    - name: Frame_114
       frameIndex: 114
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 50
         height: 53
       spriteId: bd8a571882cdbdd4a9028633b4e72011
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_115
+    - name: Frame_115
       frameIndex: 115
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 40
         height: 46
       spriteId: 3ff79edcea632d945aae757bfa8d8e79
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_116
+    - name: Frame_116
       frameIndex: 116
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 41
         height: 44
       spriteId: dcb43cfa9a628844da59b0f06d816c0d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_117
+    - name: Frame_117
       frameIndex: 117
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 46
         height: 44
       spriteId: e9d31243e8138f74693a21da468247a9
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_118
+    - name: Frame_118
       frameIndex: 118
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 44
         height: 44
       spriteId: 1f50d55ac0a6d3d46a07ef2a2da1cacb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_119
+    - name: Frame_119
       frameIndex: 119
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 46
         height: 47
       spriteId: f8dc13c69409a0c41921076950e145d1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_120
+    - name: Frame_120
       frameIndex: 120
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 47
         height: 61
       spriteId: a6fcae8d00b12f84a8db311d9e915508
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_121
+    - name: Frame_121
       frameIndex: 121
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 57
       spriteId: ce1b18050af1e594fa4bea130dd27794
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_122
+    - name: Frame_122
       frameIndex: 122
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 53
       spriteId: aecd23405601b284094b6b6ee0ff0fbe
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_123
+    - name: Frame_123
       frameIndex: 123
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 52
       spriteId: 49c5ecc791d150246966248dbdf5bc27
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_124
+    - name: Frame_124
       frameIndex: 124
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 57
         height: 50
       spriteId: 6820ad471d4a154478a98d18542ae0cf
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_125
+    - name: Frame_125
       frameIndex: 125
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 59
         height: 50
       spriteId: c8989955f9b7cd64a99147e37fff4ec0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_126
+    - name: Frame_126
       frameIndex: 126
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 115
         height: 53
       spriteId: e884269fb9ff8cb4a85c44ffa8be4154
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_127
+    - name: Frame_127
       frameIndex: 127
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 127
         height: 53
       spriteId: 19bea5257b713ce42888a086c2941791
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_128
+    - name: Frame_128
       frameIndex: 128
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 142
         height: 53
       spriteId: 932a90a3a98c31b4f8f9109606cc3244
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_129
+    - name: Frame_129
       frameIndex: 129
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 157
         height: 53
       spriteId: 30d613223bfc3974e919ba1b45f8e887
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_130
+    - name: Frame_130
       frameIndex: 130
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 160
         height: 46
       spriteId: 8dee5bd77f20e9346a46912b2899df02
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_131
+    - name: Frame_131
       frameIndex: 131
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 162
         height: 44
       spriteId: 673eea460c243aa4f9479971146f019f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_132
+    - name: Frame_132
       frameIndex: 132
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 167
         height: 44
       spriteId: bb07363db6fdd664ebf75e6cc88ae5d8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_133
+    - name: Frame_133
       frameIndex: 133
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 169
         height: 44
       spriteId: e1e3db783d1a63b43a19b759c5f2ef45
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_134
+    - name: Frame_134
       frameIndex: 134
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 44
         height: 44
       spriteId: 281f1533c267f4f44a14e37123257182
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_135
+    - name: Frame_135
       frameIndex: 135
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 46
         height: 47
       spriteId: 75553f55aeb737e4c827929df1fbbc6a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_136
+    - name: Frame_136
       frameIndex: 136
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 47
         height: 61
       spriteId: 0d5aa164593c7d54f85523ff19c06860
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_137
+    - name: Frame_137
       frameIndex: 137
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 57
       spriteId: 07a0ce399e443824e9d5d543bbdf2648
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_138
+    - name: Frame_138
       frameIndex: 138
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 53
       spriteId: 6aeab888d5517e748b720ae700c715c3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_139
+    - name: Frame_139
       frameIndex: 139
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 52
         height: 52
       spriteId: cbc25d8393dcd0b48bc543177ee0c4c6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_140
+    - name: Frame_140
       frameIndex: 140
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 57
         height: 50
       spriteId: c0adeed8e3d189647a69fc3964e6d990
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_141
+    - name: Frame_141
       frameIndex: 141
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 59
         height: 50
       spriteId: 4b4db8735cf83684d9e62f7500264d31
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_142
+    - name: Frame_142
       frameIndex: 142
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 130
         height: 53
       spriteId: cc863e5b9b7dafb4ab6d59b6056a9d8e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_143
+    - name: Frame_143
       frameIndex: 143
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 139
         height: 53
       spriteId: 52b2ef2b45f8e4142a8753e626349dc2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_144
+    - name: Frame_144
       frameIndex: 144
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 142
         height: 53
       spriteId: 913d731ce25bcc5439bbca8d1c260dac
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_145
+    - name: Frame_145
       frameIndex: 145
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 155
         height: 53
       spriteId: 4de2d428e95f38a438cbe559ea386211
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_146
+    - name: Frame_146
       frameIndex: 146
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 155
         height: 57
       spriteId: 66aa01dab532a964a889a546d6d896fb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_147
+    - name: Frame_147
       frameIndex: 147
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 159
         height: 63
       spriteId: 93139f89b76dce247b2fd15864bccb43
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_148
+    - name: Frame_148
       frameIndex: 148
+      additiveSortOrder: 0
       cellRect:
         x: 120
         y: 1
         width: 167
         height: 69
       spriteId: c4f6fcbc7be42414a80d94e7dce4a336
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_149
+    - name: Frame_149
       frameIndex: 149
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 147
         height: 44
       spriteId: cd8976a6a8765b04fa6d88f33534fc18
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_150
+    - name: Frame_150
       frameIndex: 150
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 36
         height: 43
       spriteId: f1498697f7f7e224ba55a7f47bc4cd9e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_151
+    - name: Frame_151
       frameIndex: 151
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 33
         height: 43
       spriteId: a1146171dd05ef64bac6da733fc97f98
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_152
+    - name: Frame_152
       frameIndex: 152
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 39
         height: 41
       spriteId: 21740593f5a55e24caa2c8adf771af70
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_153
+    - name: Frame_153
       frameIndex: 153
+      additiveSortOrder: 0
       cellRect:
         x: 111
         y: 1
         width: 50
         height: 39
       spriteId: 56ceab32556c82a4986d1866ee4b42ce
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_154
+    - name: Frame_154
       frameIndex: 154
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 43
         height: 52
       spriteId: e6ab058bf680ea04c8edf4cb0f307663
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_155
+    - name: Frame_155
       frameIndex: 155
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 40
         height: 52
       spriteId: 3ad34bde8b1ad254199e36e23d4013cb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_156
+    - name: Frame_156
       frameIndex: 156
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 40
         height: 52
       spriteId: 25f883f4113a5214dadba0e919d1f317
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_157
+    - name: Frame_157
       frameIndex: 157
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 49
         height: 73
       spriteId: b5a5e3bc2f4431a42ae021cef654762a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_158
+    - name: Frame_158
       frameIndex: 158
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 67
         height: 88
       spriteId: 171bf74a9d1c564489486446aa7a918a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_159
+    - name: Frame_159
       frameIndex: 159
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 66
         height: 101
       spriteId: c5f766f8072196849b732eea1a2e79c1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_160
+    - name: Frame_160
       frameIndex: 160
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 32
         height: 42
       spriteId: 989b4a576a028c84588b4749579f2ea1
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_161
+    - name: Frame_161
       frameIndex: 161
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 1c3420486e0fc83498a75f7df8d58c02
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_162
+    - name: Frame_162
       frameIndex: 162
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 36
         height: 43
       spriteId: d6660aa6a36bb834f8c957b0b50a6fd4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_163
+    - name: Frame_163
       frameIndex: 163
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 33
         height: 43
       spriteId: de165270313c53c429d6bd2eab0fe2c7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_164
+    - name: Frame_164
       frameIndex: 164
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 39
         height: 41
       spriteId: ac0eaf38717b5c648b6643ccb356e822
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_165
+    - name: Frame_165
       frameIndex: 165
+      additiveSortOrder: 0
       cellRect:
         x: 111
         y: 1
         width: 50
         height: 39
       spriteId: 27eceffad8e7abc4db52072e726befd0
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_166
+    - name: Frame_166
       frameIndex: 166
+      additiveSortOrder: 0
       cellRect:
         x: 116
         y: 1
         width: 43
         height: 52
       spriteId: 308aa81cfe9d2dd49b0a5ec3282bf256
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_167
+    - name: Frame_167
       frameIndex: 167
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 40
         height: 52
       spriteId: 188c933967c21c74bae9722ebe9563fc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_168
+    - name: Frame_168
       frameIndex: 168
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 40
         height: 52
       spriteId: 8786856bd2cccca49992a3dad4d4d2f6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_169
+    - name: Frame_169
       frameIndex: 169
+      additiveSortOrder: 0
       cellRect:
         x: 114
         y: 1
         width: 49
         height: 73
       spriteId: f1c3e4de182d366458fd876e1f42e479
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_170
+    - name: Frame_170
       frameIndex: 170
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 67
         height: 88
       spriteId: 182e8ecfd40270a4395d1cc95101b148
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_171
+    - name: Frame_171
       frameIndex: 171
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 66
         height: 101
       spriteId: 100e56629c0564d4989081a66b6baf44
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_172
+    - name: Frame_172
       frameIndex: 172
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 32
         height: 42
       spriteId: 2d3a450ef026c0d44bd1103d06c4e8a8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_173
+    - name: Frame_173
       frameIndex: 173
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: b06f8fa765912db498ef22b4bceb8a81
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_174
+    - name: Frame_174
       frameIndex: 174
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 49
         height: 44
       spriteId: b009afad5023fd34ea4a0ea05adde841
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_175
+    - name: Frame_175
       frameIndex: 175
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: be5923e775575f8408ba441335845c47
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_176
+    - name: Frame_176
       frameIndex: 176
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 49
         height: 44
       spriteId: ca1a92b274c3f51449a2559635422d04
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_177
+    - name: Frame_177
       frameIndex: 177
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 9a3ece234f04c0647842800a038ddbb4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_178
+    - name: Frame_178
       frameIndex: 178
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: a6e69953a58666945a7865cf8a7cbeb3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_179
+    - name: Frame_179
       frameIndex: 179
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 45
         height: 44
       spriteId: 4881d5b1d2816ae45b25be9ffe77b9f7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_180
+    - name: Frame_180
       frameIndex: 180
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 45
         height: 43
       spriteId: f6507983e7472ba4e99acda7d5ef5786
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_181
+    - name: Frame_181
       frameIndex: 181
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 145
         height: 119
       spriteId: d84b6c50a09efa44fbb9b73ee832a503
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_182
+    - name: Frame_182
       frameIndex: 182
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 148
         height: 122
       spriteId: cf6c350da1ef8044eaf815442823ed61
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_183
+    - name: Frame_183
       frameIndex: 183
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 148
         height: 120
       spriteId: 6bff956cbf63e0047ae9a85fb0e3e184
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_184
+    - name: Frame_184
       frameIndex: 184
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 149
         height: 119
       spriteId: 4899e8d9ac1ef08488053ef5a3d449ef
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_185
+    - name: Frame_185
       frameIndex: 185
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 151
         height: 118
       spriteId: 338f84b5b72656d4f85d627767fdfbc8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_186
+    - name: Frame_186
       frameIndex: 186
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 155
         height: 122
       spriteId: 804a09467764b5946b7c72978ce9b3d2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_187
+    - name: Frame_187
       frameIndex: 187
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 155
         height: 122
       spriteId: 50b7c48f2a9cfa4418742bcd86c495bb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_188
+    - name: Frame_188
       frameIndex: 188
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: 1
         width: 163
         height: 120
       spriteId: 46aca31dfdd3c0641bdd4e6e56593e8b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_189
+    - name: Frame_189
       frameIndex: 189
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 157
         height: 120
       spriteId: 56749da2c1269f74fade98e0a72f6951
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_190
+    - name: Frame_190
       frameIndex: 190
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 152
         height: 53
       spriteId: 1f46fcfb01cee0f41a2be12e5ae342d3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_191
+    - name: Frame_191
       frameIndex: 191
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 151
         height: 44
       spriteId: bfda25332a549cc4b8697934d9e37b8b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_192
+    - name: Frame_192
       frameIndex: 192
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 145
         height: 43
       spriteId: f7dd96990099f714a9cafabb37fe7cc7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_193
+    - name: Frame_193
       frameIndex: 193
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 124
         height: 43
       spriteId: 5db080e6d27c25649bacbb0c99595db4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_194
+    - name: Frame_194
       frameIndex: 194
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 106
         height: 43
       spriteId: c7323c41fd4d7d04d801bbbe4d7c7689
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_195
+    - name: Frame_195
       frameIndex: 195
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 101
         height: 43
       spriteId: 28c3936735f36304ca6f1c188866233f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_196
+    - name: Frame_196
       frameIndex: 196
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 102
         height: 43
       spriteId: 58602d16b0d67df48b8af1745f239e6e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_197
+    - name: Frame_197
       frameIndex: 197
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 102
         height: 44
       spriteId: b4bf6ece1274e004497de6010c6d61c7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_198
+    - name: Frame_198
       frameIndex: 198
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 39
         height: 42
       spriteId: a57936bbc39afb54c965e1f959ab6adb
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_199
+    - name: Frame_199
       frameIndex: 199
+      additiveSortOrder: 0
       cellRect:
         x: 123
         y: 1
         width: 37
         height: 39
       spriteId: c398112f70be9f84288d58a6f5e1f675
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_200
+    - name: Frame_200
       frameIndex: 200
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: 1
         width: 47
         height: 36
       spriteId: 73654ca61aec90740be07412c5e508f9
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_201
+    - name: Frame_201
       frameIndex: 201
+      additiveSortOrder: 0
       cellRect:
         x: 100
         y: 1
         width: 61
         height: 35
       spriteId: 45d1ebde500c11a47aef585c4857b7b6
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_202
+    - name: Frame_202
       frameIndex: 202
+      additiveSortOrder: 0
       cellRect:
         x: 104
         y: 1
         width: 59
         height: 39
       spriteId: 4e674127635d3254c948ec736d9231a7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_203
+    - name: Frame_203
       frameIndex: 203
+      additiveSortOrder: 0
       cellRect:
         x: 105
         y: 1
         width: 55
         height: 35
       spriteId: ed8c2029315d9f44c95e6fc7f6ca028d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_204
+    - name: Frame_204
       frameIndex: 204
+      additiveSortOrder: 0
       cellRect:
         x: 107
         y: 1
         width: 63
         height: 45
       spriteId: 2135c36e48b887245a033cb15c5bc451
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_205
+    - name: Frame_205
       frameIndex: 205
+      additiveSortOrder: 0
       cellRect:
         x: 109
         y: 1
         width: 64
         height: 47
       spriteId: 6c7af801d03991c419690a07de602255
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_206
+    - name: Frame_206
       frameIndex: 206
+      additiveSortOrder: 0
       cellRect:
         x: 109
         y: 1
         width: 72
         height: 58
       spriteId: 98ef3e5d9a04680418e53eacb918167d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_207
+    - name: Frame_207
       frameIndex: 207
+      additiveSortOrder: 0
       cellRect:
         x: 108
         y: 1
         width: 180
         height: 35
       spriteId: ba03dbc39b84c9c4eb9c1bf7950d531f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_208
+    - name: Frame_208
       frameIndex: 208
+      additiveSortOrder: 0
       cellRect:
         x: 102
         y: 1
         width: 186
         height: 35
       spriteId: d68596300c7f1a049825054687f62367
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_209
+    - name: Frame_209
       frameIndex: 209
+      additiveSortOrder: 0
       cellRect:
         x: 94
         y: 1
         width: 194
         height: 29
       spriteId: 268c58736d595f645907964e370f4bb5
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_210
+    - name: Frame_210
       frameIndex: 210
+      additiveSortOrder: 0
       cellRect:
         x: 93
         y: 1
         width: 195
         height: 29
       spriteId: d1fb733b6beff3d489d040d501ee6113
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_211
+    - name: Frame_211
       frameIndex: 211
+      additiveSortOrder: 0
       cellRect:
         x: 93
         y: 1
         width: 41
         height: 29
       spriteId: d3bfec3ae6a46c149bfe452444758619
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_212
+    - name: Frame_212
       frameIndex: 212
+      additiveSortOrder: 0
       cellRect:
         x: 101
         y: 1
         width: 47
         height: 38
       spriteId: f97c5e5f7bb890646a0653220cb22505
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_213
+    - name: Frame_213
       frameIndex: 213
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 39
         height: 40
       spriteId: 70f49df7af525024880777177e08fb92
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_214
+    - name: Frame_214
       frameIndex: 214
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 5e44337ef2079f246a50a05095bcc7b4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_215
+    - name: Frame_215
       frameIndex: 215
+      additiveSortOrder: 0
       cellRect:
         x: 126
         y: 1
         width: 35
         height: 47
       spriteId: dac2b6e612a796f46832e33b30d54a46
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_216
+    - name: Frame_216
       frameIndex: 216
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 33
         height: 47
       spriteId: 8752f5589ce9bab429883a35b25b22ea
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_217
+    - name: Frame_217
       frameIndex: 217
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 39
         height: 42
       spriteId: 7d2bf5d806d7c5947a7fa5612dd4b2d2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_218
+    - name: Frame_218
       frameIndex: 218
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 45
         height: 52
       spriteId: 1b0fc72f87a47b042a4a3ec258a43422
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_219
+    - name: Frame_219
       frameIndex: 219
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 44
         height: 52
       spriteId: 3d4f42cd68adbb646b31cd5e9da5268e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_220
+    - name: Frame_220
       frameIndex: 220
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 47
         height: 53
       spriteId: c18242cf1cc92654790355179833ad35
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_221
+    - name: Frame_221
       frameIndex: 221
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 53
         height: 54
       spriteId: 0e345360af0bc0d4ea1aaedfdd1579dc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_222
+    - name: Frame_222
       frameIndex: 222
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: f4edbbce4f168b54e9ade93fc0086064
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_223
+    - name: Frame_223
       frameIndex: 223
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: 2247ad80a275f72459e180d86d1d0b2b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_224
+    - name: Frame_224
       frameIndex: 224
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: e26766bcb91a56e4587a7aa1d349d2b3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_225
+    - name: Frame_225
       frameIndex: 225
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: 8effe4399b7eeac48836e46f01561a1d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_226
+    - name: Frame_226
       frameIndex: 226
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: bc3dfe958f474384097db23bb8e652cc
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_227
+    - name: Frame_227
       frameIndex: 227
+      additiveSortOrder: 0
       cellRect:
         x: 139
         y: 1
         width: 52
         height: 65
       spriteId: 43e3173bb1ba2f044b1de5f3da888175
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_228
+    - name: Frame_228
       frameIndex: 228
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 53
         height: 54
       spriteId: 3f950e191615dee44bf100663dad3e57
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_229
+    - name: Frame_229
       frameIndex: 229
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 47
         height: 53
       spriteId: 1a27a20f274fc6845ae5c61ad521258e
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_230
+    - name: Frame_230
       frameIndex: 230
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 44
         height: 52
       spriteId: 973a41b31f8bccf4aa4817b8d85adda8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_231
+    - name: Frame_231
       frameIndex: 231
+      additiveSortOrder: 0
       cellRect:
         x: 140
         y: 1
         width: 44
         height: 52
       spriteId: 173ddc9b9cbc89940b209c1fa73fc10b
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_232
+    - name: Frame_232
       frameIndex: 232
+      additiveSortOrder: 0
       cellRect:
         x: 134
         y: 1
         width: 37
         height: 44
       spriteId: c61a78dd72c04a04cbfba2d9fb17bd6d
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_233
+    - name: Frame_233
       frameIndex: 233
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 45
         height: 44
       spriteId: 13cd1d76e6620cc4b9b41ed5d078ef09
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_234
+    - name: Frame_234
       frameIndex: 234
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 39
         height: 42
       spriteId: 582bf92adaa038c4285143bd0bd04ab2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_235
+    - name: Frame_235
       frameIndex: 235
+      additiveSortOrder: 0
       cellRect:
         x: 121
         y: 1
         width: 39
         height: 42
       spriteId: 32cdaff9762ca484b903d3cfa6ef0bb8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_236
+    - name: Frame_236
       frameIndex: 236
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 39
         height: 50
       spriteId: eda153e4eb0c97c4590492b5ede2f3b4
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_237
+    - name: Frame_237
       frameIndex: 237
+      additiveSortOrder: 0
       cellRect:
         x: 112
         y: 1
         width: 36
         height: 50
       spriteId: 1fa707b1e882e1a4499595b634989960
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_238
+    - name: Frame_238
       frameIndex: 238
+      additiveSortOrder: 0
       cellRect:
         x: 113
         y: 1
         width: 36
         height: 50
       spriteId: 385f2bc7b70165447a3263978a83e3b3
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_239
+    - name: Frame_239
       frameIndex: 239
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 02cb413e90d0cc243a4f1c9075a5391a
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_240
+    - name: Frame_240
       frameIndex: 240
+      additiveSortOrder: 0
       cellRect:
         x: 119
         y: 1
         width: 48
         height: 44
       spriteId: 1a61bedecd2395e4fae0355dac2521db
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_241
+    - name: Frame_241
       frameIndex: 241
+      additiveSortOrder: 0
       cellRect:
         x: 122
         y: 1
         width: 58
         height: 42
       spriteId: 1737be96b1d535c408ef6c319a4b14a8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_242
+    - name: Frame_242
       frameIndex: 242
+      additiveSortOrder: 0
       cellRect:
         x: 125
         y: 1
         width: 56
         height: 39
       spriteId: f05bbb99b5c99744ba9a04cfd1d5e4d9
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_243
+    - name: Frame_243
       frameIndex: 243
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 48
         height: 34
       spriteId: c52df4590589257498e178cbb4e452bf
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_244
+    - name: Frame_244
       frameIndex: 244
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 46
         height: 33
       spriteId: 567e90beae0ae714d935e9acdf0cff64
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_245
+    - name: Frame_245
       frameIndex: 245
+      additiveSortOrder: 0
       cellRect:
         x: 129
         y: 1
         width: 47
         height: 33
       spriteId: 368c06957868c0448b2d962cb2b317fa
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_246
+    - name: Frame_246
       frameIndex: 246
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 49
         height: 33
       spriteId: 69f87e0b0e9558d44bab930406eba5d2
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_247
+    - name: Frame_247
       frameIndex: 247
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 48
         height: 33
       spriteId: 5616bd2575332e24f9f2930e4a726222
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_248
+    - name: Frame_248
       frameIndex: 248
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 47
         height: 33
       spriteId: abb68a5e80654b14eb08fde2a1fd7952
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_249
+    - name: Frame_249
       frameIndex: 249
+      additiveSortOrder: 0
       cellRect:
         x: 128
         y: 1
         width: 47
         height: 33
       spriteId: 5dc60ad52d7f05b4794eea819cce36ff
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_250
+    - name: Frame_250
       frameIndex: 250
+      additiveSortOrder: 0
       cellRect:
         x: 130
         y: 1
         width: 45
         height: 33
       spriteId: 7ce0625f5304aca4c9886e6d263f797f
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_251
+    - name: Frame_251
       frameIndex: 251
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 43
         height: 27
       spriteId: 1dba5642ab740cf44a023430b12390e8
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_252
+    - name: Frame_252
       frameIndex: 252
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 51
         height: 11
       spriteId: 01a1dd5880e4139408251db84be18ff7
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_253
+    - name: Frame_253
       frameIndex: 253
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 56
         height: 7
       spriteId: 2fd716a329784144cab53e89b774eb34
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_254
+    - name: Frame_254
       frameIndex: 254
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 57
         height: 6
       spriteId: 39422f78745f5874fbee338a56634753
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_255
+    - name: Frame_255
       frameIndex: 255
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 58
         height: 6
       spriteId: a3b16d74f02303f47a7df0b9bd5dceec
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_256
+    - name: Frame_256
       frameIndex: 256
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 58
         height: 6
       spriteId: 7a48c1e6c10ce14449c56cfc100a41ae
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_257
+    - name: Frame_257
       frameIndex: 257
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
         width: 58
         height: 6
       spriteId: 5aef5a3a421f13b49a2583c0b1ae0582
-    - name: Elementals_leaf_ranger_free_v1.0_Frame_258
+    - name: Frame_258
       frameIndex: 258
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 1
@@ -7389,3 +7909,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 288, y: 128}
+  previousTextureSize: {x: 1024, y: 2048}
