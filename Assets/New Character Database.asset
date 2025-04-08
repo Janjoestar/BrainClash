@@ -74,5 +74,5 @@ MonoBehaviour:
     maxHealth: 80
     characterAttacks: []
     characterColor: {r: 0.6415094, g: 0.30562478, b: 0.31317273, a: 1}
-    secondaryColor: {r: 0.6132076, g: 0.42519584, b: 0.4306719, a: 0}
-    primaryColor: {r: 0.3773585, g: 0, b: 0.008775783, a: 0}
+    secondaryColor: {r: 0.6132076, g: 0.42519584, b: 0.4306719, a: 1}
+    primaryColor: {r: 0.3773585, g: 0, b: 0.008775783, a: 1}
