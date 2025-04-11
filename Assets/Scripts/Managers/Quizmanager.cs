@@ -101,8 +101,6 @@ public class QuizManager : MonoBehaviour
             ShuffleQuestions();
         }
 
-        ShuffleQuestions();
-
         HideFreezeTimers();
 
         StartQuizPhase();

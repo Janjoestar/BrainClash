@@ -64,7 +64,7 @@ MonoBehaviour:
     primaryColor: {r: 0, g: 0, b: 0, a: 0}
   - characterName: Ground
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 80
+    maxHealth: 120
     characterAttacks: []
     characterColor: {r: 0.735849, g: 0.471801, b: 0.35751158, a: 1}
     secondaryColor: {r: 0, g: 0, b: 0, a: 0}
