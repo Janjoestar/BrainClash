@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 public static class AIQuestionGenerator
 {
     // Using a more reliable model that's still fast
-    private const string MODEL_NAME = "phi3";  // Alternative options: "gemma:2b", "qwen:7b"
+    private const string MODEL_NAME = "llama3";  // Alternative options: "gemma:2b", "qwen:7b"
 
     public static IEnumerator GenerateQuestions(string topic, Action<List<Question>> onComplete, Action<string> onError, int numberOfQuestions)
     {
@@ -17,7 +17,7 @@ public static class AIQuestionGenerator
 
         // Even clearer prompt with explicit format instructions
         string promptText =
-            $"Create {numberOfQuestions} multiple choice quiz questions about {topic}. " +
+            $"Create {7} multiple choice quiz questions about {topic}. " +
             "Each question should have 4 options with only one correct answer. " +
             "Format as a JSON array following EXACTLY this structure:\n" +
             "[{\"question\":\"Who discovered gravity?\",\"options\":[\"Newton\",\"Einstein\",\"Galileo\",\"Darwin\"],\"answer\":0}]\n" +
