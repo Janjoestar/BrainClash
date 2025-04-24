@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player1FreezeTimerText;
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player1DamageMultiText;
+    [SerializeField] private Canvas player1DamageMultiAnimation;
+
 
 
     [Header("Player 2 UI")]
@@ -41,6 +44,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player2FreezeTimerText;
     [SerializeField] private Text player2HealthText;
     [SerializeField] private Text player2DamageMultiText;
+    [SerializeField] private Canvas player2DamageMultiAnimation;
+
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
@@ -50,6 +55,8 @@ public class QuizManager : MonoBehaviour
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
     private List<int> usedQuestionIndices = new List<int>();
+
+    private bool showTextAnimation = false;
 
     [Header("Freeze UI")]
     private bool isReadingTime = true;
@@ -436,6 +443,10 @@ public class QuizManager : MonoBehaviour
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
 
+        GameObject p1damagePopup;
+        GameObject p2damagePopup;
+
+
         Color playerColor = playerNumber == 1 ? GameManager.Instance.SelectedCharacterP1.characterColor : GameManager.Instance.SelectedCharacterP2.characterColor;
 
         if (player1ColorTransition != null)
@@ -469,6 +480,25 @@ public class QuizManager : MonoBehaviour
         }
 
         ShowAnswerOptions();
+
+        if (playerWhoBuzzed == 1 && showTextAnimation)
+        {
+            p1damagePopup = Instantiate(player1DamageMultiAnimation, Player1.transform).gameObject;
+            StartCoroutine(DestroyAfterDelay(p1damagePopup, 0.75f));
+            showTextAnimation = false;
+        }
+        else if (playerWhoBuzzed == 2 && showTextAnimation)
+        {
+            p2damagePopup = Instantiate(player1DamageMultiAnimation, Player2.transform).gameObject;
+            StartCoroutine(DestroyAfterDelay(p2damagePopup, 0.75f));
+            showTextAnimation = false;
+        }
+    }
+
+    private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(obj);
     }
 
     private IEnumerator TransitionColor(Image image, Color targetColor)
@@ -518,6 +548,7 @@ public class QuizManager : MonoBehaviour
         isBuzzLocked = false;
         playerWhoBuzzed = 0;
 
+        showTextAnimation = true;
         PlayerBuzzed(otherPlayer);
     }
 
