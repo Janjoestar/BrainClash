@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static event Action OnGameManagerReady; // Event for when GameManager finishes loading characters
 
-    [SerializeField] private int player1Health = 1;
-    [SerializeField] private int player2Health = 1;
+    [SerializeField] private float player1Health = 1;
+    [SerializeField] private float player2Health = 1;
 
     private int lastCorrectPlayer = 0;
 
@@ -23,6 +23,28 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip battleMusic;
+
+    public static float player1DamageMultiplier = 1;
+    public static float player2DamageMultiplier = 1;
+
+    public void ResetDamageMultipliers()
+    {
+        player1DamageMultiplier = 1;
+        player2DamageMultiplier = 1;
+    }
+
+    public void SetDoubleDamageForPlayer(int playerNumber, float damageMultiplier)
+    {
+        if (playerNumber == 1)
+            player2DamageMultiplier += damageMultiplier;
+        else if (playerNumber == 2)
+            player1DamageMultiplier += damageMultiplier;
+        else
+        {
+            Debug.Log("Player Number false");
+        }
+    }
+
 
 
     private void Awake()
@@ -182,42 +204,52 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public int GetPlayerHealth(int player)
+    public float GetPlayerHealth(int player)
     {
         return player == 1 ? player1Health : player2Health;
     }
 
-    public int DamagePlayer(int player, int damage)
+    public float DamagePlayer(int player, float damage, bool applyDamageMultiplier)
     {
-        int actualDamage = damage;
+        float actualDamage;
+        if (player == 2 && applyDamageMultiplier)
+        {
+            actualDamage = damage * player1DamageMultiplier;
+        }
+        else if (player == 1 && applyDamageMultiplier)
+        {
+            actualDamage = damage * player2DamageMultiplier;
+        }
+        else
+        actualDamage = damage;
 
         if (player == 1)
         {
-            actualDamage = Mathf.Min(player1Health, damage);
-            player1Health = Mathf.Max(0, player1Health - damage);
+            actualDamage = Mathf.Min(player1Health, actualDamage); // Use actualDamage here
+            player1Health = Mathf.Max(0, player1Health - actualDamage); // And here
         }
         else
         {
-            actualDamage = Mathf.Min(player2Health, damage);
-            player2Health = Mathf.Max(0, player2Health - damage);
+            actualDamage = Mathf.Min(player2Health, actualDamage); // Use actualDamage here
+            player2Health = Mathf.Max(0, player2Health - actualDamage); // And here
         }
 
         return actualDamage;
     }
 
-    public int HealPlayer(int playerNum, int amount)
+    public float HealPlayer(int playerNum, float amount)
     {
-        int actualHealing = 0;
+        float actualHealing = 0;
 
         if (playerNum == 1)
         {
-            int oldHealth = player1Health;
+            float oldHealth = player1Health;
             player1Health = Mathf.Min(player1Health + amount, SelectedCharacterP1.maxHealth);
             actualHealing = player1Health - oldHealth;
         }
         else if (playerNum == 2)
         {
-            int oldHealth = player2Health;
+            float oldHealth = player2Health;
             player2Health = Mathf.Min(player2Health + amount, SelectedCharacterP2.maxHealth);
             actualHealing = player2Health - oldHealth;
         }
@@ -238,7 +270,9 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToQuizScene()
     {
-            SceneManager.LoadScene("QuizScene");
+        player1DamageMultiplier = 1;
+        player2DamageMultiplier = 1;
+        SceneManager.LoadScene("QuizScene");
     }
 
     public void GoToBattleScene()

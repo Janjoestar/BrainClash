@@ -21,6 +21,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private float earlyBuzzPenaltyTime = 1.5f; // Time penalty for buzzing too early
     [SerializeField] private float colorTransitionSpeed = 2f;
     [SerializeField] private float initialSlideInTime = 0.75f; // How long the initial animation takes
+    [SerializeField] private Button passQuestionButton; // Assign in inspector
 
     [Header("Player 1 UI")]
     [SerializeField] private RectTransform leftColorPanel;  // Panel for Player 1 color
@@ -28,13 +29,18 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Image leftBackgroundImage;
     private Coroutine player1ColorTransition;
     [SerializeField] private Text player1FreezeTimerText;
+    [SerializeField] private Text player1HealthText;
+    [SerializeField] private Text player1DamageMultiText;
+
 
     [Header("Player 2 UI")]
     [SerializeField] private RectTransform rightColorPanel; // Panel for Player 2 color
     private Coroutine rightPanelAnimation;
-    [SerializeField] private Text player2FreezeTimerText;
     [SerializeField] private Image rightBackgroundImage;
     private Coroutine player2ColorTransition;
+    [SerializeField] private Text player2FreezeTimerText;
+    [SerializeField] private Text player2HealthText;
+    [SerializeField] private Text player2DamageMultiText;
 
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
@@ -51,6 +57,8 @@ public class QuizManager : MonoBehaviour
     private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
     private float[] playerFreezeTimeRemaining = new float[3]; // Remaining freeze time for each player
     private Color frozenColor = new Color(0.7f, 0.9f, 1f); // Light blue "frozen" color
+
+
 
     private void Awake()
     {
@@ -331,14 +339,29 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    private void UpdatePlayerInfos()
+    {
+        player1HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(2).ToString();
+        player2HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(1).ToString();
+        player1DamageMultiText.text = "Damage Multiplier: " + GameManager.player2DamageMultiplier.ToString() + "x";
+        player2DamageMultiText.text = "Damage Multiplier: " + GameManager.player1DamageMultiplier.ToString() + "x";
+    }
+
     private void StartQuizPhase()
     {
+        GameManager.Instance.ResetDamageMultipliers();
+        UpdatePlayerInfos();
+
         // Reset buzz state
         isBuzzLocked = false;
         canBuzz = true;
         playerWhoBuzzed = 0;
         playerFrozen[1] = false;
         playerFrozen[2] = false;
+
+        // Reset pass question state
+        questionWasPassed = false;
+        playerWhoPassedQuestion = 0;
 
         // Hide freeze timer texts
         HideFreezeTimers();
@@ -463,6 +486,42 @@ public class QuizManager : MonoBehaviour
         image.color = targetColor;
     }
 
+    private bool questionWasPassed = false;
+    private int playerWhoPassedQuestion = 0;
+
+    public void PassQuestionToOtherPlayer()
+    {
+        if (playerWhoBuzzed == 0 || questionWasPassed)
+            return;
+
+        questionWasPassed = true;
+        playerWhoPassedQuestion = playerWhoBuzzed;
+
+        GameManager.Instance.SetDoubleDamageForPlayer(playerWhoPassedQuestion, 1f);
+
+        UpdatePlayerInfos();
+
+        int otherPlayer = (playerWhoBuzzed == 1) ? 2 : 1;
+
+        StartCoroutine(PassQuestionAnimation(otherPlayer));
+    }
+
+    private IEnumerator PassQuestionAnimation(int otherPlayer)
+    {
+        questionText.text = "Question passed to Player " + otherPlayer + "!";
+
+        yield return new WaitForSeconds(0.5f);
+
+        int originalPlayer = playerWhoBuzzed;
+
+        canBuzz = true;
+        isBuzzLocked = false;
+        playerWhoBuzzed = 0;
+
+        PlayerBuzzed(otherPlayer);
+    }
+
+    // Modify ShowAnswerOptions to reset and show the pass button
     private void ShowAnswerOptions()
     {
         Question q = questions[currentQuestionIndex];
@@ -482,6 +541,11 @@ public class QuizManager : MonoBehaviour
             {
                 answerTexts[i].transform.parent.gameObject.SetActive(false);
             }
+        }
+
+        if (passQuestionButton != null)
+        {
+            passQuestionButton.interactable = !questionWasPassed;
         }
     }
 
@@ -557,6 +621,7 @@ public class QuizManager : MonoBehaviour
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
 
+
     public void SelectAnswer(int answerIndex)
     {
         if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
@@ -581,6 +646,17 @@ public class QuizManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
+
+            // If this player passed the question, they'll take double damage
+            if (questionWasPassed && playerWhoPassedQuestion == playerWhoBuzzed)
+            {
+                GameManager.Instance.SetDoubleDamageForPlayer(playerWhoBuzzed, 2f);
+            }
+        }
+
+        if (GameManager.Instance != null)
             GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
 
         if (GameManager.Instance != null)
@@ -589,7 +665,19 @@ public class QuizManager : MonoBehaviour
 
     private IEnumerator ResetBuzzer()
     {
+        GameManager.Instance.DamagePlayer(playerWhoBuzzed, 15f, false);
+
+        UpdatePlayerInfos();
+
+
+        if (playerWhoBuzzed == 1)
+            questionText.text = "Player " + playerWhoBuzzed + " Took 15 damage";
+        else
+            questionText.text = "Player " + playerWhoBuzzed + " Took 15 damage";
+
         isBuzzLocked = true;
+
+        yield return new WaitForSeconds(1.5f);
 
         questionText.text = "Incorrect! Try again...";
 
