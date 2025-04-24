@@ -41,9 +41,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text damageTakenText;
     [SerializeField] private Text healingDoneText;
 
-    private Dictionary<int, int> damageDealt = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
-    private Dictionary<int, int> damageTaken = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
-    private Dictionary<int, int> healingDone = new Dictionary<int, int>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<float, float> damageDealt = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<float, float> damageTaken = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<float, float> healingDone = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
 
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
@@ -75,6 +75,9 @@ public class BattleManager : MonoBehaviour
 
         Character p1Character = GameManager.Instance.SelectedCharacterP1;
         Character p2Character = GameManager.Instance.SelectedCharacterP2;
+
+        Debug.Log($"Player 1 is taking {GameManager.player1DamageMultiplier} times more damage");
+        Debug.Log($"Player 2 is taking {GameManager.player2DamageMultiplier} times more damage");
 
         SetCharacter(Player1, p1Character);
         SetCharacter(Player2, p2Character);
@@ -153,8 +156,8 @@ public class BattleManager : MonoBehaviour
 
     private void CheckForGameOver()
     {
-        int p1Health = GameManager.Instance.GetPlayerHealth(1);
-        int p2Health = GameManager.Instance.GetPlayerHealth(2);
+        float p1Health = GameManager.Instance.GetPlayerHealth(1);
+        float p2Health = GameManager.Instance.GetPlayerHealth(2);
 
         if (p1Health <= 0 || p2Health <= 0)
         {
@@ -261,8 +264,8 @@ public class BattleManager : MonoBehaviour
 
     private void UpdateHealthDisplays()
     {
-        int p1Health = GameManager.Instance.GetPlayerHealth(1);
-        int p2Health = GameManager.Instance.GetPlayerHealth(2);
+        float p1Health = GameManager.Instance.GetPlayerHealth(1);
+        float p2Health = GameManager.Instance.GetPlayerHealth(2);
 
         if (attackingPlayer == 1)
         {
@@ -291,13 +294,13 @@ public class BattleManager : MonoBehaviour
 
         if (attack.attackType == AttackType.Heal)
         {
-            int healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
+            float healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
             healingDone[attackingPlayer] += healAmount;
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + healAmount + " HP!";
         }
         else
         {
-            int actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage);
+            float actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage, true);
             damageDealt[attackingPlayer] += actualDamage;
             damageTaken[targetPlayer] += actualDamage;
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";

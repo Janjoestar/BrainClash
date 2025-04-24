@@ -16,7 +16,7 @@ public enum AttackType
 public class AttackData
 {
     public string attackName;
-    public int damage;
+    public float damage;
     public string description;
     public string animationTrigger;
     public AttackType attackType;
@@ -29,7 +29,7 @@ public class AttackData
     public Color flashColor;
     public string soundEffectName;     // Sound effect file name (without extension)
 
-    public AttackData(string name, int dmg, string desc, string animTrigger,
+    public AttackData(string name, float dmg, string desc, string animTrigger,
                     AttackType type, string effectName, Vector3 offset, float delay,
                     float flashInterval, Color flashColor, string sound = "",
                     string hitEffectName = "", Vector3 hitOffset = default)
