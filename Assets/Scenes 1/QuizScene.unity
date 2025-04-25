@@ -2784,18 +2784,17 @@ MonoBehaviour:
   colorTransitionSpeed: 2
   initialSlideInTime: 0.75
   passQuestionButton: {fileID: 88711548}
+  DamageMultiAnimation: {fileID: 4790386049251404545, guid: 78df2f91dad965248939802e7ccf2d7b, type: 3}
   leftColorPanel: {fileID: 357062960}
   leftBackgroundImage: {fileID: 357062961}
   player1FreezeTimerText: {fileID: 1749539807}
   player1HealthText: {fileID: 1113924091}
   player1DamageMultiText: {fileID: 715406381}
-  player1DamageMultiAnimation: {fileID: 4713785378714889003, guid: 71b3dacab5f1ed14b98369e43d4b23ed, type: 3}
   rightColorPanel: {fileID: 2139890987}
   rightBackgroundImage: {fileID: 2139890989}
   player2FreezeTimerText: {fileID: 1354420917}
   player2HealthText: {fileID: 1800171162}
   player2DamageMultiText: {fileID: 44344280}
-  player2DamageMultiAnimation: {fileID: 8628421802167107609, guid: dc33e1049266bfa4e964f93d634939c6, type: 3}
 --- !u!4 &1835962244
 Transform:
   m_ObjectHideFlags: 0
