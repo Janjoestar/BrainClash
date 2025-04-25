@@ -21,8 +21,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
 
-    [SerializeField] private AudioClip menuMusic;
-    [SerializeField] private AudioClip battleMusic;
+    // Music arrays for different categories
+    [SerializeField] private AudioClip[] menuMusic;        // For StartScreen and CharacterSelection
+    [SerializeField] private AudioClip[] loadingMusic;     // For LoadingScene
+    [SerializeField] private AudioClip[] gameplayMusic;    // For QuizScene and BattleScene
+
+    // Keep track of current music category to avoid switching when moving between scenes of same category
+    private string currentMusicCategory = "";
 
     public static float player1DamageMultiplier = 1;
     public static float player2DamageMultiplier = 1;
@@ -44,8 +49,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player Number false");
         }
     }
-
-
 
     private void Awake()
     {
@@ -86,8 +89,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void LoadSelectedCharacters()
     {
         int selectedIndexP1 = PlayerPrefs.GetInt("selectedOptionP1", 0);
@@ -97,7 +98,6 @@ public class GameManager : MonoBehaviour
         SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
         player1Health = SelectedCharacterP1.maxHealth;
         player2Health = SelectedCharacterP2.maxHealth;
-
 
         OnGameManagerReady?.Invoke(); // Notify BattleManager that characters are ready
                                       // Force reapply animations after loading to fix glitches
@@ -134,16 +134,58 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        string name = scene.name;
+        // Determine which music category to use based on scene name
+        string musicCategory = GetMusicCategoryForScene(scene.name);
 
-        if (name == "StartScreen" || name == "CharacterSelection")
+        // Only change the music if we're moving to a different music category
+        if (musicCategory != currentMusicCategory)
         {
-            PlayMusic(menuMusic);
+            currentMusicCategory = musicCategory;
+
+            switch (musicCategory)
+            {
+                case "menu":
+                    PlayRandomMusic(menuMusic);
+                    break;
+                case "loading":
+                    PlayRandomMusic(loadingMusic);
+                    break;
+                case "gameplay":
+                    PlayRandomMusic(gameplayMusic);
+                    break;
+            }
         }
-        else if (name == "QuizScene" || name == "BattleScene")
+    }
+
+    private string GetMusicCategoryForScene(string sceneName)
+    {
+        switch (sceneName)
         {
-            PlayMusic(battleMusic);
+            case "StartScreen":
+            case "CharacterSelection":
+                return "menu";
+            case "LoadingScene":
+                return "loading";
+            case "QuizScene":
+            case "BattleScene":
+                return "gameplay";
+            default:
+                Debug.LogWarning("Unknown scene name: " + sceneName);
+                return "menu"; // Default to menu music
         }
+    }
+
+    private void PlayRandomMusic(AudioClip[] musicClips)
+    {
+        if (musicClips == null || musicClips.Length == 0)
+        {
+            Debug.LogWarning("No music clips available for this category.");
+            return;
+        }
+
+        // Select a random clip from the array
+        AudioClip selectedClip = musicClips[UnityEngine.Random.Range(0, musicClips.Length)];
+        PlayMusic(selectedClip);
     }
 
     private void PlayMusic(AudioClip clip)
@@ -160,7 +202,6 @@ public class GameManager : MonoBehaviour
         musicSource.clip = clip;
         musicSource.Play();
     }
-
 
     public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
     {
@@ -190,9 +231,6 @@ public class GameManager : MonoBehaviour
         musicSource.volume = originalMusicVolume;
     }
 
-
-
-
     public void SetLastCorrectPlayer(int playerNumber)
     {
         lastCorrectPlayer = playerNumber;
@@ -202,7 +240,6 @@ public class GameManager : MonoBehaviour
     {
         return lastCorrectPlayer;
     }
-
 
     public float GetPlayerHealth(int player)
     {
@@ -221,7 +258,7 @@ public class GameManager : MonoBehaviour
             actualDamage = damage * player2DamageMultiplier;
         }
         else
-        actualDamage = damage;
+            actualDamage = damage;
 
         if (player == 1)
         {
@@ -277,6 +314,6 @@ public class GameManager : MonoBehaviour
 
     public void GoToBattleScene()
     {
-            SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("BattleScene");
     }
 }

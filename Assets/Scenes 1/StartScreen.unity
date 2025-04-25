@@ -2110,6 +2110,46 @@ PrefabInstance:
       propertyPath: musicSource
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: menuMusic.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: loadingMusic.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'menuMusic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6a26bb98e75616143b3b96bfad50f12e, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'menuMusic.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a8ea20baac74af419de2aee46dbbe86, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'menuMusic.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f68adde797af7c449aa65835ae435c1e, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'menuMusic.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: dfcc9e8b480930b4c8b58e3fef623594, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: gameplayMusic.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'loadingMusic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8093bd30053ba0e4eaa10225c9500186, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'gameplayMusic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 21d94c716eae93745913320514a46d25, type: 3}
+    - target: {fileID: 8405208316699419210, guid: 48727fc8743751d45a76bdd3d6faaabe, type: 3}
+      propertyPath: 'gameplayMusic.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b935d3a2ccd8fb244aa1f6208f7ab1fb, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

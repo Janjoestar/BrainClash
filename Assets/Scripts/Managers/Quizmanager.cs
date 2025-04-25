@@ -24,6 +24,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private float initialSlideInTime = 0.75f; // How long the initial animation takes
     [SerializeField] private Button passQuestionButton; // Assign in inspector
 
+    [SerializeField] private Canvas DamageMultiAnimation;
+
     [Header("Player 1 UI")]
     [SerializeField] private RectTransform leftColorPanel;  // Panel for Player 1 color
     private Coroutine leftPanelAnimation;
@@ -32,7 +34,6 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player1FreezeTimerText;
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player1DamageMultiText;
-    [SerializeField] private Canvas player1DamageMultiAnimation;
 
 
 
@@ -44,7 +45,6 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player2FreezeTimerText;
     [SerializeField] private Text player2HealthText;
     [SerializeField] private Text player2DamageMultiText;
-    [SerializeField] private Canvas player2DamageMultiAnimation;
 
 
     private int currentQuestionIndex = -1;
@@ -77,7 +77,6 @@ public class QuizManager : MonoBehaviour
         if (questions.Count == 0)
             InitializeExampleQuestions();
 
-        // Cache the "Game" object transform
         gameTransform = answerPanel.transform.Find("Game");
         if (gameTransform != null)
         {
@@ -113,7 +112,6 @@ public class QuizManager : MonoBehaviour
         else
         {
             InitializeExampleQuestions();
-            ShuffleQuestions();
         }
 
         HideFreezeTimers();
@@ -217,10 +215,8 @@ public class QuizManager : MonoBehaviour
 
     private void Update()
     {
-        // Handle buzzer input with proper checks
         HandleBuzzerInput();
 
-        // Update freeze timers
         UpdateFreezeTimers();
     }
 
@@ -337,15 +333,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    private void ShuffleQuestions()
-    {
-        for (int i = questions.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (questions[i], questions[randomIndex]) = (questions[randomIndex], questions[i]);
-        }
-    }
-
+  
     private void UpdatePlayerInfos()
     {
         player1HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(2).ToString();
@@ -483,13 +471,13 @@ public class QuizManager : MonoBehaviour
 
         if (playerWhoBuzzed == 1 && showTextAnimation)
         {
-            p1damagePopup = Instantiate(player1DamageMultiAnimation, Player1.transform).gameObject;
+            p1damagePopup = Instantiate(DamageMultiAnimation, Player1.transform).gameObject;
             StartCoroutine(DestroyAfterDelay(p1damagePopup, 0.75f));
             showTextAnimation = false;
         }
         else if (playerWhoBuzzed == 2 && showTextAnimation)
         {
-            p2damagePopup = Instantiate(player1DamageMultiAnimation, Player2.transform).gameObject;
+            p2damagePopup = Instantiate(DamageMultiAnimation, Player2.transform).gameObject;
             StartCoroutine(DestroyAfterDelay(p2damagePopup, 0.75f));
             showTextAnimation = false;
         }
