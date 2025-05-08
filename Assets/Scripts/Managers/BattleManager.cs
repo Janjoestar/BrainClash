@@ -585,7 +585,7 @@ public class BattleManager : MonoBehaviour
         battleStatusText.text = characterName + "'s turn to attack!";
 
         float startY = -75;
-        float xPosition = -692; 
+        float xPosition = 692; 
         float yStep = -100;
 
         int index = 0;
