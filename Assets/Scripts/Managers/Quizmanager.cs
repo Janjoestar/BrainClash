@@ -23,6 +23,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private float colorTransitionSpeed = 2f;
     [SerializeField] private float initialSlideInTime = 0.75f; // How long the initial animation takes
     [SerializeField] private Button passQuestionButton; // Assign in inspector
+    [SerializeField] private Button[] answerButtons; // Add this field to store references to answer buttons
 
     [SerializeField] private Canvas DamageMultiAnimation;
 
@@ -57,6 +58,7 @@ public class QuizManager : MonoBehaviour
     private List<int> usedQuestionIndices = new List<int>();
 
     private bool showTextAnimation = false;
+    private bool answerSelected = false; // Add this flag to track if an answer has been selected
 
     [Header("Freeze UI")]
     private bool isReadingTime = true;
@@ -126,7 +128,7 @@ public class QuizManager : MonoBehaviour
 
         Vector2 screenSize = new Vector2(Screen.width, Screen.height);
 
-        leftColorPanel.anchoredPosition = new Vector2(-480,0);
+        leftColorPanel.anchoredPosition = new Vector2(-480, 0);
 
         rightColorPanel.anchoredPosition = new Vector2(480, 0);
     }
@@ -328,12 +330,12 @@ public class QuizManager : MonoBehaviour
         {
             Color originalColor = spriteRenderer.color;
             spriteRenderer.color = frozenColor;
-            yield return new WaitForSeconds(0.2f); // Flash briefly
+            yield return new WaitForSeconds(0.5f); // Flash briefly
             spriteRenderer.color = originalColor;
         }
     }
 
-  
+
     private void UpdatePlayerInfos()
     {
         player1HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(2).ToString();
@@ -357,6 +359,9 @@ public class QuizManager : MonoBehaviour
         // Reset pass question state
         questionWasPassed = false;
         playerWhoPassedQuestion = 0;
+
+        // Reset answer selection state
+        answerSelected = false;
 
         // Hide freeze timer texts
         HideFreezeTimers();
@@ -424,12 +429,13 @@ public class QuizManager : MonoBehaviour
 
     public void PlayerBuzzed(int playerNumber)
     {
-        if (isBuzzLocked || isReadingTime || !canBuzz || playerFrozen[playerNumber])
+        if (isBuzzLocked || isReadingTime || !canBuzz || playerFrozen[playerNumber] || playerWhoBuzzed == 1 || playerWhoBuzzed == 2)
             return;
 
         isBuzzLocked = true;
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
+        answerSelected = false; // Reset answer selection state when a player buzzes
 
         GameObject p1damagePopup;
         GameObject p2damagePopup;
@@ -526,6 +532,9 @@ public class QuizManager : MonoBehaviour
 
     private IEnumerator PassQuestionAnimation(int otherPlayer)
     {
+        // Store the current question text
+        string currentQuestion = questions[currentQuestionIndex].questionText;
+
         questionText.text = "Question passed to Player " + otherPlayer + "!";
 
         yield return new WaitForSeconds(0.5f);
@@ -538,6 +547,10 @@ public class QuizManager : MonoBehaviour
 
         showTextAnimation = true;
         PlayerBuzzed(otherPlayer);
+
+        // Restore the question text
+        questionText.text = currentQuestion;
+        SetDynamicFontSizeForQuestion(questionText, currentQuestion);
     }
 
     // Modify ShowAnswerOptions to reset and show the pass button
@@ -565,6 +578,18 @@ public class QuizManager : MonoBehaviour
         if (passQuestionButton != null)
         {
             passQuestionButton.interactable = !questionWasPassed;
+        }
+
+        // Make sure all answer buttons are interactable (they might have been disabled in a previous round)
+        if (answerButtons != null && answerButtons.Length > 0)
+        {
+            for (int i = 0; i < answerButtons.Length; i++)
+            {
+                if (answerButtons[i] != null)
+                {
+                    answerButtons[i].interactable = true;
+                }
+            }
         }
     }
 
@@ -643,6 +668,25 @@ public class QuizManager : MonoBehaviour
 
     public void SelectAnswer(int answerIndex)
     {
+        // Check if an answer has already been selected
+        if (answerSelected)
+            return;
+
+        // Mark that an answer has been selected
+        answerSelected = true;
+
+        // Disable all answer buttons
+        if (answerButtons != null && answerButtons.Length > 0)
+        {
+            for (int i = 0; i < answerButtons.Length; i++)
+            {
+                if (answerButtons[i] != null)
+                {
+                    answerButtons[i].interactable = false;
+                }
+            }
+        }
+
         if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
         {
             if (GameManager.Instance != null)
