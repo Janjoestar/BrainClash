@@ -2402,7 +2402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -541, y: -462}
+  m_AnchoredPosition: {x: -541, y: -250}
   m_SizeDelta: {x: 600, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1749539806
@@ -2426,7 +2426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.70923734, b: 0.93962264, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2784,6 +2784,7 @@ MonoBehaviour:
   colorTransitionSpeed: 2
   initialSlideInTime: 0.75
   passQuestionButton: {fileID: 88711548}
+  answerButtons: []
   DamageMultiAnimation: {fileID: 4790386049251404545, guid: 78df2f91dad965248939802e7ccf2d7b, type: 3}
   leftColorPanel: {fileID: 357062960}
   leftBackgroundImage: {fileID: 357062961}
