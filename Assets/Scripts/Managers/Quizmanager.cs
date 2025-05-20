@@ -36,8 +36,6 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player1HealthText;
     [SerializeField] private Text player1DamageMultiText;
 
-
-
     [Header("Player 2 UI")]
     [SerializeField] private RectTransform rightColorPanel; // Panel for Player 2 color
     private Coroutine rightPanelAnimation;
@@ -47,7 +45,6 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player2HealthText;
     [SerializeField] private Text player2DamageMultiText;
 
-
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
     private int playerWhoBuzzed = 0; // 0 = none, 1 = player1, 2 = player2
@@ -56,6 +53,7 @@ public class QuizManager : MonoBehaviour
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
     private List<int> usedQuestionIndices = new List<int>();
+    private HashSet<int> usedQuestionSet = new HashSet<int>(); // More efficient for checking if a question has been used
 
     private bool showTextAnimation = false;
     private bool answerSelected = false; // Add this flag to track if an answer has been selected
@@ -66,8 +64,6 @@ public class QuizManager : MonoBehaviour
     private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
     private float[] playerFreezeTimeRemaining = new float[3]; // Remaining freeze time for each player
     private Color frozenColor = new Color(0.7f, 0.9f, 1f); // Light blue "frozen" color
-
-
 
     private void Awake()
     {
@@ -115,6 +111,10 @@ public class QuizManager : MonoBehaviour
         {
             InitializeExampleQuestions();
         }
+
+        // Initialize question tracking
+        usedQuestionIndices.Clear();
+        usedQuestionSet.Clear();
 
         HideFreezeTimers();
 
@@ -268,34 +268,76 @@ public class QuizManager : MonoBehaviour
         if (isBuzzLocked)
             return;
 
-        // Player 1 input
-        if (Input.GetKeyDown(KeyCode.S))
+        // Check for simultaneous early buzzes first
+        bool player1Buzzed = Input.GetKeyDown(KeyCode.S);
+        bool player2Buzzed = Input.GetKeyDown(KeyCode.K);
+
+        if (isReadingTime)
         {
-            if (isReadingTime)
+            // Handle early buzzes
+            if (player1Buzzed && player2Buzzed)
             {
-                // Player buzzed too early - apply penalty
+                // Both players buzzed simultaneously and too early
                 ApplyEarlyBuzzPenalty(1);
+                ApplyEarlyBuzzPenalty(2);
+                return;
             }
-            else if (canBuzz && !playerFrozen[1])
+            else if (player1Buzzed)
             {
-                // Valid buzz
-                PlayerBuzzed(1);
+                // Player 1 buzzed too early
+                ApplyEarlyBuzzPenalty(1);
+                return;
+            }
+            else if (player2Buzzed)
+            {
+                // Player 2 buzzed too early
+                ApplyEarlyBuzzPenalty(2);
+                return;
             }
         }
-        // Player 2 input
-        else if (Input.GetKeyDown(KeyCode.K))
+        else
         {
-            if (isReadingTime)
+            // Handle valid buzzes (not in reading time)
+            if (player1Buzzed && player2Buzzed)
             {
-                // Player buzzed too early - apply penalty
-                ApplyEarlyBuzzPenalty(2);
+                // Both players buzzed simultaneously - determine who gets priority
+                HandleSimultaneousBuzzes();
             }
-            else if (canBuzz && !playerFrozen[2])
+            else if (player1Buzzed && canBuzz && !playerFrozen[1])
             {
-                // Valid buzz
+                // Valid buzz from Player 1
+                PlayerBuzzed(1);
+            }
+            else if (player2Buzzed && canBuzz && !playerFrozen[2])
+            {
+                // Valid buzz from Player 2
                 PlayerBuzzed(2);
             }
         }
+    }
+
+    // Handle simultaneous valid buzzes
+    private void HandleSimultaneousBuzzes()
+    {
+        // Only proceed if both players can buzz
+        if (!canBuzz || (playerFrozen[1] && playerFrozen[2]))
+            return;
+
+        // If one player is frozen, the other gets priority
+        if (playerFrozen[1])
+        {
+            PlayerBuzzed(2);
+            return;
+        }
+        else if (playerFrozen[2])
+        {
+            PlayerBuzzed(1);
+            return;
+        }
+
+        // If both players can buzz, randomly select one
+        int randomPlayer = Random.Range(1, 3); // Returns 1 or 2
+        PlayerBuzzed(randomPlayer);
     }
 
     private void ApplyEarlyBuzzPenalty(int playerNumber)
@@ -334,7 +376,6 @@ public class QuizManager : MonoBehaviour
             spriteRenderer.color = originalColor;
         }
     }
-
 
     private void UpdatePlayerInfos()
     {
@@ -407,9 +448,14 @@ public class QuizManager : MonoBehaviour
 
         isReadingTime = false;
 
+        // Add a small delay to ensure all input processing for this frame is complete
         yield return new WaitForSeconds(0.5f);
 
-        MoveToBuzzerPhase();
+        // Check if a player has already buzzed (could happen exactly as time runs out)
+        if (playerWhoBuzzed == 0)
+        {
+            MoveToBuzzerPhase();
+        }
     }
 
     private void MoveToBuzzerPhase()
@@ -429,7 +475,7 @@ public class QuizManager : MonoBehaviour
 
     public void PlayerBuzzed(int playerNumber)
     {
-        if (isBuzzLocked || isReadingTime || !canBuzz || playerFrozen[playerNumber] || playerWhoBuzzed == 1 || playerWhoBuzzed == 2)
+        if (isBuzzLocked || (isReadingTime && currentReadingTime > 0) || !canBuzz || playerFrozen[playerNumber] || playerWhoBuzzed == 1 || playerWhoBuzzed == 2)
             return;
 
         isBuzzLocked = true;
@@ -439,7 +485,6 @@ public class QuizManager : MonoBehaviour
 
         GameObject p1damagePopup;
         GameObject p2damagePopup;
-
 
         Color playerColor = playerNumber == 1 ? GameManager.Instance.SelectedCharacterP1.characterColor : GameManager.Instance.SelectedCharacterP2.characterColor;
 
@@ -595,18 +640,38 @@ public class QuizManager : MonoBehaviour
 
     private int GetNextUniqueQuestionIndex()
     {
-        if (usedQuestionIndices.Count >= questions.Count)
+        // If we've used all questions, reset the tracking
+        if (usedQuestionSet.Count >= questions.Count)
         {
+            Debug.Log("All questions have been used. Resetting question pool.");
             usedQuestionIndices.Clear();
+            usedQuestionSet.Clear();
         }
 
         int randomIndex;
+        int attempts = 0;
+        int maxAttempts = questions.Count * 2; // Safeguard against infinite loops
+
         do
         {
             randomIndex = Random.Range(0, questions.Count);
-        } while (usedQuestionIndices.Contains(randomIndex));
+            attempts++;
 
+            // Safety check to prevent infinite loop
+            if (attempts > maxAttempts)
+            {
+                Debug.LogWarning("Failed to find an unused question after multiple attempts. Clearing question history.");
+                usedQuestionIndices.Clear();
+                usedQuestionSet.Clear();
+                break;
+            }
+        } while (usedQuestionSet.Contains(randomIndex));
+
+        // Add to both data structures
         usedQuestionIndices.Add(randomIndex);
+        usedQuestionSet.Add(randomIndex);
+
+        Debug.Log($"Selected question {randomIndex}. Used questions: {usedQuestionSet.Count}/{questions.Count}");
 
         return randomIndex;
     }
@@ -664,7 +729,6 @@ public class QuizManager : MonoBehaviour
 
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
-
 
     public void SelectAnswer(int answerIndex)
     {
@@ -729,9 +793,7 @@ public class QuizManager : MonoBehaviour
     private IEnumerator ResetBuzzer()
     {
         GameManager.Instance.DamagePlayer(playerWhoBuzzed, 15f, false);
-
         UpdatePlayerInfos();
-
 
         if (playerWhoBuzzed == 1)
             questionText.text = "Player " + playerWhoBuzzed + " Took 15 damage";
@@ -742,30 +804,54 @@ public class QuizManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        questionText.text = "Incorrect! Try again...";
+        // Check if player health is 0 or less
+        float playerHealth = GameManager.Instance.GetPlayerHealth(playerWhoBuzzed);
+        if (playerHealth <= 0)
+        {
+            questionText.text = "Player " + playerWhoBuzzed + " has been defeated!";
+            yield return new WaitForSeconds(1.5f);
+
+            // Switch to the battle scene and show end screen
+            StartCoroutine(TransitionToBattleEndScreen(playerWhoBuzzed));
+        }
+        else
+        {
+            questionText.text = "Incorrect! Try again...";
+            yield return new WaitForSeconds(1f);
+
+            if (GameManager.Instance != null)
+            {
+                Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
+                Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
+
+                if (player1ColorTransition != null)
+                    StopCoroutine(player1ColorTransition);
+                if (player2ColorTransition != null)
+                    StopCoroutine(player2ColorTransition);
+
+                player1ColorTransition = StartCoroutine(TransitionColor(leftBackgroundImage, player1Color));
+                player2ColorTransition = StartCoroutine(TransitionColor(rightBackgroundImage, player2Color));
+            }
+
+            questionText.color = Color.white;
+            LogoText.color = Color.white;
+
+            StartQuizPhase();
+        }
+    }
+
+    private IEnumerator TransitionToBattleEndScreen(int defeatedPlayer)
+    {
+        isBuzzLocked = true;
 
         yield return new WaitForSeconds(1f);
 
-        if (GameManager.Instance != null)
-        {
-            Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
-            Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
+        // Load battle scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
 
-            if (player1ColorTransition != null)
-                StopCoroutine(player1ColorTransition);
-            if (player2ColorTransition != null)
-                StopCoroutine(player2ColorTransition);
-
-            player1ColorTransition = StartCoroutine(TransitionColor(leftBackgroundImage, player1Color));
-            player2ColorTransition = StartCoroutine(TransitionColor(rightBackgroundImage, player2Color));
-        }
-
-        questionText.color = Color.white;
-        LogoText.color = Color.white;
-
-        StartQuizPhase();
+        // We need to pass information about which player was defeated
+        GameManager.Instance.SetDefeatedPlayerInQuiz(defeatedPlayer);
     }
-
 
     private void InitializeExampleQuestions()
     {

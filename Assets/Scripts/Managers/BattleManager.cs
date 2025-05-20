@@ -62,6 +62,14 @@ public class BattleManager : MonoBehaviour
         if (GameManager.Instance != null && GameManager.Instance.SelectedCharacterP1 != null)
         {
             InitializeBattle();
+
+            // Check if a player was defeated in the quiz phase
+            int defeatedPlayer = GameManager.Instance.GetDefeatedPlayerInQuiz();
+            if (defeatedPlayer > 0)
+            {
+                // Show end screen immediately
+                ShowEndScreen(defeatedPlayer);
+            }
         }
     }
 
@@ -306,12 +314,12 @@ public class BattleManager : MonoBehaviour
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         }
 
-        UpdateHealthDisplays();
 
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
         Animator attackerAnimator = attacker.GetComponent<Animator>();
 
         StartCoroutine(ShowAttackAnimation(attackerAnimator, attack));
+        UpdateHealthDisplays();
     }
 
     private void PlaySound(string soundName)

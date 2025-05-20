@@ -1513,7 +1513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -503, y: 280}
+  m_AnchoredPosition: {x: -297, y: 237.5}
   m_SizeDelta: {x: 700, y: 235}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1542020266
@@ -1538,7 +1538,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 200
+    m_FontSize: 125
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1549,7 +1549,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Logo
+  m_Text: Brain Clash
 --- !u!222 &1542020267
 CanvasRenderer:
   m_ObjectHideFlags: 0

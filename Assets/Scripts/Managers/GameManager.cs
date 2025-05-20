@@ -32,6 +32,20 @@ public class GameManager : MonoBehaviour
     public static float player1DamageMultiplier = 1;
     public static float player2DamageMultiplier = 1;
 
+    private int playerDefeatedInQuiz = 0; // 0 = none, 1 = player1, 2 = player2
+
+    public void SetDefeatedPlayerInQuiz(int playerNumber)
+    {
+        playerDefeatedInQuiz = playerNumber;
+    }
+
+    public int GetDefeatedPlayerInQuiz()
+    {
+        int defeated = playerDefeatedInQuiz;
+        playerDefeatedInQuiz = 0; // Reset after getting the value
+        return defeated;
+    }
+
     public void ResetDamageMultipliers()
     {
         player1DamageMultiplier = 1;

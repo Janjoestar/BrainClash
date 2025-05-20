@@ -371,7 +371,7 @@ public class CharacterSelectionManager : MonoBehaviour
         SaveCharacters();
     }
 
-    private static int numberOfQuestionsToGenerate = 10;
+    private static int numberOfQuestionsToGenerate = 5;
     public void ConfirmSelection()
     {
         SaveCharacters();
