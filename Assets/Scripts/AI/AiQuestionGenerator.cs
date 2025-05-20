@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq; // Add this for using LINQ features
 
 public static class AIQuestionGenerator
 {
@@ -17,13 +18,36 @@ public static class AIQuestionGenerator
 
         // Even clearer prompt with explicit format instructions
         string promptText =
-            $"Create {7} multiple choice quiz questions about {topic}. " +
-            "Each question should have 4 options with only one correct answer. " +
-            "Format as a JSON array following EXACTLY this structure:\n" +
-            "[{\"question\":\"Who discovered gravity?\",\"options\":[\"Newton\",\"Einstein\",\"Galileo\",\"Darwin\"],\"answer\":0}]\n" +
-            "IMPORTANT: - 'options' must be an array of strings, not objects\n" +
-            "- 'answer' must be a number (0-3) indicating the index of the correct option\n" +
-            "- Return ONLY the JSON array with no additional text";
+            $"You are a quiz generator AI. Generate {numberOfQuestions} UNIQUE multiple-choice quiz questions on the topic of \"{topic}\". " +
+            "Make sure each question is distinct from the others with no duplicate questions or answers. " +
+            "Each question must follow this structure:\n\n" +
+            "[\n" +
+            "  {\n" +
+            "    \"question\": \"<QUESTION TEXT>\",\n" +
+            "    \"options\": [\"<OPTION1>\", \"<OPTION2>\", \"<OPTION3>\", \"<OPTION4>\"],\n" +
+            "    \"answer\": <INDEX OF CORRECT OPTION (0-3)>\n" +
+            "  }\n" +
+            "]\n\n" +
+            "IMPORTANT RULES:\n" +
+            "- Output only a JSON array, not wrapped in any other text.\n" +
+            "- Each 'options' array must contain exactly 4 strings.\n" +
+            "- 'answer' must be a number (0–3) that correctly matches the index of the correct option.\n" +
+            "- Do NOT include explanations, introductions, comments, markdown, or code blocks.\n" +
+            "- Each question must be UNIQUE and different from other questions.\n\n" +
+            "Here is an example format:\n" +
+            "[\n" +
+            "  {\n" +
+            "    \"question\": \"Who wrote '1984'?\",\n" +
+            "    \"options\": [\"Aldous Huxley\", \"George Orwell\", \"Ray Bradbury\", \"J.K. Rowling\"],\n" +
+            "    \"answer\": 1\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"question\": \"What is the capital of France?\",\n" +
+            "    \"options\": [\"Rome\", \"Berlin\", \"Madrid\", \"Paris\"],\n" +
+            "    \"answer\": 3\n" +
+            "  }\n" +
+            "]\n\n" +
+            $"Now generate the JSON array with exactly {numberOfQuestions} UNIQUE questions on the topic: {topic}. Output ONLY the JSON array and nothing else.";
 
         // Create the request body with proper JSON escaping
         string jsonRequest = JsonUtility.ToJson(new OllamaRequest
@@ -74,10 +98,19 @@ public static class AIQuestionGenerator
                     questions = CreateFallbackQuestions(topic, numberOfQuestions);
                 }
 
+                // Remove duplicate questions based on question text similarity
+                questions = RemoveDuplicateQuestions(questions);
+
+                // Ensure we have the requested number of questions (or at least as many as possible)
+                if (questions.Count > numberOfQuestions)
+                {
+                    questions = questions.Take(numberOfQuestions).ToList();
+                }
+
                 // We should have questions at this point, either parsed or fallback
                 if (questions != null && questions.Count > 0)
                 {
-                    Debug.Log($"Successfully created {questions.Count} questions");
+                    Debug.Log($"Successfully created {questions.Count} unique questions");
                     onComplete?.Invoke(questions);
                 }
                 else
@@ -97,6 +130,53 @@ public static class AIQuestionGenerator
                 onError?.Invoke($"Request failed: {request.error}. Please check if Ollama is running and the '{MODEL_NAME}' model is installed.");
             }
         }
+    }
+
+    // NEW METHOD: Remove duplicate questions based on text similarity
+    private static List<Question> RemoveDuplicateQuestions(List<Question> questions)
+    {
+        if (questions == null || questions.Count <= 1)
+            return questions;
+
+        List<Question> uniqueQuestions = new List<Question>();
+        HashSet<string> questionTexts = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (Question question in questions)
+        {
+            // Normalize the question text to catch similar questions
+            string normalizedText = NormalizeText(question.questionText);
+
+            if (!questionTexts.Contains(normalizedText))
+            {
+                questionTexts.Add(normalizedText);
+                uniqueQuestions.Add(question);
+            }
+            else
+            {
+                Debug.Log($"Filtered out duplicate question: {question.questionText}");
+            }
+        }
+
+        Debug.Log($"Original question count: {questions.Count}, After duplicate removal: {uniqueQuestions.Count}");
+        return uniqueQuestions;
+    }
+
+    // NEW METHOD: Normalize text for better duplicate detection
+    private static string NormalizeText(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return string.Empty;
+
+        // Convert to lowercase
+        string normalized = text.ToLowerInvariant();
+
+        // Remove punctuation
+        normalized = Regex.Replace(normalized, @"[^\w\s]", "");
+
+        // Remove extra whitespace
+        normalized = Regex.Replace(normalized, @"\s+", " ").Trim();
+
+        return normalized;
     }
 
     // Extract the full response text from a potentially streaming response
