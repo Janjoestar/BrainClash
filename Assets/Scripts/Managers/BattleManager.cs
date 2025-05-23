@@ -41,9 +41,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text damageTakenText;
     [SerializeField] private Text healingDoneText;
 
-    private Dictionary<int, float> damageDealt = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
-    private Dictionary<int, float> damageTaken = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
-    private Dictionary<int, float> healingDone = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    private Dictionary<float, float> damageDealt = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<float, float> damageTaken = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
+    private Dictionary<float, float> healingDone = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
 
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
@@ -214,8 +214,6 @@ public class BattleManager : MonoBehaviour
             endScreenPanel.SetActive(true);
 
             int winnerPlayer = defeatedPlayer == 1 ? 2 : 1;
-            Debug.Log($"[BattleManager] ShowEndScreen for defeatedPlayer: {defeatedPlayer}. Winner: Player {winnerPlayer}.");
-
             Character winnerCharacter = winnerPlayer == 1 ?
                 GameManager.Instance.SelectedCharacterP1 :
                 GameManager.Instance.SelectedCharacterP2;
@@ -226,34 +224,9 @@ public class BattleManager : MonoBehaviour
             emblemBorder.GetComponent<SpriteRenderer>().color = winnerCharacter.secondaryColor;
             winnerSprite.GetComponent<SpriteRenderer>().sprite = winnerCharacter.characterSprite;
 
-            Debug.Log($"[BattleManager] Stats for Winner (Player {winnerPlayer}): Damage Dealt: {(damageDealt.ContainsKey(winnerPlayer) ? damageDealt[winnerPlayer].ToString() : "N/A")}, Damage Taken: {(damageTaken.ContainsKey(winnerPlayer) ? damageTaken[winnerPlayer].ToString() : "N/A")}, Healing Done: {(healingDone.ContainsKey(winnerPlayer) ? healingDone[winnerPlayer].ToString() : "N/A")}");
-
-            if (damageDealtText != null)
-            {
-                damageDealtText.text = "Damage Dealt: " + (damageDealt.ContainsKey(winnerPlayer) ? damageDealt[winnerPlayer].ToString() : "0");
-            }
-            else
-            {
-                Debug.LogError("[BattleManager] damageDealtText UI element is not assigned in the Inspector!");
-            }
-
-            if (damageTakenText != null)
-            {
-                damageTakenText.text = "Damage Taken: " + (damageTaken.ContainsKey(winnerPlayer) ? damageTaken[winnerPlayer].ToString() : "0");
-            }
-            else
-            {
-                Debug.LogError("[BattleManager] damageTakenText UI element is not assigned in the Inspector!");
-            }
-
-            if (healingDoneText != null)
-            {
-                healingDoneText.text = "Healing Done: " + (healingDone.ContainsKey(winnerPlayer) ? healingDone[winnerPlayer].ToString() : "0");
-            }
-            else
-            {
-                Debug.LogError("[BattleManager] healingDoneText UI element is not assigned in the Inspector!");
-            }
+            damageDealtText.text = "Damage Dealt: " + damageDealt[winnerPlayer];
+            damageTakenText.text = "Damage Taken: " + damageTaken[winnerPlayer];
+            healingDoneText.text = "Healing Done: " + healingDone[winnerPlayer];
 
             SpriteRenderer spriteRenderer = winnerSprite.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)

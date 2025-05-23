@@ -52,6 +52,7 @@ public class QuizManager : MonoBehaviour
 
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
+    private List<int> usedQuestionIndices = new List<int>();
     private HashSet<int> usedQuestionSet = new HashSet<int>(); // More efficient for checking if a question has been used
 
     private bool showTextAnimation = false;
@@ -112,6 +113,7 @@ public class QuizManager : MonoBehaviour
         }
 
         // Initialize question tracking
+        usedQuestionIndices.Clear();
         usedQuestionSet.Clear();
 
         HideFreezeTimers();
@@ -276,7 +278,6 @@ public class QuizManager : MonoBehaviour
             if (player1Buzzed && player2Buzzed)
             {
                 // Both players buzzed simultaneously and too early
-                Debug.Log($"[Buzzer] Player 1 and Player 2 buzzed EARLY. isReadingTime: {isReadingTime}, currentReadingTime: {currentReadingTime}");
                 ApplyEarlyBuzzPenalty(1);
                 ApplyEarlyBuzzPenalty(2);
                 return;
@@ -284,14 +285,12 @@ public class QuizManager : MonoBehaviour
             else if (player1Buzzed)
             {
                 // Player 1 buzzed too early
-                Debug.Log($"[Buzzer] Player 1 buzzed EARLY. isReadingTime: {isReadingTime}, currentReadingTime: {currentReadingTime}");
                 ApplyEarlyBuzzPenalty(1);
                 return;
             }
             else if (player2Buzzed)
             {
                 // Player 2 buzzed too early
-                Debug.Log($"[Buzzer] Player 2 buzzed EARLY. isReadingTime: {isReadingTime}, currentReadingTime: {currentReadingTime}");
                 ApplyEarlyBuzzPenalty(2);
                 return;
             }
@@ -343,7 +342,6 @@ public class QuizManager : MonoBehaviour
 
     private void ApplyEarlyBuzzPenalty(int playerNumber)
     {
-        Debug.Log($"[Buzzer] Applying early buzz penalty to P{playerNumber} for {earlyBuzzPenaltyTime}s. Player currently frozen: {playerFrozen[playerNumber]}");
         // Don't apply penalty if player is already frozen
         if (playerFrozen[playerNumber])
             return;
@@ -477,12 +475,10 @@ public class QuizManager : MonoBehaviour
 
     public void PlayerBuzzed(int playerNumber)
     {
-        Debug.Log($"[Buzzer] PlayerBuzzed attempt by P{playerNumber}. isBuzzLocked: {isBuzzLocked}, canBuzz: {canBuzz}, playerFrozen: {playerFrozen[playerNumber]}, isReadingTime: {isReadingTime}, playerWhoBuzzed: {playerWhoBuzzed}");
         if (isBuzzLocked || (isReadingTime && currentReadingTime > 0) || !canBuzz || playerFrozen[playerNumber] || playerWhoBuzzed == 1 || playerWhoBuzzed == 2)
             return;
 
         isBuzzLocked = true;
-        Debug.Log($"[Buzzer] P{playerNumber} successfully buzzed.");
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
         answerSelected = false; // Reset answer selection state when a player buzzes
@@ -564,19 +560,17 @@ public class QuizManager : MonoBehaviour
 
     public void PassQuestionToOtherPlayer()
     {
-        Debug.Log($"[Buzzer] PassQuestionToOtherPlayer initiated by P{playerWhoBuzzed}. questionWasPassed: {questionWasPassed}");
         if (playerWhoBuzzed == 0 || questionWasPassed)
             return;
 
         questionWasPassed = true;
         playerWhoPassedQuestion = playerWhoBuzzed;
 
-        GameManager.Instance.SetDoubleDamageForPlayer(playerWhoPassedQuestion, 1f); // This adds 1x to the OTHER player's received damage multiplier (e.g., if P1 passes, P2's multiplier increases)
+        GameManager.Instance.SetDoubleDamageForPlayer(playerWhoPassedQuestion, 1f);
 
         UpdatePlayerInfos();
 
         int otherPlayer = (playerWhoBuzzed == 1) ? 2 : 1;
-        Debug.Log($"[Buzzer] Question passed from P{playerWhoPassedQuestion} to P{otherPlayer}.");
 
         StartCoroutine(PassQuestionAnimation(otherPlayer));
     }
@@ -650,6 +644,7 @@ public class QuizManager : MonoBehaviour
         if (usedQuestionSet.Count >= questions.Count)
         {
             Debug.Log("All questions have been used. Resetting question pool.");
+            usedQuestionIndices.Clear();
             usedQuestionSet.Clear();
         }
 
@@ -666,12 +661,14 @@ public class QuizManager : MonoBehaviour
             if (attempts > maxAttempts)
             {
                 Debug.LogWarning("Failed to find an unused question after multiple attempts. Clearing question history.");
+                usedQuestionIndices.Clear();
                 usedQuestionSet.Clear();
                 break;
             }
         } while (usedQuestionSet.Contains(randomIndex));
 
-        // Add to data structure
+        // Add to both data structures
+        usedQuestionIndices.Add(randomIndex);
         usedQuestionSet.Add(randomIndex);
 
         Debug.Log($"Selected question {randomIndex}. Used questions: {usedQuestionSet.Count}/{questions.Count}");
@@ -735,7 +732,6 @@ public class QuizManager : MonoBehaviour
 
     public void SelectAnswer(int answerIndex)
     {
-        Debug.Log($"[Buzzer] SelectAnswer: P{playerWhoBuzzed} selected answer {answerIndex}. Correct is {questions[currentQuestionIndex].correctAnswerIndex}. answerSelected: {answerSelected}");
         // Check if an answer has already been selected
         if (answerSelected)
             return;
@@ -779,6 +775,12 @@ public class QuizManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
+
+            // If this player passed the question, they'll take double damage
+            if (questionWasPassed && playerWhoPassedQuestion == playerWhoBuzzed)
+            {
+                GameManager.Instance.SetDoubleDamageForPlayer(playerWhoBuzzed, 2f);
+            }
         }
 
         if (GameManager.Instance != null)

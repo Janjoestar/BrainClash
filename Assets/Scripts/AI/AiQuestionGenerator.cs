@@ -28,7 +28,6 @@ public static class AIQuestionGenerator
             "    \"answer\": <INDEX OF CORRECT OPTION (0-3)>\n" +
             "  }\n" +
             "]\n\n" +
-            "- Ensure all string values in the JSON (e.g., 'question' and 'options' text) are valid and properly escaped JSON strings.\n" +
             "IMPORTANT RULES:\n" +
             "- Output only a JSON array, not wrapped in any other text.\n" +
             "- Each 'options' array must contain exactly 4 strings.\n" +
@@ -100,12 +99,7 @@ public static class AIQuestionGenerator
                 }
 
                 // Remove duplicate questions based on question text similarity
-                questions = RemoveDuplicateQuestions(questions, topic);
-
-                if (questions.Count < numberOfQuestions)
-                {
-                    Debug.LogWarning($"[AIQuestionGenerator] After duplicate removal, only {questions.Count} unique questions were generated for topic '{topic}', though {numberOfQuestions} were requested. Consider revising the topic or the AI model if this persists.");
-                }
+                questions = RemoveDuplicateQuestions(questions);
 
                 // Ensure we have the requested number of questions (or at least as many as possible)
                 if (questions.Count > numberOfQuestions)
@@ -139,7 +133,7 @@ public static class AIQuestionGenerator
     }
 
     // NEW METHOD: Remove duplicate questions based on text similarity
-    private static List<Question> RemoveDuplicateQuestions(List<Question> questions, string topic)
+    private static List<Question> RemoveDuplicateQuestions(List<Question> questions)
     {
         if (questions == null || questions.Count <= 1)
             return questions;
@@ -164,10 +158,6 @@ public static class AIQuestionGenerator
         }
 
         Debug.Log($"Original question count: {questions.Count}, After duplicate removal: {uniqueQuestions.Count}");
-        if (uniqueQuestions.Count < questions.Count)
-        {
-            Debug.LogWarning($"[AIQuestionGenerator] Duplicate question removal reduced question count from {questions.Count} to {uniqueQuestions.Count} for topic '{topic}'.");
-        }
         return uniqueQuestions;
     }
 
@@ -288,7 +278,7 @@ public static class AIQuestionGenerator
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Standard JSON parsing failed: {ex.Message}. Attempted to parse snippet: {wrappedJson.Substring(0, Mathf.Min(500, wrappedJson.Length))}...");
+            Debug.LogWarning($"Standard JSON parsing failed: {ex.Message}");
         }
 
         return null;
@@ -385,7 +375,6 @@ public static class AIQuestionGenerator
             Debug.LogWarning($"Fix and parse JSON failed: {ex.Message}");
             return null;
         }
-        if (questions == null || questions.Count == 0) { Debug.LogWarning($"Fix and parse JSON resulted in no questions. Original text snippet for regex parsing: {text.Substring(0, Mathf.Min(500, text.Length))}..."); }
     }
 
     // Create fallback questions if all parsing fails
