@@ -1,3 +1,4 @@
+// NOTE: This script is believed to be unused or deprecated and has been intentionally disabled to prevent conflicts with Quizmanager.cs.
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -34,29 +35,29 @@ public class BuzzerSystem : MonoBehaviour
 
     void Start()
     {
-        ResetGame();
-        SetupAnswerButtons();
-        LoadQuestions(); // Load questions from your list
+        // ResetGame();
+        // SetupAnswerButtons();
+        // LoadQuestions(); // Load questions from your list
     }
 
     void Update()
     {
-        if (!gameActive)
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                HandleWinner(1);
-            }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                HandleWinner(2);
-            }
-        }
-        else if (waitingForAnswer)
-        {
-            HandleAnswerInput();
-            UpdateTimer();
-        }
+        // if (!gameActive)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.S))
+        //     {
+        //         HandleWinner(1);
+        //     }
+        //     if (Input.GetKeyDown(KeyCode.K))
+        //     {
+        //         HandleWinner(2);
+        //     }
+        // }
+        // else if (waitingForAnswer)
+        // {
+        //     HandleAnswerInput();
+        //     UpdateTimer();
+        // }
     }
 
     private void HandleWinner(int player)
@@ -240,18 +241,18 @@ public class BuzzerSystem : MonoBehaviour
 
     private void SetupAnswerButtons()
     {
-        for (int i = 0; i < answerButtons.Length; i++)
-        {
-            int buttonIndex = i; // Capture the index for the listener
-            answerButtons[i].GetComponent<Button>().onClick.AddListener(() => AnswerButtonClicked(buttonIndex));
-        }
+        // for (int i = 0; i < answerButtons.Length; i++)
+        // {
+        //     int buttonIndex = i; // Capture the index for the listener
+        //     answerButtons[i].GetComponent<Button>().onClick.AddListener(() => AnswerButtonClicked(buttonIndex));
+        // }
     }
 
     private void LoadQuestions()
     {
-        // Add your questions here (replace with your actual questions)
-        questions.Add(new Question { question = "Was ist die Hauptstadt von Frankreich?", answers = new string[] { "Berlin", "Paris", "London", "Rom" }, correctAnswerIndex = 1 });
-        questions.Add(new Question { question = "Wie viele Planeten hat unser Sonnensystem?", answers = new string[] { "7", "8", "9", "10" }, correctAnswerIndex = 1 });
-        // Add more questions...
+        // // Add your questions here (replace with your actual questions)
+        // questions.Add(new Question { question = "Was ist die Hauptstadt von Frankreich?", answers = new string[] { "Berlin", "Paris", "London", "Rom" }, correctAnswerIndex = 1 });
+        // questions.Add(new Question { question = "Wie viele Planeten hat unser Sonnensystem?", answers = new string[] { "7", "8", "9", "10" }, correctAnswerIndex = 1 });
+        // // Add more questions...
     }
 }
