@@ -28,6 +28,13 @@ public class BattleManager : MonoBehaviour
     private List<AttackData> player2Attacks = new List<AttackData>();
     private int attackingPlayer = 1;
 
+    [SerializeField] private GameObject attackHoverPrefab;
+    [SerializeField] private float hoverDelay = 0.5f; // Time to wait before showing hover
+
+    // Add these private fields:
+    private GameObject currentHoverInstance;
+    private Coroutine hoverCoroutine;
+
     [Header("End Screen Elements")]
     [SerializeField] private GameObject endScreenPanel;
     [SerializeField] private Text winnerText;
@@ -41,9 +48,21 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text damageTakenText;
     [SerializeField] private Text healingDoneText;
 
-    private Dictionary<float, float> damageDealt = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
-    private Dictionary<float, float> damageTaken = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
-    private Dictionary<float, float> healingDone = new Dictionary<float, float>() { { 1, 0 }, { 2, 0 } };
+    [Header("Player 1 Status Effect UI")]
+    [SerializeField] private Image player1StatusIcon;
+    [SerializeField] private Text player1StatusDurationText;
+
+    [Header("Player 2 Status Effect UI")]
+    [SerializeField] private Image player2StatusIcon;
+    [SerializeField] private Text player2StatusDurationText;
+
+    private Sprite burnIconSprite;
+
+    private Dictionary<int, float> damageDealt = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    private Dictionary<int, float> damageTaken = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    private Dictionary<int, float> healingDone = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+
+    // Local status effect lists removed, will use GameManager.Instance
 
     private void OnEnable() => GameManager.OnGameManagerReady += InitializeBattle;
     private void OnDisable() => GameManager.OnGameManagerReady -= InitializeBattle;
@@ -55,6 +74,8 @@ public class BattleManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
+        burnIconSprite = Resources.Load<Sprite>("Icons/BurnIcon");
+        if (burnIconSprite == null) Debug.LogError("Failed to load BurnIcon from Resources/Icons/");
     }
 
     private void Start()
@@ -303,14 +324,14 @@ public class BattleManager : MonoBehaviour
         if (attack.attackType == AttackType.Heal)
         {
             float healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
-            healingDone[attackingPlayer] += healAmount;
+            healingDone[attackingPlayer] += healAmount; // Key is int
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + healAmount + " HP!";
         }
         else
         {
             float actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage, true);
-            damageDealt[attackingPlayer] += actualDamage;
-            damageTaken[targetPlayer] += actualDamage;
+            damageDealt[attackingPlayer] += actualDamage; // Key is int
+            damageTaken[targetPlayer] += actualDamage; // Key is int
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         }
 
@@ -575,13 +596,79 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(attack.flashInterval);
         }
     }
+    private void OnAttackButtonHoverEnter(AttackData attack, RectTransform buttonRect)
+    {
+        // Cancel any existing hover coroutine
+        if (hoverCoroutine != null)
+        {
+            StopCoroutine(hoverCoroutine);
+        }
 
+        hoverCoroutine = StartCoroutine(ShowHoverAfterDelay(attack, buttonRect));
+    }
+
+    // Add this method to handle hover exit:
+    private void OnAttackButtonHoverExit()
+    {
+        // Cancel hover coroutine if still waiting
+        if (hoverCoroutine != null)
+        {
+            StopCoroutine(hoverCoroutine);
+            hoverCoroutine = null;
+        }
+
+        // Destroy hover instance if it exists
+        if (currentHoverInstance != null)
+        {
+            Destroy(currentHoverInstance);
+            currentHoverInstance = null;
+        }
+    }
+
+    // Add this coroutine to show hover after delay:
+    private IEnumerator ShowHoverAfterDelay(AttackData attack, RectTransform buttonRect)
+    {
+        yield return new WaitForSeconds(hoverDelay);
+
+        // Create hover instance
+        currentHoverInstance = Instantiate(attackHoverPrefab, attackPanel.transform);
+
+        // Set hover text content
+        Text[] hoverTexts = currentHoverInstance.GetComponentsInChildren<Text>();
+        foreach (Text text in hoverTexts)
+        {
+            if (text.name.Contains("Damage") || text.name.Contains("damage"))
+            {
+                text.text = attack.damage.ToString() + " dmg";
+            }
+            else if (text.name.Contains("Description") || text.name.Contains("description"))
+            {
+                text.text = attack.description;
+            }
+        }
+
+        // Position hover 125px below the button
+        RectTransform hoverRect = currentHoverInstance.GetComponent<RectTransform>();
+        Vector2 buttonPos = buttonRect.anchoredPosition;
+        hoverRect.anchoredPosition = new Vector2(buttonPos.x, buttonPos.y - 125f);
+
+        // Disable raycast target on hover popup to prevent interference
+        Graphic[] graphics = currentHoverInstance.GetComponentsInChildren<Graphic>();
+        foreach (Graphic graphic in graphics)
+        {
+            graphic.raycastTarget = false;
+        }
+
+        hoverCoroutine = null;
+    }
+
+    // Modify your ShowAttackOptions method - replace the button creation section with this:
     private void ShowAttackOptions()
     {
-
         foreach (Transform child in attackPanel.transform)
         {
-            Destroy(child.gameObject);
+            if( child.gameObject != attackHoverPrefab)
+                Destroy(child.gameObject);
         }
 
         List<AttackData> currentAttacks = (attackingPlayer == 1) ? player1Attacks : player2Attacks;
@@ -593,7 +680,7 @@ public class BattleManager : MonoBehaviour
         battleStatusText.text = characterName + "'s turn to attack!";
 
         float startY = -75;
-        float xPosition = 692; 
+        float xPosition = 692;
         float yStep = -100;
 
         int index = 0;
@@ -609,7 +696,7 @@ public class BattleManager : MonoBehaviour
             Text buttonText = buttonObj.GetComponentInChildren<Text>();
             if (buttonText != null)
             {
-                buttonText.text = attack.attackName + " (" + attack.damage + " dmg)";
+                buttonText.text = attack.attackName;
                 buttonText.enabled = true;
             }
             buttonText.gameObject.SetActive(true);
@@ -620,6 +707,25 @@ public class BattleManager : MonoBehaviour
 
             RectTransform buttonRect = buttonObj.GetComponent<RectTransform>();
             buttonRect.anchoredPosition = new Vector2(xPosition, startY + (yStep * index));
+
+            // Add EventTrigger for hover functionality
+            UnityEngine.EventSystems.EventTrigger eventTrigger = buttonObj.GetComponent<UnityEngine.EventSystems.EventTrigger>();
+            if (eventTrigger == null)
+            {
+                eventTrigger = buttonObj.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+            }
+
+            // Pointer Enter event
+            UnityEngine.EventSystems.EventTrigger.Entry pointerEnter = new UnityEngine.EventSystems.EventTrigger.Entry();
+            pointerEnter.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
+            pointerEnter.callback.AddListener((data) => { OnAttackButtonHoverEnter(attack, buttonRect); });
+            eventTrigger.triggers.Add(pointerEnter);
+
+            // Pointer Exit event
+            UnityEngine.EventSystems.EventTrigger.Entry pointerExit = new UnityEngine.EventSystems.EventTrigger.Entry();
+            pointerExit.eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit;
+            pointerExit.callback.AddListener((data) => { OnAttackButtonHoverExit(); });
+            eventTrigger.triggers.Add(pointerExit);
 
             button.interactable = true;
             buttonObj.SetActive(true);

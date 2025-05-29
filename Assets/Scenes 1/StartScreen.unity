@@ -360,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -377,7 +377,7 @@ PrefabInstance:
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1705972139}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -392,7 +392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
+      value: PlayCancelSound
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -400,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameController, Assembly-CSharp
+      value: UIAudioManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -416,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643035238047357343, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -458,6 +458,7 @@ MonoBehaviour:
   - {fileID: 1808035594}
   - {fileID: 1052673353}
   - {fileID: 1470467249}
+  - {fileID: 596612836}
   gameModeButtons:
   - {fileID: 4643035238001031338}
   - {fileID: 4643035236028310615}
@@ -480,6 +481,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &596612836 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
+  m_PrefabInstance: {fileID: 958620330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &722746629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1649,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649892857}
   m_CullTransparentMesh: 1
+--- !u!1 &1705972138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705972140}
+  - component: {fileID: 1705972139}
+  m_Layer: 0
+  m_Name: UIAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1705972139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705972138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78826b195ef7023489b4ee0afe2616b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doneSound: {fileID: 8300000, guid: 294fae49aba2fe543a8a42a4754aa788, type: 3}
+  clickSound: {fileID: 8300000, guid: 5aa584f2cba8f0f499032671788a2c33, type: 3}
+  cancelSound: {fileID: 8300000, guid: d7810f340050e36418bc84f475774597, type: 3}
+  hoverSound: {fileID: 8300000, guid: d81835263a2f40940afd13b77248b1ea, type: 3}
+  volume: 0.75
+  hoverDelay: 0.25
+--- !u!4 &1705972140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705972138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1796252225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,3 +2331,4 @@ SceneRoots:
   - {fileID: 957300810}
   - {fileID: 555705582}
   - {fileID: 6130278998104878596}
+  - {fileID: 1705972140}

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +44,10 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Text player2HealthText;
     [SerializeField] private Text player2DamageMultiText;
 
+    [Header("Freeze Effects")]
+    [SerializeField] private AudioClip freezeSound; // Assign freeze sound effect in inspector
+    private AudioSource audioSource;
+
     private int currentQuestionIndex = -1;
     private bool canBuzz = true;
     private int playerWhoBuzzed = 0; // 0 = none, 1 = player1, 2 = player2
@@ -63,7 +66,8 @@ public class QuizManager : MonoBehaviour
     private bool isBuzzLocked = false;
     private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
     private float[] playerFreezeTimeRemaining = new float[3]; // Remaining freeze time for each player
-    private Color frozenColor = new Color(0.7f, 0.9f, 1f); // Light blue "frozen" color
+    private Color frozenColor = new Color(0f / 255f, 181f / 255f, 240f / 255f, 1f); // #00B5F0 color
+    private Color[] originalPlayerColors = new Color[3]; // Store original colors for each player
 
     private void Awake()
     {
@@ -71,6 +75,13 @@ public class QuizManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        // Get or add AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         if (questions.Count == 0)
             InitializeExampleQuestions();
@@ -94,6 +105,9 @@ public class QuizManager : MonoBehaviour
 
             leftBackgroundImage.color = player1Color;
             rightBackgroundImage.color = player2Color;
+
+            // Store original player colors
+            StoreOriginalPlayerColors();
 
             InitializeColorPanels();
 
@@ -119,6 +133,19 @@ public class QuizManager : MonoBehaviour
         HideFreezeTimers();
 
         StartQuizPhase();
+    }
+
+    private void StoreOriginalPlayerColors()
+    {
+        // Store the original colors of both players
+        SpriteRenderer player1Renderer = Player1.GetComponent<SpriteRenderer>();
+        SpriteRenderer player2Renderer = Player2.GetComponent<SpriteRenderer>();
+
+        if (player1Renderer != null)
+            originalPlayerColors[1] = player1Renderer.color;
+
+        if (player2Renderer != null)
+            originalPlayerColors[2] = player2Renderer.color;
     }
 
     private void InitializeColorPanels()
@@ -231,6 +258,8 @@ public class QuizManager : MonoBehaviour
             {
                 playerFrozen[1] = false;
                 player1FreezeTimerText.gameObject.SetActive(false);
+                // Restore original color when freeze ends
+                RestorePlayerColor(1);
             }
             else
             {
@@ -245,11 +274,24 @@ public class QuizManager : MonoBehaviour
             {
                 playerFrozen[2] = false;
                 player2FreezeTimerText.gameObject.SetActive(false);
+                // Restore original color when freeze ends
+                RestorePlayerColor(2);
             }
             else
             {
                 player2FreezeTimerText.text = $"Player 2 is frozen for {playerFreezeTimeRemaining[2]:F1} seconds";
             }
+        }
+    }
+
+    private void RestorePlayerColor(int playerNumber)
+    {
+        GameObject playerObject = (playerNumber == 1) ? Player1 : Player2;
+        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalPlayerColors[playerNumber];
         }
     }
 
@@ -350,18 +392,38 @@ public class QuizManager : MonoBehaviour
         playerFrozen[playerNumber] = true;
         playerFreezeTimeRemaining[playerNumber] = earlyBuzzPenaltyTime;
 
-        // Show freeze timer text
+        // Play freeze sound effect
+        PlayFreezeSound();
+
+        // Show freeze timer text and apply freeze color
         if (playerNumber == 1 && player1FreezeTimerText != null)
         {
             player1FreezeTimerText.gameObject.SetActive(true);
             player1FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
-            StartCoroutine(FlashPlayerFreeze(Player1));
+            ApplyFreezeColor(Player1);
         }
         else if (playerNumber == 2 && player2FreezeTimerText != null)
         {
             player2FreezeTimerText.gameObject.SetActive(true);
             player2FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
-            StartCoroutine(FlashPlayerFreeze(Player2));
+            ApplyFreezeColor(Player2);
+        }
+    }
+
+    private void PlayFreezeSound()
+    {
+        if (freezeSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(freezeSound);
+        }
+    }
+
+    private void ApplyFreezeColor(GameObject playerObject)
+    {
+        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = frozenColor;
         }
     }
 
@@ -396,6 +458,10 @@ public class QuizManager : MonoBehaviour
         playerWhoBuzzed = 0;
         playerFrozen[1] = false;
         playerFrozen[2] = false;
+
+        // Restore original player colors when starting new quiz phase
+        RestorePlayerColor(1);
+        RestorePlayerColor(2);
 
         // Reset pass question state
         questionWasPassed = false;
@@ -793,6 +859,8 @@ public class QuizManager : MonoBehaviour
     private IEnumerator ResetBuzzer()
     {
         GameManager.Instance.DamagePlayer(playerWhoBuzzed, 15f, false);
+
+        GameManager.Instance.PlaySFX("General/HitSound", 1.0f, 0.7f);
         UpdatePlayerInfos();
 
         if (playerWhoBuzzed == 1)
