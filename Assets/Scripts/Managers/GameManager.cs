@@ -284,7 +284,6 @@ public class GameManager : MonoBehaviour
             actualDamage = Mathf.Min(player2Health, actualDamage); // Use actualDamage here
             player2Health = Mathf.Max(0, player2Health - actualDamage); // And here
         }
-
         return actualDamage;
     }
 

@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BurnIcon_0: -632122146342402490
+      BurnIcon_1: -7983266205160038225
+      BurnIcon_2: 6613775773078073821
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
