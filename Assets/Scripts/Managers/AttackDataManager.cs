@@ -191,13 +191,13 @@ public class AttackDataManager : MonoBehaviour
                 return new List<AttackData>
             {
                 new AttackData("Quick Punch", 15, "Fast earth strike", "Attack1",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f), "Ground/RockPunch"),
                 new AttackData("Punch Combo", 20, "Multiple earth hits", "Attack2",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f)),
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f), "Ground/DoubleRockPunch"),
                 new AttackData("Rock Slide", 30, "Falling boulder", "Attack3",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.35f, new Color(0.6f, 0.3f, 0.1f)),  
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.35f, new Color(0.6f, 0.3f, 0.1f), "Ground/RealGroundAttack3"),  
                 new AttackData("Rock Smash", 50, "Devastating impact", "Special",
-                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.8f, 0.25f, new Color(0.6f, 0.3f, 0.1f))
+                              AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.8f, 0.25f, new Color(0.6f, 0.3f, 0.1f), "Ground/RockSpecial")
             };
             default:
                 return new List<AttackData>

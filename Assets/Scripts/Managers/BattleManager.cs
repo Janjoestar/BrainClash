@@ -47,20 +47,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text damageDealtText;
     [SerializeField] private Text damageTakenText;
     [SerializeField] private Text healingDoneText;
-
-    [Header("Player 1 Status Effect UI")]
-    [SerializeField] private Image player1StatusIcon;
-    [SerializeField] private Text player1StatusDurationText;
-
-    [Header("Player 2 Status Effect UI")]
-    [SerializeField] private Image player2StatusIcon;
-    [SerializeField] private Text player2StatusDurationText;
-
-    private Sprite burnIconSprite;
-
-    private Dictionary<int, float> damageDealt = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
-    private Dictionary<int, float> damageTaken = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
-    private Dictionary<int, float> healingDone = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    [SerializeField] private Text healthLeftText;
 
     // Local status effect lists removed, will use GameManager.Instance
 
@@ -74,8 +61,6 @@ public class BattleManager : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
-        burnIconSprite = Resources.Load<Sprite>("Icons/BurnIcon");
-        if (burnIconSprite == null) Debug.LogError("Failed to load BurnIcon from Resources/Icons/");
     }
 
     private void Start()
@@ -245,9 +230,11 @@ public class BattleManager : MonoBehaviour
             emblemBorder.GetComponent<SpriteRenderer>().color = winnerCharacter.secondaryColor;
             winnerSprite.GetComponent<SpriteRenderer>().sprite = winnerCharacter.characterSprite;
 
-            damageDealtText.text = "Damage Dealt: " + damageDealt[winnerPlayer];
-            damageTakenText.text = "Damage Taken: " + damageTaken[winnerPlayer];
-            healingDoneText.text = "Healing Done: " + healingDone[winnerPlayer];
+            // Replace the stats display section with:
+            damageDealtText.text = "Damage Dealt: " + GameManager.Instance.GetDamageDealt(winnerPlayer);
+            damageTakenText.text = "Damage Taken: " + GameManager.Instance.GetDamageTaken(winnerPlayer);
+            healingDoneText.text = "Healing Done: " + GameManager.Instance.GetHealingDone(winnerPlayer);
+            healthLeftText.text = "Health Left: " + GameManager.Instance.GetPlayerHealth(winnerPlayer);
 
             SpriteRenderer spriteRenderer = winnerSprite.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
@@ -324,17 +311,16 @@ public class BattleManager : MonoBehaviour
         if (attack.attackType == AttackType.Heal)
         {
             float healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
-            healingDone[attackingPlayer] += healAmount; // Key is int
+            GameManager.Instance.AddHealingDone(attackingPlayer, healAmount);
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + healAmount + " HP!";
         }
         else
         {
             float actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage, true);
-            damageDealt[attackingPlayer] += actualDamage; // Key is int
-            damageTaken[targetPlayer] += actualDamage; // Key is int
+            GameManager.Instance.AddDamageDealt(attackingPlayer, actualDamage);
+            GameManager.Instance.AddDamageTaken(targetPlayer, actualDamage);
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
         }
-
 
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
         Animator attackerAnimator = attacker.GetComponent<Animator>();

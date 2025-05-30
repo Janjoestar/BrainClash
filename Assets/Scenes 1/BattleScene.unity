@@ -817,7 +817,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   backgroundMusicSource: {fileID: 0}
   attackHoverPrefab: {fileID: 3162147642371195733, guid: 92c7089aa028ccf4a860fca94483e742, type: 3}
-  hoverDelay: 1
+  hoverDelay: 0.75
   endScreenPanel: {fileID: 1690589920}
   winnerText: {fileID: 694125736}
   returnToMenuButton: {fileID: 2013173624}
@@ -829,10 +829,7 @@ MonoBehaviour:
   damageDealtText: {fileID: 344911638}
   damageTakenText: {fileID: 1038066992}
   healingDoneText: {fileID: 1132348403}
-  player1StatusIcon: {fileID: 2035361832}
-  player1StatusDurationText: {fileID: 108006482}
-  player2StatusIcon: {fileID: 1221859916}
-  player2StatusDurationText: {fileID: 1063327962}
+  healthLeftText: {fileID: 1571474638}
 --- !u!4 &547178149
 Transform:
   m_ObjectHideFlags: 0
@@ -3187,6 +3184,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2105257976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105257977}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2105257977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105257976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7083781, y: -0.011810672, z: 0.040034737}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2130665272
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,3 +3388,4 @@ SceneRoots:
   - {fileID: 452771680}
   - {fileID: 547178149}
   - {fileID: 1635947272}
+  - {fileID: 2105257977}
