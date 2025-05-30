@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-
 
 public class CharacterSelectionManager : MonoBehaviour
 {
@@ -12,9 +10,6 @@ public class CharacterSelectionManager : MonoBehaviour
     [SerializeField] private InputField promptInput;
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Button confirmButton;
-    public Text[] Texts;
-    public Color normalColor = Color.white;
-    public Color hoverColor = Color.yellow;
 
     [System.Serializable]
     public class AIResponse
@@ -56,15 +51,11 @@ public class CharacterSelectionManager : MonoBehaviour
     void Start()
     {
         gameMode = StartScreenManager.GetSelectedGameMode();
-
         Debug.Log(gameMode);
-
-        onTextHover();
 
         SetupPromptField();
 
-
-        if(gameMode == "AITrivia")
+        if (gameMode == "AITrivia")
         {
             promptInput.interactable = false;
         }
@@ -97,55 +88,16 @@ public class CharacterSelectionManager : MonoBehaviour
         SetupAttackButtonListeners();
     }
 
-    void onTextHover()
-    {
-        // Add hover listeners to menu buttons
-        if (Texts != null)
-        {
-            foreach (Text buttonText in Texts)
-            {
-                Button button = buttonText.GetComponentInParent<Button>();
-                if (button != null)
-                {
-                    // Add EventTrigger component if it doesn't exist
-                    EventTrigger trigger = button.GetComponent<EventTrigger>();
-                    if (trigger == null)
-                        trigger = button.gameObject.AddComponent<EventTrigger>();
-
-                    // Create entry for pointer enter
-                    EventTrigger.Entry enterEntry = new EventTrigger.Entry();
-                    enterEntry.eventID = EventTriggerType.PointerEnter;
-                    enterEntry.callback.AddListener((data) => { OnButtonHover(buttonText, true); });
-                    trigger.triggers.Add(enterEntry);
-
-                    // Create entry for pointer exit
-                    EventTrigger.Entry exitEntry = new EventTrigger.Entry();
-                    exitEntry.eventID = EventTriggerType.PointerExit;
-                    exitEntry.callback.AddListener((data) => { OnButtonHover(buttonText, false); });
-                    trigger.triggers.Add(exitEntry);
-                }
-            }
-        }
-    }
-
-    public void OnButtonHover(Text buttonText, bool isHovering)
-    {
-        buttonText.color = isHovering ? hoverColor : normalColor;
-    }
-
-
     void SetupPromptField()
     {
         if (gameMode == "PromptPlay")
         {
             promptInput.gameObject.SetActive(true);
-
             promptInput.onValueChanged.AddListener(OnPromptChanged);
         }
         else
         {
             promptInput.gameObject.SetActive(false);
-
             confirmButton.interactable = true;
         }
     }
@@ -172,7 +124,6 @@ public class CharacterSelectionManager : MonoBehaviour
             artworkSpriteP1.sprite = character.characterSprite;
             nameTextP1.text = character.characterName;
             ApplyCharacterAnimation(artworkSpriteP1.gameObject, character.characterName);
-
             UpdateAttackInfo(1, character.characterName);
         }
         else if (player == 2)
@@ -180,7 +131,6 @@ public class CharacterSelectionManager : MonoBehaviour
             artworkSpriteP2.sprite = character.characterSprite;
             nameTextP2.text = character.characterName;
             ApplyCharacterAnimation(artworkSpriteP2.gameObject, character.characterName);
-
             UpdateAttackInfo(2, character.characterName);
         }
     }
@@ -373,6 +323,7 @@ public class CharacterSelectionManager : MonoBehaviour
 
     private static int numberOfQuestionsToGenerate = 5;
     private LoadingScreenManager loadingScreenManager;
+
     public void ConfirmSelection()
     {
         SaveCharacters();
@@ -422,4 +373,3 @@ public class CharacterSelectionManager : MonoBehaviour
         selectedOptionP2 = PlayerPrefs.GetInt("selectedOptionP2", 0);
     }
 }
-

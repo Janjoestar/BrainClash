@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip[] menuMusic;        // For StartScreen and CharacterSelection
     [SerializeField] private AudioClip[] loadingMusic;     // For LoadingScene
     [SerializeField] private AudioClip[] gameplayMusic;    // For QuizScene and BattleScene
+    [SerializeField] private AudioClip[] prepPhaseMusic;    // For QuizScene and BattleScene
 
     // Keep track of current music category to avoid switching when moving between scenes of same category
     private string currentMusicCategory = "";
@@ -234,6 +235,9 @@ public class GameManager : MonoBehaviour
                 case "gameplay":
                     PlayRandomMusic(gameplayMusic);
                     break;
+                case "silent":
+                    StopMusic();
+                    break;
             }
         }
     }
@@ -250,6 +254,8 @@ public class GameManager : MonoBehaviour
             case "QuizScene":
             case "BattleScene":
                 return "gameplay";
+            case "PrepPhase":
+                return "silent";
             default:
                 Debug.LogWarning("Unknown scene name: " + sceneName);
                 return "menu"; // Default to menu music
@@ -282,6 +288,14 @@ public class GameManager : MonoBehaviour
 
         musicSource.clip = clip;
         musicSource.Play();
+    }
+
+    private void StopMusic()
+    {
+        if (musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
     }
 
     public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
