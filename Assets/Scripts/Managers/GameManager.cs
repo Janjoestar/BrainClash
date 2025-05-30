@@ -34,6 +34,73 @@ public class GameManager : MonoBehaviour
 
     private int playerDefeatedInQuiz = 0; // 0 = none, 1 = player1, 2 = player2
 
+    private HashSet<int> usedQuestionIndices = new HashSet<int>();
+
+    // Add these methods to GameManager class:
+    public bool IsQuestionUsed(int questionIndex)
+    {
+        return usedQuestionIndices.Contains(questionIndex);
+    }
+
+    public void MarkQuestionAsUsed(int questionIndex)
+    {
+        usedQuestionIndices.Add(questionIndex);
+    }
+
+    public int GetUsedQuestionCount()
+    {
+        return usedQuestionIndices.Count;
+    }
+
+    public void ResetUsedQuestions()
+    {
+        usedQuestionIndices.Clear();
+    }
+
+    private Dictionary<int, float> battleDamageDealt = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    private Dictionary<int, float> battleDamageTaken = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+    private Dictionary<int, float> battleHealingDone = new Dictionary<int, float>() { { 1, 0f }, { 2, 0f } };
+
+    public void ResetBattleStats()
+    {
+        battleDamageDealt[1] = 0f;
+        battleDamageDealt[2] = 0f;
+        battleDamageTaken[1] = 0f;
+        battleDamageTaken[2] = 0f;
+        battleHealingDone[1] = 0f;
+        battleHealingDone[2] = 0f;
+    }
+
+    public void AddDamageDealt(int player, float damage)
+    {
+        battleDamageDealt[player] += damage;
+    }
+
+    public void AddDamageTaken(int player, float damage)
+    {
+        battleDamageTaken[player] += damage;
+    }
+
+    public void AddHealingDone(int player, float healing)
+    {
+        battleHealingDone[player] += healing;
+    }
+
+    public float GetDamageDealt(int player)
+    {
+        return battleDamageDealt[player];
+    }
+
+    public float GetDamageTaken(int player)
+    {
+        return battleDamageTaken[player];
+    }
+
+    public float GetHealingDone(int player)
+    {
+        return battleHealingDone[player];
+    }
+
     public void SetDefeatedPlayerInQuiz(int playerNumber)
     {
         playerDefeatedInQuiz = playerNumber;

@@ -372,6 +372,7 @@ public class CharacterSelectionManager : MonoBehaviour
     }
 
     private static int numberOfQuestionsToGenerate = 5;
+    private LoadingScreenManager loadingScreenManager;
     public void ConfirmSelection()
     {
         SaveCharacters();
@@ -384,13 +385,8 @@ public class CharacterSelectionManager : MonoBehaviour
         if (gameMode == "AITrivia")
         {
             List<Question> aiQuestions = AIQuestionsHolder.GetAIQuestions();
-
-            ShuffleQuestions(aiQuestions);
-
             GeneratedQuestionHolder.generatedQuestions = aiQuestions;
-
             Debug.Log("AI Trivia questions loaded: " + GeneratedQuestionHolder.generatedQuestions.Count);
-
             SceneManager.LoadScene("QuizScene");
         }
         else if (gameMode == "PromptPlay")
@@ -402,90 +398,15 @@ public class CharacterSelectionManager : MonoBehaviour
                 return;
             }
 
-            if (loadingPanel != null) loadingPanel.SetActive(true);
+            Debug.Log($"Starting PromptPlay mode with topic: {topic}");
 
-            StartCoroutine(AIQuestionGenerator.GenerateQuestions(topic, OnQuestionsReady, OnAIError, numberOfQuestionsToGenerate));
+            // Store the topic for use after scene loads
+            PlayerPrefs.SetString("CurrentTopic", topic);
+            PlayerPrefs.Save();
+
+            // Load the loading scene first
+            SceneManager.LoadScene("LoadingScene");
         }
-    }
-
-
-    private void ShuffleQuestions(List<Question> questions)
-    {
-        for (int i = questions.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            Question temp = questions[i];
-            questions[i] = questions[randomIndex];
-            questions[randomIndex] = temp;
-        }
-    }
-
-    private void OnQuestionsReady(List<Question> questions)
-    {
-        if (questions == null)
-        {
-            Debug.LogError("OnQuestionsReady received null questions list");
-            if (loadingPanel != null) loadingPanel.SetActive(false);
-            return;
-        }
-
-        Debug.Log("OnQuestionsReady received " + questions.Count + " questions");
-
-        if (questions.Count == 0)
-        {
-            Debug.LogWarning("OnQuestionsReady received empty questions list");
-            if (loadingPanel != null) loadingPanel.SetActive(false);
-            return;
-        }
-
-        // Log the first question to verify format
-        if (questions.Count > 0)
-        {
-            Question firstQ = questions[0];
-            Debug.Log("First question: " + firstQ.questionText);
-            Debug.Log("Options count: " + (firstQ.answerOptions != null ? firstQ.answerOptions.Length : 0));
-            Debug.Log("Correct answer index: " + firstQ.correctAnswerIndex);
-        }
-
-        GeneratedQuestionHolder.generatedQuestions = questions;
-        Debug.Log("Questions stored in GeneratedQuestionHolder, count: " +
-                  GeneratedQuestionHolder.generatedQuestions.Count);
-
-        if (loadingPanel != null) loadingPanel.SetActive(false);
-
-        Debug.Log("About to load QuizScene");
-        SceneManager.LoadScene("QuizScene");
-    }
-
-    private void OnAIError(string error)
-    {
-        Debug.LogError("AI error: " + error);
-
-        if (error.Contains("JSON") || error.Contains("parse"))
-        {
-            Debug.Log("Trying with fallback questions...");
-            List<Question> fallbackQuestions = CreateBasicQuestions(promptInput.text, 5);
-            OnQuestionsReady(fallbackQuestions);
-        }
-        else
-        {
-            if (loadingPanel != null) loadingPanel.SetActive(false);
-        }
-    }
-
-    private List<Question> CreateBasicQuestions(string topic, int count)
-    {
-        List<Question> questions = new List<Question>();
-        for (int i = 0; i < count; i++)
-        {
-            questions.Add(new Question
-            {
-                questionText = $"Question {i + 1} about {topic}",
-                answerOptions = new[] { "Option A", "Option B", "Option C", "Option D" },
-                correctAnswerIndex = 0
-            });
-        }
-        return questions;
     }
 
     public void SaveCharacters()

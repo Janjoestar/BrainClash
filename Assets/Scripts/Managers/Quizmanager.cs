@@ -55,8 +55,6 @@ public class QuizManager : MonoBehaviour
 
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
-    private List<int> usedQuestionIndices = new List<int>();
-    private HashSet<int> usedQuestionSet = new HashSet<int>(); // More efficient for checking if a question has been used
 
     private bool showTextAnimation = false;
     private bool answerSelected = false; // Add this flag to track if an answer has been selected
@@ -106,11 +104,8 @@ public class QuizManager : MonoBehaviour
             leftBackgroundImage.color = player1Color;
             rightBackgroundImage.color = player2Color;
 
-            // Store original player colors
             StoreOriginalPlayerColors();
-
             InitializeColorPanels();
-
             StartCoroutine(InitialColorPanelSlideIn());
         }
 
@@ -126,12 +121,8 @@ public class QuizManager : MonoBehaviour
             InitializeExampleQuestions();
         }
 
-        // Initialize question tracking
-        usedQuestionIndices.Clear();
-        usedQuestionSet.Clear();
 
         HideFreezeTimers();
-
         StartQuizPhase();
     }
 
@@ -452,46 +443,36 @@ public class QuizManager : MonoBehaviour
         GameManager.Instance.ResetDamageMultipliers();
         UpdatePlayerInfos();
 
-        // Reset buzz state
         isBuzzLocked = false;
         canBuzz = true;
         playerWhoBuzzed = 0;
         playerFrozen[1] = false;
         playerFrozen[2] = false;
 
-        // Restore original player colors when starting new quiz phase
         RestorePlayerColor(1);
         RestorePlayerColor(2);
 
-        // Reset pass question state
         questionWasPassed = false;
         playerWhoPassedQuestion = 0;
 
-        // Reset answer selection state
         answerSelected = false;
 
-        // Hide freeze timer texts
         HideFreezeTimers();
 
-        // Reset player visibility
         Player1.SetActive(true);
         Player2.SetActive(true);
 
-        // Get a new question
         int nextIndex = GetNextUniqueQuestionIndex();
         currentQuestionIndex = nextIndex;
 
-        // Show quiz panel with question
         quizPanel.SetActive(true);
         buzzerPanel.SetActive(false);
         answerPanel.SetActive(false);
 
-        // Display the question
         Question q = questions[currentQuestionIndex];
         questionText.text = q.questionText;
         SetDynamicFontSizeForQuestion(questionText, questionText.text);
 
-        // Initialize and start the reading timer
         currentReadingTime = readingTime;
         isReadingTime = true;
         StartCoroutine(QuizPhaseTimer());
@@ -707,11 +688,10 @@ public class QuizManager : MonoBehaviour
     private int GetNextUniqueQuestionIndex()
     {
         // If we've used all questions, reset the tracking
-        if (usedQuestionSet.Count >= questions.Count)
+        if (GameManager.Instance.GetUsedQuestionCount() >= questions.Count)
         {
             Debug.Log("All questions have been used. Resetting question pool.");
-            usedQuestionIndices.Clear();
-            usedQuestionSet.Clear();
+            GameManager.Instance.ResetUsedQuestions();
         }
 
         int randomIndex;
@@ -727,17 +707,15 @@ public class QuizManager : MonoBehaviour
             if (attempts > maxAttempts)
             {
                 Debug.LogWarning("Failed to find an unused question after multiple attempts. Clearing question history.");
-                usedQuestionIndices.Clear();
-                usedQuestionSet.Clear();
+                GameManager.Instance.ResetUsedQuestions();
                 break;
             }
-        } while (usedQuestionSet.Contains(randomIndex));
+        } while (GameManager.Instance.IsQuestionUsed(randomIndex));
 
-        // Add to both data structures
-        usedQuestionIndices.Add(randomIndex);
-        usedQuestionSet.Add(randomIndex);
+        // Mark question as used
+        GameManager.Instance.MarkQuestionAsUsed(randomIndex);
 
-        Debug.Log($"Selected question {randomIndex}. Used questions: {usedQuestionSet.Count}/{questions.Count}");
+        Debug.Log($"Selected question {randomIndex}. Used questions: {GameManager.Instance.GetUsedQuestionCount()}/{questions.Count}");
 
         return randomIndex;
     }
