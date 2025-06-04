@@ -2797,6 +2797,10 @@ MonoBehaviour:
   player2HealthText: {fileID: 1800171162}
   player2DamageMultiText: {fileID: 44344280}
   freezeSound: {fileID: 8300000, guid: 8085174db23a75e46b630a5bbc2f0def, type: 3}
+  correctAnswerColor: {r: 0, g: 1, b: 0, a: 1}
+  incorrectAnswerColor: {r: 1, g: 0, b: 0, a: 1}
+  buttonScaleMultiplier: 1.2
+  buttonAnimationDuration: 0.3
 --- !u!4 &1835962244
 Transform:
   m_ObjectHideFlags: 0
