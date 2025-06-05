@@ -298,7 +298,46 @@ public class QuizManager : MonoBehaviour
     private void HandleBuzzerInput()
     {
         // If the game isn't in a state where buzzing is allowed, don't process inputs
-        if (isBuzzLocked)
+        if (isBuzzLocked && !answerPanel.activeInHierarchy)
+            return;
+
+        // Handle answer selection when answer panel is active
+        if (answerPanel.activeInHierarchy && !answerSelected)
+        {
+            // Check for answer selection keys (A, B, C, D or 1, 2, 3, 4)
+            if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SelectAnswer(0);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SelectAnswer(1);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SelectAnswer(2);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SelectAnswer(3);
+                return;
+            }
+            // Pass question key (P or Space)
+            else if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Space))
+            {
+                if (passQuestionButton != null && passQuestionButton.interactable)
+                {
+                    PassQuestionToOtherPlayer();
+                }
+                return;
+            }
+        }
+
+        // Original buzzer input handling (only when answer panel is not active)
+        if (answerPanel.activeInHierarchy)
             return;
 
         // Check for simultaneous early buzzes first

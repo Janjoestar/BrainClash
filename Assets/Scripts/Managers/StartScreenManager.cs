@@ -11,16 +11,6 @@ public class StartScreenManager : MonoBehaviour
     public GameObject playPanel;
     public GameObject shadowPanel;
 
-    // References for hover effects
-    public Text[] menuButtonTexts; // Array of all menu button texts
-    public Button[] gameModeButtons; // Array of gamemode buttons
-
-    // Colors for hover effects
-    public Color normalColor = Color.white;
-    public Color hoverColor = Color.yellow;
-    public Color gameModeNormalColor = Color.white;
-    public Color gameModeHoverColor = new Color(1f, 0.8f, 0.8f); // Light pink/red
-
     // Static variable to store the selected game mode across scenes
     public static string selectedGameMode;
 
@@ -32,74 +22,6 @@ public class StartScreenManager : MonoBehaviour
             playPanel.SetActive(false);
             shadowPanel.SetActive(false);
         }
-
-        // Add hover listeners to menu buttons
-        if (menuButtonTexts != null)
-        {
-            foreach (Text buttonText in menuButtonTexts)
-            {
-                Button button = buttonText.GetComponentInParent<Button>();
-                if (button != null)
-                {
-                    // Add EventTrigger component if it doesn't exist
-                    EventTrigger trigger = button.GetComponent<EventTrigger>();
-                    if (trigger == null)
-                        trigger = button.gameObject.AddComponent<EventTrigger>();
-
-                    // Create entry for pointer enter
-                    EventTrigger.Entry enterEntry = new EventTrigger.Entry();
-                    enterEntry.eventID = EventTriggerType.PointerEnter;
-                    enterEntry.callback.AddListener((data) => { OnButtonHover(buttonText, true); });
-                    trigger.triggers.Add(enterEntry);
-
-                    // Create entry for pointer exit
-                    EventTrigger.Entry exitEntry = new EventTrigger.Entry();
-                    exitEntry.eventID = EventTriggerType.PointerExit;
-                    exitEntry.callback.AddListener((data) => { OnButtonHover(buttonText, false); });
-                    trigger.triggers.Add(exitEntry);
-                }
-            }
-        }
-
-        // Add hover listeners to gamemode buttons
-        if (gameModeButtons != null)
-        {
-            foreach (Button button in gameModeButtons)
-            {
-                Image buttonImage = button.GetComponent<Image>();
-                if (buttonImage != null)
-                {
-                    // Add EventTrigger component if it doesn't exist
-                    EventTrigger trigger = button.GetComponent<EventTrigger>();
-                    if (trigger == null)
-                        trigger = button.gameObject.AddComponent<EventTrigger>();
-
-                    // Create entry for pointer enter
-                    EventTrigger.Entry enterEntry = new EventTrigger.Entry();
-                    enterEntry.eventID = EventTriggerType.PointerEnter;
-                    enterEntry.callback.AddListener((data) => { OnGameModeHover(buttonImage, true); });
-                    trigger.triggers.Add(enterEntry);
-
-                    // Create entry for pointer exit
-                    EventTrigger.Entry exitEntry = new EventTrigger.Entry();
-                    exitEntry.eventID = EventTriggerType.PointerExit;
-                    exitEntry.callback.AddListener((data) => { OnGameModeHover(buttonImage, false); });
-                    trigger.triggers.Add(exitEntry);
-                }
-            }
-        }
-    }
-
-    // Hover effect for main menu buttons
-    public void OnButtonHover(Text buttonText, bool isHovering)
-    {
-        buttonText.color = isHovering ? hoverColor : normalColor;
-    }
-
-    // Hover effect for gamemode buttons
-    public void OnGameModeHover(Image buttonImage, bool isHovering)
-    {
-        buttonImage.color = isHovering ? gameModeHoverColor : gameModeNormalColor;
     }
 
     // Called when the "Play" button is clicked
@@ -108,6 +30,11 @@ public class StartScreenManager : MonoBehaviour
         // Show the game mode selection panels
         playPanel.SetActive(true);
         shadowPanel.SetActive(true);
+    }
+
+    public void OnPrepPhaseButton()
+    {
+        SceneManager.LoadScene("PrepPhase");
     }
 
     // Called when the "Prompt Play" game mode is selected
@@ -128,13 +55,6 @@ public class StartScreenManager : MonoBehaviour
         Debug.Log(selectedGameMode);
         // Load the character selection scene
         SceneManager.LoadScene("CharacterSelection");
-    }
-
-    // Called when the "Prep Phase" button is clicked
-    public void OnPrepPhaseButton()
-    {
-        // Add scene name or logic here, for now just logging
-        Debug.Log("Prep Phase button clicked");
     }
 
     // Called when the "Exit" button is clicked
