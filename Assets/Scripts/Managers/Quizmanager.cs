@@ -7,88 +7,58 @@ public class QuizManager : MonoBehaviour
 {
     public static QuizManager Instance;
 
+    [Header("Core Components")]
     [SerializeField] private List<Question> questions = new List<Question>();
-    [SerializeField] private Text questionText;
+    [SerializeField] private Text questionText, timerText, LogoText, answerTimerText;
     [SerializeField] private Text[] answerTexts;
-    [SerializeField] private GameObject quizPanel;
-    [SerializeField] private GameObject buzzerPanel;
-    [SerializeField] private GameObject answerPanel;
-    [SerializeField] internal GameObject Player1;
-    [SerializeField] internal GameObject Player2;
-    [SerializeField] private float readingTime = 3f;
-    [SerializeField] private Text timerText;
-    [SerializeField] private Text LogoText;
-    [SerializeField] private float earlyBuzzPenaltyTime = 1.5f; // Time penalty for buzzing too early
-    [SerializeField] private float colorTransitionSpeed = 2f;
-    [SerializeField] private float initialSlideInTime = 0.75f; // How long the initial animation takes
-    [SerializeField] private Button passQuestionButton; // Assign in inspector
-    [SerializeField] private Button[] answerButtons; // Add this field to store references to answer buttons
-
+    [SerializeField] internal GameObject quizPanel, buzzerPanel, answerPanel, Player1, Player2;
+    [SerializeField] private Button passQuestionButton;
+    [SerializeField] private Button[] answerButtons;
     [SerializeField] private Canvas DamageMultiAnimation;
 
-    [Header("Player 1 UI")]
-    [SerializeField] private RectTransform leftColorPanel;  // Panel for Player 1 color
-    private Coroutine leftPanelAnimation;
-    [SerializeField] private Image leftBackgroundImage;
-    private Coroutine player1ColorTransition;
-    [SerializeField] private Text player1FreezeTimerText;
-    [SerializeField] private Text player1HealthText;
-    [SerializeField] private Text player1DamageMultiText;
+    [Header("Timing Settings")]
+    [SerializeField]
+    private float readingTime = 3f, earlyBuzzPenaltyTime = 1.5f, colorTransitionSpeed = 2f,
+                                  initialSlideInTime = 0.75f, answerTimeLimit = 10f;
 
-    [Header("Player 2 UI")]
-    [SerializeField] private RectTransform rightColorPanel; // Panel for Player 2 color
-    private Coroutine rightPanelAnimation;
-    [SerializeField] private Image rightBackgroundImage;
-    private Coroutine player2ColorTransition;
-    [SerializeField] private Text player2FreezeTimerText;
-    [SerializeField] private Text player2HealthText;
-    [SerializeField] private Text player2DamageMultiText;
+    [Header("Player UI")]
+    [SerializeField] private RectTransform leftColorPanel, rightColorPanel;
+    [SerializeField] private Image leftBackgroundImage, rightBackgroundImage;
+    [SerializeField]
+    private Text player1FreezeTimerText, player1HealthText, player1DamageMultiText,
+                                  player2FreezeTimerText, player2HealthText, player2DamageMultiText;
 
-    [Header("Freeze Effects")]
-    [SerializeField] private AudioClip freezeSound; // Assign freeze sound effect in inspector
-    private AudioSource audioSource;
+    [Header("Audio")]
+    [SerializeField] private AudioClip freezeSound, timerTickSound;
 
-    private int currentQuestionIndex = -1;
-    private bool canBuzz = true;
-    private int playerWhoBuzzed = 0; // 0 = none, 1 = player1, 2 = player2
-    private float currentReadingTime;
+    // Consolidate private fields:
+    private int currentQuestionIndex = -1, playerWhoBuzzed = 0, playerWhoPassedQuestion = 0;
+    private float currentReadingTime, currentAnswerTime;
+    private bool canBuzz = true, showTextAnimation = false, answerSelected = false, isReadingTime = true,
+                 isBuzzLocked = false, questionWasPassed = false, answerTimerRunning = false;
 
     private Transform gameTransform;
     private RectTransform quizPanelGameOBJ;
+    private AudioSource audioSource;
+    private Coroutine player1ColorTransition, player2ColorTransition, answerTimerCoroutine;
 
-    private bool showTextAnimation = false;
-    private bool answerSelected = false; // Add this flag to track if an answer has been selected
+    private bool[] playerFrozen = new bool[3];
+    private float[] playerFreezeTimeRemaining = new float[3];
+    private Color[] originalPlayerColors = new Color[3];
+    private Color frozenColor = new Color(0f, 181f / 255f, 240f / 255f, 1f);
 
-    [Header("Freeze UI")]
-    private bool isReadingTime = true;
-    private bool isBuzzLocked = false;
-    private bool[] playerFrozen = new bool[3]; // Index 0 unused, 1 = player1, 2 = player2
-    private float[] playerFreezeTimeRemaining = new float[3]; // Remaining freeze time for each player
-    private Color frozenColor = new Color(0f / 255f, 181f / 255f, 240f / 255f, 1f); // #00B5F0 color
-    private Color[] originalPlayerColors = new Color[3]; // Store original colors for each player
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        if (Instance == null) Instance = this;
+        else { Destroy(gameObject); return; }
 
-        // Get or add AudioSource component
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
 
-        if (questions.Count == 0)
-            InitializeExampleQuestions();
+        if (questions.Count == 0) Debug.Log("No generated questions found, using default questions.");
 
         gameTransform = answerPanel.transform.Find("Game");
-        if (gameTransform != null)
-        {
-            quizPanelGameOBJ = gameTransform.GetComponent<RectTransform>();
-        }
+        if (gameTransform != null) quizPanelGameOBJ = gameTransform.GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -98,29 +68,19 @@ public class QuizManager : MonoBehaviour
             SetCharacter(Player1, GameManager.Instance.SelectedCharacterP1);
             SetCharacter(Player2, GameManager.Instance.SelectedCharacterP2);
 
-            Color player1Color = GameManager.Instance.SelectedCharacterP1.characterColor;
-            Color player2Color = GameManager.Instance.SelectedCharacterP2.characterColor;
-
-            leftBackgroundImage.color = player1Color;
-            rightBackgroundImage.color = player2Color;
+            leftBackgroundImage.color = GameManager.Instance.SelectedCharacterP1.characterColor;
+            rightBackgroundImage.color = GameManager.Instance.SelectedCharacterP2.characterColor;
 
             StoreOriginalPlayerColors();
             InitializeColorPanels();
             StartCoroutine(InitialColorPanelSlideIn());
         }
 
-        Debug.Log(GeneratedQuestionHolder.generatedQuestions.Count > 0 ? GeneratedQuestionHolder.generatedQuestions[1] + "" + GeneratedQuestionHolder.generatedQuestions[2] : "No generated questions");
-
-        if (GeneratedQuestionHolder.generatedQuestions != null && GeneratedQuestionHolder.generatedQuestions.Count > 0)
+        if (GeneratedQuestionHolder.generatedQuestions?.Count > 0)
         {
             questions.Clear();
             questions = new List<Question>(GeneratedQuestionHolder.generatedQuestions);
         }
-        else
-        {
-            InitializeExampleQuestions();
-        }
-
 
         HideFreezeTimers();
         StartQuizPhase();
@@ -128,26 +88,18 @@ public class QuizManager : MonoBehaviour
 
     private void StoreOriginalPlayerColors()
     {
-        // Store the original colors of both players
-        SpriteRenderer player1Renderer = Player1.GetComponent<SpriteRenderer>();
-        SpriteRenderer player2Renderer = Player2.GetComponent<SpriteRenderer>();
+        var p1Renderer = Player1.GetComponent<SpriteRenderer>();
+        var p2Renderer = Player2.GetComponent<SpriteRenderer>();
 
-        if (player1Renderer != null)
-            originalPlayerColors[1] = player1Renderer.color;
-
-        if (player2Renderer != null)
-            originalPlayerColors[2] = player2Renderer.color;
+        if (p1Renderer != null) originalPlayerColors[1] = p1Renderer.color;
+        if (p2Renderer != null) originalPlayerColors[2] = p2Renderer.color;
     }
 
     private void InitializeColorPanels()
     {
         leftColorPanel.GetComponent<Image>().color = GameManager.Instance.SelectedCharacterP1.characterColor;
         rightColorPanel.GetComponent<Image>().color = GameManager.Instance.SelectedCharacterP2.characterColor;
-
-        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
-
         leftColorPanel.anchoredPosition = new Vector2(-480, 0);
-
         rightColorPanel.anchoredPosition = new Vector2(480, 0);
     }
 
@@ -165,43 +117,6 @@ public class QuizManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / initialSlideInTime;
-
-            float smoothT = Mathf.SmoothStep(0, 1, t);
-
-            leftColorPanel.anchoredPosition = Vector2.Lerp(leftPanelStart, leftPanelTarget, smoothT);
-            rightColorPanel.anchoredPosition = Vector2.Lerp(rightPanelStart, rightPanelTarget, smoothT);
-
-            yield return null;
-        }
-
-        leftColorPanel.anchoredPosition = leftPanelTarget;
-        rightColorPanel.anchoredPosition = rightPanelTarget;
-    }
-
-    private IEnumerator AnimateColorPanelsToBuzz(int playerNumber)
-    {
-        Vector2 leftPanelTarget, rightPanelTarget;
-
-        if (playerNumber == 1)
-        {
-            leftPanelTarget = new Vector2(Screen.width / 2f, 0);
-            rightPanelTarget = new Vector2(Screen.width * 1.5f, 0);
-        }
-        else
-        {
-            leftPanelTarget = new Vector2(-Screen.width / 2f, 0);
-            rightPanelTarget = new Vector2(0, 0);
-        }
-
-        Vector2 leftPanelStart = leftColorPanel.anchoredPosition;
-        Vector2 rightPanelStart = rightColorPanel.anchoredPosition;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < colorTransitionSpeed)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / colorTransitionSpeed;
 
             float smoothT = Mathf.SmoothStep(0, 1, t);
 
@@ -242,36 +157,24 @@ public class QuizManager : MonoBehaviour
 
     private void UpdateFreezeTimers()
     {
-        if (playerFrozen[1])
-        {
-            playerFreezeTimeRemaining[1] -= Time.deltaTime;
-            if (playerFreezeTimeRemaining[1] <= 0)
-            {
-                playerFrozen[1] = false;
-                player1FreezeTimerText.gameObject.SetActive(false);
-                // Restore original color when freeze ends
-                RestorePlayerColor(1);
-            }
-            else
-            {
-                player1FreezeTimerText.text = $"Player 1 is frozen for {playerFreezeTimeRemaining[1]:F1} seconds";
-            }
-        }
+        UpdatePlayerFreezeTimer(1, player1FreezeTimerText, "Player 1 is frozen for");
+        UpdatePlayerFreezeTimer(2, player2FreezeTimerText, "Player 2 is frozen for");
+    }
 
-        if (playerFrozen[2])
+    private void UpdatePlayerFreezeTimer(int playerNum, Text timerText, string message)
+    {
+        if (!playerFrozen[playerNum]) return;
+
+        playerFreezeTimeRemaining[playerNum] -= Time.deltaTime;
+        if (playerFreezeTimeRemaining[playerNum] <= 0)
         {
-            playerFreezeTimeRemaining[2] -= Time.deltaTime;
-            if (playerFreezeTimeRemaining[2] <= 0)
-            {
-                playerFrozen[2] = false;
-                player2FreezeTimerText.gameObject.SetActive(false);
-                // Restore original color when freeze ends
-                RestorePlayerColor(2);
-            }
-            else
-            {
-                player2FreezeTimerText.text = $"Player 2 is frozen for {playerFreezeTimeRemaining[2]:F1} seconds";
-            }
+            playerFrozen[playerNum] = false;
+            timerText.gameObject.SetActive(false);
+            RestorePlayerColor(playerNum);
+        }
+        else
+        {
+            timerText.text = $"{message} {playerFreezeTimeRemaining[playerNum]:F1} seconds";
         }
     }
 
@@ -297,14 +200,11 @@ public class QuizManager : MonoBehaviour
 
     private void HandleBuzzerInput()
     {
-        // If the game isn't in a state where buzzing is allowed, don't process inputs
         if (isBuzzLocked && !answerPanel.activeInHierarchy)
             return;
 
-        // Handle answer selection when answer panel is active
         if (answerPanel.activeInHierarchy && !answerSelected)
         {
-            // Check for answer selection keys (A, B, C, D or 1, 2, 3, 4)
             if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
             {
                 SelectAnswer(0);
@@ -325,7 +225,6 @@ public class QuizManager : MonoBehaviour
                 SelectAnswer(3);
                 return;
             }
-            // Pass question key (P or Space)
             else if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Space))
             {
                 if (passQuestionButton != null && passQuestionButton.interactable)
@@ -336,11 +235,9 @@ public class QuizManager : MonoBehaviour
             }
         }
 
-        // Original buzzer input handling (only when answer panel is not active)
         if (answerPanel.activeInHierarchy)
             return;
 
-        // Check for simultaneous early buzzes first
         bool player1Buzzed = Input.GetKeyDown(KeyCode.S);
         bool player2Buzzed = Input.GetKeyDown(KeyCode.K);
 
@@ -349,40 +246,33 @@ public class QuizManager : MonoBehaviour
             // Handle early buzzes
             if (player1Buzzed && player2Buzzed)
             {
-                // Both players buzzed simultaneously and too early
                 ApplyEarlyBuzzPenalty(1);
                 ApplyEarlyBuzzPenalty(2);
                 return;
             }
             else if (player1Buzzed)
             {
-                // Player 1 buzzed too early
                 ApplyEarlyBuzzPenalty(1);
                 return;
             }
             else if (player2Buzzed)
             {
-                // Player 2 buzzed too early
                 ApplyEarlyBuzzPenalty(2);
                 return;
             }
         }
         else
         {
-            // Handle valid buzzes (not in reading time)
             if (player1Buzzed && player2Buzzed)
             {
-                // Both players buzzed simultaneously - determine who gets priority
                 HandleSimultaneousBuzzes();
             }
             else if (player1Buzzed && canBuzz && !playerFrozen[1])
             {
-                // Valid buzz from Player 1
                 PlayerBuzzed(1);
             }
             else if (player2Buzzed && canBuzz && !playerFrozen[2])
             {
-                // Valid buzz from Player 2
                 PlayerBuzzed(2);
             }
         }
@@ -414,29 +304,20 @@ public class QuizManager : MonoBehaviour
 
     private void ApplyEarlyBuzzPenalty(int playerNumber)
     {
-        // Don't apply penalty if player is already frozen
-        if (playerFrozen[playerNumber])
-            return;
+        if (playerFrozen[playerNumber]) return;
 
-        // Set player as frozen
         playerFrozen[playerNumber] = true;
         playerFreezeTimeRemaining[playerNumber] = earlyBuzzPenaltyTime;
-
-        // Play freeze sound effect
         PlayFreezeSound();
 
-        // Show freeze timer text and apply freeze color
-        if (playerNumber == 1 && player1FreezeTimerText != null)
+        var timerText = playerNumber == 1 ? player1FreezeTimerText : player2FreezeTimerText;
+        var playerObj = playerNumber == 1 ? Player1 : Player2;
+
+        if (timerText != null)
         {
-            player1FreezeTimerText.gameObject.SetActive(true);
-            player1FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
-            ApplyFreezeColor(Player1);
-        }
-        else if (playerNumber == 2 && player2FreezeTimerText != null)
-        {
-            player2FreezeTimerText.gameObject.SetActive(true);
-            player2FreezeTimerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
-            ApplyFreezeColor(Player2);
+            timerText.gameObject.SetActive(true);
+            timerText.text = $"Frozen for {earlyBuzzPenaltyTime:F1} seconds";
+            ApplyFreezeColor(playerObj);
         }
     }
 
@@ -457,63 +338,47 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FlashPlayerFreeze(GameObject playerObject)
-    {
-        SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            Color originalColor = spriteRenderer.color;
-            spriteRenderer.color = frozenColor;
-            yield return new WaitForSeconds(0.5f); // Flash briefly
-            spriteRenderer.color = originalColor;
-        }
-    }
-
     private void UpdatePlayerInfos()
     {
-        player1HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(2).ToString();
-        player2HealthText.text = "Health: " + GameManager.Instance.GetPlayerHealth(1).ToString();
-        player1DamageMultiText.text = "Damage Multiplier: " + GameManager.player2DamageMultiplier.ToString() + "x";
-        player2DamageMultiText.text = "Damage Multiplier: " + GameManager.player1DamageMultiplier.ToString() + "x";
+        player1HealthText.text = $"Health: {GameManager.Instance.GetPlayerHealth(2)}";
+        player2HealthText.text = $"Health: {GameManager.Instance.GetPlayerHealth(1)}";
+        player1DamageMultiText.text = $"Damage Multiplier: {GameManager.player2DamageMultiplier}x";
+        player2DamageMultiText.text = $"Damage Multiplier: {GameManager.player1DamageMultiplier}x";
     }
+
 
     private void StartQuizPhase()
     {
         GameManager.Instance.ResetDamageMultipliers();
         UpdatePlayerInfos();
 
-        isBuzzLocked = false;
+        isBuzzLocked = canBuzz = false;
         canBuzz = true;
-        playerWhoBuzzed = 0;
-        playerFrozen[1] = false;
-        playerFrozen[2] = false;
+        playerWhoBuzzed = playerWhoPassedQuestion = 0;
+        playerFrozen[1] = playerFrozen[2] = false;
+        questionWasPassed = answerSelected = false;
 
         RestorePlayerColor(1);
         RestorePlayerColor(2);
-
-        questionWasPassed = false;
-        playerWhoPassedQuestion = 0;
-
-        answerSelected = false;
-
         HideFreezeTimers();
 
         Player1.SetActive(true);
         Player2.SetActive(true);
 
-        int nextIndex = GetNextUniqueQuestionIndex();
-        currentQuestionIndex = nextIndex;
+        currentQuestionIndex = GetNextUniqueQuestionIndex();
 
         quizPanel.SetActive(true);
         buzzerPanel.SetActive(false);
         answerPanel.SetActive(false);
 
-        Question q = questions[currentQuestionIndex];
+        var q = questions[currentQuestionIndex];
         questionText.text = q.questionText;
         SetDynamicFontSizeForQuestion(questionText, questionText.text);
 
         currentReadingTime = readingTime;
         isReadingTime = true;
+        answerTimerText.gameObject.SetActive(false);
+
         StartCoroutine(QuizPhaseTimer());
     }
 
@@ -534,10 +399,8 @@ public class QuizManager : MonoBehaviour
 
         isReadingTime = false;
 
-        // Add a small delay to ensure all input processing for this frame is complete
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
-        // Check if a player has already buzzed (could happen exactly as time runs out)
         if (playerWhoBuzzed == 0)
         {
             MoveToBuzzerPhase();
@@ -553,7 +416,6 @@ public class QuizManager : MonoBehaviour
         Player1.SetActive(true);
         Player2.SetActive(true);
 
-        // Allow buzzing, but keep any active freeze penalties
         canBuzz = true;
         playerWhoBuzzed = 0;
         isBuzzLocked = false;
@@ -567,7 +429,9 @@ public class QuizManager : MonoBehaviour
         isBuzzLocked = true;
         canBuzz = false;
         playerWhoBuzzed = playerNumber;
-        answerSelected = false; // Reset answer selection state when a player buzzes
+        answerSelected = false;
+
+        answerTimerText.gameObject.SetActive(true);
 
         GameObject p1damagePopup;
         GameObject p2damagePopup;
@@ -606,6 +470,8 @@ public class QuizManager : MonoBehaviour
 
         ShowAnswerOptions();
 
+        StartAnswerTimer();
+
         if (playerWhoBuzzed == 1 && showTextAnimation)
         {
             p1damagePopup = Instantiate(DamageMultiAnimation, Player1.transform).gameObject;
@@ -619,6 +485,86 @@ public class QuizManager : MonoBehaviour
             showTextAnimation = false;
         }
     }
+
+    private void StartAnswerTimer()
+    {
+        currentAnswerTime = answerTimeLimit;
+        answerTimerRunning = true;
+
+        if (answerTimerCoroutine != null)
+            StopCoroutine(answerTimerCoroutine);
+
+        answerTimerCoroutine = StartCoroutine(AnswerTimerCountdown());
+
+        // Show the timer text when the timer starts
+        answerTimerText.gameObject.SetActive(true);
+    }
+
+    private IEnumerator AnswerTimerCountdown()
+    {
+        float previousTime = currentAnswerTime;
+        float lastTickTime = 0f;
+
+        while (currentAnswerTime > 0 && answerTimerRunning && !answerSelected)
+        {
+            if (answerTimerText != null)
+            {
+                answerTimerText.text = "Time: " + Mathf.Ceil(currentAnswerTime).ToString();
+
+                float timeFraction = currentAnswerTime / answerTimeLimit;
+
+                if (timeFraction > 0.66f)
+                {
+                    answerTimerText.color = Color.yellow;
+                }
+                else if (timeFraction > 0.33f)
+                {
+                    answerTimerText.color = new Color(1f, 0.647f, 0f);
+                }
+                else
+                {
+                    answerTimerText.color = Color.red;
+                }
+            }
+
+            if (Mathf.Floor(currentAnswerTime) != Mathf.Floor(previousTime))
+            {
+                previousTime = currentAnswerTime;
+
+                if (timerTickSound != null && audioSource != null)
+                {
+                    float volume = Mathf.Lerp(0.4f, 1f, currentAnswerTime / answerTimeLimit);
+                    audioSource.PlayOneShot(timerTickSound, volume);
+                }
+            }
+
+            currentAnswerTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (!answerSelected && answerTimerRunning)
+        {
+            AnswerTimeExpired();
+        }
+        answerTimerText.gameObject.SetActive(false);
+    }
+
+
+    private void AnswerTimeExpired()
+    {
+        if (answerSelected) return;
+
+        answerSelected = true;
+        answerTimerRunning = false;
+
+        if (answerTimerText != null)
+            answerTimerText.text = "Time's Up!";
+
+        answerButtons[questions[currentQuestionIndex].correctAnswerIndex].GetComponent<Image>().color = Color.green;
+
+        StartCoroutine(ResetBuzzer());
+    }
+
 
     private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
     {
@@ -640,9 +586,6 @@ public class QuizManager : MonoBehaviour
 
         image.color = targetColor;
     }
-
-    private bool questionWasPassed = false;
-    private int playerWhoPassedQuestion = 0;
 
     public void PassQuestionToOtherPlayer()
     {
@@ -684,20 +627,27 @@ public class QuizManager : MonoBehaviour
         SetDynamicFontSizeForQuestion(questionText, currentQuestion);
     }
 
-    // Modify ShowAnswerOptions to reset and show the pass button
+    public void ResetAnswerButtons()
+    {
+        foreach (Button button in answerButtons)
+        {
+            if (button != null)
+            {
+                button.GetComponent<Image>().color = Color.white; // Reset to default color
+                button.transform.localScale = Vector3.one; // Reset to original size
+            }
+        }
+    }
     private void ShowAnswerOptions()
     {
-        Question q = questions[currentQuestionIndex];
+        var q = questions[currentQuestionIndex];
 
         for (int i = 0; i < answerTexts.Length; i++)
         {
             if (i < q.answerOptions.Length)
             {
-                string optionLetter = ((char)('A' + i)).ToString() + ". ";
-                answerTexts[i].text = optionLetter + q.answerOptions[i];
-
+                answerTexts[i].text = $"{(char)('A' + i)}. {q.answerOptions[i]}";
                 SetDynamicFontSize(answerTexts[i], q.answerOptions[i]);
-
                 answerTexts[i].transform.parent.gameObject.SetActive(true);
             }
             else
@@ -706,22 +656,12 @@ public class QuizManager : MonoBehaviour
             }
         }
 
-        if (passQuestionButton != null)
-        {
-            passQuestionButton.interactable = !questionWasPassed;
-        }
+        if (passQuestionButton != null) passQuestionButton.interactable = !questionWasPassed;
 
-        // Make sure all answer buttons are interactable (they might have been disabled in a previous round)
-        if (answerButtons != null && answerButtons.Length > 0)
-        {
-            for (int i = 0; i < answerButtons.Length; i++)
-            {
-                if (answerButtons[i] != null)
-                {
-                    answerButtons[i].interactable = true;
-                }
-            }
-        }
+        foreach (var button in answerButtons)
+            if (button != null) button.interactable = true;
+
+        ResetAnswerButtons();
     }
 
     private int GetNextUniqueQuestionIndex()
@@ -761,90 +701,74 @@ public class QuizManager : MonoBehaviour
 
     private void SetDynamicFontSizeForQuestion(Text textComponent, string content)
     {
-        if (content.Length < 50)
-        {
-            textComponent.fontSize = 70;
-        }
-        else if (content.Length < 75)
-        {
-            textComponent.fontSize = 60;
-        }
-        else if (content.Length < 100)
-        {
-            textComponent.fontSize = 50;
-        }
-        else
-        {
-            textComponent.fontSize = 35; // Minimum readable size
-        }
-
+        int len = content.Length;
+        textComponent.fontSize = len < 50 ? 70 : len < 75 ? 60 : len < 100 ? 50 : 35;
         textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
         textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
 
+    // Simplified SetDynamicFontSize:
     private void SetDynamicFontSize(Text textComponent, string content)
     {
-        if (content.Length < 10)
-        {
-            textComponent.fontSize = 50;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
-            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
-        }
-        else if (content.Length < 25)
-        {
-            textComponent.fontSize = 44;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
-            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
-        }
-        else if (content.Length < 50)
-        {
-            textComponent.fontSize = 30;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
-            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
-        }
-        else
-        {
-            textComponent.fontSize = 25;
-            textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
-            textComponent.verticalOverflow = VerticalWrapMode.Truncate;
-        }
-
+        int len = content.Length;
+        textComponent.fontSize = len < 10 ? 50 : len < 25 ? 44 : len < 50 ? 30 : 25;
+        textComponent.horizontalOverflow = HorizontalWrapMode.Wrap;
+        textComponent.verticalOverflow = VerticalWrapMode.Truncate;
         textComponent.alignment = TextAnchor.MiddleCenter;
     }
 
     public void SelectAnswer(int answerIndex)
     {
-        // Check if an answer has already been selected
-        if (answerSelected)
-            return;
-
-        // Mark that an answer has been selected
+        if (answerSelected) return;
         answerSelected = true;
+        answerTimerRunning = false; // Stop the answer timer
 
-        // Disable all answer buttons
-        if (answerButtons != null && answerButtons.Length > 0)
+        if (answerTimerCoroutine != null)
+            StopCoroutine(answerTimerCoroutine);
+
+        bool isCorrect = answerIndex == questions[currentQuestionIndex].correctAnswerIndex;
+        answerButtons[answerIndex].GetComponent<Image>().color = isCorrect ? Color.green : Color.red;
+
+        if (!isCorrect)
+            answerButtons[questions[currentQuestionIndex].correctAnswerIndex].GetComponent<Image>().color = Color.green;
+
+        StartCoroutine(AnimateButtonSize(answerButtons[answerIndex], isCorrect));
+
+        if (isCorrect)
         {
-            for (int i = 0; i < answerButtons.Length; i++)
-            {
-                if (answerButtons[i] != null)
-                {
-                    answerButtons[i].interactable = false;
-                }
-            }
-        }
-
-        if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
-        {
-            if (GameManager.Instance != null)
-                GameManager.Instance.SetLastCorrectPlayer(playerWhoBuzzed);
-
+            GameManager.Instance?.SetLastCorrectPlayer(playerWhoBuzzed);
             StartCoroutine(TransitionToBattle());
         }
         else
-        {
             StartCoroutine(ResetBuzzer());
+    }
+
+    private IEnumerator AnimateButtonSize(Button button, bool isCorrect)
+    {
+        Vector3 orig = button.transform.localScale;
+        Vector3 big = orig * 1.1f;
+        float t = 0f;
+
+        while (t < 0.2f)
+        {
+            button.transform.localScale = Vector3.Lerp(orig, big, t / 0.2f);
+            t += Time.deltaTime;
+            yield return null;
         }
+
+        button.transform.localScale = big;
+        yield return new WaitForSeconds(0.1f);
+
+        t = 0f;
+        while (t < 0.2f)
+        {
+            button.transform.localScale = Vector3.Lerp(big, orig, t / 0.2f);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        button.transform.localScale = orig;
     }
 
     private IEnumerator TransitionToBattle()
@@ -936,43 +860,5 @@ public class QuizManager : MonoBehaviour
 
         // We need to pass information about which player was defeated
         GameManager.Instance.SetDefeatedPlayerInQuiz(defeatedPlayer);
-    }
-
-    private void InitializeExampleQuestions()
-    {
-        questions.Add(new Question
-        {
-            questionText = "What is the capital of France?",
-            answerOptions = new string[] { "London", "Paris", "Berlin", "Madrid" },
-            correctAnswerIndex = 1
-        });
-
-        questions.Add(new Question
-        {
-            questionText = "What is the largest planet in our solar system?",
-            answerOptions = new string[] { "Earth", "Mars", "Jupiter", "Saturn" },
-            correctAnswerIndex = 2
-        });
-
-        questions.Add(new Question
-        {
-            questionText = "How many sides does a pentagon have?",
-            answerOptions = new string[] { "4", "5", "6", "7" },
-            correctAnswerIndex = 1
-        });
-
-        questions.Add(new Question
-        {
-            questionText = "Which element has the chemical symbol 'O'?",
-            answerOptions = new string[] { "Gold", "Oxygen", "Iron", "Osmium" },
-            correctAnswerIndex = 1
-        });
-
-        questions.Add(new Question
-        {
-            questionText = "What is 7 × 8?",
-            answerOptions = new string[] { "54", "56", "58", "62" },
-            correctAnswerIndex = 1
-        });
     }
 }

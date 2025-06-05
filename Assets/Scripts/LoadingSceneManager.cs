@@ -16,10 +16,12 @@ public class LoadingScreenManager : MonoBehaviour
     public bool smoothProgress = true;
     public float smoothSpeed = 2f;
     public int numberOfQuestionsToGenerate = 20;
+    public float errorDisplayTime = 3f;
 
     private float targetProgress = 0f;
     private float currentProgress = 0f;
     private Coroutine smoothProgressCoroutine;
+    private bool hasError = false;
 
     private void Start()
     {
@@ -34,15 +36,15 @@ public class LoadingScreenManager : MonoBehaviour
         else
         {
             Debug.LogError("No topic found in PlayerPrefs!");
-            UpdateProgress(0f, "Error: No topic specified");
+            ShowErrorAndReturnToStart("Error: No topic specified");
         }
     }
 
     private IEnumerator GenerateQuestionsWithProgress(string topic)
     {
-        Debug.Log($"Starting question generation for topic: {topic}");
+        Debug.Log($"Starting hybrid question generation for topic: {topic}");
 
-        yield return StartCoroutine(AIQuestionGenerator.GenerateQuestions(
+        yield return StartCoroutine(HybridQuestionGenerator.GenerateQuestions(
             topic,
             OnQuestionsReady,
             OnAIError,
@@ -53,20 +55,67 @@ public class LoadingScreenManager : MonoBehaviour
 
     private void OnQuestionsReady(List<Question> questions)
     {
+        if (hasError) return; // Prevent multiple callbacks
+
         if (questions == null || questions.Count == 0)
         {
             Debug.LogError("OnQuestionsReady received null or empty questions list");
-            OnAIError("No questions were generated");
+            ShowErrorAndReturnToStart("No questions were generated");
             return;
         }
 
         Debug.Log("OnQuestionsReady received " + questions.Count + " questions");
 
-        GeneratedQuestionHolder.generatedQuestions = questions;
+        // Validate questions before storing
+        List<Question> validQuestions = ValidateQuestions(questions);
+
+        if (validQuestions.Count == 0)
+        {
+            Debug.LogError("No valid questions after validation");
+            ShowErrorAndReturnToStart("Generated questions were invalid");
+            return;
+        }
+
+        GeneratedQuestionHolder.generatedQuestions = validQuestions;
         Debug.Log("Questions stored in GeneratedQuestionHolder, count: " + GeneratedQuestionHolder.generatedQuestions.Count);
 
-        CompleteProgress("Questions ready!");
-        StartCoroutine(LoadQuizSceneAfterDelay(1f));
+        CompleteProgress($"Ready! {validQuestions.Count} questions generated.");
+        StartCoroutine(LoadQuizSceneAfterDelay(1.5f));
+    }
+
+    private List<Question> ValidateQuestions(List<Question> questions)
+    {
+        List<Question> validQuestions = new List<Question>();
+
+        foreach (Question q in questions)
+        {
+            if (IsValidQuestion(q))
+            {
+                validQuestions.Add(q);
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid question filtered: {q?.questionText}");
+            }
+        }
+
+        return validQuestions;
+    }
+
+    private bool IsValidQuestion(Question question)
+    {
+        if (question == null) return false;
+        if (string.IsNullOrWhiteSpace(question.questionText)) return false;
+        if (question.answerOptions == null || question.answerOptions.Length != 4) return false;
+        if (question.correctAnswerIndex < 0 || question.correctAnswerIndex >= 4) return false;
+
+        // Check all options have content
+        foreach (string option in question.answerOptions)
+        {
+            if (string.IsNullOrWhiteSpace(option)) return false;
+        }
+
+        return true;
     }
 
     private IEnumerator LoadQuizSceneAfterDelay(float delay)
@@ -78,16 +127,24 @@ public class LoadingScreenManager : MonoBehaviour
 
     private void OnAIError(string error)
     {
+        if (hasError) return; // Prevent multiple error callbacks
+
+        hasError = true;
         Debug.LogError("AI error: " + error);
-        UpdateProgress(0f, "Failed to generate questions. Please try again.");
-        StartCoroutine(ReturnToPreviousSceneAfterDelay(3f));
+        ShowErrorAndReturnToStart("Failed to generate questions. " + error);
     }
 
-    private IEnumerator ReturnToPreviousSceneAfterDelay(float delay)
+    private void ShowErrorAndReturnToStart(string errorMessage)
+    {
+        UpdateProgress(0f, errorMessage);
+        StartCoroutine(ReturnToStartScreenAfterDelay(errorDisplayTime));
+    }
+
+    private IEnumerator ReturnToStartScreenAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        // Load back to your main menu or character selection scene
-        // SceneManager.LoadScene("YourMainMenuScene");
+        Debug.Log("Returning to StartScreen due to error");
+        SceneManager.LoadScene("StartScreen");
     }
 
     private void InitializeUI()
@@ -182,6 +239,7 @@ public class LoadingScreenManager : MonoBehaviour
         targetProgress = 0f;
         SetProgressImmediate(0f);
         UpdateStatusText("Initializing...");
+        hasError = false;
     }
 
     public void CompleteProgress(string finalMessage = "Complete!")

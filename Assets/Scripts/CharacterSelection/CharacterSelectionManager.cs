@@ -327,7 +327,6 @@ public class CharacterSelectionManager : MonoBehaviour
     public void ConfirmSelection()
     {
         SaveCharacters();
-
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ReloadSelectedCharacters();
@@ -335,6 +334,7 @@ public class CharacterSelectionManager : MonoBehaviour
 
         if (gameMode == "AITrivia")
         {
+            // Use pre-stored questions from AIQuestionsHolder
             List<Question> aiQuestions = AIQuestionsHolder.GetAIQuestions();
             GeneratedQuestionHolder.generatedQuestions = aiQuestions;
             Debug.Log("AI Trivia questions loaded: " + GeneratedQuestionHolder.generatedQuestions.Count);
@@ -348,14 +348,11 @@ public class CharacterSelectionManager : MonoBehaviour
                 Debug.LogWarning("Prompt is empty. Please enter a topic.");
                 return;
             }
-
             Debug.Log($"Starting PromptPlay mode with topic: {topic}");
-
             // Store the topic for use after scene loads
             PlayerPrefs.SetString("CurrentTopic", topic);
             PlayerPrefs.Save();
-
-            // Load the loading scene first
+            // Load the loading scene first (this will use the hybrid AI generation)
             SceneManager.LoadScene("LoadingScene");
         }
     }
