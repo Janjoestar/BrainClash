@@ -45,6 +45,39 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip globalSelfKOSound;   // Drag your self-KO sound here in the Inspector
     [SerializeField] private AudioClip globalHitSound;   // Drag your self-KO sound here in the Inspector
 
+    private Dictionary<int, Dictionary<string, int>> playerAttackCooldowns = new Dictionary<int, Dictionary<string, int>>();
+
+    public void SetAttackCooldown(int player, string attackName, int cooldown)
+    {
+        if (!playerAttackCooldowns.ContainsKey(player))
+            playerAttackCooldowns[player] = new Dictionary<string, int>();
+
+        playerAttackCooldowns[player][attackName] = cooldown;
+    }
+
+    public int GetAttackCooldown(int player, string attackName)
+    {
+        if (!playerAttackCooldowns.ContainsKey(player) || !playerAttackCooldowns[player].ContainsKey(attackName))
+            return 0;
+
+        return playerAttackCooldowns[player][attackName];
+    }
+
+    public void UpdatePlayerCooldowns(int player)
+    {
+        if (!playerAttackCooldowns.ContainsKey(player))
+            return;
+
+        var attackCooldowns = playerAttackCooldowns[player];
+        var keysToUpdate = new List<string>(attackCooldowns.Keys);
+
+        foreach (string attackName in keysToUpdate)
+        {
+            if (attackCooldowns[attackName] > 0)
+                attackCooldowns[attackName]--;
+        }
+    }
+
 
     // Add these methods to GameManager class:
     public bool IsQuestionUsed(int questionIndex)

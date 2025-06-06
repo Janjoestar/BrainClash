@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
@@ -179,6 +180,8 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
+            // Update cooldowns for the current attacking player before switching turns
+            GameManager.Instance.UpdatePlayerCooldowns(attackingPlayer);
             SceneManager.LoadScene("QuizScene");
         }
     }
@@ -301,10 +304,28 @@ public class BattleManager : MonoBehaviour
         CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
 
-    // Replace your PerformAttack method with this version:
+    private bool IsAttackAvailable(AttackData attack)
+    {
+        int cooldown = GameManager.Instance.GetAttackCooldown(attackingPlayer, attack.attackName);
+        return cooldown <= 0;
+    }
+
     private void PerformAttack(AttackData attack)
     {
+        // Check if attack is on cooldown
+        if (!IsAttackAvailable(attack))
+        {
+            battleStatusText.text = attack.attackName + " is on cooldown!";
+            return;
+        }
+
         SetAttackButtonsInteractable(false);
+
+        // Set cooldown for this attack if it has one
+        if (attack.maxCooldown > 0)
+        {
+            GameManager.Instance.SetAttackCooldown(attackingPlayer, attack.attackName, attack.maxCooldown);
+        }
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
@@ -782,7 +803,7 @@ public class BattleManager : MonoBehaviour
     {
         foreach (Transform child in attackPanel.transform)
         {
-            if( child.gameObject != attackHoverPrefab)
+            if (child.gameObject != attackHoverPrefab)
                 Destroy(child.gameObject);
         }
 
@@ -809,9 +830,22 @@ public class BattleManager : MonoBehaviour
             if (image != null) image.enabled = true;
 
             Text buttonText = buttonObj.GetComponentInChildren<Text>();
+            int cooldown = GameManager.Instance.GetAttackCooldown(attackingPlayer, attack.attackName);
             if (buttonText != null)
             {
-                buttonText.text = attack.attackName;
+                // Check if attack is on cooldown and modify button text
+                if (cooldown > 0)
+                {
+                    buttonText.text = attack.attackName + " (" + cooldown + ")";
+                    button.interactable = false; // Disable button if on cooldown
+                    image.color = Color.gray; // Make button appear grayed out
+                }
+                else
+                {
+                    buttonText.text = attack.attackName;
+                    button.interactable = true;
+                    image.color = Color.white;
+                }
                 buttonText.enabled = true;
             }
             buttonText.gameObject.SetActive(true);
@@ -823,28 +857,29 @@ public class BattleManager : MonoBehaviour
             RectTransform buttonRect = buttonObj.GetComponent<RectTransform>();
             buttonRect.anchoredPosition = new Vector2(xPosition, startY + (yStep * index));
 
-            // Add EventTrigger for hover functionality
-            UnityEngine.EventSystems.EventTrigger eventTrigger = buttonObj.GetComponent<UnityEngine.EventSystems.EventTrigger>();
-            if (eventTrigger == null)
+            // Add EventTrigger for hover functionality (only if not on cooldown)
+            if (cooldown <= 0)
             {
-                eventTrigger = buttonObj.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+                UnityEngine.EventSystems.EventTrigger eventTrigger = buttonObj.GetComponent<UnityEngine.EventSystems.EventTrigger>();
+                if (eventTrigger == null)
+                {
+                    eventTrigger = buttonObj.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+                }
+
+                // Pointer Enter event
+                UnityEngine.EventSystems.EventTrigger.Entry pointerEnter = new UnityEngine.EventSystems.EventTrigger.Entry();
+                pointerEnter.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
+                pointerEnter.callback.AddListener((data) => { OnAttackButtonHoverEnter(attack, buttonRect); });
+                eventTrigger.triggers.Add(pointerEnter);
+
+                // Pointer Exit event
+                UnityEngine.EventSystems.EventTrigger.Entry pointerExit = new UnityEngine.EventSystems.EventTrigger.Entry();
+                pointerExit.eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit;
+                pointerExit.callback.AddListener((data) => { OnAttackButtonHoverExit(); });
+                eventTrigger.triggers.Add(pointerExit);
             }
 
-            // Pointer Enter event
-            UnityEngine.EventSystems.EventTrigger.Entry pointerEnter = new UnityEngine.EventSystems.EventTrigger.Entry();
-            pointerEnter.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
-            pointerEnter.callback.AddListener((data) => { OnAttackButtonHoverEnter(attack, buttonRect); });
-            eventTrigger.triggers.Add(pointerEnter);
-
-            // Pointer Exit event
-            UnityEngine.EventSystems.EventTrigger.Entry pointerExit = new UnityEngine.EventSystems.EventTrigger.Entry();
-            pointerExit.eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit;
-            pointerExit.callback.AddListener((data) => { OnAttackButtonHoverExit(); });
-            eventTrigger.triggers.Add(pointerExit);
-
-            button.interactable = true;
             buttonObj.SetActive(true);
-
             index++;
         }
     }

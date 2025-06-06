@@ -9,7 +9,7 @@ using System.Linq;
 
 public static class AIQuestionGenerator
 {
-    private const string MODEL_NAME = "llama3.2:3b";
+    private const string MODEL_NAME = "llama3";
 
     public static IEnumerator GenerateQuestions(string topic, Action<List<Question>> onComplete, Action<string> onError, int numberOfQuestions, Action<float, string> onProgress = null)
     {
