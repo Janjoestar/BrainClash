@@ -9,6 +9,7 @@ public class StartScreenManager : MonoBehaviour
 {
     // Reference to the panels
     public GameObject playPanel;
+    public GameObject creditsPanel;
     public GameObject shadowPanel;
 
     // Static variable to store the selected game mode across scenes
@@ -17,9 +18,10 @@ public class StartScreenManager : MonoBehaviour
     void Start()
     {
         // Initialize panels as hidden when the scene starts
-        if (playPanel != null && shadowPanel != null)
+        if (playPanel != null && creditsPanel != null && shadowPanel != null)
         {
             playPanel.SetActive(false);
+            creditsPanel.SetActive(false);
             shadowPanel.SetActive(false);
         }
     }
@@ -29,6 +31,14 @@ public class StartScreenManager : MonoBehaviour
     {
         // Show the game mode selection panels
         playPanel.SetActive(true);
+        shadowPanel.SetActive(true);
+    }
+
+    // Called when the "Credits" button is clicked
+    public void OnCreditsButton()
+    {
+        // Show the credits panel
+        creditsPanel.SetActive(true);
         shadowPanel.SetActive(true);
     }
 
@@ -42,7 +52,6 @@ public class StartScreenManager : MonoBehaviour
     {
         // Store the selected game mode
         selectedGameMode = "PromptPlay";
-
         // Load the character selection scene
         SceneManager.LoadScene("CharacterSelection");
     }
@@ -69,17 +78,18 @@ public class StartScreenManager : MonoBehaviour
     {
         // Hide the panels
         playPanel.SetActive(false);
+        creditsPanel.SetActive(false);
         shadowPanel.SetActive(false);
     }
 
-    // Check if click is outside of gamemode panels
+    // Check if click is outside of panels
     public void Update()
     {
         // Check for mouse click
         if (Input.GetMouseButtonDown(0))
         {
-            // If play panel is active, check if click is outside it
-            if (playPanel.activeSelf)
+            // If any panel is active, check if click is outside it
+            if (playPanel.activeSelf || creditsPanel.activeSelf)
             {
                 // Cast a ray from the mouse position
                 PointerEventData eventData = new PointerEventData(EventSystem.current);
@@ -87,24 +97,25 @@ public class StartScreenManager : MonoBehaviour
                 List<RaycastResult> results = new List<RaycastResult>();
                 EventSystem.current.RaycastAll(eventData, results);
 
-                bool clickedOnGameModeUI = false;
+                bool clickedOnUI = false;
 
-                // Check if any of the hit elements are part of our game mode UI
+                // Check if any of the hit elements are part of our UI panels
                 foreach (RaycastResult result in results)
                 {
-                    // Check if the clicked object is a child of our playPanel
-                    if (result.gameObject.transform.IsChildOf(playPanel.transform) ||
-                        result.gameObject == playPanel)
+                    // Check if the clicked object is a child of our panels
+                    if ((playPanel.activeSelf && (result.gameObject.transform.IsChildOf(playPanel.transform) || result.gameObject == playPanel)) ||
+                        (creditsPanel.activeSelf && (result.gameObject.transform.IsChildOf(creditsPanel.transform) || result.gameObject == creditsPanel)))
                     {
-                        clickedOnGameModeUI = true;
+                        clickedOnUI = true;
                         break;
                     }
                 }
 
-                // If clicked outside game mode UI, close panels
-                if (!clickedOnGameModeUI)
+                // If clicked outside UI, close panels
+                if (!clickedOnUI)
                 {
                     playPanel.SetActive(false);
+                    creditsPanel.SetActive(false);
                     shadowPanel.SetActive(false);
                 }
             }

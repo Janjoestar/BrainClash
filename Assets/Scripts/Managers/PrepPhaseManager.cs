@@ -7,6 +7,6 @@ public class PrepPhaseManager : MonoBehaviour
     public void SkipPrepPhase()
     {
         Debug.Log("Clicked");
-        SceneManager.LoadScene("CharacterSelection");
+        SceneManager.LoadScene("StartScreen");
     }
 }

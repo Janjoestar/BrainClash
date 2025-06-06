@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// Make sure this is included for AudioMixer, if you're using it in GameManager's SetupMusicSource.
+// using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,9 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
 
     // Music arrays for different categories
-    [SerializeField] private AudioClip[] menuMusic;        // For StartScreen and CharacterSelection
-    [SerializeField] private AudioClip[] loadingMusic;     // For LoadingScene
-    [SerializeField] private AudioClip[] gameplayMusic;    // For QuizScene and BattleScene
+    [SerializeField] private AudioClip[] menuMusic;         // For StartScreen and CharacterSelection
+    [SerializeField] private AudioClip[] loadingMusic;      // For LoadingScene
+    [SerializeField] private AudioClip[] gameplayMusic;     // For QuizScene and BattleScene
     [SerializeField] private AudioClip[] prepPhaseMusic;    // For QuizScene and BattleScene
 
     // Keep track of current music category to avoid switching when moving between scenes of same category
@@ -36,6 +38,13 @@ public class GameManager : MonoBehaviour
     private int playerDefeatedInQuiz = 0; // 0 = none, 1 = player1, 2 = player2
 
     private HashSet<int> usedQuestionIndices = new HashSet<int>();
+
+    // Add these fields for your global crit and self-KO sounds
+    [Header("Global Sound Effects")]
+    [SerializeField] private AudioClip globalCritSound;     // Drag your critical hit sound here in the Inspector
+    [SerializeField] private AudioClip globalSelfKOSound;   // Drag your self-KO sound here in the Inspector
+    [SerializeField] private AudioClip globalHitSound;   // Drag your self-KO sound here in the Inspector
+
 
     // Add these methods to GameManager class:
     public bool IsQuestionUsed(int questionIndex)
@@ -168,6 +177,8 @@ public class GameManager : MonoBehaviour
             sfxSource.loop = false;
             sfxSource.playOnAwake = false;
             sfxSource.volume = 1.1f; // 🔊 Boost SFX volume here
+            // If you're using an AudioMixer, set its output here:
+            // sfxSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
         }
     }
 
@@ -183,7 +194,7 @@ public class GameManager : MonoBehaviour
 
         OnGameManagerReady?.Invoke(); // Notify BattleManager that characters are ready
                                       // Force reapply animations after loading to fix glitches
-        if (SceneManager.GetActiveScene().name == "CharacterSelectionScene")
+        if (SceneManager.GetActiveScene().name == "CharacterSelection") // Changed from "CharacterSelectionScene" to match the actual scene name provided in your `GetMusicCategoryForScene`
         {
             CharacterSelectionManager selectionManager = FindObjectOfType<CharacterSelectionManager>();
             if (selectionManager != null)
@@ -247,7 +258,7 @@ public class GameManager : MonoBehaviour
         switch (sceneName)
         {
             case "StartScreen":
-            case "CharacterSelection":
+            case "CharacterSelection": // This matches your case "menu" in OnSceneLoaded
                 return "menu";
             case "LoadingScene":
                 return "loading";
@@ -297,22 +308,6 @@ public class GameManager : MonoBehaviour
             musicSource.Stop();
         }
     }
-
-    public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
-    {
-        if (string.IsNullOrEmpty(sfxName)) return;
-
-        AudioClip clip = Resources.Load<AudioClip>("SFX/" + sfxName);
-        if (clip != null)
-        {
-            StartCoroutine(DuckMusicThenPlaySFX(clip, volume, musicDuckVolume));
-        }
-        else
-        {
-            Debug.LogWarning("SFX not found: " + sfxName);
-        }
-    }
-
     private IEnumerator DuckMusicThenPlaySFX(AudioClip clip, float sfxVolume, float musicDuckVolume)
     {
         float originalMusicVolume = musicSource.volume;
@@ -324,6 +319,62 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(clip.length);
 
         musicSource.volume = originalMusicVolume;
+    }
+
+    public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
+    {
+        if (string.IsNullOrEmpty(sfxName)) return;
+
+        if (sfxName.Contains("Win") || sfxName.Contains("Miss"))
+        {
+            volume = 5f;
+        }
+
+        AudioClip clip = Resources.Load<AudioClip>("SFX/" + sfxName);
+        if (clip != null)
+        {
+            StartCoroutine(DuckMusicThenPlaySFX(clip, volume, musicDuckVolume));
+        }
+        else
+        {
+            Debug.LogWarning("SFX not found: " + sfxName + ". Make sure it's in a Resources/SFX folder.");
+        }
+    }
+
+    public void PlayCritSound(float volume = 1.0f, float musicDuckVolume = 0.2f)
+    {
+        if (globalCritSound != null)
+        {
+            StartCoroutine(DuckMusicThenPlaySFX(globalCritSound, volume, musicDuckVolume));
+        }
+        else
+        {
+            Debug.LogWarning("Global Crit Sound is not assigned in GameManager.");
+        }
+    }
+
+    public void PlayHitSound(float volume = 1.0f, float musicDuckVolume = 0.2f)
+    {
+        if (globalHitSound != null)
+        {
+            StartCoroutine(DuckMusicThenPlaySFX(globalHitSound, volume, musicDuckVolume));
+        }
+        else
+        {
+            Debug.LogWarning("Global Crit Sound is not assigned in GameManager.");
+        }
+    }
+
+    public void PlaySelfKOSound(float volume = 1.0f, float musicDuckVolume = 0.2f)
+    {
+        if (globalSelfKOSound != null)
+        {
+            StartCoroutine(DuckMusicThenPlaySFX(globalSelfKOSound, volume, musicDuckVolume));
+        }
+        else
+        {
+            Debug.LogWarning("Global Self-KO Sound is not assigned in GameManager.");
+        }
     }
 
     public void SetLastCorrectPlayer(int playerNumber)
@@ -357,13 +408,15 @@ public class GameManager : MonoBehaviour
 
         if (player == 1)
         {
-            actualDamage = Mathf.Min(player1Health, actualDamage); // Use actualDamage here
-            player1Health = Mathf.Max(0, player1Health - actualDamage); // And here
+            // Use actualDamage here
+            actualDamage = Mathf.Min(player1Health, actualDamage);
+            player1Health = Mathf.Max(0, player1Health - actualDamage);
         }
         else
         {
-            actualDamage = Mathf.Min(player2Health, actualDamage); // Use actualDamage here
-            player2Health = Mathf.Max(0, player2Health - actualDamage); // And here
+            // Use actualDamage here
+            actualDamage = Mathf.Min(player2Health, actualDamage);
+            player2Health = Mathf.Max(0, player2Health - actualDamage);
         }
         return actualDamage;
     }

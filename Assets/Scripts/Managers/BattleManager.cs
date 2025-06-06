@@ -202,11 +202,11 @@ public class BattleManager : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.75f);
         }
         else
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3f);
         }
 
         ShowEndScreen(defeatedPlayer);
@@ -219,6 +219,8 @@ public class BattleManager : MonoBehaviour
             battlePanel.SetActive(false);
             endScreenPanel.SetActive(true);
 
+            GameManager.Instance.PlaySFX("General/Win");
+
             int winnerPlayer = defeatedPlayer == 1 ? 2 : 1;
             Character winnerCharacter = winnerPlayer == 1 ?
                 GameManager.Instance.SelectedCharacterP1 :
@@ -230,7 +232,6 @@ public class BattleManager : MonoBehaviour
             emblemBorder.GetComponent<SpriteRenderer>().color = winnerCharacter.secondaryColor;
             winnerSprite.GetComponent<SpriteRenderer>().sprite = winnerCharacter.characterSprite;
 
-            // Replace the stats display section with:
             damageDealtText.text = "Damage Dealt: " + GameManager.Instance.GetDamageDealt(winnerPlayer);
             damageTakenText.text = "Damage Taken: " + GameManager.Instance.GetDamageTaken(winnerPlayer);
             healingDoneText.text = "Healing Done: " + GameManager.Instance.GetHealingDone(winnerPlayer);
@@ -300,60 +301,153 @@ public class BattleManager : MonoBehaviour
         CharacterAnimation.ApplyCharacterAnimation(playerObject, characterName);
     }
 
+    // Replace your PerformAttack method with this version:
     private void PerformAttack(AttackData attack)
     {
         SetAttackButtonsInteractable(false);
 
         int targetPlayer = (attackingPlayer == 1) ? 2 : 1;
+        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
+        Animator attackerAnimator = attacker.GetComponent<Animator>();
 
-        PlaySound(attack.soundEffectName);
+
+        if (attack.canSelfKO)
+        {
+            float selfKORoll = Random.Range(0f, 1f);
+            if (selfKORoll < attack.selfKOFailChance)
+            {
+                battleStatusText.text = "Player " + attackingPlayer + "'s " + attack.attackName + " backfired! They defeated themselves!";
+                GameManager.Instance.DamagePlayer(attackingPlayer, GameManager.Instance.GetPlayerHealth(attackingPlayer), false);
+                GameManager.Instance.PlaySelfKOSound();
+                StartCoroutine(ShowSelfKOAnimation(attackerAnimator, attack));
+                return;
+            }
+        }
+
+        if (Random.Range(0f, 1f) > attack.accuracy)
+        {
+            battleStatusText.text = "Player " + attackingPlayer + "'s " + attack.attackName + " missed!";
+
+            if (attack.doubleEdgeDamage > 0)
+            {
+                float selfDamage = GameManager.Instance.DamagePlayer(attackingPlayer, attack.doubleEdgeDamage, false);
+                battleStatusText.text += "\nBut Player " + attackingPlayer + " hurt themselves for " + selfDamage + " damage!";
+            }
+
+            GameManager.Instance.PlaySFX("General/MissVoice");
+            StartCoroutine(ShowMissedAttack(attack.doubleEdgeDamage > 0 ? attacker : null));
+            return;
+        }
 
         if (attack.attackType == AttackType.Heal)
         {
+            GameManager.Instance.PlaySFX(attack.soundEffectName);
             float healAmount = GameManager.Instance.HealPlayer(attackingPlayer, attack.damage);
             GameManager.Instance.AddHealingDone(attackingPlayer, healAmount);
             battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + " and recovered " + healAmount + " HP!";
         }
         else
         {
-            float actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, attack.damage, true);
+            GameManager.Instance.PlaySFX(attack.soundEffectName);
+            float finalDamage = attack.damage;
+            bool isCrit = false;
+
+            // Check for critical hit
+            if (Random.Range(0f, 1f) < attack.critChance)
+            {
+                finalDamage *= 2f; // Double damage for crit
+                isCrit = true;
+                GameManager.Instance.PlayCritSound();
+            }
+
+            float actualDamage = GameManager.Instance.DamagePlayer(targetPlayer, finalDamage, true);
             GameManager.Instance.AddDamageDealt(attackingPlayer, actualDamage);
             GameManager.Instance.AddDamageTaken(targetPlayer, actualDamage);
-            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!";
+
+            string critText = isCrit ? " It's a critical hit!" : "";
+            battleStatusText.text = "Player " + attackingPlayer + " used " + attack.attackName + "!" + critText;
+
+            // Apply double edge damage *after* dealing damage to the enemy
+            if (attack.doubleEdgeDamage > 0)
+            {
+                float selfDamage = GameManager.Instance.DamagePlayer(attackingPlayer, attack.doubleEdgeDamage, false);
+                battleStatusText.text += "\nBut Player " + attackingPlayer + " hurt themselves for " + selfDamage + " damage!";
+            }
         }
 
-        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
-        Animator attackerAnimator = attacker.GetComponent<Animator>();
-
-        StartCoroutine(ShowAttackAnimation(attackerAnimator, attack));
+        StartCoroutine(ShowAttackAnimation(attackerAnimator, attack, false)); // false = hit
         UpdateHealthDisplays();
     }
 
-    private void PlaySound(string soundName)
+    // Add this new method for handling self-KO:
+    private IEnumerator ShowSelfKOAnimation(Animator animator, AttackData attack)
     {
-        if (string.IsNullOrEmpty(soundName))
-            return;
+        GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
 
-        AudioClip clip = Resources.Load<AudioClip>("SFX/" + soundName);
-        if (clip != null)
+        // Play hit animation and sound on attacker
+        GameManager.Instance.PlayHitSound();
+        if (animator != null)
         {
-            GameManager.Instance.PlaySFX(soundName);
+            animator.SetTrigger("Hit");
+        }
 
-        }
-        else
+        // Flash the attacker sprite
+        SpriteRenderer attackerRenderer = attacker.GetComponent<SpriteRenderer>();
+        if (attackerRenderer != null)
         {
-            Debug.LogWarning("Sound effect not found: " + soundName);
+            StartCoroutine(FlashSprite(attackerRenderer, attack));
         }
+
+        yield return new WaitForSeconds(0.35f); // Wait after hit
+
+        // Now handle death
+        StartCoroutine(HandlePlayerDeath(attackingPlayer));
     }
 
-    private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack)
+    // Add this new method for handling missed attacks:
+    private IEnumerator ShowMissedAttack(GameObject selfDamageTarget)
+    {
+        yield return new WaitForSeconds(1.0f); // Wait to let players process the miss
+
+        // If there's self-damage from double-edge, show hit animation on attacker
+        if (selfDamageTarget != null)
+        {
+            Animator attackerAnimator = selfDamageTarget.GetComponent<Animator>();
+            if (attackerAnimator != null)
+            {
+                GameManager.Instance.PlayHitSound();
+                attackerAnimator.SetTrigger("Hit");
+            }
+
+            // Flash the attacker sprite for self-damage
+            SpriteRenderer attackerRenderer = selfDamageTarget.GetComponent<SpriteRenderer>();
+            if (attackerRenderer != null)
+            {
+                Color originalColor = Color.white;
+                for (int i = 0; i < 3; i++)
+                {
+                    attackerRenderer.color = Color.red;
+                    yield return new WaitForSeconds(0.1f);
+                    attackerRenderer.color = originalColor;
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+
+            yield return new WaitForSeconds(0.5f); // Wait after self-damage animation
+        }
+
+        UpdateHealthDisplays();
+        CheckForGameOver();
+    }
+
+    private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack, bool missed = false)
     {
         GameObject attacker = (attackingPlayer == 1) ? Player1 : Player2;
         GameObject defender = (attackingPlayer == 1) ? Player2 : Player1;
 
         if (attack.attackType == AttackType.MoveAndHit)
         {
-            yield return StartCoroutine(HandleMoveAndHit(attacker, attack, animator));
+            yield return StartCoroutine(HandleMoveAndHit(attacker, attack, animator, missed));
         }
         else
         {
@@ -364,17 +458,21 @@ public class BattleManager : MonoBehaviour
 
             yield return new WaitForSeconds(attack.effectDelay);
 
-            if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
+            // Only show effects if attack didn't miss
+            if (!missed)
             {
-                yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
-            }
-            else if (attack.attackType == AttackType.Heal)
-            {
-                yield return StartCoroutine(ShowDirectEffect(attacker, attack));
-            }
-            else
-            {
-                yield return StartCoroutine(ShowDirectEffect(defender, attack));
+                if (attack.attackType == AttackType.Projectile || attack.attackType == AttackType.Magic)
+                {
+                    yield return StartCoroutine(ShowTravelingEffect(attacker, defender, attack));
+                }
+                else if (attack.attackType == AttackType.Heal)
+                {
+                    yield return StartCoroutine(ShowDirectEffect(attacker, attack));
+                }
+                else
+                {
+                    yield return StartCoroutine(ShowDirectEffect(defender, attack));
+                }
             }
 
             if (animator != null)
@@ -392,7 +490,7 @@ public class BattleManager : MonoBehaviour
         CheckForGameOver();
     }
 
-    private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator)
+    private IEnumerator HandleMoveAndHit(GameObject attacker, AttackData attack, Animator animator, bool missed = false)
     {
         Vector3 originalPosition = attacker.transform.position;
         Vector3 attackPosition = new Vector3(0f, -2.290813f, originalPosition.z);
@@ -413,7 +511,11 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(attack.effectDelay);
 
-        PlayImpactEffect(defender, attack);
+        // Only show impact effect if attack didn't miss
+        if (!missed)
+        {
+            PlayImpactEffect(defender, attack);
+        }
 
         if (animator != null)
         {
@@ -449,7 +551,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowTravelingEffect(GameObject attacker, GameObject defender, AttackData attack)
+    private IEnumerator ShowTravelingEffect(GameObject attacker, GameObject defender, AttackData attack, bool missed = false)
     {
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
@@ -518,10 +620,14 @@ public class BattleManager : MonoBehaviour
             Destroy(attackEffect);
         }
 
-        PlayImpactEffect(defender, attack);
+        // Only play impact effect if attack didn't miss
+        if (!missed)
+        {
+            PlayImpactEffect(defender, attack);
+        }
     }
 
-    private IEnumerator ShowDirectEffect(GameObject target, AttackData attack)
+    private IEnumerator ShowDirectEffect(GameObject target, AttackData attack, bool missed = false)
     {
 
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
@@ -547,7 +653,11 @@ public class BattleManager : MonoBehaviour
             effectDuration = particleSystem.main.duration;
         }
 
-        PlayImpactEffect(target, attack);
+        // Only play impact effect if attack didn't miss
+        if (!missed)
+        {
+            PlayImpactEffect(target, attack);
+        }
 
         yield return new WaitForSeconds(effectDuration);
 
@@ -556,15 +666,22 @@ public class BattleManager : MonoBehaviour
 
     private void PlayImpactEffect(GameObject target, AttackData attack)
     {
+
         int targetPlayer = target == Player1 ? 1 : 2;
 
         Animator targetAnimator = target.GetComponent<Animator>();
-        if (targetAnimator != null)
-        {
-            targetAnimator.SetTrigger("Hit");
-        }
 
         SpriteRenderer targetRenderer = target.GetComponent<SpriteRenderer>();
+        if (attack.attackType == AttackType.Heal)
+        {
+            StartCoroutine(FlashSprite(targetRenderer, attack));
+            return;
+        }
+        if (targetAnimator != null)
+        {
+            GameManager.Instance.PlayHitSound();
+            targetAnimator.SetTrigger("Hit");
+        }
         if (targetRenderer != null)
         {
             StartCoroutine(FlashSprite(targetRenderer, attack));
@@ -611,7 +728,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Add this coroutine to show hover after delay:
     private IEnumerator ShowHoverAfterDelay(AttackData attack, RectTransform buttonRect)
     {
         yield return new WaitForSeconds(hoverDelay);
@@ -629,14 +745,27 @@ public class BattleManager : MonoBehaviour
             }
             else if (text.name.Contains("Description") || text.name.Contains("description"))
             {
-                text.text = attack.description;
+                string enhancedDescription = attack.description;
+                enhancedDescription += "\nCrit: " + (attack.critChance * 100f).ToString("F0") + "%";
+                enhancedDescription += "\nAccuracy: " + (attack.accuracy * 100f).ToString("F0") + "%";
+                if (attack.doubleEdgeDamage > 0)
+                {
+                    enhancedDescription += "\nSelf-damage: " + attack.doubleEdgeDamage;
+                }
+                // *** ADD THIS BLOCK FOR SELF-KO CHANCE ***
+                if (attack.canSelfKO)
+                {
+                    enhancedDescription += "\nSelf-KO Chance: " + (attack.selfKOFailChance * 100f).ToString("F0") + "%";
+                }
+                // *****************************************
+                text.text = enhancedDescription;
             }
         }
 
         // Position hover 125px below the button
         RectTransform hoverRect = currentHoverInstance.GetComponent<RectTransform>();
         Vector2 buttonPos = buttonRect.anchoredPosition;
-        hoverRect.anchoredPosition = new Vector2(buttonPos.x, buttonPos.y - 125f);
+        hoverRect.anchoredPosition = new Vector2(buttonPos.x, buttonPos.y + 125f);
 
         // Disable raycast target on hover popup to prevent interference
         Graphic[] graphics = currentHoverInstance.GetComponentsInChildren<Graphic>();

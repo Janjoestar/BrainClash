@@ -816,7 +816,7 @@ MonoBehaviour:
   backgroundPosition: {fileID: 1207384836}
   audioSource: {fileID: 0}
   backgroundMusicSource: {fileID: 0}
-  attackHoverPrefab: {fileID: 3162147642371195733, guid: 92c7089aa028ccf4a860fca94483e742, type: 3}
+  attackHoverPrefab: {fileID: 2747158347340650141, guid: 134f248b1ff9bf64882e4243bdda888e, type: 3}
   hoverDelay: 0.75
   endScreenPanel: {fileID: 1690589920}
   winnerText: {fileID: 694125736}
@@ -2132,7 +2132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -33.98, y: 7.23}
+  m_AnchoredPosition: {x: 0, y: -0.0000052452}
   m_SizeDelta: {x: 582.6, y: 129.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1458887772
@@ -2165,7 +2165,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 35
+    m_FontSize: 33
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2173,7 +2173,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'PLAYER USED: BLABLA'

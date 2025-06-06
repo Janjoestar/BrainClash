@@ -13,30 +13,23 @@ MonoBehaviour:
   m_Name: New Character Database
   m_EditorClassIdentifier: 
   character:
-  - characterName: Samurai
-    characterSprite: {fileID: -774134865, guid: 3265837ba755f6a4fb65ead9d043ecdb, type: 3}
-    maxHealth: 90
-    characterAttacks: []
-    characterColor: {r: 0.2928088, g: 0.28653434, b: 0.4433962, a: 1}
-    secondaryColor: {r: 0.36686325, g: 0.36084908, b: 0.4811321, a: 1}
-    primaryColor: {r: 0.13278751, g: 0.12388752, b: 0.3018868, a: 1}
   - characterName: Knight
     characterSprite: {fileID: -256371126, guid: 465f315484ebe0a469d5c2ae112c96e6, type: 3}
-    maxHealth: 160
+    maxHealth: 180
     characterAttacks: []
     characterColor: {r: 0.6850303, g: 0.73360354, b: 0.8113208, a: 1}
     secondaryColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
     primaryColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
   - characterName: Archer
     characterSprite: {fileID: 1268940452, guid: 921829387776d4143abd8f5a60388af1, type: 3}
-    maxHealth: 120
+    maxHealth: 140
     characterAttacks: []
     characterColor: {r: 0.255518, g: 0.6226415, b: 0.43302825, a: 1}
     secondaryColor: {r: 0.7335796, g: 0.990566, b: 0.85660493, a: 1}
     primaryColor: {r: 0.045167312, g: 0.2735849, b: 0.15451613, a: 1}
   - characterName: Water
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 80
+    maxHealth: 160
     characterAttacks: []
     characterColor: {r: 0.28421274, g: 0.24038802, b: 0.6981132, a: 1}
     secondaryColor: {r: 0, g: 0.82256204, b: 0.9339623, a: 1}
@@ -50,28 +43,28 @@ MonoBehaviour:
     primaryColor: {r: 0.627451, g: 0.1254902, b: 0.09411766, a: 1}
   - characterName: Wind
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 80
+    maxHealth: 125
     characterAttacks: []
     characterColor: {r: 0.9056604, g: 0.8550455, b: 0.7390531, a: 1}
     secondaryColor: {r: 0.6981132, g: 0.6274288, b: 0.46431115, a: 1}
     primaryColor: {r: 0.3679245, g: 0.25669152, b: 0, a: 1}
   - characterName: Crystal
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 80
+    maxHealth: 150
     characterAttacks: []
-    characterColor: {r: 0.735849, g: 0.4408152, b: 0.50871986, a: 1}
-    secondaryColor: {r: 0, g: 0, b: 0, a: 0}
-    primaryColor: {r: 0, g: 0, b: 0, a: 0}
+    characterColor: {r: 0.5764706, g: 0.8980392, b: 0.68235296, a: 1}
+    secondaryColor: {r: 0.9411765, g: 0.59607846, b: 0.6431373, a: 1}
+    primaryColor: {r: 0.3254902, g: 0.5529412, b: 0.6901961, a: 1}
   - characterName: Ground
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 120
+    maxHealth: 160
     characterAttacks: []
     characterColor: {r: 0.735849, g: 0.471801, b: 0.35751158, a: 1}
-    secondaryColor: {r: 0, g: 0, b: 0, a: 0}
-    primaryColor: {r: 0, g: 0, b: 0, a: 0}
+    secondaryColor: {r: 0.990566, g: 0.777655, b: 0.6868548, a: 1}
+    primaryColor: {r: 0.46226418, g: 0.2650758, b: 0.18098077, a: 1}
   - characterName: Necromancer
     characterSprite: {fileID: 939212875, guid: 7b7192c6ce0358f4aa49bf90bd3c6275, type: 3}
-    maxHealth: 80
+    maxHealth: 120
     characterAttacks: []
     characterColor: {r: 0.6415094, g: 0.30562478, b: 0.31317273, a: 1}
     secondaryColor: {r: 0.6132076, g: 0.42519584, b: 0.4306719, a: 1}
