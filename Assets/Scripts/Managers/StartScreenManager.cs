@@ -72,7 +72,7 @@ public class StartScreenManager : MonoBehaviour
         selectedGameMode = "StoryMode";
         Debug.Log(selectedGameMode);
         // Load the character selection scene
-        SceneManager.LoadScene("StoryMode");
+        SceneManager.LoadScene("StoryCharacterSelection");
     }
 
     // Called when the "Exit" button is clicked

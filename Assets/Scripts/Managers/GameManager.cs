@@ -292,11 +292,13 @@ public class GameManager : MonoBehaviour
         {
             case "StartScreen":
             case "CharacterSelection": // This matches your case "menu" in OnSceneLoaded
+            case "StoryCharacterSelection":
                 return "menu";
             case "LoadingScene":
                 return "loading";
             case "QuizScene":
             case "BattleScene":
+            case "StoryMode":
                 return "gameplay";
             case "PrepPhase":
                 return "silent";
