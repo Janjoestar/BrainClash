@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum AttackType
@@ -36,6 +37,7 @@ public class AttackData
     public float accuracy = 1f;
     public int cooldown = 0;        // How many turns this attack is on cooldown
     public int maxCooldown = 0;     // Maximum cooldown turns (0 = no cooldown)
+    public float damageIncrease = 0f;
 
     public AttackData(string name, float dmg, string desc, string animTrigger,
                       AttackType type, string effectName, Vector3 offset, float delay,
@@ -250,5 +252,25 @@ public class AttackDataManager : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public AttackData GetAttackByName(string attackName)
+    {
+        // Define all possible character names to iterate through
+        List<string> characterNames = new List<string>
+        {
+            "Knight", "Archer", "Water", "Fire", "Wind", "Necromancer", "Crystal", "Ground", "Default"
+        };
+
+        foreach (string charName in characterNames)
+        {
+            List<AttackData> attacks = GetAttacksForCharacter(charName);
+            AttackData foundAttack = attacks.FirstOrDefault(attack => attack.attackName == attackName);
+            if (foundAttack != null)
+            {
+                return foundAttack;
+            }
+        }
+        return null; // Return null if no attack with the given name is found
     }
 }
