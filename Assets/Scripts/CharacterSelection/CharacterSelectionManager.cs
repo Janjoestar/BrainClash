@@ -94,6 +94,8 @@ public class CharacterSelectionManager : MonoBehaviour
         {
             promptInput.gameObject.SetActive(true);
             promptInput.onValueChanged.AddListener(OnPromptChanged);
+            // Add this line to listen for the Enter key press
+            promptInput.onEndEdit.AddListener(OnPromptEndEdit);
         }
         else
         {
@@ -105,6 +107,19 @@ public class CharacterSelectionManager : MonoBehaviour
     void OnPromptChanged(string newText)
     {
         CheckRequirements();
+    }
+
+    // New method to handle the EndEdit event
+    void OnPromptEndEdit(string text)
+    {
+        // Check if the Enter key was pressed (this is often handled by onEndEdit implicitly)
+        // You might want to add a specific check for Input.GetKeyDown(KeyCode.Return) or KeyCode.Enter
+        // if you need more granular control, but for a simple "press enter to confirm",
+        // onEndEdit is usually sufficient.
+        if (!string.IsNullOrEmpty(text) && confirmButton.interactable)
+        {
+            ConfirmSelection();
+        }
     }
 
     void CheckRequirements()

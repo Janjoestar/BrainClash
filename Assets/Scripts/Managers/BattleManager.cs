@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -180,8 +179,10 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            // Update cooldowns for the current attacking player before switching turns
-            GameManager.Instance.UpdatePlayerCooldowns(attackingPlayer);
+            // Update cooldowns for *both* players before switching turns
+            GameManager.Instance.UpdatePlayerCooldowns(1); // Update P1 cooldowns
+            GameManager.Instance.UpdatePlayerCooldowns(2); // Update P2 cooldowns
+
             SceneManager.LoadScene("QuizScene");
         }
     }
@@ -321,7 +322,7 @@ public class BattleManager : MonoBehaviour
 
         SetAttackButtonsInteractable(false);
 
-        // Set cooldown for this attack if it has one
+        // Set cooldown for this attack if it has one (this will now apply the maxCooldown, as initial is set in GameManager)
         if (attack.maxCooldown > 0)
         {
             GameManager.Instance.SetAttackCooldown(attackingPlayer, attack.attackName, attack.maxCooldown);
@@ -499,8 +500,8 @@ public class BattleManager : MonoBehaviour
             if (animator != null)
             {
                 float remainingAnimTime = animator.GetCurrentAnimatorStateInfo(0).length -
-                                         animator.GetCurrentAnimatorStateInfo(0).normalizedTime *
-                                         animator.GetCurrentAnimatorStateInfo(0).length;
+                                          animator.GetCurrentAnimatorStateInfo(0).normalizedTime *
+                                          animator.GetCurrentAnimatorStateInfo(0).length;
                 remainingAnimTime = Mathf.Max(remainingAnimTime, 0) + 0.1f;
                 yield return new WaitForSeconds(remainingAnimTime);
             }
@@ -654,8 +655,8 @@ public class BattleManager : MonoBehaviour
         GameObject effectPrefab = GetEffectPrefabForAttack(attack);
 
         GameObject attackEffect = Instantiate(effectPrefab,
-                                            attack.effectOffset,
-                                            Quaternion.identity);
+                                             attack.effectOffset,
+                                             Quaternion.identity);
 
         if (attack.attackType == AttackType.Slash)
         {

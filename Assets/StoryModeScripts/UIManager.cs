@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using System.Linq;
 
 public class UIManager
 {
@@ -27,13 +28,15 @@ public class UIManager
     private GameObject enemyUIElementPrefab;
     private float hoverDelay;
     private Vector3 enemyUIOffset;
+    private Func<string[]> getEnemyNames;
 
     private List<GameObject> enemyUIInstances = new List<GameObject>();
 
     public UIManager(MonoBehaviour monoBehaviourInstance, GameObject battlePanel, GameObject attackPanel, GameObject enemySelectionPanel, GameObject endScreenPanel, GameObject enemyUIPanel,
                      Text playerHealthText, Text battleStatusText, Text resultText, Button returnToMenuButton, Button continueButton,
-                     List<Button> enemySelectionButtons, GameObject attackButtonPrefab, GameObject attackHoverPrefab, GameObject enemyUIElementPrefab,
-                     float hoverDelay, Vector3 enemyUIOffset, Text waveReachedText)
+                     Transform enemySelectionButtonsParent,
+                     GameObject attackButtonPrefab, GameObject attackHoverPrefab, GameObject enemyUIElementPrefab,
+                     float hoverDelay, Vector3 enemyUIOffset, Text waveReachedText, Func<string[]> getEnemyNames)
     {
         this.monoBehaviourInstance = monoBehaviourInstance;
         this.battlePanel = battlePanel;
@@ -46,13 +49,25 @@ public class UIManager
         this.resultText = resultText;
         this.returnToMenuButton = returnToMenuButton;
         this.continueButton = continueButton;
-        this.enemySelectionButtons = enemySelectionButtons;
+        if (enemySelectionButtonsParent != null)
+        {
+            foreach (Transform child in enemySelectionButtonsParent)
+            {
+                Button button = child.GetComponent<Button>();
+                if (button != null)
+                {
+                    enemySelectionButtons.Add(button);
+                }
+            }
+        }
+
         this.attackButtonPrefab = attackButtonPrefab;
         this.attackHoverPrefab = attackHoverPrefab;
         this.enemyUIElementPrefab = enemyUIElementPrefab;
         this.hoverDelay = hoverDelay;
         this.enemyUIOffset = enemyUIOffset;
         this.waveReachedText = waveReachedText;
+        this.getEnemyNames = getEnemyNames;
     }
 
     public void UpdatePlayerHealth(float health)
@@ -100,7 +115,7 @@ public class UIManager
     {
         if (enemyUIPanel == null) return;
 
-        enemyUIInstances.Clear();
+        ClearEnemyUI();
 
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -111,9 +126,11 @@ public class UIManager
                 RectTransform uiRect = uiInstance.GetComponent<RectTransform>();
                 if (uiRect != null)
                 {
-                    // Reverted to original logic:
                     Vector3 enemyWorldPos = enemies[i].transform.position + enemyUIOffset;
-                    uiInstance.transform.position = enemyWorldPos;
+                    Vector2 screenPoint = Camera.main.WorldToScreenPoint(enemyWorldPos);
+                    RectTransform canvasRect = enemyUIPanel.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, Camera.main, out Vector2 localPoint);
+                    uiRect.localPosition = localPoint;
                 }
 
                 Text[] texts = uiInstance.GetComponentsInChildren<Text>();
@@ -121,11 +138,19 @@ public class UIManager
                 {
                     if (text.name.Contains("Name"))
                     {
-                        text.text = enemies[i].name.Replace("(Clone)", "").Trim();
+                        string[] names = getEnemyNames();
+                        if (i < names.Length)
+                        {
+                            text.text = names[i];
+                        }
+                        else
+                        {
+                            text.text = "Enemy " + (i + 1);
+                        }
                     }
                     else if (text.name.Contains("Health"))
                     {
-                        text.text = $"HP: {currentEnemyHealths[i]}";
+                        text.text = $"HP: {Mathf.Round(currentEnemyHealths[i])}";
                     }
                 }
                 enemyUIInstances.Add(uiInstance);
@@ -143,26 +168,51 @@ public class UIManager
         enemyUIInstances.Clear();
     }
 
-    public void SetupEnemySelectionButtons(List<int> aliveEnemies, string[] enemyNames, Action<int> onEnemySelectedCallback)
+    public void SetupEnemySelectionButtons(List<int> aliveEnemies, string[] allSpawnedEnemyNames, Action<int> onEnemySelectedCallback)
     {
+        Dictionary<string, int> currentDuplicateCounts = new Dictionary<string, int>();
+
+        Dictionary<string, int> totalAliveNameOccurrences = new Dictionary<string, int>();
+        foreach (int enemyActualIndex in aliveEnemies)
+        {
+            string baseName = allSpawnedEnemyNames[enemyActualIndex];
+            if (!totalAliveNameOccurrences.ContainsKey(baseName))
+            {
+                totalAliveNameOccurrences[baseName] = 0;
+            }
+            totalAliveNameOccurrences[baseName]++;
+        }
+
         for (int i = 0; i < enemySelectionButtons.Count; i++)
         {
             if (i < aliveEnemies.Count && enemySelectionButtons[i] != null)
             {
-                int enemyIndex = aliveEnemies[i];
+                int enemyActualIndex = aliveEnemies[i];
                 enemySelectionButtons[i].gameObject.SetActive(true);
 
                 Text buttonText = enemySelectionButtons[i].GetComponentInChildren<Text>();
                 if (buttonText != null)
                 {
-                    buttonText.text = enemyNames[enemyIndex];
+                    string baseName = allSpawnedEnemyNames[enemyActualIndex];
+                    string displayName = baseName;
+
+                    if (totalAliveNameOccurrences.ContainsKey(baseName) && totalAliveNameOccurrences[baseName] > 1)
+                    {
+                        if (!currentDuplicateCounts.ContainsKey(baseName))
+                        {
+                            currentDuplicateCounts[baseName] = 0;
+                        }
+                        currentDuplicateCounts[baseName]++;
+                        displayName = $"{baseName} ({currentDuplicateCounts[baseName]})";
+                    }
+                    buttonText.text = displayName;
                 }
 
                 Button button = enemySelectionButtons[i].GetComponent<Button>();
                 if (button != null)
                 {
                     button.onClick.RemoveAllListeners();
-                    int capturedIndex = enemyIndex;
+                    int capturedIndex = enemyActualIndex;
                     button.onClick.AddListener(() => onEnemySelectedCallback(capturedIndex));
                 }
             }
@@ -172,6 +222,7 @@ public class UIManager
             }
         }
     }
+
 
     public void ShowEndScreen(bool playerWon, int currentWave, int maxWaves)
     {
@@ -233,7 +284,7 @@ public class UIManager
     }
 
     public void CreateAttackButtons(List<AttackData> playerAttacks, Action<AttackData> onAttackSelectedCallback,
-                                   Action<AttackData, RectTransform> onHoverEnterCallback, Action onHoverExitCallback)
+                                     Action<AttackData, RectTransform> onHoverEnterCallback, Action onHoverExitCallback)
     {
         float startY = -75;
         float xPosition = 692;
@@ -349,6 +400,11 @@ public class UIManager
             description += "\nSelf-KO Chance: " + (attack.selfKOFailChance * 100f).ToString("F0") + "%";
         }
 
+        if (attack.maxCooldown > 0)
+        {
+            description += "\nCooldown: " + (attack.cooldown > 0 ? $"{attack.cooldown} turns" : "Ready");
+        }
+
         return description;
     }
 
@@ -356,7 +412,7 @@ public class UIManager
     {
         RectTransform hoverRect = hoverInstance.GetComponent<RectTransform>();
         Vector2 buttonPos = buttonRect.anchoredPosition;
-        hoverRect.anchoredPosition = new Vector2(buttonPos.x, buttonPos.y + 125f);
+        hoverRect.anchoredPosition = new Vector2(buttonPos.x, buttonPos.y + buttonRect.sizeDelta.y / 2 + hoverRect.sizeDelta.y / 2 + 10f);
     }
 
     private void DisableHoverRaycast(GameObject hoverInstance)
@@ -382,11 +438,84 @@ public class UIManager
 
     public void PlayImpactEffect(GameObject target, AttackData attack)
     {
+        if (attack == null || target == null)
+        {
+            Debug.LogWarning("PlayImpactEffect: AttackData or Target GameObject is null.");
+            return;
+        }
+
         Animator targetAnimator = target.GetComponent<Animator>();
         if (targetAnimator != null)
+        {
             targetAnimator.SetTrigger("Hit");
+        }
 
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && (attack.soundEffectName == "None" || string.IsNullOrEmpty(attack.soundEffectName)))
+        {
             GameManager.Instance.PlaySFX("General/HitSound");
+        }
+
+        string effectToLoad = string.IsNullOrEmpty(attack.hitEffectPrefabName) ? attack.effectPrefabName : attack.hitEffectPrefabName;
+        GameObject effectPrefab = Resources.Load<GameObject>("Effects/" + effectToLoad);
+
+        if (effectPrefab == null)
+        {
+            Debug.LogWarning($"Effect prefab not found: {effectToLoad} for attack {attack.attackName}.");
+            return;
+        }
+
+        Vector3 spawnPosition = target.transform.position;
+        Vector3 finalOffset = (attack.attackType == AttackType.Heal) ? attack.effectOffset : (attack.targetHitOffset != Vector3.zero ? attack.targetHitOffset : attack.effectOffset);
+
+        GameObject effectInstance = GameObject.Instantiate(effectPrefab, spawnPosition + finalOffset, Quaternion.identity);
+
+        ParticleSystem ps = effectInstance.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            bool particleSystemDestroysItself = (ps.main.stopAction == ParticleSystemStopAction.Destroy);
+
+            if (!particleSystemDestroysItself)
+            {
+                float totalEffectDuration = ps.main.duration;
+                if (ps.main.startLifetime.mode == ParticleSystemCurveMode.Constant)
+                {
+                    totalEffectDuration += ps.main.startLifetime.constant;
+                }
+                else if (ps.main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants)
+                {
+                    totalEffectDuration += ps.main.startLifetime.constantMax;
+                }
+                totalEffectDuration += 0.05f;
+
+                if (monoBehaviourInstance != null)
+                {
+                    monoBehaviourInstance.StartCoroutine(DestroyEffectAfterDelay(effectInstance, totalEffectDuration));
+                }
+                else
+                {
+                    GameObject.Destroy(effectInstance, totalEffectDuration);
+                }
+            }
+        }
+        else
+        {
+            if (monoBehaviourInstance != null)
+            {
+                monoBehaviourInstance.StartCoroutine(DestroyEffectAfterDelay(effectInstance, 2.0f));
+            }
+            else
+            {
+                GameObject.Destroy(effectInstance, 2.0f);
+            }
+        }
+    }
+
+    private IEnumerator DestroyEffectAfterDelay(GameObject objToDestroy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (objToDestroy != null)
+        {
+            GameObject.Destroy(objToDestroy);
+        }
     }
 }

@@ -596,7 +596,8 @@ MonoBehaviour:
   statusText: {fileID: 1587603011}
   smoothProgress: 1
   smoothSpeed: 2
-  numberOfQuestionsToGenerate: 15
+  numberOfQuestionsToGenerate: 25
+  errorDisplayTime: 3
 --- !u!1 &1576428414
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-﻿// UpgradeManager.cs
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -262,7 +261,7 @@ public class UpgradeManager : MonoBehaviour
         List<UpgradeData> availableUpgradesPool = GetAvailableUpgradesFromPool(allAvailableUpgradesPool);
 
         // Check if it's an "ability wave" (every 5 waves)
-        bool isAbilityWave = (currentWave % 5 == 0);
+        bool isAbilityWave = (currentWave % 2 == 0);
 
         // If it's an ability wave, temporarily add available attack upgrades to the pool
         if (isAbilityWave)
@@ -303,8 +302,6 @@ public class UpgradeManager : MonoBehaviour
         }
 
         // Final fallback: Ensure 'upgradeChoicesCount' items if still possible and unique options exist
-        // Note: availableUpgradesPool (before temporary attack upgrades) is the "master list" of what could be
-        // offered, but tempWorkingList is what's left for this specific selection.
         while (selectedUpgrades.Count < upgradeChoicesCount && availableUpgradesPool.Except(selectedUpgrades).Any())
         {
             List<UpgradeData> potentialFillers = availableUpgradesPool.Except(selectedUpgrades).ToList();
@@ -322,13 +319,11 @@ public class UpgradeManager : MonoBehaviour
         return selectedUpgrades;
     }
 
-
-    // New helper method to get available upgrades from a specific pool
     private List<UpgradeData> GetAvailableUpgradesFromPool(List<UpgradeData> pool)
     {
         return pool.Where(upgrade =>
-            !(upgrade.isUnique && playerUpgrades.ContainsKey(upgrade)) && // Exclude if unique AND player already has it
-            !(playerUpgrades.ContainsKey(upgrade) && playerUpgrades[upgrade] >= upgrade.maxStacks) // Exclude if player has it and it's maxed out
+            !(upgrade.isUnique && playerUpgrades.ContainsKey(upgrade)) &&
+            !(playerUpgrades.ContainsKey(upgrade) && playerUpgrades[upgrade] >= upgrade.maxStacks)
         ).ToList();
     }
 
@@ -350,19 +345,15 @@ public class UpgradeManager : MonoBehaviour
             return UpgradeRarity.Epic;
         if (randomValue < legendaryChance + epicChance + rareChance && currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Rare))
             return UpgradeRarity.Rare;
-        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Common)) // Prioritize common if nothing else hits or available
+        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Common))
             return UpgradeRarity.Common;
 
         // Fallback: if no upgrades of the rolled rarity are available in the current pool,
-        // or if curves resulted in a totalChance = 0 and randomValue is 0,
-        // try to find any available rarity from the current pool, preferring higher
         if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Epic)) return UpgradeRarity.Epic;
         if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Rare)) return UpgradeRarity.Rare;
         if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Common)) return UpgradeRarity.Common;
 
         // Last resort: If no upgrades are available AT ALL in the current pool,
-        // this shouldn't happen if GenerateRandomUpgrades checks are robust.
-        // Return Common, GenerateRandomUpgrades will handle gracefully if no upgrades are found.
         return UpgradeRarity.Common;
     }
 
@@ -459,7 +450,8 @@ public class UpgradeManager : MonoBehaviour
         if (button != null)
         {
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => {
+            button.onClick.AddListener(() =>
+            {
                 SelectUpgrade(upgrade);
             });
             button.interactable = true;
@@ -661,10 +653,11 @@ public class UpgradeManager : MonoBehaviour
             runInfoQuestionText.text = "RUN INFO";
         }
 
+        float yOffsetIncrement = -40f; // This is the increment for both boons and abilities
+
         if (boonsContainer != null && runInfoUpgradeTextTemplate != null)
         {
-            float currentYOffset = 200f;
-            float yOffsetIncrement = -40f;
+            float currentYOffsetBoons = 200f; // Starting Y position for boons
 
             foreach (var entry in playerUpgrades)
             {
@@ -684,8 +677,8 @@ public class UpgradeManager : MonoBehaviour
                 RectTransform rectTransform = upgradeEntry.GetComponent<RectTransform>();
                 if (rectTransform != null)
                 {
-                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, currentYOffset);
-                    currentYOffset += yOffsetIncrement;
+                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, currentYOffsetBoons);
+                    currentYOffsetBoons += yOffsetIncrement;
                 }
 
                 Text upgradeText = upgradeEntry.GetComponent<Text>();
@@ -712,24 +705,34 @@ public class UpgradeManager : MonoBehaviour
 
         if (abilitiesContainer != null && runInfoUpgradeTextTemplate != null)
         {
-            // You might need a reference to BattleManager to get current player attacks
+            float currentYOffsetAbilities = 200f;
+
             if (battleManager != null)
             {
-                // Assuming StoryBattleManager has a public method like GetCurrentPlayerAttacks()
-                // You'd need to add this method to StoryBattleManager if it doesn't exist
-                // public List<AttackData> GetCurrentPlayerAttacks() { return playerAttacks; }
                 List<AttackData> currentAbilities = battleManager.GetCurrentPlayerAttacks();
 
                 foreach (AttackData attack in currentAbilities)
                 {
                     GameObject abilityEntry = Instantiate(runInfoUpgradeTextTemplate, abilitiesContainer);
                     Text abilityText = abilityEntry.GetComponent<Text>();
+
+                    RectTransform rectTransform = abilityEntry.GetComponent<RectTransform>();
+                    if (rectTransform != null)
+                    {
+                        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, currentYOffsetAbilities);
+                        currentYOffsetAbilities += yOffsetIncrement;
+                    }
+
                     if (abilityText != null)
                     {
                         abilityText.text = attack.attackName;
                         abilityText.color = StoryAttackDataManager.Instance.GetColorForAttackType(attack.attackType);
                     }
                 }
+            }
+            else
+            {
+                Debug.LogWarning("BattleManager is null. Cannot retrieve current player attacks for abilities.");
             }
         }
         else

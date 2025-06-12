@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3130157529368721326}
   - component: {fileID: 4443530053382965031}
   - component: {fileID: 4834642855025357253}
+  - component: {fileID: -596555900926644486}
   m_Layer: 0
-  m_Name: Wolf
+  m_Name: SkullWolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,3 +111,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-596555900926644486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775577846886639310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4fa4a27424189b40aa9144196a61bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAttack: {fileID: 11400000, guid: 0df3e75bc3dd9dd43a4f9e61ed488d23, type: 2}

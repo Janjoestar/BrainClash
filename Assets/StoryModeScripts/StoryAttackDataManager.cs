@@ -1,10 +1,7 @@
-﻿// StoryAttackDataManager.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-// REMOVE AttackType enum and AttackData class definitions from here.
-// They are now in AttackDataTypes.cs.
+using System;
 
 public class StoryAttackDataManager : MonoBehaviour
 {
@@ -62,109 +59,127 @@ public class StoryAttackDataManager : MonoBehaviour
                 return new List<AttackData>
                 {
                     new AttackData("Quick Slash", 15, "Fast sword strike.", "Attack1",
-                                   AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red, "Knight/Slash4", "", default, 0.50f, 1.0f),
+                                    AttackType.DirectHit, "Knight/Slash4", new Vector3(0.0f, 0.5f, 0.0f),
+                                    0.1f, 0.8f, Color.red, sound: "Slash", critChance: 0.50f, accuracy: 1.0f, charName: "Knight"),
                     new AttackData("Warrior Slash", 30, "Fiery blade attack, risky but powerful.", "Attack1",
-                                   AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red, "Knight/Slash4", "", default, 0f, 0.8f, maxCooldown: 2), // Added cooldown
+                                    AttackType.DirectHit, "Knight/Slash4", new Vector3(0.1f, 0.6f, -0.1f),
+                                    0.1f, 0.8f, Color.red, sound: "WarriorSlash", critChance: 0f, accuracy: 0.8f, charName: "Knight"),
                     new AttackData("Dragon Slash", 40, "Powerful dragon strike, with some recoil.", "Attack2",
-                                   AttackType.DirectHit, "DragonSlash", new Vector3(-3.23f, -1.93f, -4.116615f), 0.8f, 0.1f, Color.red, "Knight/Slash6", "", default, 0.15f, 0.90f, 10f, maxCooldown: 3), // Added cooldown
+                                    AttackType.DirectHit, "Knight/Slash6", new Vector3(0.0f, 0.7f, 0.0f),
+                                    0.1f, 0.8f, Color.red, sound: "DragonSlash", critChance: 0.15f, accuracy: 0.90f, doubleEdgeDamage: 10f, charName: "Knight"),
                     new AttackData("Sacrificial Blade", 80, "A final, desperate blow that may consume you entirely.", "Special",
-                                   AttackType.DirectHit, "JudgementImpact", new Vector3(-2.81f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red, "Knight/Slash4", "", default, 0.05f, 1.0f, 0f, true, 0.5f, maxCooldown: 5) // Added cooldown
+                                    AttackType.DirectHit, "Knight/Slash4", new Vector3(0.0f, 0.0f, 0.0f),
+                                    0.1f, 0.8f, Color.red, sound: "JudgementImpact", critChance: 0.05f, accuracy: 1.0f, doubleEdgeDamage: 0f, canSelfKO: true, selfKOFailChance: 0.5f, charName: "Knight")
                 };
             case "Archer":
                 return new List<AttackData>
                 {
                     new AttackData("Poison Arrow", 10, "Toxic projectile.", "Attack1",
-                                   AttackType.Projectile, "PoisonArrow", new Vector3(1.01f, -3.7f, -4.116615f), 1f, 0.1f, Color.magenta, "Archer/Atk1", "PoisonArrowHitEffect", new Vector3(-2.43f,-3.291f,0.1f), 0.40f, 0.95f),
+                                    AttackType.Projectile, "Archer/Atk1", new Vector3(1.0f, 0.2f, 0f), // Offset from PLAYER for projectile spawn
+                                    0.1f, 1f, Color.magenta, sound: "PoisonArrow", hitEffectName: "PoisonArrowHitEffect",
+                                    hitOffset: new Vector3(0f, 0.5f, 0f), // CORRECTED: Changed targetHitOffset to hitOffset
+                                    critChance: 0.40f, accuracy: 0.95f, charName: "Archer"),
                     new AttackData("Arrow Shower", 35, "Rain of arrows, some may graze you.", "Attack2",
-                                   AttackType.AreaEffect, "ArrowShower", new Vector3(-3.2f, -3.46f, -4.116615f), 2f, 0.1f, Color.red, "Archer/Atk2", "", default, 0.10f, 1.0f, 10f, maxCooldown: 3), // Added cooldown
+                                    AttackType.AreaEffect, "Archer/Atk2", new Vector3(0f, 1.0f, 0f), // Effect spawns 1 unit above target
+                                    0.1f, 2f, Color.red, sound: "ArrowShower", critChance: 0.10f, accuracy: 1.0f, doubleEdgeDamage: 10f, charName: "Archer"),
                     new AttackData("Impale Arrow", 25, "A sharp arrow thrust directly into the target. Very accurate.", "Attack3",
-                                   AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1f, 0.1f, Color.white, "Archer/Atk3", "", default, 0.45f, 1.0f),
+                                    AttackType.MoveAndHit, "Archer/Atk3", new Vector3(0.0f, 0.3f, 0.0f), // Effect at target when player is close
+                                    0.1f, 1f, Color.white, sound: "None", critChance: 0.45f, accuracy: 1.0f, charName: "Archer"),
                     new AttackData("Green Beam", 60, "A focused beam of magical energy.", "Special",
-                                   AttackType.Magic, "None", new Vector3(0f, 0f, 0f), 1.595f, 0.1f, Color.green, "Archer/Special", "LargeExplosionHit", default, 0.10f, 0.60f, 10f, maxCooldown: 4) // Added cooldown
+                                    AttackType.Magic, "Archer/Special", new Vector3(1.0f, 0.2f, 0f), // Beam origin from player
+                                    0.1f, 1.595f, Color.green, sound: "None", hitEffectName: "LargeExplosionHit",
+                                    hitOffset: new Vector3(0f, 0f, 0f), // CORRECTED: Changed targetHitOffset to hitOffset
+                                    critChance: 0.10f, accuracy: 0.60f, doubleEdgeDamage: 10f, charName: "Archer")
                 };
             case "Water":
                 return new List<AttackData>
                 {
                     new AttackData("Aqua Slash", 20, "A swift slash imbued with water. Very accurate.", "Attack1",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.cyan, "Water/Atk1", "", default, 0.25f, 1.0f),
+                                    AttackType.MoveAndHit, "Water/Atk1", new Vector3(0.0f, 0.5f, 0f),
+                                    0.1f, 0.8f, Color.cyan, sound: "None", critChance: 0.25f, accuracy: 1.0f, charName: "Water"),
                     new AttackData("Heal", 40, "Restore health.", "Attack2",
-                                   AttackType.Heal, "None", new Vector3(1.01f, -3.7f, -4.116615f), 1.25f, 0.1f, Color.green, "Heal", "", default, 0.00f, 1.0f, maxCooldown: 2), // Added cooldown
+                                    AttackType.Heal, "Heal", new Vector3(0f, 1.0f, 0f),
+                                    0.1f, 1.25f, Color.green, sound: "None", critChance: 0.00f, accuracy: 1.0f, charName: "Water"),
                     new AttackData("Water Dance", 45, "Flowing combo attack. Consistent damage.High chance for critical.", "Attack3",
-                                   AttackType.MoveAndHit, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.7f, 0.2f, Color.blue, "Water/Atk3", "", default, 0.30f, 0.70f, maxCooldown: 3),
+                                    AttackType.MoveAndHit, "Water/Atk3", new Vector3(0.1f, 0.4f, 0f),
+                                    0.2f, 1.7f, Color.blue, sound: "None", critChance: 0.30f, accuracy: 0.70f, charName: "Water"),
                     new AttackData("Water Ball", 100, "Liquid projectile. Good chance for critical.", "Special",
-                                   AttackType.Projectile, "None", new Vector3(-3.2f, -3.46f, -4.116615f), 1.25f, 0.1f, Color.blue, "Water/Atk2", "", default, 0.40f, 0.45f, maxCooldown: 4)
+                                    AttackType.Projectile, "Water/Atk2", new Vector3(1.0f, 0.2f, 0f), // Projectile spawn offset from player
+                                    0.1f, 1.25f, Color.blue, sound: "None", hitEffectName: "WaterBallHitEffect", // Assuming a hit effect
+                                    hitOffset: new Vector3(0f, 0.5f, 0f), // CORRECTED: Changed targetHitOffset to hitOffset
+                                    critChance: 0.40f, accuracy: 0.45f, charName: "Water")
                 };
             case "Fire":
                 return new List<AttackData>
                 {
                     new AttackData("Fire Slash", 25, "Burns enemy, but scorches you significantly.", "Attack1",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.red, "FireSlash", "", default, 0.15f, 0.90f, 10f),
+                                   AttackType.MoveAndHit, "FireSlash", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "None", critChance: 0.15f, accuracy: 0.90f, doubleEdgeDamage: 10f, charName: "Fire"),
                     new AttackData("Spin Slash", 30, "Spinning flame attack. High crit potential.", "Attack2",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.2f, Color.red, "FireSpin", "", default, 0.40f, 0.70f, maxCooldown: 2),
+                                   AttackType.MoveAndHit, "FireSpin", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "None", critChance: 0.40f, accuracy: 0.70f, charName: "Fire"),
                     new AttackData("Fire Combo", 50, "Multi-hit flames. Good accuracy. Burns the user.", "Attack3",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.9f, 0.38f, Color.red, "FireSpin", "", default, 0.05f, 0.90f, 30, maxCooldown: 3),
+                                   AttackType.MoveAndHit, "FireSpin", new Vector3(0.0f, 0.5f, 0f), 0.38f, 0.9f, Color.red, sound: "None", critChance: 0.05f, accuracy: 0.90f, doubleEdgeDamage: 30, charName: "Fire"),
                     new AttackData("Inferno Sacrifice", 100, "Unleashes a massive inferno, but at a terrible cost to yourself.", "Special",
-                                   AttackType.AreaEffect, "None", new Vector3(0f, 0f, 0f), 2f, 0.2f, Color.red, "LargeFireExplosion", "", default, 0.0f, 0.8f, 0f, true, 0.60f, maxCooldown: 5)
+                                   AttackType.AreaEffect, "LargeFireExplosion", new Vector3(0f, 0.5f, 0f), 0.2f, 2f, Color.red, sound: "None", critChance: 0.0f, accuracy: 0.8f, doubleEdgeDamage: 0f, canSelfKO: true, selfKOFailChance: 0.60f, charName: "Fire")
                 };
             case "Wind":
                 return new List<AttackData>
                 {
                     new AttackData("Wind Slash", 25, "Cutting air blade. High Accuracy.", "Attack1",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, new Color(0.659f, 0.592f, 0.447f), "Wind/Atk1", "", default, 0.20f, 0.95f),
+                                   AttackType.MoveAndHit, "Wind/Atk1", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, new Color(0.659f, 0.592f, 0.447f), sound: "None", critChance: 0.20f, accuracy: 0.95f, charName: "Wind"),
                     new AttackData("Wind Barrage", 30, "Multiple air strikes, with strong backlash.", "Attack2",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1.2f, 0.1f, new Color(0.659f, 0.592f, 0.447f), "Wind/Atk2", "", default, 0.25f, 0.80f, 10f, maxCooldown: 2),
+                                   AttackType.MoveAndHit, "Wind/Atk2", new Vector3(0.0f, 0.5f, 0f), 0.1f, 1.2f, new Color(0.659f, 0.592f, 0.447f), sound: "None", critChance: 0.25f, accuracy: 0.80f, doubleEdgeDamage: 10f, charName: "Wind"),
                     new AttackData("Tornado", 25, "Whirling vortex. Low accuracy, but high crit chance.", "Attack3",
-                                   AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.15f, new Color(0.659f, 0.592f, 0.447f), "Wind/WindTornado", "", default, 0.60f, 0.65f),
+                                   AttackType.DirectHit, "Wind/WindTornado", new Vector3(0.0f, 0.5f, 0f), 0.15f, 1.5f, new Color(0.659f, 0.592f, 0.447f), sound: "None", critChance: 0.60f, accuracy: 0.65f, charName: "Wind"),
                     new AttackData("Tempest Collapse", 75, "Summons a devastating tempest.", "Special",
-                                   AttackType.AreaEffect, "None", new Vector3(0f, 0f, 0f), 1.5f, 0.25f, new Color(0.659f, 0.592f, 0.447f), "Wind/Special", "", default, 0.0f, 0.50f, 0f, maxCooldown: 4)
+                                   AttackType.AreaEffect, "Wind/Special", new Vector3(0.0f, 0.5f, 0f), 0.25f, 1.5f, new Color(0.659f, 0.592f, 0.447f), sound: "None", critChance: 0.0f, accuracy: 0.50f, doubleEdgeDamage: 10f, charName: "Wind")
                 };
             case "Necromancer":
                 return new List<AttackData>
                 {
                     new AttackData("Soul Rise", 20, "Summon spirits. Reliable damage.", "Attack1",
-                                   AttackType.DirectHit, "SoulRise", new Vector3(-3.26f, -1.92f, -0.05191165f), 0.8f, 0.1f, Color.red, "SoulRise", "", default, 0.05f, 0.90f),
+                                   AttackType.DirectHit, "SoulRise", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "SoulRise", critChance: 0.05f, accuracy: 0.90f, charName: "Necromancer"),
                     new AttackData("Blood Spike", 30, "Piercing blood magic with a high crit chance.", "Attack1",
-                                   AttackType.DirectHit, "BloodSpike", new Vector3(-3.25f, -2.25f, -0.05191165f), 1.2f, 0.1f, Color.red, "BloodSpike", "", default, 0.35f, 0.85f, 10f, maxCooldown: 2),
+                                   AttackType.DirectHit, "BloodSpike", new Vector3(0.0f, -0.5f, 0f), 0.1f, 1.2f, Color.red, sound: "BloodSpike", critChance: 0.35f, accuracy: 0.85f, doubleEdgeDamage: 10f, charName: "Necromancer"),
                     new AttackData("Red Lightning", 50, "Dark thunder strike, drawing heavily from your own life force.", "Attack1",
-                                   AttackType.DirectHit, "RedLightning", new Vector3(-3.33f, -1.7f, -0.05191165f), 1.5f, 0.15f, Color.red, "ThunderBolt", "", default, 0.30f, 0.60f,30f, maxCooldown: 3),
+                                   AttackType.DirectHit, "ThunderBolt", new Vector3(0.0f, 0.5f, 0f), 0.15f, 1.5f, Color.red, sound: "RedLightning", critChance: 0.30f, accuracy: 0.60f, doubleEdgeDamage: 30f, charName: "Necromancer"),
                     new AttackData("Final Offering", 150, "Sacrifices all life energy to unleash a cataclysmic curse, with a high chance of self-destruction.", "Attack1",
-                                   AttackType.AreaEffect, "BloodTornado", new Vector3(-3.27f, -0.97f, -0.05191165f), 1.5f, 0.25f, Color.red, "Hurricane", "", default, 0.0f, 1f, 0f, true, 0.85f, maxCooldown: 5)
+                                   AttackType.AreaEffect, "Hurricane", new Vector3(0.0f, 0.5f, 0f), 0.25f, 1.5f, Color.red, sound: "BloodTornado", critChance: 0.0f, accuracy: 1f, doubleEdgeDamage: 0f, canSelfKO: true, selfKOFailChance: 0.85f, charName: "Necromancer")
                 };
             case "Crystal":
                 return new List<AttackData>
                 {
                     new AttackData("Crystal Crusher", 20, "Shattering punch. Good accuracy.", "Attack1",
-                                   AttackType.AreaEffect, "None", new Vector3(0f, 0f, 0f), 0.8f, 0.1f, Color.cyan, "Crystal/Atk1", "", default, 0.25f, 0.95f),
+                                   AttackType.AreaEffect, "Crystal/Atk1", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.cyan, sound: "None", critChance: 0.25f, accuracy: 0.95f, charName: "Crystal"),
                     new AttackData("Crystal Hammer", 25, "A massive crystal hammer falls from the sky. Very high crit chance", "Attack2",
-                                   AttackType.DirectHit, "PhantomShatter", new Vector3(-3.19f, -1.47f, -0.03036325f), 1.2f, 0.1f, Color.cyan, "Crystal/Atk2", "", default, 0.40f, 0.75f, maxCooldown: 2),
+                                   AttackType.DirectHit, "Crystal/Atk2", new Vector3(0.0f, 0.5f, 0f), 0.1f, 1.2f, Color.cyan, sound: "PhantomShatter", critChance: 0.40f, accuracy: 0.75f, charName: "Crystal"),
                     new AttackData("Crystal Eruption", 45, "Gem explosion, shards may cut you significantly.", "Attack3",
-                                   AttackType.DirectHit, "None", new Vector3(0f, 0f, 0f), 1.6f, 0.15f, Color.cyan, "Crystal/Atk3", "", default, 0.05f, 0.80f, 20f, maxCooldown: 3),
+                                   AttackType.DirectHit, "Crystal/Atk3", new Vector3(0.0f, 0.5f, 0f), 0.15f, 1.6f, Color.cyan, sound: "None", critChance: 0.05f, accuracy: 0.80f, doubleEdgeDamage: 20f, charName: "Crystal"),
                     new AttackData("Prismatic Overload", 65, "Channels immense crystal energy.", "Special",
-                                   AttackType.AreaEffect, "None", new Vector3(0f, 0f, 0f), 1.65f, 0.15f, Color.cyan, "Crystal/Special", "", default, 0.0f, 0.55f, 10f, maxCooldown: 4)
+                                   AttackType.AreaEffect, "Crystal/Special", new Vector3(0.0f, 0.5f, 0f), 0.15f, 1.65f, Color.cyan, sound: "None", critChance: 0.0f, accuracy: 0.55f, doubleEdgeDamage: 10f, charName: "Crystal")
                 };
             case "Ground":
                 return new List<AttackData>
                 {
                     new AttackData("Quick Punch", 20, "Fast earth strike. High Accuracy", "Attack1",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f), "Ground/RockPunch", "", default, 0.15f, 0.95f),
+                                   AttackType.MoveAndHit, "Ground/RockPunch", new Vector3(0.0f, 0.5f, 0f), 0.1f, 1f, new Color(0.6f, 0.3f, 0.1f), sound: "None", critChance: 0.15f, accuracy: 0.95f, charName: "Ground"),
                     new AttackData("Punch Combo", 35, "Multiple earth hits, causing minor tremors to yourself. High crit chance", "Attack2",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.1f, new Color(0.6f, 0.3f, 0.1f), "Ground/DoubleRockPunch", "", default, 0.30f, 0.80f, 10f, maxCooldown: 2),
+                                   AttackType.MoveAndHit, "Ground/DoubleRockPunch", new Vector3(0.0f, 0.5f, 0f), 0.1f, 1f, new Color(0.6f, 0.3f, 0.1f), sound: "None", critChance: 0.30f, accuracy: 0.80f, doubleEdgeDamage: 10f, charName: "Ground"),
                     new AttackData("Rock Slide", 50, "Falling boulder. Riskier, but can be worth it.", "Attack3",
-                                   AttackType.MoveAndHit, "None", new Vector3(0f, 0f, 0f), 1f, 0.35f, new Color(0.6f, 0.3f, 0.1f), "Ground/RealGroundAttack3", "", default, 0.15f, 0.60f, 20f, maxCooldown: 3),
+                                   AttackType.MoveAndHit, "Ground/RealGroundAttack3", new Vector3(0.0f, 0.5f, 0f), 0.35f, 1f, new Color(0.6f, 0.3f, 0.1f), sound: "None", critChance: 0.15f, accuracy: 0.60f, doubleEdgeDamage: 20f, charName: "Ground"),
                     new AttackData("Titanic Reckoning", 100, "Shatters the earth with suicidal force, potentially crushing yourself.", "Special",
-                                   AttackType.AreaEffect, "None", new Vector3(0f, 0f, 0f), 1.8f, 0.25f, new Color(0.6f, 0.3f, 0.1f), "Ground/RockSpecial", "", default, 0.0f, 1.0f, 0f, true, 0.5f, maxCooldown: 5)
+                                   AttackType.AreaEffect, "Ground/RockSpecial", new Vector3(0.0f, 0.5f, 0f), 0.25f, 1.8f, new Color(0.6f, 0.3f, 0.1f), sound: "None", critChance: 0.0f, accuracy: 1.0f, doubleEdgeDamage: 0f, canSelfKO: true, selfKOFailChance: 0.5f, charName: "Ground")
                 };
             default:
                 return new List<AttackData>
                 {
                     new AttackData("Basic Attack", 10, "Simple strike.", "Attack1",
-                                   AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red, "", "", default, 0.0f, 0.95f),
+                                    AttackType.DirectHit, "", new Vector3(0.0f, 0.5f, 0.0f), 0.1f, 0.8f, Color.red, sound: "Slash", critChance: 0.0f, accuracy: 0.95f, charName: "Default"),
                     new AttackData("Special Attack", 15, "Enhanced strike. Balanced.", "Attack2",
-                                   AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red, "", "", default, 0.05f, 0.90f, maxCooldown: 1),
+                                    AttackType.DirectHit, "", new Vector3(0.0f, 0.5f, 0.0f), 0.1f, 0.8f, Color.red, sound: "WarriorSlash", critChance: 0.05f, accuracy: 0.90f, charName: "Default"),
                     new AttackData("Power Strike", 25, "Strong attack with some recoil.", "Attack1",
-                                   AttackType.DirectHit, "Slash", new Vector3(-3.3f, -2.18f, -4.116615f), 0.8f, 0.1f, Color.red, "", "", default, 0.0f, 0.85f, 10f, maxCooldown: 2),
+                                    AttackType.DirectHit, "", new Vector3(0.0f, 0.5f, 0.0f), 0.1f, 0.8f, Color.red, sound: "Slash", critChance: 0.0f, accuracy: 0.85f, doubleEdgeDamage: 10f, charName: "Default"),
                     new AttackData("Ultimate Attack", 60, "A devastating, yet risky, ultimate.", "Attack2",
-                                   AttackType.DirectHit, "WarriorSlash", new Vector3(-3.25f, -2.33f, -4.116615f), 0.8f, 0.1f, Color.red, "", "", default, 0.15f, 0.75f, 0f, maxCooldown: 3)
+                                    AttackType.DirectHit, "", new Vector3(0.0f, 0.5f, 0.0f), 0.1f, 0.8f, Color.red, sound: "WarriorSlash", critChance: 0.15f, accuracy: 0.75f, doubleEdgeDamage: 0f, charName: "Default")
                 };
         }
     }

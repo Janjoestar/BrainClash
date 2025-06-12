@@ -24,13 +24,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
 
     // Music arrays for different categories
-    [SerializeField] private AudioClip[] menuMusic;         // For StartScreen and CharacterSelection
-    [SerializeField] private AudioClip[] loadingMusic;      // For LoadingScene
-    [SerializeField] private AudioClip[] gameplayMusic;     // For QuizScene and BattleScene
-    [SerializeField] private AudioClip[] prepPhaseMusic;    // For QuizScene and BattleScene
+    [SerializeField] private AudioClip[] menuMusic;      // For StartScreen and CharacterSelection
+    [SerializeField] private AudioClip[] loadingMusic;     // For LoadingScene
+    [SerializeField] private AudioClip[] gameplayMusic;    // For QuizScene and BattleScene
+    [SerializeField] private AudioClip[] prepPhaseMusic;   // For QuizScene and BattleScene
 
     // Keep track of current music category to avoid switching when moving between scenes of same category
     private string currentMusicCategory = "";
+
+    // NEW: Base volume for music
+    private float _baseMusicVolume = 0.6f;
 
     public static float player1DamageMultiplier = 1;
     public static float player2DamageMultiplier = 1;
@@ -41,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     // Add these fields for your global crit and self-KO sounds
     [Header("Global Sound Effects")]
-    [SerializeField] private AudioClip globalCritSound;     // Drag your critical hit sound here in the Inspector
+    [SerializeField] private AudioClip globalCritSound;    // Drag your critical hit sound here in the Inspector
     [SerializeField] private AudioClip globalSelfKOSound;   // Drag your self-KO sound here in the Inspector
     [SerializeField] private AudioClip globalHitSound;   // Drag your self-KO sound here in the Inspector
 
@@ -201,7 +204,7 @@ public class GameManager : MonoBehaviour
             musicSource = gameObject.AddComponent<AudioSource>();
             musicSource.loop = true;
             musicSource.playOnAwake = false;
-            musicSource.volume = 0.6f; // Music shouldn't drown out SFX
+            musicSource.volume = _baseMusicVolume; // Set initial volume using the base
         }
 
         if (sfxSource == null)
@@ -224,6 +227,32 @@ public class GameManager : MonoBehaviour
         SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
         player1Health = SelectedCharacterP1.maxHealth;
         player2Health = SelectedCharacterP2.maxHealth;
+
+        // Reset all attack cooldowns and then set initial cooldowns for ultimates/attacks
+        playerAttackCooldowns.Clear();
+
+        // Set initial cooldowns for Player 1's attacks
+        List<AttackData> p1Attacks = AttackDataManager.Instance.GetAttacksForCharacter(SelectedCharacterP1.characterName);
+        foreach (AttackData attack in p1Attacks)
+        {
+            if (attack.maxCooldown > 0)
+            {
+                // Set initial cooldown to maxCooldown - 1, ensuring it doesn't go below 0
+                SetAttackCooldown(1, attack.attackName, Mathf.Max(0, attack.maxCooldown - 1));
+            }
+        }
+
+        // Set initial cooldowns for Player 2's attacks
+        List<AttackData> p2Attacks = AttackDataManager.Instance.GetAttacksForCharacter(SelectedCharacterP2.characterName);
+        foreach (AttackData attack in p2Attacks)
+        {
+            if (attack.maxCooldown > 0)
+            {
+                // Set initial cooldown to maxCooldown - 1, ensuring it doesn't go below 0
+                SetAttackCooldown(2, attack.attackName, Mathf.Max(0, attack.maxCooldown - 1));
+            }
+        }
+
 
         OnGameManagerReady?.Invoke(); // Notify BattleManager that characters are ready
                                       // Force reapply animations after loading to fix glitches
@@ -295,13 +324,12 @@ public class GameManager : MonoBehaviour
             case "StoryCharacterSelection":
                 return "menu";
             case "LoadingScene":
-                return "loading";
+            case "PrepPhase": // Assuming PrepPhase should also be silent as per previous request/example
+                return "silent"; // Changed from "loading" to "silent" for PrepPhase
             case "QuizScene":
             case "BattleScene":
             case "StoryMode":
                 return "gameplay";
-            case "PrepPhase":
-                return "silent";
             default:
                 Debug.LogWarning("Unknown scene name: " + sceneName);
                 return "menu"; // Default to menu music
@@ -343,17 +371,17 @@ public class GameManager : MonoBehaviour
             musicSource.Stop();
         }
     }
+
+    // Modified to restore to _baseMusicVolume
     private IEnumerator DuckMusicThenPlaySFX(AudioClip clip, float sfxVolume, float musicDuckVolume)
     {
-        float originalMusicVolume = musicSource.volume;
-
-        musicSource.volume = musicDuckVolume;
+        musicSource.volume = musicDuckVolume; // Duck music
 
         sfxSource.PlayOneShot(clip, sfxVolume);
 
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(clip.length); // Wait for SFX to finish
 
-        musicSource.volume = originalMusicVolume;
+        musicSource.volume = _baseMusicVolume; // Restore music to base volume
     }
 
     public void PlaySFX(string sfxName, float volume = 1.0f, float musicDuckVolume = 0.2f)
@@ -396,7 +424,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Global Crit Sound is not assigned in GameManager.");
+            Debug.LogWarning("Global Hit Sound is not assigned in GameManager.");
         }
     }
 
@@ -485,6 +513,31 @@ public class GameManager : MonoBehaviour
         SelectedCharacterP2 = characterDB.GetCharacter(selectedIndexP2);
         player1Health = SelectedCharacterP1.maxHealth;
         player2Health = SelectedCharacterP2.maxHealth;
+
+        // Reset all attack cooldowns from previous game
+        playerAttackCooldowns.Clear();
+
+        // Set initial cooldowns for Player 1's attacks
+        List<AttackData> p1Attacks = AttackDataManager.Instance.GetAttacksForCharacter(SelectedCharacterP1.characterName);
+        foreach (AttackData attack in p1Attacks)
+        {
+            if (attack.maxCooldown > 0)
+            {
+                // Set initial cooldown to maxCooldown - 1, ensuring it doesn't go below 0
+                SetAttackCooldown(1, attack.attackName, Mathf.Max(0, attack.maxCooldown - 1));
+            }
+        }
+
+        // Set initial cooldowns for Player 2's attacks
+        List<AttackData> p2Attacks = AttackDataManager.Instance.GetAttacksForCharacter(SelectedCharacterP2.characterName);
+        foreach (AttackData attack in p2Attacks)
+        {
+            if (attack.maxCooldown > 0)
+            {
+                // Set initial cooldown to maxCooldown - 1, ensuring it doesn't go below 0
+                SetAttackCooldown(2, attack.attackName, Mathf.Max(0, attack.maxCooldown - 1));
+            }
+        }
     }
 
     public void ReturnToQuizScene()

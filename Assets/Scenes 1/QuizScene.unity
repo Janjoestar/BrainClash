@@ -2821,11 +2821,11 @@ MonoBehaviour:
   - {fileID: 1826993114}
   - {fileID: 1888045893}
   DamageMultiAnimation: {fileID: 4790386049251404545, guid: 78df2f91dad965248939802e7ccf2d7b, type: 3}
-  readingTime: 3
+  readingTime: 5
   earlyBuzzPenaltyTime: 2
   colorTransitionSpeed: 2
   initialSlideInTime: 0.75
-  answerTimeLimit: 10
+  answerTimeLimit: 13
   leftColorPanel: {fileID: 357062960}
   rightColorPanel: {fileID: 2139890987}
   leftBackgroundImage: {fileID: 357062961}

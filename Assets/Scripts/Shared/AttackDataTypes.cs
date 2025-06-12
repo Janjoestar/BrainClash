@@ -4,17 +4,17 @@ using UnityEngine;
 // Define AttackType enum once
 public enum AttackType
 {
-    Slash,          // Melee slash effects that appear near the target
-    Projectile,     // Effects that travel from attacker to defender
-    Magic,          // Magical projectiles that travel
-    AreaEffect,     // Effects that appear on or around the target (explosions, etc.)
-    DirectHit,      // Effects that appear directly on the target (hammer hit, etc.)
-    MoveAndHit,     // Character moves to target, attacks, then returns to position
+    Slash,            // Melee slash effects that appear near the target
+    Projectile,       // Effects that travel from attacker to defender
+    Magic,            // Magical projectiles that travel
+    AreaEffect,       // Effects that appear on or around the target (explosions, etc.)
+    DirectHit,        // Effects that appear directly on the target (hammer hit, etc.)
+    MoveAndHit,       // Character moves to target, attacks, then returns to position
     Heal
 }
 
 // Define AttackData class once
-[Serializable]
+[Serializable] // This is why it's not a ScriptableObject
 public class AttackData
 {
     public string attackName;
@@ -40,12 +40,16 @@ public class AttackData
     public int maxCooldown = 0;     // Maximum cooldown turns (0 = no cooldown)
     public float damageIncrease = 0f;
 
+    // NEW FIELD for the character name
+    public string characterName;
+
     public AttackData(string name, float dmg, string desc, string animTrigger,
                       AttackType type, string effectName, Vector3 offset, float delay,
                       float flashInterval, Color flashColor, string sound = "",
                       string hitEffectName = "", Vector3 hitOffset = default,
                       float critChance = 0.0f, float accuracy = 0.85f, float doubleEdgeDamage = 0f,
-                      bool canSelfKO = false, float selfKOFailChance = 0.0f, int maxCooldown = 0)
+                      bool canSelfKO = false, float selfKOFailChance = 0.0f, int maxCooldown = 0,
+                      string charName = "Default") // Added charName parameter
     {
         attackName = name;
         damage = dmg;
@@ -66,12 +70,13 @@ public class AttackData
         this.canSelfKO = canSelfKO;
         this.selfKOFailChance = selfKOFailChance;
         this.maxCooldown = maxCooldown;
-        this.cooldown = 0; // Cooldown starts at 0, meaning it's ready to use.
+        this.cooldown = 0;
+        this.characterName = charName; // Assign the new field
     }
 
-    // Backward compatibility constructor
+    // Backward compatibility constructor - updated to include characterName
     public AttackData(string name, int dmg, string desc, string animTrigger, AttackType type)
-        : this(name, (float)dmg, desc, animTrigger, type, "", Vector3.zero, 0.3f, 0.1f, Color.red)
+        : this(name, (float)dmg, desc, animTrigger, type, "", Vector3.zero, 0.3f, 0.1f, Color.red, charName: "Default") // Added charName here
     {
     }
 }

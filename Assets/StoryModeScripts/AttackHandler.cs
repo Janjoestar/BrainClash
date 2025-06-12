@@ -9,7 +9,7 @@ public class AttackHandler
     private GameObject player;
     private List<GameObject> enemies;
     private List<float> currentEnemyHealths;
-    private string[] enemyNames;
+    private Func<string[]> getEnemyNames;
 
     // Use delegates for dynamic health and modifier access
     private Func<float> getCurrentPlayerHealth;
@@ -23,25 +23,28 @@ public class AttackHandler
     private Func<bool> getHasLifesteal;
     private Func<float> getLifestealPercentage;
     private Func<bool> getHasShield;
-    private Action<float> setShieldAmount; // Now an Action to set the shield amount
+    private Action<float> setShieldAmount;
 
     private float moveSpeed;
     private float attackDistance;
     private Vector3 originalPlayerPosition;
-    private GameObject attackEffectPrefab;
+    private GameObject attackEffectPrefab; // This prefab is now handled by UIManager's callback
 
-    public AttackHandler(MonoBehaviour monoBehaviourInstance, GameObject player, List<GameObject> enemies, List<float> currentEnemyHealths, string[] enemyNames,
-                         Func<float> getCurrentPlayerHealth, Action<float> setCurrentPlayerHealth, Func<float> getPlayerMaxHealth,
-                         Func<float> getDamageMultiplier, Func<float> getCritChanceBonus, Func<float> getAccuracyBonus,
-                         Func<float> getHealingMultiplier, Func<float> getDoubleEdgeReduction, Func<bool> getHasLifesteal,
-                         Func<float> getLifestealPercentage, Func<bool> getHasShield, Action<float> setShieldAmount, // Changed to Action
-                         float moveSpeed, float attackDistance, Vector3 originalPlayerPosition, GameObject attackEffectPrefab)
+    // Store the player's original AnimatorController when AttackHandler is constructed
+    private RuntimeAnimatorController _playerOriginalAnimatorController;
+
+    public AttackHandler(MonoBehaviour monoBehaviourInstance, GameObject player, List<GameObject> enemies, List<float> currentEnemyHealths, Func<string[]> getEnemyNames,
+                          Func<float> getCurrentPlayerHealth, Action<float> setCurrentPlayerHealth, Func<float> getPlayerMaxHealth,
+                          Func<float> getDamageMultiplier, Func<float> getCritChanceBonus, Func<float> getAccuracyBonus,
+                          Func<float> getHealingMultiplier, Func<float> getDoubleEdgeReduction, Func<bool> getHasLifesteal,
+                          Func<float> getLifestealPercentage, Func<bool> getHasShield, Action<float> setShieldAmount,
+                          float moveSpeed, float attackDistance, Vector3 originalPlayerPosition, GameObject attackEffectPrefab)
     {
         this.monoBehaviourInstance = monoBehaviourInstance;
         this.player = player;
         this.enemies = enemies;
         this.currentEnemyHealths = currentEnemyHealths;
-        this.enemyNames = enemyNames;
+        this.getEnemyNames = getEnemyNames;
 
         this.getCurrentPlayerHealth = getCurrentPlayerHealth;
         this.setCurrentPlayerHealth = setCurrentPlayerHealth;
@@ -54,19 +57,33 @@ public class AttackHandler
         this.getHasLifesteal = getHasLifesteal;
         this.getLifestealPercentage = getLifestealPercentage;
         this.getHasShield = getHasShield;
-        this.setShieldAmount = setShieldAmount; // Assign the setter delegate
+        this.setShieldAmount = setShieldAmount;
 
         this.moveSpeed = moveSpeed;
         this.attackDistance = attackDistance;
         this.originalPlayerPosition = originalPlayerPosition;
         this.attackEffectPrefab = attackEffectPrefab;
+
+        // Initialize _playerOriginalAnimatorController here
+        // At this point, StoryBattleManager.InitializeStoryBattle() should have already set the player's initial animator.
+        Animator playerAnimator = player.GetComponent<Animator>();
+        if (playerAnimator != null)
+        {
+            _playerOriginalAnimatorController = playerAnimator.runtimeAnimatorController;
+        }
+        else
+        {
+            Debug.LogError("[AttackHandler] Player GameObject is missing an Animator component!");
+        }
     }
 
     public IEnumerator PerformAttack(AttackData attack, int targetEnemyIndex,
-                                     Action<string> updateBattleStatusCallback,
-                                     Action<GameObject, AttackData> playImpactEffectCallback,
-                                     Func<IEnumerator> flashPlayerSpriteCallback)
+                                      Action<string> updateBattleStatusCallback,
+                                      Action<GameObject, AttackData> playImpactEffectCallback,
+                                      Func<IEnumerator> flashPlayerSpriteCallback)
     {
+        // Cooldown check and application removed
+
         float modifiedAccuracy = Mathf.Min(1f, attack.accuracy + getAccuracyBonus());
         if (UnityEngine.Random.Range(0f, 1f) > modifiedAccuracy)
         {
@@ -75,25 +92,148 @@ public class AttackHandler
             yield break;
         }
 
+        // Get animator here to ensure it's still valid
+        Animator animator = player.GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("[AttackHandler] Animator component missing on player.");
+            yield break;
+        }
+
+        // Use the stored original controller as the target for reversion
+        RuntimeAnimatorController targetOriginalController = _playerOriginalAnimatorController;
+
+        AnimatorOverrideController attackCharacterOverrideController = null;
+        string overridePath = "Animations/" + attack.characterName + "Override";
+
+        // Try to load the override controller for the attack's character
+        attackCharacterOverrideController = Resources.Load<AnimatorOverrideController>(overridePath);
+
+        bool controllerWasTemporarilyChanged = false;
+
+        // Check if the loaded override controller for the attack is actually different from the current one on the Animator
+        if (attackCharacterOverrideController != null && animator.runtimeAnimatorController != attackCharacterOverrideController)
+        {
+            animator.runtimeAnimatorController = attackCharacterOverrideController;
+            // Force the animator to reset and apply the new controller immediately.
+            animator.Rebind();
+            animator.Update(0f); // Ensure the state machine is initialized for the new controller
+            controllerWasTemporarilyChanged = true;
+            Debug.Log($"[AttackHandler] Temporarily switching animator to {attack.characterName} for {attack.attackName} (Original: {targetOriginalController?.name ?? "N/A"}).");
+        }
+        else if (attackCharacterOverrideController == null)
+        {
+            Debug.LogWarning($"[AttackHandler] Animator Override Controller not found for {attack.characterName} at {overridePath}. Using currently set animator. Animation may not play correctly.");
+        }
+        // If it's already the correct controller, do nothing.
+
+        // Add a small delay BEFORE setting the trigger to ensure the controller switch has fully registered.
+        yield return new WaitForSeconds(0.05f); // A very small buffer
+
+        // Play the attack animation
+        animator.SetTrigger(attack.animationTrigger);
+
+        // --- RELIABLE ANIMATION WAITING ---
+        yield return null; // Wait one frame for the trigger to activate a state
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float animationLength = 0f;
+
+        bool stateFound = false;
+        float timer = 0f;
+        float timeout = 2.0f; // Prevent infinite loop
+
+        while (!stateFound && timer < timeout)
+        {
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsName(attack.animationTrigger))
+            {
+                animationLength = stateInfo.length;
+                stateFound = true;
+            }
+            else
+            {
+                // Iterate through all clips in the CURRENTLY ACTIVE controller to find a match by name.
+                foreach (var clip in animator.runtimeAnimatorController.animationClips)
+                {
+                    if (clip.name.Equals(attack.animationTrigger))
+                    {
+                        animationLength = clip.length;
+                        stateFound = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!stateFound)
+            {
+                yield return null; // Wait a frame and re-check
+                timer += Time.deltaTime;
+            }
+        }
+
+        if (!stateFound || animationLength <= 0f)
+        {
+            Debug.LogWarning($"[AttackHandler] Failed to get accurate animation length for '{attack.animationTrigger}' on '{attack.characterName}'. Fallback to 1.0s. (Controller: {animator.runtimeAnimatorController?.name})");
+            animationLength = 1.0f; // Fallback to a safe duration
+        }
+
         if (attack.attackType == AttackType.Heal)
         {
             HandleHealAttack(attack, updateBattleStatusCallback);
-            yield return ShowAttackAnimation(player.GetComponent<Animator>(), attack, -1, playImpactEffectCallback);
+            // Effect comes directly after animation trigger delay
+            yield return new WaitForSeconds(Mathf.Min(attack.effectDelay, animationLength));
+            if (player != null) playImpactEffectCallback(player, attack); // Effect on player for heal
         }
         else if (attack.attackType == AttackType.AreaEffect)
         {
+            // Effect comes directly after animation trigger delay
+            yield return new WaitForSeconds(Mathf.Min(attack.effectDelay, animationLength));
             yield return HandleAreaAttack(attack, updateBattleStatusCallback, playImpactEffectCallback);
         }
         else if (attack.attackType == AttackType.MoveAndHit)
         {
+            // MoveToEnemyAndAttack handles its own animation and effects
             yield return MoveToEnemyAndAttack(attack, targetEnemyIndex, updateBattleStatusCallback, playImpactEffectCallback);
         }
-        else // Single target damage attacks
+        else // Single target damage attacks (Slash, Projectile, Magic, DirectHit)
         {
+            // Calculate damage first
             HandleDamageAttack(attack, targetEnemyIndex, updateBattleStatusCallback);
-            yield return ShowAttackAnimation(player.GetComponent<Animator>(), attack, targetEnemyIndex, playImpactEffectCallback);
+
+            // Effect comes directly after animation trigger delay
+            yield return new WaitForSeconds(Mathf.Min(attack.effectDelay, animationLength));
+            if (targetEnemyIndex >= 0 && targetEnemyIndex < enemies.Count && enemies[targetEnemyIndex] != null)
+            {
+                playImpactEffectCallback(enemies[targetEnemyIndex], attack); // Effect on target enemy
+            }
+        }
+
+        // Wait for the remainder of the animation to truly finish for the currently active controller
+        if (animationLength > attack.effectDelay)
+        {
+            yield return new WaitForSeconds(animationLength - attack.effectDelay);
+        }
+        // If it was a MoveAndHit, the return movement is handled there.
+        // For other attack types, add a small general pause after everything.
+        if (attack.attackType != AttackType.MoveAndHit)
+        {
+            yield return new WaitForSeconds(0.2f); // Small pause for general flow
+        }
+
+
+        // --- REVERT ANIMATOR ---
+        if (controllerWasTemporarilyChanged)
+        {
+            animator.runtimeAnimatorController = targetOriginalController; // Revert to the battle's starting character's controller
+            animator.Rebind();
+            animator.Update(0f); // Ensure it's re-initialized for the original character
+            Debug.Log($"[AttackHandler] Reverted animator to original character: {targetOriginalController?.name ?? "N/A"}.");
         }
     }
+
+    // Removed: public void DecrementAttackCooldowns(List<AttackData> playerAttacks)
 
     private IEnumerator HandleAreaAttack(AttackData attack, Action<string> updateBattleStatusCallback, Action<GameObject, AttackData> playImpactEffectCallback)
     {
@@ -107,9 +247,6 @@ public class AttackHandler
         }
 
         updateBattleStatusCallback("You used " + attack.attackName + " on all enemies!");
-
-        // Wait for player animation before impact effects
-        yield return ShowAttackAnimation(player.GetComponent<Animator>(), attack, -1, playImpactEffectCallback); // Pass -1 for no specific target visual effect
 
         float totalDamageDealt = 0f;
         foreach (int enemyIndex in aliveEnemies)
@@ -129,6 +266,7 @@ public class AttackHandler
 
             if (enemyIndex < enemies.Count && enemies[enemyIndex] != null)
             {
+                // Play impact effect directly here for each enemy after damage is calculated
                 playImpactEffectCallback(enemies[enemyIndex], attack);
             }
         }
@@ -163,7 +301,7 @@ public class AttackHandler
             }
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); // General pause after all area effects are shown
     }
 
     private IEnumerator MoveToEnemyAndAttack(AttackData attack, int targetEnemyIndex, Action<string> updateBattleStatusCallback, Action<GameObject, AttackData> playImpactEffectCallback)
@@ -179,9 +317,36 @@ public class AttackHandler
 
         yield return MovePlayerTo(targetPos);
 
-        HandleDamageAttack(attack, targetEnemyIndex, updateBattleStatusCallback);
+        // Perform damage and play player attack animation here
+        HandleDamageAttack(attack, targetEnemyIndex, updateBattleStatusCallback); // This will now also trigger impact effect via its own playImpactEffectCallback
 
-        yield return ShowAttackAnimation(player.GetComponent<Animator>(), attack, targetEnemyIndex, playImpactEffectCallback);
+        Animator animator = player.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger(attack.animationTrigger);
+        }
+
+        // Wait for the animation to finish before moving back
+        float animationLength = 0f;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName(attack.animationTrigger))
+        {
+            animationLength = stateInfo.length;
+        }
+        else
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name.Equals(attack.animationTrigger))
+                {
+                    animationLength = clip.length;
+                    break;
+                }
+            }
+        }
+        if (animationLength <= 0f) animationLength = 1.0f; // Fallback
+
+        yield return new WaitForSeconds(animationLength); // Wait for entire animation, as effect is already handled in HandleDamageAttack
 
         yield return MovePlayerTo(originalPlayerPosition);
     }
@@ -240,6 +405,13 @@ public class AttackHandler
 
         currentEnemyHealths[targetEnemyIndex] = Mathf.Max(0, currentEnemyHealths[targetEnemyIndex] - finalDamage);
 
+        // This is where the impact effect happens for single-target damage attacks
+        // The playImpactEffectCallback is passed into PerformAttack, so it's available here.
+        // However, we are calling it in PerformAttack after the effectDelay.
+        // If you want it to happen immediately on damage calculation, move it here.
+        // For consistency with other types, we'll keep it in PerformAttack for now.
+        // If it's a Projectile, Magic, or DirectHit, it will be handled in PerformAttack's "else" block.
+
         if (getHasLifesteal() && getLifestealPercentage() > 0)
         {
             float healAmount = finalDamage * (getLifestealPercentage() / 100f);
@@ -251,7 +423,7 @@ public class AttackHandler
         }
 
         string critText = isCrit ? " It's a critical hit!" : "";
-        updateBattleStatusCallback("You used " + attack.attackName + " on " + enemyNames[targetEnemyIndex] + "!" + critText);
+        updateBattleStatusCallback("You used " + attack.attackName + " on " + getEnemyNames()[targetEnemyIndex] + "!" + critText); // Use the delegate here
 
         if (attack.doubleEdgeDamage > 0)
         {
@@ -307,36 +479,6 @@ public class AttackHandler
         }
 
         if (GameManager.Instance != null)
-            GameManager.Instance.PlaySFX("Audio/SFX/General/Miss");
-        // Removed the generic "HitSound" on miss, as it might be confusing.
-    }
-
-    private IEnumerator ShowAttackAnimation(Animator animator, AttackData attack, int targetEnemyIndex, Action<GameObject, AttackData> playImpactEffectCallback)
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger(attack.animationTrigger);
-        }
-
-        yield return new WaitForSeconds(attack.effectDelay);
-
-        GameObject targetObject = null;
-        if (attack.attackType == AttackType.Heal)
-        {
-            targetObject = player;
-        }
-        else if (targetEnemyIndex >= 0 && targetEnemyIndex < enemies.Count)
-        {
-            targetObject = enemies[targetEnemyIndex];
-        }
-
-        if (targetObject != null)
-        {
-            playImpactEffectCallback(targetObject, attack); // Call the UIManager's impact effect directly
-        }
-
-        // Removed the direct Instantiate/Destroy of attack effect prefab here, 
-        // as UIManager.PlayImpactEffect handles it based on the attack data.
-        yield return new WaitForSeconds(0.5f); // General pause for animation
+            GameManager.Instance.PlaySFX("General/MissVoice");
     }
 }

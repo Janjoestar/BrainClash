@@ -1,10 +1,10 @@
-﻿// StoryBattleManager.cs
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // Required for EventTrigger
+using System; // Required for Action and Func
 
 public class StoryBattleManager : MonoBehaviour
 {
@@ -12,7 +12,6 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] public GameObject Player;
     [SerializeField] public List<GameObject> Enemies = new List<GameObject>();
     [SerializeField] private Transform playerPosition;
-    [SerializeField] private string[] enemyNames = new string[4];
 
     [Header("UI Panels")]
     [SerializeField] private GameObject battlePanel;
@@ -27,7 +26,6 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] private Text resultText;
     [SerializeField] private Button returnToMenuButton;
     [SerializeField] private Button continueButton;
-    [SerializeField] private List<Button> enemySelectionButtons = new List<Button>();
     [SerializeField] private Text waveReachedText;
 
     [Header("Prefabs")]
@@ -45,9 +43,8 @@ public class StoryBattleManager : MonoBehaviour
     [Header("Character Database")]
     public CharacterDatabase characterDB;
 
-    private List<AttackData> playerAttacks = new List<AttackData>(); // Existing private field
+    private List<AttackData> playerAttacks = new List<AttackData>();
 
-    // NEW: Public getter for playerAttacks to be used by UI (e.g., Run Info Panel)
     public List<AttackData> GetCurrentPlayerAttacks()
     {
         return playerAttacks;
@@ -67,8 +64,8 @@ public class StoryBattleManager : MonoBehaviour
     private float accuracyBonus = 0f;
     private float healingMultiplier = 1f;
     private float doubleEdgeReduction = 0f;
-    public float LifestealPercentage { get; private set; } = 0f; // Make LifestealPercentage public with setter
-    public float ShieldAmount { get; private set; } = 0f; // Make ShieldAmount public with setter
+    public float LifestealPercentage { get; private set; } = 0f;
+    public float ShieldAmount { get; private set; } = 0f;
     private float regenPerTurn = 0f;
     private bool hasLifesteal = false;
     private bool hasShield = false;
@@ -91,7 +88,7 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] private UpgradeManager upgradeManager;
 
     internal UIManager uiManager;
-    private AttackHandler attackHandler;
+    private AttackHandler attackHandler; // Declare here, but initialize later
     private EnemySpawner enemySpawner;
     private PlayerCharacter playerCharacter;
 
@@ -102,27 +99,21 @@ public class StoryBattleManager : MonoBehaviour
             gameObject.AddComponent<AudioSource>().playOnAwake = false;
         }
 
+        // Initialize parts that don't depend on player character setup yet
         uiManager = new UIManager(this, battlePanel, attackPanel, enemySelectionPanel, endScreenPanel, enemyUIPanel,
-                                 playerHealthText, battleStatusText, resultText, returnToMenuButton, continueButton,
-                                 enemySelectionButtons, attackButtonPrefab, attackHoverPrefab, enemyUIElementPrefab,
-                                 hoverDelay, enemyUIOffset, waveReachedText);
+                                   playerHealthText, battleStatusText, resultText, returnToMenuButton, continueButton,
+                                   enemySelectionPanel.transform,
+                                   attackButtonPrefab, attackHoverPrefab, enemyUIElementPrefab,
+                                   hoverDelay, enemyUIOffset, waveReachedText, () => enemySpawner.GetEnemyNames());
 
-        // Pass functions to AttackHandler to get dynamic values
-        attackHandler = new AttackHandler(this, Player, Enemies, currentEnemyHealths, enemyNames,
-                                         () => currentPlayerHealth, (newHealth) => currentPlayerHealth = newHealth,
-                                         () => playerMaxHealth,
-                                         () => damageMultiplier, () => critChanceBonus, () => accuracyBonus,
-                                         () => healingMultiplier, () => doubleEdgeReduction,
-                                         () => hasLifesteal, () => LifestealPercentage, // Use the public property
-                                         () => hasShield, (amount) => ShieldAmount = amount, // Pass setter for ShieldAmount
-                                         moveSpeed, attackDistance, originalPlayerPosition, attackEffectPrefab);
-
-        enemySpawner = new EnemySpawner(Enemies, enemyNames, enemyPrefabs, enemySpawnPoints);
-        playerCharacter = new PlayerCharacter(Player, playerPosition);
+        enemySpawner = new EnemySpawner(Enemies, enemyPrefabs, enemySpawnPoints);
+        playerCharacter = new PlayerCharacter(Player, playerPosition); // PlayerCharacter object created.
     }
 
     private void Start()
     {
+        // Now that UIManager, EnemySpawner, and PlayerCharacter objects exist,
+        // we can perform the full battle initialization which sets up the character and then AttackHandler.
         InitializeStoryBattle();
     }
 
@@ -133,8 +124,11 @@ public class StoryBattleManager : MonoBehaviour
         if (characterDB != null)
         {
             selectedCharacter = characterDB.GetCharacter(selectedCharacterIndex);
+
+            // CRUCIAL: Set the player character's initial animator controller FIRST.
+            // This happens once at the start of the battle mode.
             playerCharacter.SetCharacter(selectedCharacter);
-            // Get only the starting attack for the selected character
+
             playerAttacks.Clear();
             playerAttacks.Add(StoryAttackDataManager.Instance.GetStartingAttackForCharacter(selectedCharacter.characterName));
         }
@@ -144,13 +138,25 @@ public class StoryBattleManager : MonoBehaviour
             return;
         }
 
+        // Now that playerCharacter's Animator is set, initialize AttackHandler
+        // The AttackHandler constructor will now correctly grab the _playerOriginalAnimatorController.
+        attackHandler = new AttackHandler(this, Player, Enemies, currentEnemyHealths,
+                                          () => enemySpawner.GetEnemyNames(),
+                                          () => currentPlayerHealth, (newHealth) => currentPlayerHealth = newHealth,
+                                          () => playerMaxHealth,
+                                          () => damageMultiplier, () => critChanceBonus, () => accuracyBonus,
+                                          () => healingMultiplier, () => doubleEdgeReduction,
+                                          () => hasLifesteal, () => LifestealPercentage,
+                                          () => hasShield, (amount) => ShieldAmount = amount,
+                                          moveSpeed, attackDistance, originalPlayerPosition, attackEffectPrefab);
+
         currentPlayerHealth = playerMaxHealth;
         currentWave = 1;
-        ResetUpgradeModifiers(); // Reset modifiers at the start of a new game
+        ResetUpgradeModifiers();
 
         enemySpawner.SpawnWaveEnemies(currentWave, waveProgressionMultiplier, enemyMaxHealth, currentEnemyHealths);
         uiManager.CreateEnemyUI(Enemies, currentEnemyHealths);
-        playerCharacter.SetupPlayer();
+        playerCharacter.SetupPlayer(); // This handles position, etc.
         originalPlayerPosition = playerCharacter.OriginalPlayerPosition;
 
         uiManager.SetEnemySelectionPanelActive(false);
@@ -219,7 +225,7 @@ public class StoryBattleManager : MonoBehaviour
         if (upgrade.grantsShield)
         {
             hasShield = true;
-            ShieldAmount += upgrade.shieldAmount * stacks; // This updates the local ShieldAmount
+            ShieldAmount += upgrade.shieldAmount * stacks;
         }
 
         if (upgrade.grantsRegeneration)
@@ -228,14 +234,13 @@ public class StoryBattleManager : MonoBehaviour
             regenPerTurn += upgrade.regenPerTurn * stacks;
         }
 
-        // Handle new attacks explicitly if they are not just stat buffs
         if (upgrade.grantsNewAttack && !string.IsNullOrEmpty(upgrade.newAttackName))
         {
             AttackData newAttack = StoryAttackDataManager.Instance.GetAttackByName(upgrade.newAttackName);
             if (newAttack != null && !playerAttacks.Contains(newAttack))
             {
                 playerAttacks.Add(newAttack);
-                ShowAttackOptions(); // Refresh attack buttons to show the new attack
+                ShowAttackOptions(); // Re-display attack buttons to show the new attack
             }
         }
         UpdateHealthDisplays();
@@ -253,12 +258,12 @@ public class StoryBattleManager : MonoBehaviour
 
         if (attack.attackType == AttackType.Heal)
         {
-            StartCoroutine(PerformAttackCoroutine(attack, -1)); // -1 for self-target/no target
+            StartCoroutine(PerformAttackCoroutine(attack, -1));
             return;
         }
         else if (attack.attackType == AttackType.AreaEffect)
         {
-            StartCoroutine(PerformAttackCoroutine(attack, -1)); // -1 for no specific single target
+            StartCoroutine(PerformAttackCoroutine(attack, -1));
             return;
         }
 
@@ -283,7 +288,7 @@ public class StoryBattleManager : MonoBehaviour
         List<int> aliveIndices = new List<int>();
         for (int i = 0; i < currentEnemyHealths.Count; i++)
         {
-            if (currentEnemyHealths[i] > 0 && Enemies[i] != null && Enemies[i].activeInHierarchy) // Check if enemy GameObject is active
+            if (currentEnemyHealths[i] > 0 && Enemies[i] != null && Enemies[i].activeInHierarchy)
             {
                 aliveIndices.Add(i);
             }
@@ -314,6 +319,7 @@ public class StoryBattleManager : MonoBehaviour
     {
         SetAttackButtonsInteractable(false);
 
+        // Cooldown check and application removed from AttackHandler.PerformAttack.
         yield return attackHandler.PerformAttack(attack, targetEnemyIndex,
             uiManager.UpdateBattleStatus,
             uiManager.PlayImpactEffect,
@@ -357,6 +363,8 @@ public class StoryBattleManager : MonoBehaviour
         else
         {
             ApplyTurnStartEffects();
+            // Removed: attackHandler.DecrementAttackCooldowns(playerAttacks); // Cooldowns are removed
+            ShowAttackOptions(); // Re-display attacks (no cooldown update needed on buttons now)
             SetAttackButtonsInteractable(true);
             uiManager.UpdateBattleStatus("Choose your next attack!");
         }
@@ -457,9 +465,6 @@ public class StoryBattleManager : MonoBehaviour
 
         ResetEnemiesForNewWave();
 
-        // float healAmount = playerMaxHealth * 0.1f; // Commented out as per previous user request
-        // currentPlayerHealth = Mathf.Min(playerMaxHealth, currentPlayerHealth + healAmount);
-
         UpdateHealthDisplays();
         uiManager.UpdateBattleStatus($"Wave {currentWave} - Choose your attack!");
         SetAttackButtonsInteractable(true);
@@ -480,6 +485,7 @@ public class StoryBattleManager : MonoBehaviour
     private void ShowAttackOptions()
     {
         uiManager.ClearAttackButtons();
+        // Pass playerAttacks directly. UIManager no longer needs to handle disabling buttons based on cooldown.
         uiManager.CreateAttackButtons(playerAttacks, OnAttackSelected, OnAttackButtonHoverEnter, OnAttackButtonHoverExit);
     }
 
