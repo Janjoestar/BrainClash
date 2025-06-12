@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// UpgradeManager.cs
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,11 +23,24 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private GameObject runInfoUpgradeTextTemplate; // A simple Text GameObject prefab for each upgrade entry
 
     [Header("Upgrade Database")]
-    [SerializeField] private List<UpgradeData> allUpgrades = new List<UpgradeData>();
-    [SerializeField] private List<UpgradeData> commonUpgrades = new List<UpgradeData>();
-    [SerializeField] private List<UpgradeData> rareUpgrades = new List<UpgradeData>();
-    [SerializeField] private List<UpgradeData> epicUpgrades = new List<UpgradeData>();
-    [SerializeField] private List<UpgradeData> legendaryUpgrades = new List<UpgradeData>();
+    // These lists are for upgrades you manually assign in the inspector (e.g., stat boosts)
+    [SerializeField] private List<UpgradeData> staticCommonUpgrades = new List<UpgradeData>();
+    [SerializeField] private List<UpgradeData> staticRareUpgrades = new List<UpgradeData>();
+    [SerializeField] private List<UpgradeData> staticEpicUpades = new List<UpgradeData>(); // Corrected typo
+    [SerializeField] private List<UpgradeData> staticLegendaryUpgrades = new List<UpgradeData>();
+
+    // These lists will be populated dynamically by the code for attack-unlocking upgrades
+    private List<UpgradeData> dynamicCommonUpgrades = new List<UpgradeData>();
+    private List<UpgradeData> dynamicRareUpgrades = new List<UpgradeData>();
+    private List<UpgradeData> dynamicEpicUpgrades = new List<UpgradeData>();
+    private List<UpgradeData> dynamicLegendaryUpgrades = new List<UpgradeData>();
+
+    // New: Separate list for all dynamically generated attack upgrades, regardless of rarity
+    private List<UpgradeData> allDynamicAttackUpgrades = new List<UpgradeData>();
+
+    // This combined pool is what the game uses to select upgrades from
+    private List<UpgradeData> allAvailableUpgradesPool = new List<UpgradeData>();
+
 
     [Header("Rarity Chances (Wave Dependent)")]
     [SerializeField] private AnimationCurve commonChanceCurve;
@@ -60,14 +74,33 @@ public class UpgradeManager : MonoBehaviour
         if (shadowPanel != null)
             shadowPanel.SetActive(false);
 
-        // Initialize Run Info Panel as hidden
         if (runInfoPanel != null)
             runInfoPanel.SetActive(false);
 
         SetupSkipButton();
-        CategorizeUpgrades();
         SetupDefaultCurves();
+        InitializeDynamicUpgrades(); // Generate attack upgrades (and populate allDynamicAttackUpgrades)
+
+        // Populate the combined pool when the manager starts
+        PopulateAllAvailableUpgradesPool();
     }
+
+    private void PopulateAllAvailableUpgradesPool()
+    {
+        // This pool is used for the *general* pool of upgrades that are always considered.
+        // Attack upgrades are handled separately in GenerateRandomUpgrades.
+        allAvailableUpgradesPool.Clear(); // Clear before re-populating to prevent duplicates on scene reload
+
+        // Add static (manually assigned) upgrades
+        allAvailableUpgradesPool.AddRange(staticCommonUpgrades);
+        allAvailableUpgradesPool.AddRange(staticRareUpgrades);
+        allAvailableUpgradesPool.AddRange(staticEpicUpades);
+        allAvailableUpgradesPool.AddRange(staticLegendaryUpgrades);
+
+        // NOTE: Dynamic attack upgrades are *not* added here directly anymore.
+        // They will be conditionally added in GenerateRandomUpgrades based on wave number.
+    }
+
 
     private void SetupSkipButton()
     {
@@ -75,33 +108,6 @@ public class UpgradeManager : MonoBehaviour
         {
             skipUpgradeButton.onClick.AddListener(SkipUpgrade);
             skipUpgradeButton.gameObject.SetActive(allowSkipUpgrade);
-        }
-    }
-
-    private void CategorizeUpgrades()
-    {
-        commonUpgrades.Clear();
-        rareUpgrades.Clear();
-        epicUpgrades.Clear();
-        legendaryUpgrades.Clear();
-
-        foreach (UpgradeData upgrade in allUpgrades)
-        {
-            switch (upgrade.rarity)
-            {
-                case UpgradeRarity.Common:
-                    commonUpgrades.Add(upgrade);
-                    break;
-                case UpgradeRarity.Rare:
-                    rareUpgrades.Add(upgrade);
-                    break;
-                case UpgradeRarity.Epic:
-                    epicUpgrades.Add(upgrade);
-                    break;
-                case UpgradeRarity.Legendary:
-                    legendaryUpgrades.Add(upgrade);
-                    break;
-            }
         }
     }
 
@@ -124,6 +130,100 @@ public class UpgradeManager : MonoBehaviour
             legendaryChanceCurve = AnimationCurve.Linear(1, 0.0f, 5, 0.05f);
         }
     }
+
+    private void InitializeDynamicUpgrades()
+    {
+        dynamicCommonUpgrades.Clear();
+        dynamicRareUpgrades.Clear();
+        dynamicEpicUpgrades.Clear();
+        dynamicLegendaryUpgrades.Clear();
+        allDynamicAttackUpgrades.Clear(); // Clear this master list too
+
+        List<string> characterNames = new List<string>
+        {
+            "Knight", "Archer", "Water", "Fire", "Wind", "Necromancer", "Crystal", "Ground"
+        };
+
+        foreach (string charName in characterNames)
+        {
+            List<AttackData> unlockableAttacks = StoryAttackDataManager.Instance.GetUnlockableAttacksForCharacter(charName);
+            foreach (AttackData attack in unlockableAttacks)
+            {
+                UpgradeData attackUpgrade = ScriptableObject.CreateInstance<UpgradeData>();
+
+                attackUpgrade.upgradeName = $"Unlock {attack.attackName}";
+                attackUpgrade.description = $"Grants the '{attack.attackName}' attack: {attack.description}";
+                attackUpgrade.upgradeIcon = null;
+                attackUpgrade.upgradeType = UpgradeType.SpecialAttack;
+                attackUpgrade.rarity = GetRarityForAttack(attack.attackName);
+                attackUpgrade.grantsNewAttack = true;
+                attackUpgrade.newAttackName = attack.attackName;
+                attackUpgrade.canStack = false;
+                attackUpgrade.maxStacks = 1;
+                attackUpgrade.isUnique = true;
+
+                attackUpgrade.SetRarityColorsInternal();
+
+                // Add to dynamic lists for potential future use or separation if needed,
+                // but primarily add to the 'allDynamicAttackUpgrades' for easier access.
+                switch (attackUpgrade.rarity)
+                {
+                    case UpgradeRarity.Common:
+                        dynamicCommonUpgrades.Add(attackUpgrade);
+                        break;
+                    case UpgradeRarity.Rare:
+                        dynamicRareUpgrades.Add(attackUpgrade);
+                        break;
+                    case UpgradeRarity.Epic:
+                        dynamicEpicUpgrades.Add(attackUpgrade);
+                        break;
+                    case UpgradeRarity.Legendary:
+                        dynamicLegendaryUpgrades.Add(attackUpgrade);
+                        break;
+                }
+                allDynamicAttackUpgrades.Add(attackUpgrade); // Add to the master list of all attack upgrades
+            }
+        }
+        Debug.Log($"Dynamically initialized {allDynamicAttackUpgrades.Count} attack upgrades.");
+    }
+
+    // Helper to assign a rarity to an attack-unlocking upgrade.
+    private UpgradeRarity GetRarityForAttack(string attackName)
+    {
+        switch (attackName)
+        {
+            case "Sacrificial Blade":
+            case "Final Offering":
+            case "Inferno Sacrifice":
+            case "Tempest Collapse":
+            case "Titanic Reckoning":
+            case "Prismatic Overload":
+            case "Water Ball":
+            case "Green Beam":
+                return UpgradeRarity.Legendary;
+            case "Dragon Slash":
+            case "Arrow Shower":
+            case "Water Dance":
+            case "Fire Combo":
+            case "Wind Barrage":
+            case "Red Lightning":
+            case "Crystal Eruption":
+            case "Rock Slide":
+                return UpgradeRarity.Epic;
+            case "Warrior Slash":
+            case "Impale Arrow":
+            case "Heal":
+            case "Spin Slash":
+            case "Tornado":
+            case "Blood Spike":
+            case "Crystal Hammer":
+            case "Punch Combo":
+                return UpgradeRarity.Rare;
+            default:
+                return UpgradeRarity.Common;
+        }
+    }
+
 
     public void ShowUpgradeSelection(int currentWave)
     {
@@ -157,60 +257,83 @@ public class UpgradeManager : MonoBehaviour
     private List<UpgradeData> GenerateRandomUpgrades(int currentWave)
     {
         List<UpgradeData> selectedUpgrades = new List<UpgradeData>();
-        List<UpgradeData> availableUpgrades = GetAvailableUpgrades();
+
+        // Start with the pool of regular (static) upgrades
+        List<UpgradeData> availableUpgradesPool = GetAvailableUpgradesFromPool(allAvailableUpgradesPool);
+
+        // Check if it's an "ability wave" (every 5 waves)
+        bool isAbilityWave = (currentWave % 5 == 0);
+
+        // If it's an ability wave, temporarily add available attack upgrades to the pool
+        if (isAbilityWave)
+        {
+            List<UpgradeData> availableAttackUpgrades = GetAvailableUpgradesFromPool(allDynamicAttackUpgrades);
+            availableUpgradesPool.AddRange(availableAttackUpgrades);
+        }
+
+        // Create a temporary working list to remove selected upgrades from *this current selection round*
+        List<UpgradeData> tempWorkingList = new List<UpgradeData>(availableUpgradesPool);
 
         for (int i = 0; i < upgradeChoicesCount; i++)
         {
-            if (availableUpgrades.Count == 0) break;
+            if (tempWorkingList.Count == 0) break; // No more unique upgrades to choose from
 
-            UpgradeRarity selectedRarity = GetRandomRarity(currentWave);
-            UpgradeData selectedUpgrade = GetRandomUpgradeOfRarity(selectedRarity, availableUpgrades);
+            UpgradeRarity desiredRarity = GetRandomRarity(currentWave, tempWorkingList); // Pass tempWorkingList for rarity check
+            UpgradeData selectedUpgrade = GetRandomUpgradeOfRarity(desiredRarity, tempWorkingList);
 
             if (selectedUpgrade != null)
             {
                 selectedUpgrades.Add(selectedUpgrade);
-                availableUpgrades.Remove(selectedUpgrade);
-            }
-        }
-
-        while (selectedUpgrades.Count < upgradeChoicesCount && allUpgrades.Count > 0)
-        {
-            UpgradeData fallbackUpgrade = allUpgrades[Random.Range(0, allUpgrades.Count)];
-            if (!selectedUpgrades.Contains(fallbackUpgrade))
-            {
-                selectedUpgrades.Add(fallbackUpgrade);
+                tempWorkingList.Remove(selectedUpgrade); // Ensure it's not picked again in this selection
             }
             else
             {
-                var potentialUpgrade = allUpgrades.FirstOrDefault(u => !selectedUpgrades.Contains(u));
-                if (potentialUpgrade != null) selectedUpgrades.Add(potentialUpgrade);
-                else break;
+                // If a specific rarity could not be found, try to pick any available upgrade from the remaining
+                if (tempWorkingList.Count > 0)
+                {
+                    UpgradeData fallback = tempWorkingList[Random.Range(0, tempWorkingList.Count)];
+                    selectedUpgrades.Add(fallback);
+                    tempWorkingList.Remove(fallback);
+                }
+                else
+                {
+                    break; // No more available upgrades
+                }
             }
         }
+
+        // Final fallback: Ensure 'upgradeChoicesCount' items if still possible and unique options exist
+        // Note: availableUpgradesPool (before temporary attack upgrades) is the "master list" of what could be
+        // offered, but tempWorkingList is what's left for this specific selection.
+        while (selectedUpgrades.Count < upgradeChoicesCount && availableUpgradesPool.Except(selectedUpgrades).Any())
+        {
+            List<UpgradeData> potentialFillers = availableUpgradesPool.Except(selectedUpgrades).ToList();
+            if (potentialFillers.Count > 0)
+            {
+                selectedUpgrades.Add(potentialFillers[Random.Range(0, potentialFillers.Count)]);
+            }
+            else
+            {
+                break; // No more unique upgrades to add
+            }
+        }
+
 
         return selectedUpgrades;
     }
 
-    private List<UpgradeData> GetAvailableUpgrades()
+
+    // New helper method to get available upgrades from a specific pool
+    private List<UpgradeData> GetAvailableUpgradesFromPool(List<UpgradeData> pool)
     {
-        List<UpgradeData> available = new List<UpgradeData>();
-
-        foreach (UpgradeData upgrade in allUpgrades)
-        {
-            if (upgrade.isUnique && playerUpgrades.ContainsKey(upgrade))
-                continue;
-
-            if (playerUpgrades.ContainsKey(upgrade) &&
-                playerUpgrades[upgrade] >= upgrade.maxStacks)
-                continue;
-
-            available.Add(upgrade);
-        }
-
-        return available;
+        return pool.Where(upgrade =>
+            !(upgrade.isUnique && playerUpgrades.ContainsKey(upgrade)) && // Exclude if unique AND player already has it
+            !(playerUpgrades.ContainsKey(upgrade) && playerUpgrades[upgrade] >= upgrade.maxStacks) // Exclude if player has it and it's maxed out
+        ).ToList();
     }
 
-    private UpgradeRarity GetRandomRarity(int currentWave)
+
+    private UpgradeRarity GetRandomRarity(int currentWave, List<UpgradeData> currentPoolForSelection)
     {
         float commonChance = commonChanceCurve.Evaluate(currentWave);
         float rareChance = rareChanceCurve.Evaluate(currentWave);
@@ -220,52 +343,68 @@ public class UpgradeManager : MonoBehaviour
         float totalChance = commonChance + rareChance + epicChance + legendaryChance;
         float randomValue = Random.Range(0f, totalChance);
 
-        if (randomValue < legendaryChance && legendaryUpgrades.Count > 0)
+        // Try to return a rarity that actually has available upgrades in the current pool
+        if (randomValue < legendaryChance && currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Legendary))
             return UpgradeRarity.Legendary;
-        else if (randomValue < legendaryChance + epicChance && epicUpgrades.Count > 0)
+        if (randomValue < legendaryChance + epicChance && currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Epic))
             return UpgradeRarity.Epic;
-        else if (randomValue < legendaryChance + epicChance + rareChance && rareUpgrades.Count > 0)
+        if (randomValue < legendaryChance + epicChance + rareChance && currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Rare))
             return UpgradeRarity.Rare;
-        else
+        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Common)) // Prioritize common if nothing else hits or available
             return UpgradeRarity.Common;
+
+        // Fallback: if no upgrades of the rolled rarity are available in the current pool,
+        // or if curves resulted in a totalChance = 0 and randomValue is 0,
+        // try to find any available rarity from the current pool, preferring higher
+        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Epic)) return UpgradeRarity.Epic;
+        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Rare)) return UpgradeRarity.Rare;
+        if (currentPoolForSelection.Any(u => u.rarity == UpgradeRarity.Common)) return UpgradeRarity.Common;
+
+        // Last resort: If no upgrades are available AT ALL in the current pool,
+        // this shouldn't happen if GenerateRandomUpgrades checks are robust.
+        // Return Common, GenerateRandomUpgrades will handle gracefully if no upgrades are found.
+        return UpgradeRarity.Common;
     }
 
-    private UpgradeData GetRandomUpgradeOfRarity(UpgradeRarity rarity, List<UpgradeData> availableUpgrades)
+    private UpgradeData GetRandomUpgradeOfRarity(UpgradeRarity rarity, List<UpgradeData> poolToDrawFrom)
     {
-        List<UpgradeData> rarityUpgrades = availableUpgrades.Where(u => u.rarity == rarity).ToList();
+        // Filter from the provided pool (which is already pre-filtered for uniqueness/max stacks)
+        List<UpgradeData> raritySpecificUpgrades = poolToDrawFrom.Where(u => u.rarity == rarity).ToList();
 
-        if (rarityUpgrades.Count == 0)
+        if (raritySpecificUpgrades.Count > 0)
         {
-            if (rarity == UpgradeRarity.Legendary)
+            return raritySpecificUpgrades[Random.Range(0, raritySpecificUpgrades.Count)];
+        }
+        else
+        {
+            // Fallback logic: if no upgrades of the desired rarity are in the current pool,
+            // try lower rarities from the *same pool*.
+            if (rarity == UpgradeRarity.Legendary && poolToDrawFrom.Any(u => u.rarity == UpgradeRarity.Epic))
             {
-                rarityUpgrades = availableUpgrades.Where(u => u.rarity == UpgradeRarity.Epic).ToList();
+                return GetRandomUpgradeOfRarity(UpgradeRarity.Epic, poolToDrawFrom);
             }
-            if (rarityUpgrades.Count == 0 && rarity >= UpgradeRarity.Epic)
+            if (rarity >= UpgradeRarity.Epic && poolToDrawFrom.Any(u => u.rarity == UpgradeRarity.Rare))
             {
-                rarityUpgrades = availableUpgrades.Where(u => u.rarity == UpgradeRarity.Rare).ToList();
+                return GetRandomUpgradeOfRarity(UpgradeRarity.Rare, poolToDrawFrom);
             }
-            if (rarityUpgrades.Count == 0 && rarity >= UpgradeRarity.Rare)
+            if (rarity >= UpgradeRarity.Rare && poolToDrawFrom.Any(u => u.rarity == UpgradeRarity.Common))
             {
-                rarityUpgrades = availableUpgrades.Where(u => u.rarity == UpgradeRarity.Common).ToList();
+                return GetRandomUpgradeOfRarity(UpgradeRarity.Common, poolToDrawFrom);
+            }
+
+            // As a last resort, pick any available upgrade from the remaining pool
+            if (poolToDrawFrom.Count > 0)
+            {
+                return poolToDrawFrom[Random.Range(0, poolToDrawFrom.Count)];
             }
         }
 
-        if (rarityUpgrades.Count == 0)
-        {
-            rarityUpgrades = availableUpgrades;
-        }
-
-        if (rarityUpgrades.Count == 0)
-        {
-            return null;
-        }
-
-        return rarityUpgrades[Random.Range(0, rarityUpgrades.Count)];
+        return null; // No upgrades available at all in the provided pool
     }
+
 
     private IEnumerator CreateUpgradeButtons(List<UpgradeData> upgrades)
     {
-        // Clear any existing buttons first
         foreach (GameObject button in currentUpgradeButtons)
         {
             if (button != null)
@@ -278,17 +417,14 @@ public class UpgradeManager : MonoBehaviour
             UpgradeData upgrade = upgrades[i];
 
             GameObject upgradeButton = Instantiate(upgradeTemplate, upgradeSelectionPanel.transform);
-            upgradeButton.SetActive(true); // Ensure the button is active
+            upgradeButton.SetActive(true);
 
-            // Manual positioning logic
             RectTransform rectTransform = upgradeButton.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector2(500 - (i * 500), 0);
 
-            // Setup the button BEFORE adding to list and animating
             SetupUpgradeButton(upgradeButton, upgrade);
             currentUpgradeButtons.Add(upgradeButton);
 
-            // Animate button appearance
             upgradeButton.transform.localScale = Vector3.zero;
             StartCoroutine(AnimateButtonAppear(upgradeButton));
 
@@ -317,10 +453,8 @@ public class UpgradeManager : MonoBehaviour
 
     private void SetupUpgradeButton(GameObject buttonObj, UpgradeData upgrade)
     {
-        // Make sure the button GameObject is active
         buttonObj.SetActive(true);
 
-        // Setup button click listener
         Button button = buttonObj.GetComponent<Button>();
         if (button != null)
         {
@@ -328,8 +462,6 @@ public class UpgradeManager : MonoBehaviour
             button.onClick.AddListener(() => {
                 SelectUpgrade(upgrade);
             });
-
-            // Ensure the button is interactable
             button.interactable = true;
         }
         else
@@ -337,8 +469,7 @@ public class UpgradeManager : MonoBehaviour
             Debug.LogError("No Button component found on upgrade button!");
         }
 
-        // Setup text components
-        Text[] texts = buttonObj.GetComponentsInChildren<Text>(true); // Include inactive children
+        Text[] texts = buttonObj.GetComponentsInChildren<Text>(true);
         foreach (Text text in texts)
         {
             if (text.name.ToLower().Contains("name") || text.name.ToLower().Contains("title"))
@@ -354,26 +485,24 @@ public class UpgradeManager : MonoBehaviour
             else if (text.name.ToLower().Contains("stack"))
             {
                 int currentStacks = playerUpgrades.ContainsKey(upgrade) ? playerUpgrades[upgrade] : 0;
-                if (upgrade.canStack && currentStacks > 0)
+                if (upgrade.canStack && upgrade.maxStacks > 0 && upgrade.maxStacks != 1 && currentStacks > 0)
                 {
                     text.text = $"({currentStacks}/{upgrade.maxStacks})";
                 }
                 else
                 {
-                    text.text = "";
+                    text.text = ""; // Don't show stack count for non-stackable or unique items
                 }
             }
         }
 
-        // Setup background image
         Image backgroundImage = buttonObj.GetComponent<Image>();
         if (backgroundImage != null && upgrade.backgroundColor != Color.clear)
         {
             backgroundImage.color = upgrade.backgroundColor;
         }
 
-        // Setup icon image
-        Image[] images = buttonObj.GetComponentsInChildren<Image>(true); // Include inactive children
+        Image[] images = buttonObj.GetComponentsInChildren<Image>(true);
         foreach (Image img in images)
         {
             if (img.name.ToLower().Contains("icon") && upgrade.upgradeIcon != null)
@@ -383,7 +512,6 @@ public class UpgradeManager : MonoBehaviour
             }
         }
 
-        // Ensure all Canvas Group components (if any) are set to interactable
         CanvasGroup[] canvasGroups = buttonObj.GetComponentsInChildren<CanvasGroup>();
         foreach (CanvasGroup cg in canvasGroups)
         {
@@ -396,7 +524,7 @@ public class UpgradeManager : MonoBehaviour
     {
         string description = upgrade.description;
 
-        if (upgrade.canStack && playerUpgrades.ContainsKey(upgrade))
+        if (upgrade.canStack && upgrade.maxStacks > 1 && playerUpgrades.ContainsKey(upgrade) && playerUpgrades[upgrade] > 0)
         {
             int currentStacks = playerUpgrades[upgrade];
             description += $"\n\nCurrent Stacks: {currentStacks}";
@@ -422,7 +550,15 @@ public class UpgradeManager : MonoBehaviour
     {
         if (playerUpgrades.ContainsKey(upgrade))
         {
-            playerUpgrades[upgrade]++;
+            if (upgrade.canStack && playerUpgrades[upgrade] < upgrade.maxStacks)
+            {
+                playerUpgrades[upgrade]++;
+            }
+            else if (!upgrade.canStack || upgrade.isUnique)
+            {
+                Debug.LogWarning($"Attempted to apply unique/non-stackable upgrade '{upgrade.upgradeName}' again.");
+                return;
+            }
         }
         else
         {
@@ -472,11 +608,12 @@ public class UpgradeManager : MonoBehaviour
     public void ResetUpgrades()
     {
         playerUpgrades.Clear();
+        // Re-populate the pool if starting a new game ensures it's fresh
+        PopulateAllAvailableUpgradesPool();
     }
 
     // --- Run Info Panel UI Methods ---
 
-    // This method can be called from a UI Button or other game logic to toggle the panel
     public void OnToggleRunInfoPanel()
     {
         if (runInfoPanel == null)
@@ -517,15 +654,13 @@ public class UpgradeManager : MonoBehaviour
 
     private void PopulateRunInfo()
     {
-        ClearRunInfoContainers(); // Clear previous entries
+        ClearRunInfoContainers();
 
-        // Set the main title text
         if (runInfoQuestionText != null)
         {
             runInfoQuestionText.text = "RUN INFO";
         }
 
-        // Populate Boons (Upgrades)
         if (boonsContainer != null && runInfoUpgradeTextTemplate != null)
         {
             float currentYOffset = 200f;
@@ -550,7 +685,7 @@ public class UpgradeManager : MonoBehaviour
                 if (rectTransform != null)
                 {
                     rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, currentYOffset);
-                    currentYOffset += yOffsetIncrement; // Update offset for the next text
+                    currentYOffset += yOffsetIncrement;
                 }
 
                 Text upgradeText = upgradeEntry.GetComponent<Text>();
@@ -575,10 +710,27 @@ public class UpgradeManager : MonoBehaviour
             Debug.LogWarning("Boons Container or Run Info Upgrade Text Template is not assigned for boons. Cannot populate.");
         }
 
-        // Abilities Section (Placeholder)
         if (abilitiesContainer != null && runInfoUpgradeTextTemplate != null)
         {
-            // Add any ability entries here if you have them.
+            // You might need a reference to BattleManager to get current player attacks
+            if (battleManager != null)
+            {
+                // Assuming StoryBattleManager has a public method like GetCurrentPlayerAttacks()
+                // You'd need to add this method to StoryBattleManager if it doesn't exist
+                // public List<AttackData> GetCurrentPlayerAttacks() { return playerAttacks; }
+                List<AttackData> currentAbilities = battleManager.GetCurrentPlayerAttacks();
+
+                foreach (AttackData attack in currentAbilities)
+                {
+                    GameObject abilityEntry = Instantiate(runInfoUpgradeTextTemplate, abilitiesContainer);
+                    Text abilityText = abilityEntry.GetComponent<Text>();
+                    if (abilityText != null)
+                    {
+                        abilityText.text = attack.attackName;
+                        abilityText.color = StoryAttackDataManager.Instance.GetColorForAttackType(attack.attackType);
+                    }
+                }
+            }
         }
         else
         {

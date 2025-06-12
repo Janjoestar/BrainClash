@@ -3405,26 +3405,17 @@ MonoBehaviour:
   boonsContainer: {fileID: 1681134120}
   abilitiesContainer: {fileID: 549133490}
   runInfoUpgradeTextTemplate: {fileID: 7909200342331870346, guid: b6595a86263a84f489e731b10b816d85, type: 3}
-  allUpgrades:
-  - {fileID: 11400000, guid: 9b3e7f24c30a6de41a86d112536d8693, type: 2}
-  - {fileID: 11400000, guid: eb49407f2c8d1ad4e8e7e47a5c2afc4a, type: 2}
-  - {fileID: 11400000, guid: 1986d44925b21e044a35b394c2617508, type: 2}
-  - {fileID: 11400000, guid: cc1af39c9e5f5624685dad2e34622009, type: 2}
-  - {fileID: 11400000, guid: ed42e9c1573fb174bb2bae6652639786, type: 2}
-  - {fileID: 11400000, guid: 52e812610d6c9da45b13312ac0f64d2f, type: 2}
-  - {fileID: 11400000, guid: 63bfee989b40f8941809afc17fb41bfb, type: 2}
+  staticCommonUpgrades:
   - {fileID: 11400000, guid: bc5444145c487554aaf12408ad89f732, type: 2}
-  commonUpgrades:
   - {fileID: 11400000, guid: 63bfee989b40f8941809afc17fb41bfb, type: 2}
-  - {fileID: 11400000, guid: bc5444145c487554aaf12408ad89f732, type: 2}
   - {fileID: 11400000, guid: cc1af39c9e5f5624685dad2e34622009, type: 2}
-  rareUpgrades:
-  - {fileID: 11400000, guid: 52e812610d6c9da45b13312ac0f64d2f, type: 2}
-  - {fileID: 11400000, guid: 1986d44925b21e044a35b394c2617508, type: 2}
+  staticRareUpgrades:
   - {fileID: 11400000, guid: 9b3e7f24c30a6de41a86d112536d8693, type: 2}
-  epicUpgrades:
+  - {fileID: 11400000, guid: 1986d44925b21e044a35b394c2617508, type: 2}
+  - {fileID: 11400000, guid: 52e812610d6c9da45b13312ac0f64d2f, type: 2}
+  staticEpicUpades:
   - {fileID: 11400000, guid: eb49407f2c8d1ad4e8e7e47a5c2afc4a, type: 2}
-  legendaryUpgrades:
+  staticLegendaryUpgrades:
   - {fileID: 11400000, guid: ed42e9c1573fb174bb2bae6652639786, type: 2}
   commonChanceCurve:
     serializedVersion: 2

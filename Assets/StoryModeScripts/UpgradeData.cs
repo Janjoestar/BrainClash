@@ -1,4 +1,5 @@
-﻿using System;
+﻿// UpgradeData.cs
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -24,7 +25,7 @@ public enum UpgradeRarity
     Legendary
 }
 
-[CreateAssetMenu(fileName = "New Upgrade", menuName = "Battle System/Upgrade Data")]
+[CreateAssetMenu(fileName = "New Upgrade", menuName = "Battle System/Upgrade Data")] // KEEP THIS!
 public class UpgradeData : ScriptableObject
 {
     [Header("Basic Info")]
@@ -46,6 +47,7 @@ public class UpgradeData : ScriptableObject
 
     [Header("Special Effects")]
     public bool grantsNewAttack = false;
+    [Tooltip("If 'Grants New Attack' is true, specify the name of the attack to grant from StoryAttackDataManager.")]
     public string newAttackName = "";
     public bool grantsLifesteal = false;
     public float lifestealPercentage = 0f;
@@ -63,9 +65,19 @@ public class UpgradeData : ScriptableObject
     public int maxStacks = 5;
     public bool isUnique = false;
 
+    // Public constructor for dynamic instantiation (optional, but good practice)
+    public UpgradeData() { }
+
     private void OnValidate()
     {
-        // Set default colors based on rarity
+        // This will only be called for ScriptableObject assets created in the editor.
+        // It sets the default colors based on rarity.
+        SetRarityColorsInternal();
+    }
+
+    // This method can be called manually for dynamically created instances
+    public void SetRarityColorsInternal()
+    {
         switch (rarity)
         {
             case UpgradeRarity.Common:

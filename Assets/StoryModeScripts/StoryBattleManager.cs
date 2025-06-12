@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// StoryBattleManager.cs
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,7 +45,14 @@ public class StoryBattleManager : MonoBehaviour
     [Header("Character Database")]
     public CharacterDatabase characterDB;
 
-    private List<AttackData> playerAttacks = new List<AttackData>();
+    private List<AttackData> playerAttacks = new List<AttackData>(); // Existing private field
+
+    // NEW: Public getter for playerAttacks to be used by UI (e.g., Run Info Panel)
+    public List<AttackData> GetCurrentPlayerAttacks()
+    {
+        return playerAttacks;
+    }
+
     private Character selectedCharacter;
     private AttackData selectedAttack;
     private int selectedEnemyIndex = -1;
@@ -126,7 +134,9 @@ public class StoryBattleManager : MonoBehaviour
         {
             selectedCharacter = characterDB.GetCharacter(selectedCharacterIndex);
             playerCharacter.SetCharacter(selectedCharacter);
-            playerAttacks = AttackDataManager.Instance.GetAttacksForCharacter(selectedCharacter.characterName);
+            // Get only the starting attack for the selected character
+            playerAttacks.Clear();
+            playerAttacks.Add(StoryAttackDataManager.Instance.GetStartingAttackForCharacter(selectedCharacter.characterName));
         }
         else
         {
@@ -221,7 +231,7 @@ public class StoryBattleManager : MonoBehaviour
         // Handle new attacks explicitly if they are not just stat buffs
         if (upgrade.grantsNewAttack && !string.IsNullOrEmpty(upgrade.newAttackName))
         {
-            AttackData newAttack = AttackDataManager.Instance.GetAttackByName(upgrade.newAttackName);
+            AttackData newAttack = StoryAttackDataManager.Instance.GetAttackByName(upgrade.newAttackName);
             if (newAttack != null && !playerAttacks.Contains(newAttack))
             {
                 playerAttacks.Add(newAttack);
@@ -346,7 +356,6 @@ public class StoryBattleManager : MonoBehaviour
         }
         else
         {
-            // Only apply turn start effects if the battle is continuing
             ApplyTurnStartEffects();
             SetAttackButtonsInteractable(true);
             uiManager.UpdateBattleStatus("Choose your next attack!");
@@ -355,15 +364,14 @@ public class StoryBattleManager : MonoBehaviour
 
     private IEnumerator HideEnemyAfterDeath(int enemyIndex)
     {
-        // Added this to ensure the enemy's death animation plays before deactivating
         Animator enemyAnimator = Enemies[enemyIndex].GetComponent<Animator>();
         if (enemyAnimator != null)
         {
             enemyAnimator.SetTrigger("Death");
-            yield return new WaitForSeconds(enemyAnimator.GetCurrentAnimatorStateInfo(0).length); // Wait for animation
+            yield return new WaitForSeconds(enemyAnimator.GetCurrentAnimatorStateInfo(0).length);
         }
 
-        yield return new WaitForSeconds(0.5f); // Small additional delay
+        yield return new WaitForSeconds(0.5f);
         if (Enemies[enemyIndex] != null)
         {
             Enemies[enemyIndex].SetActive(false);
@@ -401,7 +409,7 @@ public class StoryBattleManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(2f); // Wait for death animations
+        yield return new WaitForSeconds(2f);
 
         for (int i = 0; i < Enemies.Count; i++)
         {
@@ -434,7 +442,7 @@ public class StoryBattleManager : MonoBehaviour
     {
         if (upgradeManager != null)
         {
-            upgradeManager.OnUpgradeSelectionComplete -= StartNextWave; // Unsubscribe to prevent duplicate calls
+            upgradeManager.OnUpgradeSelectionComplete -= StartNextWave;
         }
 
         currentWave++;
@@ -449,8 +457,7 @@ public class StoryBattleManager : MonoBehaviour
 
         ResetEnemiesForNewWave();
 
-        // REMOVE or comment out this line to prevent healing between waves
-        // float healAmount = playerMaxHealth * 0.1f;
+        // float healAmount = playerMaxHealth * 0.1f; // Commented out as per previous user request
         // currentPlayerHealth = Mathf.Min(playerMaxHealth, currentPlayerHealth + healAmount);
 
         UpdateHealthDisplays();

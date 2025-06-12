@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// StoryCharacterSelectionManager.cs
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,7 +17,8 @@ public class StoryCharacterSelectionManager : MonoBehaviour
     public Button[] attackButtons;
     public Text[] attackNames;
 
-    private AttackDataManager attackDataManager;
+    // Change to use StoryAttackDataManager
+    private StoryAttackDataManager storyAttackDataManager;
     private List<AttackData> currentAttacks;
 
     void Start()
@@ -30,8 +32,9 @@ public class StoryCharacterSelectionManager : MonoBehaviour
             selectedOption = PlayerPrefs.GetInt("selectedStoryCharacter");
         }
 
+        // Initialize the new StoryAttackDataManager
+        storyAttackDataManager = StoryAttackDataManager.Instance;
         LoadCharacter();
-        attackDataManager = AttackDataManager.Instance;
         UpdateCharacter(selectedOption);
         SetupAttackButtonListeners();
     }
@@ -48,7 +51,13 @@ public class StoryCharacterSelectionManager : MonoBehaviour
 
     private void UpdateAttackInfo(string characterName)
     {
-        List<AttackData> attacks = attackDataManager.GetAttacksForCharacter(characterName);
+        // Get only the starting attack for display in character selection
+        List<AttackData> attacks = new List<AttackData>();
+        AttackData startingAttack = storyAttackDataManager.GetStartingAttackForCharacter(characterName);
+        if (startingAttack != null)
+        {
+            attacks.Add(startingAttack);
+        }
         currentAttacks = attacks;
         UpdateAttackUI(attacks, attackButtons, attackNames);
     }
@@ -63,15 +72,16 @@ public class StoryCharacterSelectionManager : MonoBehaviour
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            if (i < 4)
+            // Only show the first attack (the starting attack)
+            if (i == 0 && attacks.Count > 0)
             {
                 buttons[i].gameObject.SetActive(true);
 
                 if (i < names.Length && names[i] != null)
-                    names[i].text = attacks[i].attackName;
+                    names[i].text = attacks[0].attackName; // Use the first attack
 
                 ColorBlock colors = buttons[i].colors;
-                colors.normalColor = AttackDataManager.Instance.GetColorForAttackType(attacks[i].attackType);
+                colors.normalColor = storyAttackDataManager.GetColorForAttackType(attacks[0].attackType); // Use new manager
                 buttons[i].colors = colors;
             }
             else
@@ -85,20 +95,11 @@ public class StoryCharacterSelectionManager : MonoBehaviour
     {
         GameObject characterObject = artworkSprite.gameObject;
         Animator animator = characterObject.GetComponent<Animator>();
-        string attackTrigger;
+        string attackTrigger = "Attack1"; // Always trigger Attack1 animation for preview
+
         AttackData attackData = null;
-
-        if (attackIndex < 3)
-        {
-            attackTrigger = "Attack" + (attackIndex + 1);
-        }
-        else
-        {
-            attackTrigger = "Special";
-        }
-
-        if (currentAttacks != null && attackIndex < currentAttacks.Count)
-            attackData = currentAttacks[attackIndex];
+        if (currentAttacks != null && currentAttacks.Count > 0)
+            attackData = currentAttacks[0]; // Always use the first attack for preview data
 
         if (animator != null)
         {
