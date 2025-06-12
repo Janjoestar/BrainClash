@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; // Required for EventSystem to check focused UI element
 
 public class CharacterSelectionManager : MonoBehaviour
 {
@@ -88,14 +89,33 @@ public class CharacterSelectionManager : MonoBehaviour
         SetupAttackButtonListeners();
     }
 
+    // NEW: Add an Update method to listen for Enter key press
+    void Update()
+    {
+        if (gameMode == "PromptPlay" && promptInput.gameObject.activeSelf)
+        {
+            // Check if the promptInput is currently the selected (focused) UI element
+            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == promptInput.gameObject)
+            {
+                // Check if the Enter key (Return or KeypadEnter) is pressed
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    // Manually deactivate the input field to unfocus it (optional, but good UX)
+                    promptInput.DeactivateInputField();
+                    ConfirmSelection(); // Call ConfirmSelection only on Enter key press
+                }
+            }
+        }
+    }
+
     void SetupPromptField()
     {
         if (gameMode == "PromptPlay")
         {
             promptInput.gameObject.SetActive(true);
             promptInput.onValueChanged.AddListener(OnPromptChanged);
-            // Add this line to listen for the Enter key press
-            promptInput.onEndEdit.AddListener(OnPromptEndEdit);
+            // REMOVED: promptInput.onEndEdit.AddListener(OnPromptEndEdit);
+            // The OnPromptEndEdit method itself is now also removed as it's no longer needed.
         }
         else
         {
@@ -109,18 +129,14 @@ public class CharacterSelectionManager : MonoBehaviour
         CheckRequirements();
     }
 
-    // New method to handle the EndEdit event
-    void OnPromptEndEdit(string text)
-    {
-        // Check if the Enter key was pressed (this is often handled by onEndEdit implicitly)
-        // You might want to add a specific check for Input.GetKeyDown(KeyCode.Return) or KeyCode.Enter
-        // if you need more granular control, but for a simple "press enter to confirm",
-        // onEndEdit is usually sufficient.
-        if (!string.IsNullOrEmpty(text) && confirmButton.interactable)
-        {
-            ConfirmSelection();
-        }
-    }
+    // REMOVED: This method is no longer needed as Enter key handling is now in Update()
+    // void OnPromptEndEdit(string text)
+    // {
+    //     if (!string.IsNullOrEmpty(text) && confirmButton.interactable)
+    //     {
+    //         ConfirmSelection();
+    //     }
+    // }
 
     void CheckRequirements()
     {

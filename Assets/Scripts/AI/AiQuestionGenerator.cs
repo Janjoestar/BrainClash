@@ -9,105 +9,107 @@ using System.Linq;
 
 public static class AIQuestionGenerator
 {
-    private const string MODEL_NAME = "llama3";
+    private const string MODEL_NAME = "llama3.2:3b";
 
     public static IEnumerator GenerateQuestions(string topic, Action<List<Question>> onComplete, Action<string> onError, int numberOfQuestions, Action<float, string> onProgress = null)
+{
+    Debug.Log($"Starting question generation about {topic} using {MODEL_NAME} model");
+
+    onProgress?.Invoke(0.1f, "Preparing request...");
+
+    string promptText = CreatePrompt(topic, numberOfQuestions);
+
+    string jsonRequest = JsonUtility.ToJson(new OllamaRequest
     {
-        Debug.Log($"Starting question generation about {topic} using {MODEL_NAME} model");
+        model = MODEL_NAME,
+        prompt = promptText,
+        stream = true,
 
-        onProgress?.Invoke(0.1f, "Preparing request...");
-
-        string promptText = CreatePrompt(topic, numberOfQuestions);
-
-        string jsonRequest = JsonUtility.ToJson(new OllamaRequest
+        options = new OllamaOptions
         {
-            model = MODEL_NAME,
-            prompt = promptText,
-            stream = true,
+            temperature = 0.3f,      // Lower for more focused output
+            top_p = 0.8f,            // More deterministic
+        }
+    });
 
-            options = new OllamaOptions
-            {
-                temperature = 0.3f,      // Lower for more focused output
-                top_p = 0.8f,           // More deterministic
-            }
-        });
+    onProgress?.Invoke(0.2f, "Sending request to AI...");
 
-        onProgress?.Invoke(0.2f, "Sending request to AI...");
+    using (UnityWebRequest request = new UnityWebRequest("http://localhost:11434/api/generate", "POST"))
+    {
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRequest);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Accept", "application/json");
+        request.timeout = 300;
 
-        using (UnityWebRequest request = new UnityWebRequest("http://localhost:11434/api/generate", "POST"))
+        var operation = request.SendWebRequest();
+
+        float startTime = Time.time;
+        StringBuilder streamedResponse = new StringBuilder();
+
+        while (!operation.isDone)
         {
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRequest);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Accept", "application/json");
-            request.timeout = 300;
+            float elapsed = Time.time - startTime;
+            float timeProgress = Mathf.Clamp01(elapsed / 60f); // Assume 60s max generation time
 
-            var operation = request.SendWebRequest();
-
-            float startTime = Time.time;
-            StringBuilder streamedResponse = new StringBuilder();
-
-            while (!operation.isDone)
+            if (request.downloadHandler != null && request.downloadHandler.data != null)
             {
-                float elapsed = Time.time - startTime;
-                float timeProgress = Mathf.Clamp01(elapsed / 60f); // Assume 60s max generation time
-
-                if (request.downloadHandler != null && request.downloadHandler.data != null)
+                string currentResponse = request.downloadHandler.text;
+                if (currentResponse.Length > streamedResponse.Length)
                 {
-                    string currentResponse = request.downloadHandler.text;
-                    if (currentResponse.Length > streamedResponse.Length)
-                    {
-                        string newContent = currentResponse.Substring(streamedResponse.Length);
-                        streamedResponse.Append(newContent);
+                    string newContent = currentResponse.Substring(streamedResponse.Length);
+                    streamedResponse.Append(newContent);
 
-                        float overallProgress = Mathf.Clamp01(0.2f + (timeProgress * 0.6f));
-                        string progressText = GetProgressText(streamedResponse.ToString());
-                        onProgress?.Invoke(overallProgress, progressText);
-                    }
+                    // Update progress more dynamically during streaming (20% to 80%)
+                    float currentStreamProgress = Mathf.Clamp01((float)streamedResponse.Length / 10000f); // Estimate based on response length or another metric
+                    float overallProgress = Mathf.Lerp(0.2f, 0.8f, currentStreamProgress);
+                    string progressText = GetProgressText(streamedResponse.ToString());
+                    onProgress?.Invoke(overallProgress, progressText);
                 }
-
-                yield return null;
             }
 
-            if (request.result == UnityWebRequest.Result.Success)
+            yield return null;
+        }
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            // NEW: More granular progress updates for post-response processing
+            onProgress?.Invoke(0.80f, "Received AI response, extracting content...");
+            string rawResponse = request.downloadHandler.text;
+            string fullResponseText = ExtractStreamedResponse(rawResponse);
+
+            onProgress?.Invoke(0.85f, "Parsing questions from AI response...");
+            List<Question> questions = ProcessResponse(fullResponseText);
+
+            onProgress?.Invoke(0.90f, "Validating and finalizing questions...");
+            if (questions != null && questions.Count > 0)
             {
-                onProgress?.Invoke(0.8f, "Processing AI response...");
-
-                string rawResponse = request.downloadHandler.text;
-                string fullResponseText = ExtractStreamedResponse(rawResponse);
-
-                onProgress?.Invoke(0.9f, "Creating questions...");
-
-                List<Question> questions = ProcessResponse(fullResponseText);
-
-                if (questions != null && questions.Count > 0)
+                // Trim to requested count if we got more
+                if (questions.Count > numberOfQuestions)
                 {
-                    // Trim to requested count if we got more
-                    if (questions.Count > numberOfQuestions)
-                    {
-                        questions = questions.Take(numberOfQuestions).ToList();
-                    }
-
-                    onProgress?.Invoke(1.0f, $"Generated {questions.Count} questions!");
-                    yield return new WaitForSeconds(0.5f);
-
-                    Debug.Log($"Successfully created {questions.Count} questions");
-                    onComplete?.Invoke(questions);
+                    questions = questions.Take(numberOfQuestions).ToList();
                 }
-                else
-                {
-                    Debug.LogError("Failed to create questions");
-                    onError?.Invoke("Failed to create valid questions. Please try again.");
-                }
+
+                onProgress?.Invoke(1.0f, $"Generated {questions.Count} questions!");
+                yield return new WaitForSeconds(0.5f);
+
+                Debug.Log($"Successfully created {questions.Count} questions");
+                onComplete?.Invoke(questions);
             }
             else
             {
-                Debug.LogError($"Request failed: {request.error} (Code: {request.responseCode})");
-                onError?.Invoke($"Request failed: {request.error}. Please check if Ollama is running and the '{MODEL_NAME}' model is installed.");
+                Debug.LogError("Failed to create questions");
+                onError?.Invoke("Failed to create valid questions. Please try again.");
             }
         }
+        else
+        {
+            Debug.LogError($"Request failed: {request.error} (Code: {request.responseCode})");
+            onError?.Invoke($"Request failed: {request.error}. Please check if Ollama is running and the '{MODEL_NAME}' model is installed.");
+        }
     }
+}
 
     private static string GetProgressText(string currentResponse)
     {

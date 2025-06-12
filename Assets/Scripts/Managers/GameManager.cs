@@ -320,12 +320,13 @@ public class GameManager : MonoBehaviour
         switch (sceneName)
         {
             case "StartScreen":
-            case "CharacterSelection": // This matches your case "menu" in OnSceneLoaded
+            case "CharacterSelection":
             case "StoryCharacterSelection":
                 return "menu";
             case "LoadingScene":
-            case "PrepPhase": // Assuming PrepPhase should also be silent as per previous request/example
-                return "silent"; // Changed from "loading" to "silent" for PrepPhase
+                return "loading"; 
+            case "PrepPhase":
+                return "silent";
             case "QuizScene":
             case "BattleScene":
             case "StoryMode":
