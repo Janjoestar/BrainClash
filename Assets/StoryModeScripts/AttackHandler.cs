@@ -481,4 +481,85 @@ public class AttackHandler
         if (GameManager.Instance != null)
             GameManager.Instance.PlaySFX("General/MissVoice");
     }
+
+    // In AttackHandler.cs
+
+    public IEnumerator PerformEnemyAttack(AttackData attack, GameObject attackingEnemy,
+                                          Action<string> updateBattleStatusCallback,
+                                          Action<GameObject, AttackData> playImpactEffectCallback,
+                                          Func<IEnumerator> flashPlayerSpriteCallback)
+    {
+        string enemyDisplayName = attackingEnemy.name.Replace("(Clone)", "").Trim();
+        updateBattleStatusCallback($"{enemyDisplayName} uses {attack.attackName}!");
+        yield return new WaitForSeconds(0.2f);
+
+        // Accuracy Check
+        if (UnityEngine.Random.Range(0f, 1f) > attack.accuracy)
+        {
+            updateBattleStatusCallback($"{attack.attackName} missed!");
+            if (GameManager.Instance != null) GameManager.Instance.PlaySFX("General/MissVoice");
+            yield return new WaitForSeconds(0.5f);
+            yield break;
+        }
+
+        if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
+        {
+            GameManager.Instance.PlaySFX(attack.soundEffectName);
+        }
+
+        // Play attack animation
+        Animator enemyAnimator = attackingEnemy.GetComponent<Animator>();
+        if (enemyAnimator != null && !string.IsNullOrEmpty(attack.animationTrigger))
+        {
+            enemyAnimator.SetTrigger(attack.animationTrigger);
+        }
+        yield return new WaitForSeconds(0.5f); // Wait for animation to start
+
+        // Critical Hit & Damage Calculation
+        bool isCrit = UnityEngine.Random.Range(0f, 1f) < attack.critChance;
+        float damageDealt = attack.damage;
+
+        if (isCrit)
+        {
+            damageDealt *= 2f;
+            if (GameManager.Instance != null) GameManager.Instance.PlayCritSound();
+        }
+
+        // Shield Absorption
+        float currentShield = ((StoryBattleManager)monoBehaviourInstance).ShieldAmount;
+        if (getHasShield() && currentShield > 0)
+        {
+            float damageToShield = Mathf.Min(currentShield, damageDealt);
+            setShieldAmount(currentShield - damageToShield);
+            damageDealt -= damageToShield;
+
+            if (damageToShield > 0)
+            {
+                updateBattleStatusCallback($"Your shield absorbed {Mathf.Round(damageToShield)} damage!");
+            }
+        }
+
+        // Apply Damage to Player & Play Effects
+        if (damageDealt > 0)
+        {
+            string critText = isCrit ? " It's a critical hit!" : "";
+            updateBattleStatusCallback($"{enemyDisplayName} hits for {Mathf.Round(damageDealt)} damage!{critText}");
+
+            setCurrentPlayerHealth(getCurrentPlayerHealth() - damageDealt);
+            playImpactEffectCallback(player, attack); // Plays visual effect
+
+            // Play the generic impact sound and flash the player sprite
+            if (GameManager.Instance != null) GameManager.Instance.PlayHitSound();
+            if (flashPlayerSpriteCallback != null) monoBehaviourInstance.StartCoroutine(flashPlayerSpriteCallback());
+
+            if (player.GetComponent<Animator>() != null)
+            {
+                player.GetComponent<Animator>().SetTrigger("Hit");
+            }
+        }
+        else if (isCrit)
+        {
+            updateBattleStatusCallback($"A critical hit, but your shield took the full blow!");
+        }
+    }
 }

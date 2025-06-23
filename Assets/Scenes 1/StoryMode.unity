@@ -727,17 +727,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181727265}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.593361}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1174782023}
+  m_Father: {fileID: 1836977470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &181727267
 MonoBehaviour:
@@ -777,6 +777,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181727265}
   m_CullTransparentMesh: 1
+--- !u!1 &182396799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 182396801}
+  - component: {fileID: 182396800}
+  m_Layer: 0
+  m_Name: GroqAiHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &182396800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182396799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5bddb6f78cc1d4eb3d68b77dd4049c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiKey: 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
+  model: llama3-8b-8192
+--- !u!4 &182396801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182396799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.0598254, y: -0.61681557, z: -4.0866237}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &225154519 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4643035236469343064, guid: 4d02cd888a9634d4dad30ff2edaababa, type: 3}
@@ -2207,6 +2253,18 @@ MonoBehaviour:
   hoverDelay: 0.5
   enemyUIOffset: {x: 0, y: 1, z: 0}
   characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
+  groqHandler: {fileID: 182396800}
+  currentPlayerHealth: 0
+  currentEnemyHealths: []
+  damageMultiplier: 1
+  critChanceBonus: 0
+  accuracyBonus: 0
+  healingMultiplier: 1
+  doubleEdgeReduction: 0
+  regenPerTurn: 0
+  hasLifesteal: 0
+  hasShield: 0
+  hasRegeneration: 0
   currentWave: 1
   maxWaves: 10
   waveProgressionMultiplier: 1.2
@@ -4223,7 +4281,6 @@ RectTransform:
   - {fileID: 1197955489}
   - {fileID: 1432223610}
   - {fileID: 1690589921}
-  - {fileID: 181727266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6584,6 +6641,7 @@ RectTransform:
   - {fileID: 141733157}
   - {fileID: 551588309}
   - {fileID: 2108126802}
+  - {fileID: 181727266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7497,6 +7555,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2029612157}
     m_Modifications:
+    - target: {fileID: -596555900926644486, guid: af8fe5f1f6ffaba4599f1ba28c38d6a6, type: 3}
+      propertyPath: enemyTypeName
+      value: SkullWolf
+      objectReference: {fileID: 0}
     - target: {fileID: 3130157529368721326, guid: af8fe5f1f6ffaba4599f1ba28c38d6a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.22
@@ -7561,3 +7623,4 @@ SceneRoots:
   - {fileID: 1836977470}
   - {fileID: 937416925}
   - {fileID: 1819972479}
+  - {fileID: 182396801}

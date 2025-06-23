@@ -111,42 +111,55 @@ public class UIManager
             attackPanel.SetActive(active);
     }
 
+    // In UIManager.cs
+
     public void CreateEnemyUI(List<GameObject> enemies, List<float> currentEnemyHealths)
     {
         if (enemyUIPanel == null) return;
 
         ClearEnemyUI();
 
+        // Get the parent canvas once to check its render mode
+        Canvas parentCanvas = enemyUIPanel.GetComponentInParent<Canvas>();
+        if (parentCanvas == null)
+        {
+            Debug.LogError("EnemyUIPanel is not placed under a Canvas!");
+            return;
+        }
+
+        // Determine the correct camera for coordinate conversion. For Overlay, it's null.
+        Camera uiCamera = (parentCanvas.renderMode == RenderMode.ScreenSpaceOverlay) ? null : Camera.main;
+
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemyUIElementPrefab != null && enemies[i] != null)
             {
                 GameObject uiInstance = GameObject.Instantiate(enemyUIElementPrefab, enemyUIPanel.transform);
-
                 RectTransform uiRect = uiInstance.GetComponent<RectTransform>();
+
+                // --- THIS IS THE CORRECTED LOGIC ---
                 if (uiRect != null)
                 {
+                    // 1. Convert world position to a screen point (same as before)
                     Vector3 enemyWorldPos = enemies[i].transform.position + enemyUIOffset;
                     Vector2 screenPoint = Camera.main.WorldToScreenPoint(enemyWorldPos);
-                    RectTransform canvasRect = enemyUIPanel.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, Camera.main, out Vector2 localPoint);
-                    uiRect.localPosition = localPoint;
+
+                    // 2. Convert the screen point to a local point on the canvas, using our determined uiCamera
+                    RectTransform canvasRect = parentCanvas.GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint, uiCamera, out Vector2 localPoint);
+
+                    // 3. Set the anchoredPosition for reliable placement
+                    uiRect.anchoredPosition = localPoint;
                 }
 
+                // The rest of the logic remains the same
                 Text[] texts = uiInstance.GetComponentsInChildren<Text>();
                 foreach (Text text in texts)
                 {
                     if (text.name.Contains("Name"))
                     {
                         string[] names = getEnemyNames();
-                        if (i < names.Length)
-                        {
-                            text.text = names[i];
-                        }
-                        else
-                        {
-                            text.text = "Enemy " + (i + 1);
-                        }
+                        text.text = (i < names.Length) ? names[i] : "Enemy " + (i + 1);
                     }
                     else if (text.name.Contains("Health"))
                     {
@@ -171,7 +184,6 @@ public class UIManager
     public void SetupEnemySelectionButtons(List<int> aliveEnemies, string[] allSpawnedEnemyNames, Action<int> onEnemySelectedCallback)
     {
         Dictionary<string, int> currentDuplicateCounts = new Dictionary<string, int>();
-
         Dictionary<string, int> totalAliveNameOccurrences = new Dictionary<string, int>();
         foreach (int enemyActualIndex in aliveEnemies)
         {
@@ -190,18 +202,15 @@ public class UIManager
                 int enemyActualIndex = aliveEnemies[i];
                 enemySelectionButtons[i].gameObject.SetActive(true);
 
+                // Set button text (same logic as before)
                 Text buttonText = enemySelectionButtons[i].GetComponentInChildren<Text>();
                 if (buttonText != null)
                 {
                     string baseName = allSpawnedEnemyNames[enemyActualIndex];
                     string displayName = baseName;
-
                     if (totalAliveNameOccurrences.ContainsKey(baseName) && totalAliveNameOccurrences[baseName] > 1)
                     {
-                        if (!currentDuplicateCounts.ContainsKey(baseName))
-                        {
-                            currentDuplicateCounts[baseName] = 0;
-                        }
+                        if (!currentDuplicateCounts.ContainsKey(baseName)) currentDuplicateCounts[baseName] = 0;
                         currentDuplicateCounts[baseName]++;
                         displayName = $"{baseName} ({currentDuplicateCounts[baseName]})";
                     }
@@ -209,12 +218,23 @@ public class UIManager
                 }
 
                 Button button = enemySelectionButtons[i].GetComponent<Button>();
-                if (button != null)
-                {
-                    button.onClick.RemoveAllListeners();
-                    int capturedIndex = enemyActualIndex;
-                    button.onClick.AddListener(() => onEnemySelectedCallback(capturedIndex));
-                }
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => onEnemySelectedCallback(enemyActualIndex));
+
+                // --- THIS IS THE NEW PART ---
+                EventTrigger trigger = button.GetComponent<EventTrigger>();
+                if (trigger == null) trigger = button.gameObject.AddComponent<EventTrigger>();
+                trigger.triggers.Clear();
+
+                // Add PointerEnter event
+                EventTrigger.Entry pointerEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+                pointerEnter.callback.AddListener((eventData) => { ((StoryBattleManager)monoBehaviourInstance).OnEnemyButtonHoverEnter(enemyActualIndex); });
+                trigger.triggers.Add(pointerEnter);
+
+                // Add PointerExit event
+                EventTrigger.Entry pointerExit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+                pointerExit.callback.AddListener((eventData) => { ((StoryBattleManager)monoBehaviourInstance).OnEnemyButtonHoverExit(enemyActualIndex); });
+                trigger.triggers.Add(pointerExit);
             }
             else if (enemySelectionButtons[i] != null)
             {

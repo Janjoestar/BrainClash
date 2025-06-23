@@ -184,6 +184,28 @@ public class StoryAttackDataManager : MonoBehaviour
         }
     }
 
+    // In StoryAttackDataManager.cs -> GetAttacksForEnemy method
+
+    public List<AttackData> GetAttacksForEnemy(string enemyName)
+    {
+        switch (enemyName)
+        {
+            case "SkullWolf":
+                return new List<AttackData> {
+                new AttackData("Slash", 10, "A quick slash", "Attack1", AttackType.MoveAndHit, "None", Vector3.zero, 0.1f, 0.1f, Color.red, sound: "Knight/Slash4", accuracy: 0.9f, maxCooldown: 0)
+            };
+            case "Dragon":
+                return new List<AttackData> {
+                new AttackData("Claw Swipe", 25, "A powerful swipe.", "Attack1", AttackType.DirectHit, "Effects/Slash6", new Vector3(0, 0.7f, 0), 0.1f, 0.8f, Color.red, sound: "Slash", accuracy: 0.95f, maxCooldown: 0),
+                new AttackData("Fire Breath", 40, "Breathes a cone of fire.", "Special", AttackType.AreaEffect, "Effects/LargeFireExplosion", new Vector3(0, 0.5f, 0), 0.2f, 2f, Color.red, sound: "None", accuracy: 1.0f, maxCooldown: 3) // <-- Cooldown of 3 turns
+            };
+            default:
+                return new List<AttackData> {
+                new AttackData("Tackle", 8, "A basic physical attack.", "Attack1", AttackType.DirectHit, "Effects/Slash4", Vector3.zero, 0.1f, 0.8f, Color.white, sound: "Slash", accuracy: 0.9f, maxCooldown: 0)
+            };
+        }
+    }
+
     public GameObject GetEffectPrefabForAttack(AttackData attack)
     {
         if (!string.IsNullOrEmpty(attack.effectPrefabName))

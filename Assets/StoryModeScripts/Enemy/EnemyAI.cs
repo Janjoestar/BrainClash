@@ -1,166 +1,155 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using System; // Required for Action and Func
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System;
 
-//public class EnemyAI : MonoBehaviour
-//{
-//    [SerializeField] public EnemyAttackData enemyAttack; // Assign this in the Inspector for each enemy prefab
-//    private Animator animator;
-//    private SpriteRenderer spriteRenderer;
+public class EnemyAI : MonoBehaviour
+{
+    [Tooltip("Must match a case in StoryAttackDataManager's GetAttacksForEnemy method.")]
+    public string enemyTypeName;
 
-//    private Action<float> updatePlayerHealthCallback;
-//    private Func<float> getPlayerHealthCallback;
-//    private Func<float> getPlayerMaxHealthCallback;
-//    private Action<string> updateBattleStatusCallback;
-//    private Action<GameObject, AttackData> playImpactEffectCallback_PlayerAttack; // For player attacks
-//    private Action<GameObject, EnemyAttackData> playImpactEffectCallback_EnemyAttack; // For enemy attacks
-//    private Func<SpriteRenderer, AttackData, IEnumerator> flashPlayerSpriteCallback_PlayerAttack; // For player flashes
+    private List<AttackData> allAttacks;
+    private Dictionary<string, int> attackCooldowns = new Dictionary<string, int>();
 
-//    // UIManager reference to directly call correct overloads
-//    private UIManager uiManagerRef;
+    void Start()
+    {
+        if (StoryAttackDataManager.Instance != null)
+        {
+            allAttacks = StoryAttackDataManager.Instance.GetAttacksForEnemy(enemyTypeName);
+            foreach (var attack in allAttacks)
+            {
+                attackCooldowns[attack.attackName] = 0; // All attacks start ready
+            }
+        }
+        else
+        {
+            Debug.LogError($"Could not find StoryAttackDataManager instance for {enemyTypeName}.");
+            allAttacks = new List<AttackData>();
+        }
+    }
 
+    /// Reduces all active cooldowns by 1 turn.
+    public void DecrementCooldowns()
+    {
+        var keys = new List<string>(attackCooldowns.Keys);
+        foreach (var attackName in keys)
+        {
+            if (attackCooldowns[attackName] > 0)
+            {
+                attackCooldowns[attackName]--;
+            }
+        }
+    }
 
-//    // Reverted Initialize to match original signature for EnemyAI, plus UIManager ref
-//    public void Initialize(Action<float> updatePlayerHealth, Func<float> getPlayerHealth, Func<float> getPlayerMaxHealth,
-//                           Action<string> updateStatus, UIManager uiManager) // Now directly takes UIManager
-//    {
-//        animator = GetComponent<Animator>();
-//        spriteRenderer = GetComponent<SpriteRenderer>();
+    /// Puts an attack on cooldown after use.
+    public void SetCooldownOnAttack(string attackName)
+    {
+        AttackData usedAttack = allAttacks.FirstOrDefault(a => a.attackName == attackName);
+        if (usedAttack != null && usedAttack.maxCooldown > 0)
+        {
+            attackCooldowns[attackName] = usedAttack.maxCooldown;
+        }
+    }
 
-//        if (animator == null)
-//        {
-//            Debug.LogError($"Enemy {gameObject.name} is missing an Animator component!");
-//        }
-//        if (spriteRenderer == null)
-//        {
-//            Debug.LogError($"Enemy {gameObject.name} is missing a SpriteRenderer component!");
-//        }
+    /// <summary>
+    /// Coroutine to get a smart attack choice, which populates a shared result object.
+    /// </summary>
+    public IEnumerator GetSmartAttack(StoryBattleManager battleManager, GroqAI_Handler groq, AttackChoiceResult result)
+    {
+        string prompt = BuildPrompt(battleManager);
 
-//        updatePlayerHealthCallback = updatePlayerHealth;
-//        getPlayerHealthCallback = getPlayerHealth;
-//        getPlayerMaxHealthCallback = getPlayerMaxHealth;
-//        updateBattleStatusCallback = updateStatus;
-//        uiManagerRef = uiManager; // Store the UIManager reference
+        string aiResponseContent = null;
+        yield return groq.StartCoroutine(groq.GetAiChoice(prompt, response => {
+            aiResponseContent = response;
+        }));
 
-//        if (animator != null) animator.SetTrigger("Idle"); // Ensure starting in Idle
-//    }
+        AttackData finalChoice = null;
+        if (!string.IsNullOrEmpty(aiResponseContent))
+        {
+            Debug.Log($"[Groq Response for {name}]: {aiResponseContent}"); // Log the full response for debugging
+            try
+            {
+                string key = "\"attackName\":";
+                int keyIndex = aiResponseContent.IndexOf(key);
+                if (keyIndex != -1)
+                {
+                    int startIndex = aiResponseContent.IndexOf("\"", keyIndex + key.Length) + 1;
+                    int endIndex = aiResponseContent.IndexOf("\"", startIndex);
+                    string attackName = aiResponseContent.Substring(startIndex, endIndex - startIndex);
 
+                    finalChoice = allAttacks.FirstOrDefault(a => a.attackName == attackName && attackCooldowns.ContainsKey(a.attackName) && attackCooldowns[a.attackName] <= 0);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error parsing AI response: {e.Message}");
+                finalChoice = null;
+            }
+        }
 
-//    public IEnumerator PerformAttack(GameObject playerTarget)
-//    {
-//        if (enemyAttack == null || !gameObject.activeInHierarchy)
-//        {
-//            yield break;
-//        }
+        // Fallback: If AI fails or picks an invalid move, use simple logic.
+        if (finalChoice == null)
+        {
+            Debug.LogWarning($"AI choice failed for {name}. Falling back to highest damage attack.");
+            var availableAttacks = allAttacks.Where(a => attackCooldowns.ContainsKey(a.attackName) && attackCooldowns[a.attackName] <= 0).ToList();
+            if (availableAttacks.Count > 0)
+            {
+                // A better fallback: pick the highest damage attack available.
+                finalChoice = availableAttacks.OrderByDescending(a => a.damage).FirstOrDefault();
+            }
+        }
 
-//        updateBattleStatusCallback($"{gameObject.name} is attacking!");
+        result.ChosenAttack = finalChoice; // Set the result in the shared object
+    }
 
-//        if (animator != null)
-//        {
-//            animator.SetTrigger(enemyAttack.animationTrigger);
-//        }
+    private string BuildPrompt(StoryBattleManager bm)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("### Player Status:");
+        sb.AppendLine($"* **HP:** {Mathf.Round(bm.currentPlayerHealth)} / {bm.playerMaxHealth}");
+        sb.AppendLine($"* **Shield:** {bm.ShieldAmount}");
+        var upgrades = bm.upgradeManager.GetPlayerUpgrades();
+        if (upgrades.Count > 0)
+        {
+            sb.AppendLine("* **Active Upgrades (Boons):**");
+            foreach (var upgrade in upgrades) sb.AppendLine($"    * {upgrade.Key.upgradeName} (x{upgrade.Value})");
+        }
+        sb.AppendLine("* **Player Abilities:**");
+        foreach (var attack in bm.GetCurrentPlayerAttacks()) sb.AppendLine($"    * {attack.attackName} (Dmg: {attack.damage})");
 
-//        yield return new WaitForSeconds(enemyAttack.effectDelay);
+        sb.AppendLine("\n### Battlefield Status:");
+        for (int i = 0; i < bm.Enemies.Count; i++)
+        {
+            if (bm.Enemies[i] != null && bm.Enemies[i].activeInHierarchy)
+            {
+                string selfIdentifier = (bm.Enemies[i] == this.gameObject) ? " (This is me)" : "";
+                sb.AppendLine($"* **{bm.Enemies[i].name.Replace("(Clone)", "")} HP:** {Mathf.Round(bm.currentEnemyHealths[i])}{selfIdentifier}");
+            }
+        }
 
-//        if (UnityEngine.Random.Range(0f, 1f) > enemyAttack.accuracy)
-//        {
-//            updateBattleStatusCallback($"{gameObject.name}'s attack missed!");
-//            if (GameManager.Instance != null)
-//                GameManager.Instance.PlaySFX("Audio/SFX/General/Miss"); // Original Miss sound
-//            yield return new WaitForSeconds(enemyAttack.attackDuration - enemyAttack.effectDelay);
-//            if (animator != null) animator.SetTrigger("Idle");
-//            yield break;
-//        }
+        sb.AppendLine("\n### My Available Attacks (Choose ONE):");
+        var availableAttacks = allAttacks.Where(a => attackCooldowns.ContainsKey(a.attackName) && attackCooldowns[a.attackName] <= 0).ToList();
+        if (availableAttacks.Count == 0)
+        {
+            sb.AppendLine("* No attacks available this turn.");
+        }
+        else
+        {
+            foreach (var attack in availableAttacks)
+            {
+                sb.AppendLine($"* **Name:** {attack.attackName}, **Damage:** {attack.damage}, **Accuracy:** {attack.accuracy * 100}%, **Cooldown:** {attack.maxCooldown}, **Description:** {attack.description}");
+            }
+        }
 
-//        float damageDealt = enemyAttack.damage;
-//        bool isCrit = UnityEngine.Random.Range(0f, 1f) < enemyAttack.critChance;
+        sb.AppendLine("\n**Objective:** Based on all this information, choose the single best attack from my available attacks to defeat the player.");
+        return sb.ToString();
+    }
+}
 
-//        if (isCrit)
-//        {
-//            damageDealt *= 2f;
-//            if (GameManager.Instance != null)
-//                GameManager.Instance.PlayCritSound();
-//            updateBattleStatusCallback($"{gameObject.name} scored a critical hit!");
-//        }
-
-//        float currentPlayerHealth = getPlayerHealthCallback();
-//        float newPlayerHealth = Mathf.Max(0, currentPlayerHealth - damageDealt);
-//        updatePlayerHealthCallback(newPlayerHealth);
-
-//        updateBattleStatusCallback($"{gameObject.name} dealt {Mathf.Round(damageDealt)} damage to you!");
-
-//        if (GameManager.Instance != null && (enemyAttack.soundEffectName == "None" || string.IsNullOrEmpty(enemyAttack.soundEffectName)))
-//        {
-//            GameManager.Instance.PlaySFX("General/HitSound");
-//        }
-//        else if (GameManager.Instance != null && !string.IsNullOrEmpty(enemyAttack.soundEffectName))
-//        {
-//            GameManager.Instance.PlaySFX("Audio/SFX/Enemy/" + enemyAttack.soundEffectName);
-//        }
-
-//        if (playerTarget != null && playerTarget.GetComponent<SpriteRenderer>() != null)
-//        {
-//            uiManagerRef.PlayImpactEffect(playerTarget, enemyAttack); // Calls UIManager's EnemyAttackData overload
-//            monoBehaviourInstance.StartCoroutine(uiManagerRef.FlashSprite(playerTarget.GetComponent<SpriteRenderer>(), enemyAttack)); // Calls UIManager's EnemyAttackData overload
-//        }
-
-//        yield return new WaitForSeconds(enemyAttack.attackDuration - enemyAttack.effectDelay);
-//        if (animator != null) animator.SetTrigger("Idle");
-//    }
-
-//    // This method is called from StoryBattleManager for death logic
-//    public IEnumerator PlayDeathAnimation()
-//    {
-//        if (animator != null)
-//        {
-//            animator.SetTrigger("Death");
-//            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-//            float deathAnimationLength = 0f;
-
-//            // Wait one frame for the trigger to activate a state
-//            yield return null;
-//            stateInfo = animator.GetCurrentAnimatorStateInfo(0); // Re-get state info after waiting
-
-//            if (stateInfo.IsName("Death"))
-//            {
-//                deathAnimationLength = stateInfo.length;
-//            }
-//            else
-//            {
-//                foreach (var clip in animator.runtimeAnimatorController.animationClips)
-//                {
-//                    if (clip.name.Equals("Death"))
-//                    {
-//                        deathAnimationLength = clip.length;
-//                        break;
-//                    }
-//                }
-//            }
-
-//            if (deathAnimationLength <= 0f) deathAnimationLength = 1.0f; // Fallback
-
-//            yield return new WaitForSeconds(deathAnimationLength);
-//        }
-//        else
-//        {
-//            yield return new WaitForSeconds(0.5f); // Small delay if no animator
-//        }
-
-//        gameObject.SetActive(false); // Deactivate after death animation
-//    }
-
-//    // Call this when enemy takes damage
-//    public void PlayHitAnimation()
-//    {
-//        if (animator != null)
-//        {
-//            animator.SetTrigger("Hit");
-//        }
-//    }
-
-//    private MonoBehaviour monoBehaviourInstance // Helper to get MonoBehaviour context for Coroutines
-//    {
-//        get { return FindObjectOfType<StoryBattleManager>(); } // Assumes StoryBattleManager is always in scene
-//    }
-//}
+// Helper class to safely store the result from the asynchronous AI operation.
+public class AttackChoiceResult
+{
+    public AttackData ChosenAttack { get; set; }
+}

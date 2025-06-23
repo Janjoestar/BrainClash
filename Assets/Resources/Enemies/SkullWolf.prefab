@@ -123,4 +123,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fa4a27424189b40aa9144196a61bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyAttack: {fileID: 11400000, guid: 0df3e75bc3dd9dd43a4f9e61ed488d23, type: 2}
+  enemyTypeName: SkullWolf

@@ -12,6 +12,7 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] public GameObject Player;
     [SerializeField] public List<GameObject> Enemies = new List<GameObject>();
     [SerializeField] private Transform playerPosition;
+    private HashSet<int> processedAsDefeated = new HashSet<int>();
 
     [Header("UI Panels")]
     [SerializeField] private GameObject battlePanel;
@@ -35,13 +36,17 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] private GameObject attackEffectPrefab;
 
     [Header("Battle Settings")]
-    [SerializeField] private float playerMaxHealth = 200f;
-    [SerializeField] private float enemyMaxHealth = 30f;
+    [SerializeField] public float playerMaxHealth = 200f;
+    [SerializeField] public float enemyMaxHealth = 30f;
     [SerializeField] private float hoverDelay = 0.5f;
     [SerializeField] private Vector3 enemyUIOffset = new Vector3(0, 1.5f, 0);
 
     [Header("Character Database")]
     public CharacterDatabase characterDB;
+
+    [Header("AI Systems")]
+    [SerializeField] private GroqAI_Handler groqHandler;
+
 
     private List<AttackData> playerAttacks = new List<AttackData>();
 
@@ -53,23 +58,23 @@ public class StoryBattleManager : MonoBehaviour
     private Character selectedCharacter;
     private AttackData selectedAttack;
     private int selectedEnemyIndex = -1;
-    private float currentPlayerHealth;
-    private List<float> currentEnemyHealths = new List<float>();
+    public float currentPlayerHealth;
+    public List<float> currentEnemyHealths = new List<float>();
     private GameObject currentHoverInstance;
     private Coroutine hoverCoroutine;
 
     // Player upgrade modifiers
-    private float damageMultiplier = 1f;
-    private float critChanceBonus = 0f;
-    private float accuracyBonus = 0f;
-    private float healingMultiplier = 1f;
-    private float doubleEdgeReduction = 0f;
+    public float damageMultiplier = 1f;
+    public float critChanceBonus = 0f;
+    public float accuracyBonus = 0f;
+    public float healingMultiplier = 1f;
+    public float doubleEdgeReduction = 0f;
     public float LifestealPercentage { get; private set; } = 0f;
     public float ShieldAmount { get; private set; } = 0f;
-    private float regenPerTurn = 0f;
-    private bool hasLifesteal = false;
-    private bool hasShield = false;
-    private bool hasRegeneration = false;
+    public float regenPerTurn = 0f;
+    public bool hasLifesteal = false;
+    public bool hasShield = false;
+    public bool hasRegeneration = false;
 
     private Vector3 originalPlayerPosition;
 
@@ -85,12 +90,12 @@ public class StoryBattleManager : MonoBehaviour
     [SerializeField] private float attackDistance = 1.25f;
 
     [Header("Upgrade System")]
-    [SerializeField] private UpgradeManager upgradeManager;
+    [SerializeField] public UpgradeManager upgradeManager;
 
-    internal UIManager uiManager;
-    private AttackHandler attackHandler; // Declare here, but initialize later
-    private EnemySpawner enemySpawner;
-    private PlayerCharacter playerCharacter;
+    public UIManager uiManager;
+    public AttackHandler attackHandler; // Declare here, but initialize later
+    public EnemySpawner enemySpawner;
+    public PlayerCharacter playerCharacter;
 
     private void Awake()
     {
@@ -119,6 +124,7 @@ public class StoryBattleManager : MonoBehaviour
 
     private void InitializeStoryBattle()
     {
+        processedAsDefeated.Clear();
         int selectedCharacterIndex = PlayerPrefs.GetInt("selectedStoryCharacter", 0);
 
         if (characterDB != null)
@@ -309,23 +315,44 @@ public class StoryBattleManager : MonoBehaviour
 
     private void OnEnemySelected(int enemyIndex)
     {
+        ClearAllEnemyHighlights();
+
         selectedEnemyIndex = enemyIndex;
         uiManager.SetEnemySelectionPanelActive(false);
         uiManager.SetAttackPanelActive(true);
         StartCoroutine(PerformAttackCoroutine(selectedAttack, selectedEnemyIndex));
     }
 
+    // In StoryBattleManager.cs
+
     private IEnumerator PerformAttackCoroutine(AttackData attack, int targetEnemyIndex)
     {
         SetAttackButtonsInteractable(false);
 
-        // Cooldown check and application removed from AttackHandler.PerformAttack.
+        // Perform the player's attack (this part is unchanged)
         yield return attackHandler.PerformAttack(attack, targetEnemyIndex,
             uiManager.UpdateBattleStatus,
             uiManager.PlayImpactEffect,
             () => uiManager.FlashSprite(Player.GetComponent<SpriteRenderer>(), attack));
 
         UpdateHealthDisplays();
+
+        var deathRoutines = new List<Coroutine>();
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            if (currentEnemyHealths[i] <= 0 && !processedAsDefeated.Contains(i))
+            {
+                processedAsDefeated.Add(i);
+
+                deathRoutines.Add(StartCoroutine(IndividualEnemyDeath(Enemies[i])));
+            }
+        }
+
+        foreach (var routine in deathRoutines)
+        {
+            yield return routine;
+        }
+
         CheckForBattleEnd();
     }
 
@@ -343,14 +370,79 @@ public class StoryBattleManager : MonoBehaviour
         }
     }
 
+    private bool isPlayerTurn = true;
+
+    // In StoryBattleManager.cs
+
+    private IEnumerator EnemiesTurnCoroutine()
+    {
+        uiManager.UpdateBattleStatus("Enemy Turn!");
+        SetAttackButtonsInteractable(false);
+        yield return new WaitForSeconds(0.5f);
+
+        List<int> aliveEnemies = GetAliveEnemyIndices();
+        foreach (int enemyIndex in aliveEnemies)
+        {
+            if (currentPlayerHealth <= 0) break;
+
+            GameObject currentEnemy = Enemies[enemyIndex];
+            EnemyAI enemyAI = currentEnemy.GetComponent<EnemyAI>();
+
+            if (enemyAI != null)
+            {
+                // Decrement cooldowns at the start of this enemy's action.
+                enemyAI.DecrementCooldowns();
+                uiManager.UpdateBattleStatus($"{currentEnemy.name.Replace("(Clone)", "")} is thinking...");
+
+                // Create a result object to hold the AI's eventual choice.
+                var choiceResult = new AttackChoiceResult();
+
+                // Run the GetSmartAttack coroutine and wait for it to populate the result object.
+                yield return StartCoroutine(enemyAI.GetSmartAttack(this, groqHandler, choiceResult));
+
+                AttackData chosenAttack = choiceResult.ChosenAttack;
+
+                if (chosenAttack != null)
+                {
+                    // Perform the attack chosen by the AI (or its fallback).
+                    yield return attackHandler.PerformEnemyAttack(chosenAttack, currentEnemy,
+                        uiManager.UpdateBattleStatus,
+                        uiManager.PlayImpactEffect,
+                        () => uiManager.FlashSprite(Player.GetComponent<SpriteRenderer>(), chosenAttack)
+                    );
+
+                    // Set the cooldown for the attack that was just used.
+                    enemyAI.SetCooldownOnAttack(chosenAttack.attackName);
+                }
+                else
+                {
+                    // This case happens if the AI fails AND the fallback finds no available moves.
+                    uiManager.UpdateBattleStatus($"{currentEnemy.name.Replace("(Clone)", "")} has no available attacks!");
+                    yield return new WaitForSeconds(1.0f);
+                }
+
+                UpdateHealthDisplays();
+
+                if (currentPlayerHealth <= 0) break;
+
+                yield return new WaitForSeconds(0.5f); // Pause between individual enemy attacks.
+            }
+        }
+
+        CheckForBattleEnd();
+    }
+
     private void CheckForBattleEnd()
     {
         if (currentPlayerHealth <= 0)
         {
             StartCoroutine(HandlePlayerDefeat());
+            return; // Player is defeated, end the battle
         }
-        else if (GetAliveEnemyIndices().Count == 0)
+
+        if (GetAliveEnemyIndices().Count == 0)
         {
+            // All enemies are defeated
             for (int i = 0; i < Enemies.Count; i++)
             {
                 if (currentEnemyHealths[i] <= 0 && Enemies[i] != null)
@@ -359,31 +451,44 @@ public class StoryBattleManager : MonoBehaviour
                 }
             }
             StartCoroutine(HandleAllEnemiesDefeated());
+            return; // Wave is won
+        }
+
+        // --- Turn Switching Logic ---
+        if (isPlayerTurn)
+        {
+            // Player's turn has just ended, switch to enemies' turn
+            isPlayerTurn = false;
+            StartCoroutine(EnemiesTurnCoroutine());
         }
         else
         {
+            // Enemies' turn has just ended, switch to player's turn
+            isPlayerTurn = true;
             ApplyTurnStartEffects();
-            // Removed: attackHandler.DecrementAttackCooldowns(playerAttacks); // Cooldowns are removed
-            ShowAttackOptions(); // Re-display attacks (no cooldown update needed on buttons now)
-            SetAttackButtonsInteractable(true);
             uiManager.UpdateBattleStatus("Choose your next attack!");
+            SetAttackButtonsInteractable(true);
+            ShowAttackOptions();
         }
     }
-
-    private IEnumerator HideEnemyAfterDeath(int enemyIndex)
+    private IEnumerator IndividualEnemyDeath(GameObject enemy)
     {
-        Animator enemyAnimator = Enemies[enemyIndex].GetComponent<Animator>();
-        if (enemyAnimator != null)
-        {
-            enemyAnimator.SetTrigger("Death");
-            yield return new WaitForSeconds(enemyAnimator.GetCurrentAnimatorStateInfo(0).length);
-        }
+        // Ensure the enemy and its components exist before trying to use them
+        if (enemy == null) yield break;
+        Animator animator = enemy.GetComponent<Animator>();
+        SpriteRenderer spriteRenderer = enemy.GetComponent<SpriteRenderer>();
+        if (animator == null || spriteRenderer == null) yield break;
 
-        yield return new WaitForSeconds(0.5f);
-        if (Enemies[enemyIndex] != null)
-        {
-            Enemies[enemyIndex].SetActive(false);
-        }
+        // 1. Trigger the animation
+        animator.SetTrigger("Death");
+
+        // 2. Wait for the animation to finish
+        yield return new WaitForSeconds(0.1f); // Brief delay for the animation state to transition
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationLength);
+
+        // 3. Make the sprite gray to show it's defeated
+        spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.8f);
     }
 
     private IEnumerator HandlePlayerDefeat()
@@ -404,28 +509,7 @@ public class StoryBattleManager : MonoBehaviour
     private IEnumerator HandleAllEnemiesDefeated()
     {
         uiManager.UpdateBattleStatus($"Wave {currentWave} cleared!");
-
-        foreach (GameObject enemy in Enemies)
-        {
-            if (enemy != null)
-            {
-                Animator enemyAnimator = enemy.GetComponent<Animator>();
-                if (enemyAnimator != null)
-                {
-                    enemyAnimator.SetTrigger("Death");
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        for (int i = 0; i < Enemies.Count; i++)
-        {
-            if (currentEnemyHealths[i] <= 0 && Enemies[i] != null)
-            {
-                Enemies[i].SetActive(false);
-            }
-        }
+        yield return new WaitForSeconds(1f); // A brief pause after the last enemy's animation is done.
 
         if (currentWave < maxWaves)
         {
@@ -469,9 +553,47 @@ public class StoryBattleManager : MonoBehaviour
         uiManager.UpdateBattleStatus($"Wave {currentWave} - Choose your attack!");
         SetAttackButtonsInteractable(true);
     }
+    public void OnEnemyButtonHoverEnter(int enemyIndex)
+    {
+        if (Enemies.Count > enemyIndex && Enemies[enemyIndex] != null)
+        {
+            var renderer = Enemies[enemyIndex].GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                renderer.color = new Color(1f, 1f, 0.7f);
+            }
+        }
+    }
+    public void OnEnemyButtonHoverExit(int enemyIndex)
+    {
+        if (Enemies.Count > enemyIndex && Enemies[enemyIndex] != null)
+        {
+            var renderer = Enemies[enemyIndex].GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                // Revert the sprite's color to white, which means "no tint".
+                renderer.color = Color.white;
+            }
+        }
+    }
 
+    private void ClearAllEnemyHighlights()
+    {
+        foreach (GameObject enemy in Enemies)
+        {
+            if (enemy != null)
+            {
+                var renderer = enemy.GetComponent<SpriteRenderer>();
+                if (renderer != null)
+                {
+                    renderer.color = Color.white;
+                }
+            }
+        }
+    }
     private void ResetEnemiesForNewWave()
     {
+        processedAsDefeated.Clear();
         uiManager.ClearEnemyUI();
         enemySpawner.SpawnWaveEnemies(currentWave, waveProgressionMultiplier, enemyMaxHealth, currentEnemyHealths);
         uiManager.CreateEnemyUI(Enemies, currentEnemyHealths);

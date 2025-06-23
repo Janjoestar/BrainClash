@@ -9,7 +9,7 @@ using System.Linq;
 public static class APIQuestionGenerator
 {
     private const string API_URL = "https://api.groq.com/openai/v1/chat/completions";
-    private const string API_KEY = "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";
+    private const string API_KEY = "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";
     public static IEnumerator GenerateQuestions(string topic, Action<List<Question>> onComplete, Action<string> onError, int numberOfQuestions, Action<float, string> onProgress = null)
     {
         Debug.Log($"Starting API question generation about {topic}");
