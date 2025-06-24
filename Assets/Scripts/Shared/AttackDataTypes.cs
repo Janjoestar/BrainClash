@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Define AttackType enum once
@@ -39,9 +40,8 @@ public class AttackData
     public int cooldown = 0;        // How many turns this attack is on cooldown
     public int maxCooldown = 0;     // Maximum cooldown turns (0 = no cooldown)
     public float damageIncrease = 0f;
-
-    // NEW FIELD for the character name
     public string characterName;
+    public List<StatusEffect> effectsToApply;
 
     public AttackData(string name, float dmg, string desc, string animTrigger,
                       AttackType type, string effectName, Vector3 offset, float delay,
@@ -49,7 +49,7 @@ public class AttackData
                       string hitEffectName = "", Vector3 hitOffset = default,
                       float critChance = 0.0f, float accuracy = 0.85f, float doubleEdgeDamage = 0f,
                       bool canSelfKO = false, float selfKOFailChance = 0.0f, int maxCooldown = 0,
-                      string charName = "Default") // Added charName parameter
+                      string charName = "Default", List<StatusEffect> effects = null) // Added effects parameter
     {
         attackName = name;
         damage = dmg;
@@ -71,7 +71,8 @@ public class AttackData
         this.selfKOFailChance = selfKOFailChance;
         this.maxCooldown = maxCooldown;
         this.cooldown = 0;
-        this.characterName = charName; // Assign the new field
+        this.characterName = charName;
+        this.effectsToApply = effects ?? new List<StatusEffect>();
     }
 
     // Backward compatibility constructor - updated to include characterName

@@ -228,6 +228,13 @@ public class UpgradeManager : MonoBehaviour
     {
         if (upgradeSelectionPanel == null) return;
 
+        // --- BUG FIX: PERSISTENT HOVER ---
+        if (battleManager != null)
+        {
+            // Hide any attack hover UI that might be stuck
+            battleManager.HideAttackHover();
+        }
+
         ClearCurrentUpgrades();
         List<UpgradeData> selectedUpgrades = GenerateRandomUpgrades(currentWave);
 
@@ -260,7 +267,7 @@ public class UpgradeManager : MonoBehaviour
         // Start with the pool of regular (static) upgrades
         List<UpgradeData> availableUpgradesPool = GetAvailableUpgradesFromPool(allAvailableUpgradesPool);
 
-        // Check if it's an "ability wave" (every 5 waves)
+        // Check if it's an "ability wave" (every 2 waves)
         bool isAbilityWave = (currentWave % 2 == 0);
 
         // If it's an ability wave, temporarily add available attack upgrades to the pool
@@ -446,6 +453,22 @@ public class UpgradeManager : MonoBehaviour
     {
         buttonObj.SetActive(true);
 
+        // --- BUG FIX: RAYCASTING ---
+        // Ensure the main button background is the only clickable graphic.
+        // Child elements like text and icons should not block clicks.
+        Image backgroundImage = buttonObj.GetComponent<Image>();
+        if (backgroundImage != null)
+        {
+            backgroundImage.raycastTarget = true;
+        }
+
+        foreach (Graphic g in buttonObj.GetComponentsInChildren<Graphic>())
+        {
+            // Skip the parent button's graphic itself
+            if (g.gameObject == buttonObj) continue;
+            g.raycastTarget = false;
+        }
+
         Button button = buttonObj.GetComponent<Button>();
         if (button != null)
         {
@@ -488,7 +511,6 @@ public class UpgradeManager : MonoBehaviour
             }
         }
 
-        Image backgroundImage = buttonObj.GetComponent<Image>();
         if (backgroundImage != null && upgrade.backgroundColor != Color.clear)
         {
             backgroundImage.color = upgrade.backgroundColor;
@@ -502,13 +524,6 @@ public class UpgradeManager : MonoBehaviour
                 img.sprite = upgrade.upgradeIcon;
                 img.color = Color.white;
             }
-        }
-
-        CanvasGroup[] canvasGroups = buttonObj.GetComponentsInChildren<CanvasGroup>();
-        foreach (CanvasGroup cg in canvasGroups)
-        {
-            cg.interactable = true;
-            cg.blocksRaycasts = true;
         }
     }
 
@@ -631,6 +646,14 @@ public class UpgradeManager : MonoBehaviour
             Debug.LogError("Run Info Panel GameObject is not assigned!");
             return;
         }
+
+        // --- BUG FIX: UI OVERLAP ---
+        // Hide the enemy health bars when showing the run info panel.
+        if (battleManager != null && battleManager.uiManager != null)
+        {
+            battleManager.uiManager.SetEnemyUIPanelActive(false);
+        }
+
         runInfoPanel.SetActive(true);
         PopulateRunInfo();
     }
@@ -639,6 +662,13 @@ public class UpgradeManager : MonoBehaviour
     {
         if (runInfoPanel != null)
         {
+            // --- BUG FIX: UI OVERLAP ---
+            // Re-show the enemy health bars when hiding the run info panel.
+            if (battleManager != null && battleManager.uiManager != null)
+            {
+                battleManager.uiManager.SetEnemyUIPanelActive(true);
+            }
+
             runInfoPanel.SetActive(false);
             ClearRunInfoContainers();
         }

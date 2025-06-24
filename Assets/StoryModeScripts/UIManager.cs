@@ -32,6 +32,8 @@ public class UIManager
 
     private List<GameObject> enemyUIInstances = new List<GameObject>();
 
+    public Text GetPlayerHealthText() { return playerHealthText; } // Public getter for AttackHandler
+
     public UIManager(MonoBehaviour monoBehaviourInstance, GameObject battlePanel, GameObject attackPanel, GameObject enemySelectionPanel, GameObject endScreenPanel, GameObject enemyUIPanel,
                      Text playerHealthText, Text battleStatusText, Text resultText, Button returnToMenuButton, Button continueButton,
                      Transform enemySelectionButtonsParent,
@@ -70,26 +72,148 @@ public class UIManager
         this.getEnemyNames = getEnemyNames;
     }
 
+    // --- BUG FIX: UI OVERLAP ---
+    // New method to control the visibility of the entire enemy UI container.
+    public void SetEnemyUIPanelActive(bool active)
+    {
+        if (enemyUIPanel != null)
+        {
+            enemyUIPanel.SetActive(active);
+        }
+    }
+
+    private IEnumerator AnimateDamagePopup(Text damageText, float changeAmount, bool isCrit)
+    {
+        bool isHealing = changeAmount > 0;
+        damageText.text = isHealing ? $"+{Mathf.Round(changeAmount)}" : $"{Mathf.Round(changeAmount)}";
+        damageText.gameObject.SetActive(true);
+
+        Color textColor;
+        Vector3 maxScale;
+        Vector3 originalScale = damageText.transform.localScale;
+
+        if (isCrit)
+        {
+            textColor = new Color(1f, 0.65f, 0f); // Orange for crits
+            maxScale = originalScale * 2.2f;
+            damageText.fontStyle = FontStyle.Bold;
+        }
+        else
+        {
+            textColor = isHealing ? Color.green : Color.red;
+            maxScale = originalScale * 1.75f;
+            damageText.fontStyle = FontStyle.Normal;
+        }
+        damageText.color = textColor;
+
+        float duration = 1.0f;
+        float popDuration = 0.2f;
+        float fadeStartTime = 0.5f;
+
+        float timer = 0f;
+        while (timer < popDuration)
+        {
+            timer += Time.deltaTime;
+            damageText.transform.localScale = Vector3.Lerp(originalScale, maxScale, timer / popDuration);
+            yield return null;
+        }
+
+        timer = 0f;
+        float popDownDuration = duration - popDuration;
+        Color originalPopupColor = damageText.color;
+
+        while (timer < popDownDuration)
+        {
+            timer += Time.deltaTime;
+            damageText.transform.localScale = Vector3.Lerp(maxScale, originalScale, timer / popDownDuration);
+
+            if (timer > fadeStartTime)
+            {
+                float fadeProgress = (timer - fadeStartTime) / (popDownDuration - fadeStartTime);
+                damageText.color = Color.Lerp(originalPopupColor, Color.clear, fadeProgress);
+            }
+            yield return null;
+        }
+
+        damageText.gameObject.SetActive(false);
+        damageText.transform.localScale = originalScale;
+        damageText.color = originalPopupColor;
+    }
+
+    public Coroutine ShowPlayerHealthChange(float newHealth, float changeAmount, bool isCrit = false)
+    {
+        if (playerHealthText == null || monoBehaviourInstance == null) return null;
+
+        playerHealthText.text = $"Player HP: {Mathf.Round(newHealth)}";
+
+        Transform parent = playerHealthText.transform.parent;
+        Text damageText = parent.Find("Damage")?.GetComponent<Text>();
+        if (damageText != null)
+        {
+            return monoBehaviourInstance.StartCoroutine(AnimateDamagePopup(damageText, changeAmount, isCrit));
+        }
+        return null;
+    }
+    public Coroutine ShowEnemyHealthChange(int enemyIndex, float newHealth, float changeAmount, bool isCrit)
+    {
+        if (enemyIndex < 0 || enemyIndex >= enemyUIInstances.Count || enemyUIInstances[enemyIndex] == null) return null;
+
+        GameObject uiInstance = enemyUIInstances[enemyIndex];
+        Text healthText = null;
+        Text damageText = null;
+
+        foreach (var t in uiInstance.GetComponentsInChildren<Text>(true))
+        {
+            if (t.name.Contains("Health")) healthText = t;
+            if (t.name.Contains("Damage")) damageText = t;
+        }
+
+        if (healthText != null)
+        {
+            string[] names = getEnemyNames();
+            string prefix = (enemyIndex < names.Length && !string.IsNullOrEmpty(names[enemyIndex]))
+                            ? names[enemyIndex]
+                            : "Enemy " + (enemyIndex + 1);
+            healthText.text = $"{prefix} HP: {Mathf.Round(newHealth)}";
+        }
+
+        if (damageText != null && monoBehaviourInstance != null)
+        {
+            return monoBehaviourInstance.StartCoroutine(AnimateDamagePopup(damageText, changeAmount, isCrit));
+        }
+        return null;
+    }
+
     public void UpdatePlayerHealth(float health)
     {
-        playerHealthText.text = "Player HP: " + Mathf.Round(health);
+        if (playerHealthText != null)
+        {
+            playerHealthText.text = $"Player HP: {Mathf.Round(health)}";
+        }
     }
 
     public void UpdateEnemyHealths(List<float> currentEnemyHealths)
     {
-        for (int i = 0; i < enemyUIInstances.Count && i < currentEnemyHealths.Count; i++)
+        // ... (This method remains the same as the previous fix)
+        string[] names = getEnemyNames();
+        for (int i = 0; i < enemyUIInstances.Count; i++)
         {
-            if (enemyUIInstances[i] != null)
+            if (i < currentEnemyHealths.Count && enemyUIInstances[i] != null)
             {
+                enemyUIInstances[i].SetActive(currentEnemyHealths[i] > 0);
                 Text[] texts = enemyUIInstances[i].GetComponentsInChildren<Text>();
                 foreach (Text text in texts)
                 {
                     if (text.name.Contains("Health"))
                     {
-                        text.text = $"HP: {Mathf.Round(currentEnemyHealths[i])}";
+                        string prefix = (i < names.Length) ? names[i] : "Enemy " + (i + 1);
+                        text.text = $"{prefix} HP: {Mathf.Round(currentEnemyHealths[i])}";
                     }
                 }
-                enemyUIInstances[i].SetActive(currentEnemyHealths[i] > 0);
+            }
+            else if (enemyUIInstances[i] != null)
+            {
+                enemyUIInstances[i].SetActive(false);
             }
         }
     }
@@ -168,6 +292,13 @@ public class UIManager
                 }
                 enemyUIInstances.Add(uiInstance);
             }
+        }
+    }
+    public void DeactivateEnemyUIElement(int index)
+    {
+        if (index >= 0 && index < enemyUIInstances.Count && enemyUIInstances[index] != null)
+        {
+            enemyUIInstances[index].SetActive(false);
         }
     }
 
@@ -304,7 +435,7 @@ public class UIManager
     }
 
     public void CreateAttackButtons(List<AttackData> playerAttacks, Action<AttackData> onAttackSelectedCallback,
-                                     Action<AttackData, RectTransform> onHoverEnterCallback, Action onHoverExitCallback)
+                                      Action<AttackData, RectTransform> onHoverEnterCallback, Action onHoverExitCallback)
     {
         float startY = -75;
         float xPosition = 692;

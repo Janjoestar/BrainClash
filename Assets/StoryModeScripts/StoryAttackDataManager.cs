@@ -113,7 +113,7 @@ public class StoryAttackDataManager : MonoBehaviour
                 return new List<AttackData>
                 {
                     new AttackData("Fire Slash", 25, "Burns enemy, but scorches you significantly.", "Attack1",
-                                   AttackType.MoveAndHit, "FireSlash", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "None", critChance: 0.15f, accuracy: 0.90f, doubleEdgeDamage: 10f, charName: "Fire"),
+                                   AttackType.MoveAndHit, "FireSlash", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "None", critChance: 0.15f, accuracy: 1f, doubleEdgeDamage: 10f, charName: "Fire"),
                     new AttackData("Spin Slash", 30, "Spinning flame attack. High crit potential.", "Attack2",
                                    AttackType.MoveAndHit, "FireSpin", new Vector3(0.0f, 0.5f, 0f), 0.1f, 0.8f, Color.red, sound: "None", critChance: 0.40f, accuracy: 0.70f, charName: "Fire"),
                     new AttackData("Fire Combo", 50, "Multi-hit flames. Good accuracy. Burns the user.", "Attack3",
@@ -190,18 +190,34 @@ public class StoryAttackDataManager : MonoBehaviour
     {
         switch (enemyName)
         {
-            case "SkullWolf":
+            case "FlyingEye":
                 return new List<AttackData> {
-                new AttackData("Slash", 10, "A quick slash", "Attack1", AttackType.MoveAndHit, "None", Vector3.zero, 0.1f, 0.1f, Color.red, sound: "Knight/Slash4", accuracy: 0.9f, maxCooldown: 0)
+                new AttackData("Bite", 10, "A piercing bite that slightly damages the target.", "Attack1",
+                    AttackType.MoveAndHit, "None", Vector3.zero, 0.1f, 0.1f, Color.red, sound: "Knight/Slash4", accuracy: 1f, maxCooldown: 0),
+
+                new AttackData("Terrifying Scream", 5, "A scream that instills fear, lowering player's accuracy.", "Attack3",
+                    AttackType.DirectHit, "Effects/ScreamEffect", Vector3.zero, 0.1f, 0.1f, Color.yellow, sound: "Knight/Slash4", accuracy: 1.0f, maxCooldown: 4,
+                    effects: new List<StatusEffect> { new StatusEffect { effectType = StatusEffectType.AccuracyDown, value = 0.15f, duration = 2, isBuff = false } }),
+
+                new AttackData("Dive Bomb", 25, "Dives at the player for heavy damage.", "Attack2",
+                    AttackType.MoveAndHit, "None", Vector3.zero, 0.1f, 0.1f, Color.red, sound: "Knight/Slash4", accuracy: 0.8f, maxCooldown: 3)
             };
-            case "Dragon":
+            case "Slime":
                 return new List<AttackData> {
-                new AttackData("Claw Swipe", 25, "A powerful swipe.", "Attack1", AttackType.DirectHit, "Effects/Slash6", new Vector3(0, 0.7f, 0), 0.1f, 0.8f, Color.red, sound: "Slash", accuracy: 0.95f, maxCooldown: 0),
-                new AttackData("Fire Breath", 40, "Breathes a cone of fire.", "Special", AttackType.AreaEffect, "Effects/LargeFireExplosion", new Vector3(0, 0.5f, 0), 0.2f, 2f, Color.red, sound: "None", accuracy: 1.0f, maxCooldown: 3) // <-- Cooldown of 3 turns
+                new AttackData("Slime Swipe", 8, "A weak, sticky swipe.", "Attack1",
+                    AttackType.MoveAndHit, "None", new Vector3(0, 0.7f, 0), 0.1f, 0.1f, Color.blue, sound: "Knight/Slash4", accuracy: 1f, maxCooldown: 0),
+
+                new AttackData("Corrosive Spit", 12, "Spits acid that lowers player's damage.", "Attack2",
+                    AttackType.MoveAndHit, "Effects/SlimeProjectile", new Vector3(0, 0.5f, 0), 0.2f, 0.1f, Color.blue, sound: "Knight/Slash4", accuracy: 1f, maxCooldown: 3,
+                    hitEffectName: "Effects/AcidHit",
+                    effects: new List<StatusEffect> { new StatusEffect { effectType = StatusEffectType.DamageDown, value = 0.2f, duration = 2, isBuff = false } }),
+
+                new AttackData("Engulf", 0, "Consumes ambient magic to heal itself.", "Attack2",
+                    AttackType.Heal, "None", new Vector3(0, 0.5f, 0), 0.2f, 0.1f, Color.green, sound: "Heal", accuracy: 1.0f, maxCooldown: 4)
             };
             default:
                 return new List<AttackData> {
-                new AttackData("Tackle", 8, "A basic physical attack.", "Attack1", AttackType.DirectHit, "Effects/Slash4", Vector3.zero, 0.1f, 0.8f, Color.white, sound: "Slash", accuracy: 0.9f, maxCooldown: 0)
+                new AttackData("Tackle", 8, "A basic physical attack.", "Attack1", AttackType.MoveAndHit, "Effects/Slash4", Vector3.zero, 0.1f, 0.1f, Color.white, sound: "Slash", accuracy: 0.9f, maxCooldown: 0)
             };
         }
     }

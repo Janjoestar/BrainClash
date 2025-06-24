@@ -50,6 +50,8 @@ public class StoryBattleManager : MonoBehaviour
 
     private List<AttackData> playerAttacks = new List<AttackData>();
 
+    public Dictionary<StatusEffectType, StatusEffect> playerStatusEffects = new Dictionary<StatusEffectType, StatusEffect>();
+
     public List<AttackData> GetCurrentPlayerAttacks()
     {
         return playerAttacks;
@@ -79,9 +81,9 @@ public class StoryBattleManager : MonoBehaviour
     private Vector3 originalPlayerPosition;
 
     [Header("Wave System")]
-    [SerializeField] private int currentWave = 1;
+    [SerializeField] public int currentWave = 1;
     [SerializeField] private int maxWaves = 5;
-    [SerializeField] private float waveProgressionMultiplier = 1.1f;
+    [SerializeField] public float waveProgressionMultiplier = 1.1f;
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private Transform[] enemySpawnPoints;
 
@@ -97,6 +99,31 @@ public class StoryBattleManager : MonoBehaviour
     public EnemySpawner enemySpawner;
     public PlayerCharacter playerCharacter;
 
+    private Queue<string> battleStatusQueue = new Queue<string>();
+    private bool isDisplayingStatus = false;
+
+    // Add this new method to queue messages
+    public void QueueBattleStatus(string message)
+    {
+        battleStatusQueue.Enqueue(message);
+        if (!isDisplayingStatus)
+        {
+            StartCoroutine(ProcessStatusQueue());
+        }
+    }
+
+    // Add this new coroutine to process the queue
+    private IEnumerator ProcessStatusQueue()
+    {
+        isDisplayingStatus = true;
+        while (battleStatusQueue.Count > 0)
+        {
+            uiManager.UpdateBattleStatus(battleStatusQueue.Dequeue());
+            yield return new WaitForSeconds(1.25f); // How long each message stays on screen
+        }
+        isDisplayingStatus = false;
+    }
+
     private void Awake()
     {
         if (GetComponent<AudioSource>() == null)
@@ -104,12 +131,14 @@ public class StoryBattleManager : MonoBehaviour
             gameObject.AddComponent<AudioSource>().playOnAwake = false;
         }
 
+        Enemies.Clear();
+
         // Initialize parts that don't depend on player character setup yet
         uiManager = new UIManager(this, battlePanel, attackPanel, enemySelectionPanel, endScreenPanel, enemyUIPanel,
-                                   playerHealthText, battleStatusText, resultText, returnToMenuButton, continueButton,
-                                   enemySelectionPanel.transform,
-                                   attackButtonPrefab, attackHoverPrefab, enemyUIElementPrefab,
-                                   hoverDelay, enemyUIOffset, waveReachedText, () => enemySpawner.GetEnemyNames());
+                                    playerHealthText, battleStatusText, resultText, returnToMenuButton, continueButton,
+                                    enemySelectionPanel.transform,
+                                    attackButtonPrefab, attackHoverPrefab, enemyUIElementPrefab,
+                                    hoverDelay, enemyUIOffset, waveReachedText, () => enemySpawner.GetEnemyNames());
 
         enemySpawner = new EnemySpawner(Enemies, enemyPrefabs, enemySpawnPoints);
         playerCharacter = new PlayerCharacter(Player, playerPosition); // PlayerCharacter object created.
@@ -144,17 +173,25 @@ public class StoryBattleManager : MonoBehaviour
             return;
         }
 
-        // Now that playerCharacter's Animator is set, initialize AttackHandler
-        // The AttackHandler constructor will now correctly grab the _playerOriginalAnimatorController.
+        // --- BUG FIX: INITIALIZATION ORDER ---
+        // Setup player position and store it FIRST.
+        playerCharacter.SetupPlayer();
+        originalPlayerPosition = playerCharacter.OriginalPlayerPosition;
+
+        // NOW initialize AttackHandler with the correct originalPlayerPosition.
         attackHandler = new AttackHandler(this, Player, Enemies, currentEnemyHealths,
-                                          () => enemySpawner.GetEnemyNames(),
-                                          () => currentPlayerHealth, (newHealth) => currentPlayerHealth = newHealth,
-                                          () => playerMaxHealth,
-                                          () => damageMultiplier, () => critChanceBonus, () => accuracyBonus,
-                                          () => healingMultiplier, () => doubleEdgeReduction,
-                                          () => hasLifesteal, () => LifestealPercentage,
-                                          () => hasShield, (amount) => ShieldAmount = amount,
-                                          moveSpeed, attackDistance, originalPlayerPosition, attackEffectPrefab);
+    () => enemySpawner.GetEnemyNames(),
+    () => currentPlayerHealth, (newHealth) => currentPlayerHealth = newHealth,
+    () => playerMaxHealth,
+    GetPlayerDamageMultiplier,
+    () => critChanceBonus,
+    GetPlayerAccuracyBonus,
+    () => healingMultiplier, () => doubleEdgeReduction,
+    () => hasLifesteal, () => LifestealPercentage,
+    () => hasShield, (amount) => ShieldAmount = amount,
+    playerStatusEffects,
+    QueueBattleStatus, // <-- CHANGE THIS LINE
+    moveSpeed, attackDistance, originalPlayerPosition, attackEffectPrefab);
 
         currentPlayerHealth = playerMaxHealth;
         currentWave = 1;
@@ -162,13 +199,68 @@ public class StoryBattleManager : MonoBehaviour
 
         enemySpawner.SpawnWaveEnemies(currentWave, waveProgressionMultiplier, enemyMaxHealth, currentEnemyHealths);
         uiManager.CreateEnemyUI(Enemies, currentEnemyHealths);
-        playerCharacter.SetupPlayer(); // This handles position, etc.
-        originalPlayerPosition = playerCharacter.OriginalPlayerPosition;
+        // playerCharacter.SetupPlayer(); // This is now done earlier
 
         uiManager.SetEnemySelectionPanelActive(false);
         UpdateHealthDisplays();
         uiManager.UpdateBattleStatus($"Wave {currentWave} - Choose your attack!");
         ShowAttackOptions();
+    }
+
+    public float GetPlayerDamageMultiplier()
+    {
+        float multiplier = damageMultiplier;
+        if (playerStatusEffects.ContainsKey(StatusEffectType.DamageDown))
+        {
+            multiplier *= (1 - playerStatusEffects[StatusEffectType.DamageDown].value);
+        }
+        return multiplier;
+    }
+
+    public float GetPlayerAccuracyBonus()
+    {
+        float bonus = accuracyBonus;
+        if (playerStatusEffects.ContainsKey(StatusEffectType.AccuracyDown))
+        {
+            bonus -= playerStatusEffects[StatusEffectType.AccuracyDown].value;
+        }
+        return bonus;
+    }
+
+    private void ApplyTurnStartEffects()
+    {
+        if (hasRegeneration && regenPerTurn > 0)
+        {
+            float healAmount = Mathf.Min(regenPerTurn, playerMaxHealth - currentPlayerHealth);
+            if (healAmount > 0)
+            {
+                currentPlayerHealth += healAmount;
+                uiManager.UpdateBattleStatus($"Regeneration healed {Mathf.Round(healAmount)} HP!");
+                // --- FIX: Call the renamed animation method ---
+                uiManager.ShowPlayerHealthChange(currentPlayerHealth, healAmount);
+            }
+        }
+
+        // Apply and tick down status effects
+        if (playerStatusEffects.Count > 0)
+        {
+            var effectsToRemove = new List<StatusEffectType>();
+            var keys = new List<StatusEffectType>(playerStatusEffects.Keys);
+
+            foreach (var key in keys)
+            {
+                playerStatusEffects[key].duration--;
+                if (playerStatusEffects[key].duration <= 0)
+                {
+                    effectsToRemove.Add(key);
+                    uiManager.UpdateBattleStatus($"{key} has worn off.");
+                }
+            }
+            foreach (var key in effectsToRemove)
+            {
+                playerStatusEffects.Remove(key);
+            }
+        }
     }
 
     private void ResetUpgradeModifiers()
@@ -184,6 +276,7 @@ public class StoryBattleManager : MonoBehaviour
         hasLifesteal = false;
         hasShield = false;
         hasRegeneration = false;
+        playerStatusEffects.Clear();
     }
 
     public void ApplyUpgrade(UpgradeData upgrade, int stacks)
@@ -260,6 +353,10 @@ public class StoryBattleManager : MonoBehaviour
 
     private void OnAttackSelected(AttackData attack)
     {
+        // --- BUG FIX: PERSISTENT HOVER ---
+        // Hide the hover UI as soon as a button is clicked.
+        HideAttackHover();
+
         selectedAttack = attack;
 
         if (attack.attackType == AttackType.Heal)
@@ -305,7 +402,7 @@ public class StoryBattleManager : MonoBehaviour
     private void ShowEnemySelection()
     {
         uiManager.SetAttackPanelActive(false);
-        uiManager.OnAttackButtonHoverExit(ref hoverCoroutine, ref currentHoverInstance);
+        // uiManager.OnAttackButtonHoverExit is already called by HideAttackHover()
         uiManager.SetEnemySelectionPanelActive(true);
         uiManager.UpdateBattleStatus("Select target enemy for " + selectedAttack.attackName + "!");
 
@@ -329,12 +426,12 @@ public class StoryBattleManager : MonoBehaviour
     {
         SetAttackButtonsInteractable(false);
 
-        // Perform the player's attack (this part is unchanged)
+        // This now waits for all damage/UI animations within the attack to finish.
         yield return attackHandler.PerformAttack(attack, targetEnemyIndex,
-            uiManager.UpdateBattleStatus,
             uiManager.PlayImpactEffect,
             () => uiManager.FlashSprite(Player.GetComponent<SpriteRenderer>(), attack));
 
+        // UpdateHealthDisplays is still useful for a final sync before death checks.
         UpdateHealthDisplays();
 
         var deathRoutines = new List<Coroutine>();
@@ -343,8 +440,7 @@ public class StoryBattleManager : MonoBehaviour
             if (currentEnemyHealths[i] <= 0 && !processedAsDefeated.Contains(i))
             {
                 processedAsDefeated.Add(i);
-
-                deathRoutines.Add(StartCoroutine(IndividualEnemyDeath(Enemies[i])));
+                deathRoutines.Add(StartCoroutine(IndividualEnemyDeath(Enemies[i], i)));
             }
         }
 
@@ -356,23 +452,29 @@ public class StoryBattleManager : MonoBehaviour
         CheckForBattleEnd();
     }
 
-    private void ApplyTurnStartEffects()
+    private IEnumerator IndividualEnemyDeath(GameObject enemy, int enemyIndex)
     {
-        if (hasRegeneration && regenPerTurn > 0)
+        if (enemy == null) yield break;
+        Animator animator = enemy.GetComponent<Animator>();
+        SpriteRenderer spriteRenderer = enemy.GetComponent<SpriteRenderer>();
+        if (animator == null || spriteRenderer == null) yield break;
+
+        animator.SetTrigger("Death");
+
+        yield return new WaitForSeconds(0.1f);
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationLength);
+
+        spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.8f);
+
+        if (uiManager != null)
         {
-            float healAmount = Mathf.Min(regenPerTurn, playerMaxHealth - currentPlayerHealth);
-            if (healAmount > 0)
-            {
-                currentPlayerHealth += healAmount;
-                uiManager.UpdateBattleStatus($"Regeneration healed {Mathf.Round(healAmount)} HP!");
-                UpdateHealthDisplays();
-            }
+            uiManager.DeactivateEnemyUIElement(enemyIndex);
         }
     }
 
-    private bool isPlayerTurn = true;
 
-    // In StoryBattleManager.cs
+    private bool isPlayerTurn = true;
 
     private IEnumerator EnemiesTurnCoroutine()
     {
@@ -406,10 +508,8 @@ public class StoryBattleManager : MonoBehaviour
                 {
                     // Perform the attack chosen by the AI (or its fallback).
                     yield return attackHandler.PerformEnemyAttack(chosenAttack, currentEnemy,
-                        uiManager.UpdateBattleStatus,
                         uiManager.PlayImpactEffect,
-                        () => uiManager.FlashSprite(Player.GetComponent<SpriteRenderer>(), chosenAttack)
-                    );
+                        () => uiManager.FlashSprite(Player.GetComponent<SpriteRenderer>(), chosenAttack));
 
                     // Set the cooldown for the attack that was just used.
                     enemyAI.SetCooldownOnAttack(chosenAttack.attackName);
@@ -470,25 +570,6 @@ public class StoryBattleManager : MonoBehaviour
             SetAttackButtonsInteractable(true);
             ShowAttackOptions();
         }
-    }
-    private IEnumerator IndividualEnemyDeath(GameObject enemy)
-    {
-        // Ensure the enemy and its components exist before trying to use them
-        if (enemy == null) yield break;
-        Animator animator = enemy.GetComponent<Animator>();
-        SpriteRenderer spriteRenderer = enemy.GetComponent<SpriteRenderer>();
-        if (animator == null || spriteRenderer == null) yield break;
-
-        // 1. Trigger the animation
-        animator.SetTrigger("Death");
-
-        // 2. Wait for the animation to finish
-        yield return new WaitForSeconds(0.1f); // Brief delay for the animation state to transition
-        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(animationLength);
-
-        // 3. Make the sprite gray to show it's defeated
-        spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.8f);
     }
 
     private IEnumerator HandlePlayerDefeat()
@@ -621,6 +702,13 @@ public class StoryBattleManager : MonoBehaviour
     }
 
     private void OnAttackButtonHoverExit()
+    {
+        uiManager.OnAttackButtonHoverExit(ref hoverCoroutine, ref currentHoverInstance);
+    }
+
+    // --- BUG FIX: PERSISTENT HOVER ---
+    // Public method to allow other scripts like UpgradeManager to hide the hover UI.
+    public void HideAttackHover()
     {
         uiManager.OnAttackButtonHoverExit(ref hoverCoroutine, ref currentHoverInstance);
     }
