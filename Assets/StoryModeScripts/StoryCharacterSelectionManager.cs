@@ -10,6 +10,9 @@ public class StoryCharacterSelectionManager : MonoBehaviour
     public CharacterDatabase characterDB;
     [SerializeField] private Button confirmButton;
 
+    [Header("Debug Settings")]
+    [SerializeField] private bool unlockAllAbilitiesDebug = false; // <-- DEBUG TOGGLE ADDED
+
     [Header("Player UI")]
     public Text nameText;
     public SpriteRenderer artworkSprite;
@@ -51,15 +54,23 @@ public class StoryCharacterSelectionManager : MonoBehaviour
 
     private void UpdateAttackInfo(string characterName)
     {
-        // Get only the starting attack for display in character selection
-        List<AttackData> attacks = new List<AttackData>();
-        AttackData startingAttack = storyAttackDataManager.GetStartingAttackForCharacter(characterName);
-        if (startingAttack != null)
+        // If debug toggle is on, get all attacks. Otherwise, get only the starting one.
+        if (unlockAllAbilitiesDebug)
         {
-            attacks.Add(startingAttack);
+            currentAttacks = storyAttackDataManager.GetAttacksForCharacter(characterName);
         }
-        currentAttacks = attacks;
-        UpdateAttackUI(attacks, attackButtons, attackNames);
+        else
+        {
+            // Original behavior
+            List<AttackData> attacks = new List<AttackData>();
+            AttackData startingAttack = storyAttackDataManager.GetStartingAttackForCharacter(characterName);
+            if (startingAttack != null)
+            {
+                attacks.Add(startingAttack);
+            }
+            currentAttacks = attacks;
+        }
+        UpdateAttackUI(currentAttacks, attackButtons, attackNames);
     }
 
     private void UpdateAttackUI(List<AttackData> attacks, Button[] buttons, Text[] names)
@@ -70,22 +81,24 @@ public class StoryCharacterSelectionManager : MonoBehaviour
             return;
         }
 
+        // Loop through all available button slots
         for (int i = 0; i < buttons.Length; i++)
         {
-            // Only show the first attack (the starting attack)
-            if (i == 0 && attacks.Count > 0)
+            // If there's an attack for this button slot, activate and configure it
+            if (i < attacks.Count)
             {
                 buttons[i].gameObject.SetActive(true);
 
                 if (i < names.Length && names[i] != null)
-                    names[i].text = attacks[0].attackName; // Use the first attack
+                    names[i].text = attacks[i].attackName;
 
                 ColorBlock colors = buttons[i].colors;
-                colors.normalColor = storyAttackDataManager.GetColorForAttackType(attacks[0].attackType); // Use new manager
+                colors.normalColor = storyAttackDataManager.GetColorForAttackType(attacks[i].attackType);
                 buttons[i].colors = colors;
             }
             else
             {
+                // If there's no attack for this slot, deactivate the button
                 buttons[i].gameObject.SetActive(false);
             }
         }
@@ -93,15 +106,23 @@ public class StoryCharacterSelectionManager : MonoBehaviour
 
     public void PlayAttackAnimation(int attackIndex)
     {
+        // Check if the provided index is valid for the current attacks list
+        if (currentAttacks == null || attackIndex < 0 || attackIndex >= currentAttacks.Count)
+        {
+            Debug.LogError("Invalid attack index for animation preview.");
+            return;
+        }
+
         GameObject characterObject = artworkSprite.gameObject;
         Animator animator = characterObject.GetComponent<Animator>();
-        string attackTrigger = "Attack1"; // Always trigger Attack1 animation for preview
 
-        AttackData attackData = null;
-        if (currentAttacks != null && currentAttacks.Count > 0)
-            attackData = currentAttacks[0]; // Always use the first attack for preview data
+        // Get the specific attack data using the button's index
+        AttackData attackData = currentAttacks[attackIndex];
 
-        if (animator != null)
+        // Use the animation trigger defined in the AttackData
+        string attackTrigger = attackData.animationTrigger;
+
+        if (animator != null && !string.IsNullOrEmpty(attackTrigger))
         {
             animator.SetTrigger(attackTrigger);
         }
@@ -187,6 +208,8 @@ public class StoryCharacterSelectionManager : MonoBehaviour
     public void SaveCharacter()
     {
         PlayerPrefs.SetInt("selectedStoryCharacter", selectedOption);
+        // Save the state of the debug toggle so the battle scene can read it
+        PlayerPrefs.SetInt("unlockAllAbilitiesDebug", unlockAllAbilitiesDebug ? 1 : 0);
         PlayerPrefs.Save();
     }
 

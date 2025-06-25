@@ -1751,6 +1751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
   confirmButton: {fileID: 2004321874}
+  unlockAllAbilitiesDebug: 1
   nameText: {fileID: 15096134}
   artworkSprite: {fileID: 1622638139}
   attackButtons:

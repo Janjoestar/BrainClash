@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackHandler
@@ -118,8 +119,8 @@ public class AttackHandler
     }
 
     public IEnumerator PerformAttack(AttackData attack, int targetEnemyIndex,
-                                         Action<GameObject, AttackData> playImpactEffectCallback,
-                                         Func<IEnumerator> flashPlayerSpriteCallback)
+                                     Action<GameObject, AttackData> playImpactEffectCallback,
+                                     Func<IEnumerator> flashPlayerSpriteCallback)
     {
         float modifiedAccuracy = Mathf.Min(1f, attack.accuracy + getAccuracyBonus());
         if (UnityEngine.Random.Range(0f, 1f) > modifiedAccuracy)
@@ -151,7 +152,8 @@ public class AttackHandler
         else
         {
             animator.SetTrigger(attack.animationTrigger);
-            yield return new WaitForSeconds(attack.effectDelay);
+            // Use flashInterval for delay as it contains the correct timing value from the data
+            yield return new WaitForSeconds(attack.flashInterval);
 
             if (attack.attackType == AttackType.Heal)
             {
@@ -173,7 +175,8 @@ public class AttackHandler
                 }
                 HandleDamageAttack(attack, targetEnemyIndex);
             }
-            yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger));
+            // Pass the correct delay to WaitForAnimationToComplete
+            yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.flashInterval));
         }
 
         yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
@@ -205,7 +208,8 @@ public class AttackHandler
             animator.SetTrigger(attack.animationTrigger);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        // Use flashInterval for delay as it contains the correct timing value from the data
+        yield return new WaitForSeconds(attack.flashInterval);
 
         if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
             GameManager.Instance.PlaySFX(attack.soundEffectName);
@@ -217,7 +221,8 @@ public class AttackHandler
 
         HandleDamageAttack(attack, targetEnemyIndex);
 
-        yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, 0.1f));
+        // Pass the correct delay to WaitForAnimationToComplete
+        yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.flashInterval));
 
         yield return monoBehaviourInstance.StartCoroutine(MovePlayerTo(originalPlayerPosition));
     }
@@ -248,6 +253,12 @@ public class AttackHandler
 
     private IEnumerator HandleAreaAttack(AttackData attack, Action<GameObject, AttackData> playImpactEffectCallback)
     {
+        // FIX: Play sound for Area of Effect attacks
+        if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
+        {
+            GameManager.Instance.PlaySFX(attack.soundEffectName);
+        }
+
         List<int> aliveEnemies = new List<int>();
         for (int i = 0; i < currentEnemyHealths.Count; i++)
         {
@@ -424,8 +435,8 @@ public class AttackHandler
     }
 
     public IEnumerator PerformEnemyAttack(AttackData attack, GameObject attackingEnemy,
-                                              Action<GameObject, AttackData> playImpactEffectCallback,
-                                              Func<IEnumerator> flashPlayerSpriteCallback)
+                                          Action<GameObject, AttackData> playImpactEffectCallback,
+                                          Func<IEnumerator> flashPlayerSpriteCallback)
     {
         string enemyDisplayName = attackingEnemy.name.Replace("(Clone)", "").Trim();
         QueueStatusUpdate($"{enemyDisplayName} uses {attack.attackName}!");
@@ -457,7 +468,8 @@ public class AttackHandler
                 {
                     enemyAnimator.SetTrigger(attack.animationTrigger);
                 }
-                yield return new WaitForSeconds(0.1f);
+                // Use flashInterval for delay as it contains the correct timing value from the data
+                yield return new WaitForSeconds(attack.flashInterval);
                 yield return monoBehaviourInstance.StartCoroutine(HandleEnemyDamagePlayer(attack, attackingEnemy, playImpactEffectCallback, flashPlayerSpriteCallback));
                 break;
         }
@@ -509,7 +521,8 @@ public class AttackHandler
             enemyAnimator.SetTrigger(attack.animationTrigger);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        // Use flashInterval for delay as it contains the correct timing value from the data
+        yield return new WaitForSeconds(attack.flashInterval);
 
         yield return monoBehaviourInstance.StartCoroutine(HandleEnemyDamagePlayer(attack, attackingEnemy, playImpactEffectCallback, flashPlayerSpriteCallback));
 
