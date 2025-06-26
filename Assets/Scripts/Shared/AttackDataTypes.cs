@@ -5,12 +5,12 @@ using UnityEngine;
 // Define AttackType enum once
 public enum AttackType
 {
-    Slash,            // Melee slash effects that appear near the target
-    Projectile,       // Effects that travel from attacker to defender
-    Magic,            // Magical projectiles that travel
-    AreaEffect,       // Effects that appear on or around the target (explosions, etc.)
-    DirectHit,        // Effects that appear directly on the target (hammer hit, etc.)
-    MoveAndHit,       // Character moves to target, attacks, then returns to position
+    Slash,          // Melee slash effects that appear near the target
+    Projectile,     // Effects that travel from attacker to defender
+    Magic,          // Magical projectiles that travel
+    AreaEffect,     // Effects that appear on or around the target (explosions, etc.)
+    DirectHit,      // Effects that appear directly on the target (hammer hit, etc.)
+    MoveAndHit,     // Character moves to target, attacks, then returns to position
     Heal
 }
 
@@ -37,11 +37,15 @@ public class AttackData
 
     public float critChance = 0.0f;
     public float accuracy = 1f;
-    public int cooldown = 0;        // How many turns this attack is on cooldown
-    public int maxCooldown = 0;     // Maximum cooldown turns (0 = no cooldown)
+    public int cooldown = 0;      // How many turns this attack is on cooldown
+    public int maxCooldown = 0;   // Maximum cooldown turns (0 = no cooldown)
     public float damageIncrease = 0f;
     public string characterName;
     public List<StatusEffect> effectsToApply;
+
+    // --- NEW ---
+    public int numberOfTargets = 1; // How many enemies the attack can hit. 99+ for Full AOE.
+    public float damageMultiplier = 1.0f; // Damage modifier for this specific attack.
 
     public AttackData(string name, float dmg, string desc, string animTrigger,
                       AttackType type, string effectName, Vector3 offset, float delay,
@@ -49,7 +53,7 @@ public class AttackData
                       string hitEffectName = "", Vector3 hitOffset = default,
                       float critChance = 0.0f, float accuracy = 0.85f, float doubleEdgeDamage = 0f,
                       bool canSelfKO = false, float selfKOFailChance = 0.0f, int maxCooldown = 0,
-                      string charName = "Default", List<StatusEffect> effects = null) // Added effects parameter
+                      string charName = "Default", List<StatusEffect> effects = null, int numberOfTargets = 1) // Added numberOfTargets
     {
         attackName = name;
         damage = dmg;
@@ -73,11 +77,13 @@ public class AttackData
         this.cooldown = 0;
         this.characterName = charName;
         this.effectsToApply = effects ?? new List<StatusEffect>();
+        this.numberOfTargets = numberOfTargets; // --- NEW ---
+        this.damageMultiplier = 1.0f; // --- NEW ---
     }
 
-    // Backward compatibility constructor - updated to include characterName
+    // Backward compatibility constructor - updated
     public AttackData(string name, int dmg, string desc, string animTrigger, AttackType type)
-        : this(name, (float)dmg, desc, animTrigger, type, "", Vector3.zero, 0.3f, 0.1f, Color.red, charName: "Default") // Added charName here
+        : this(name, (float)dmg, desc, animTrigger, type, "", Vector3.zero, 0.3f, 0.1f, Color.red, charName: "Default")
     {
     }
 }

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackHandler
 {
-    private class StatusUpdateAction
-    {
-        public string Message;
-        public Coroutine AnimationCoroutine;
-    }
-
+    // ... (Fields and constructor are unchanged)
     private MonoBehaviour monoBehaviourInstance;
     private GameObject player;
     private List<GameObject> enemies;
@@ -36,7 +32,11 @@ public class AttackHandler
     private Vector3 originalPlayerPosition;
     private Dictionary<StatusEffectType, StatusEffect> playerStatusEffects;
     private Action<string> updateBattleStatus;
-
+    private class StatusUpdateAction
+    {
+        public string Message;
+        public Coroutine AnimationCoroutine;
+    }
     private RuntimeAnimatorController _playerOriginalAnimatorController;
 
     private readonly Queue<StatusUpdateAction> statusUpdateQueue = new Queue<StatusUpdateAction>();
@@ -81,6 +81,196 @@ public class AttackHandler
         }
     }
 
+
+    public IEnumerator PerformAttack(AttackData attack, int primaryTargetIndex,
+                                     Action<GameObject, AttackData> playImpactEffectCallback,
+                                     Func<IEnumerator> flashPlayerSpriteCallback)
+    {
+        // ... (Accuracy check and Animator setup are unchanged) ...
+        float modifiedAccuracy = Mathf.Min(1f, attack.accuracy + getAccuracyBonus());
+        if (UnityEngine.Random.Range(0f, 1f) > modifiedAccuracy)
+        {
+            QueueStatusUpdate(attack.attackName + " missed!");
+            yield return HandleMissedAttack(attack, flashPlayerSpriteCallback);
+            yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
+            yield break;
+        }
+
+        Animator animator = player.GetComponent<Animator>();
+        if (animator == null) yield break;
+
+        RuntimeAnimatorController targetOriginalController = _playerOriginalAnimatorController;
+        AnimatorOverrideController attackCharacterOverrideController = Resources.Load<AnimatorOverrideController>("Animations/" + attack.characterName + "Override");
+        bool controllerWasTemporarilyChanged = false;
+        if (attackCharacterOverrideController != null && animator.runtimeAnimatorController != attackCharacterOverrideController)
+        {
+            animator.runtimeAnimatorController = attackCharacterOverrideController;
+            animator.Rebind();
+            animator.Update(0f);
+            controllerWasTemporarilyChanged = true;
+        }
+
+        if (attack.attackType == AttackType.Heal)
+        {
+            animator.SetTrigger(attack.animationTrigger);
+            yield return new WaitForSeconds(attack.effectDelay);
+            HandleHealAttack(attack);
+            if (player != null) playImpactEffectCallback(player, attack);
+            yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.effectDelay));
+            yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
+            yield break;
+        }
+
+        List<int> finalTargetIndices = new List<int>();
+        var sbm = (StoryBattleManager)monoBehaviourInstance;
+        List<int> aliveEnemies = sbm.GetAliveEnemyIndices();
+
+        if (attack.numberOfTargets >= 99 || attack.numberOfTargets >= aliveEnemies.Count)
+        {
+            finalTargetIndices.AddRange(aliveEnemies);
+            QueueStatusUpdate("You used " + attack.attackName + " on all enemies!");
+        }
+        else
+        {
+            if (primaryTargetIndex != -1 && aliveEnemies.Contains(primaryTargetIndex))
+            {
+                finalTargetIndices.Add(primaryTargetIndex);
+            }
+
+            if (attack.numberOfTargets > 1)
+            {
+                List<int> otherAliveEnemies = aliveEnemies.Where(i => i != primaryTargetIndex).ToList();
+                int targetsToAdd = Mathf.Min(attack.numberOfTargets - finalTargetIndices.Count, otherAliveEnemies.Count);
+
+                for (int i = 0; i < targetsToAdd; i++)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, otherAliveEnemies.Count);
+                    finalTargetIndices.Add(otherAliveEnemies[randomIndex]);
+                    otherAliveEnemies.RemoveAt(randomIndex);
+                }
+            }
+        }
+
+        if (finalTargetIndices.Count == 0)
+        {
+            QueueStatusUpdate(attack.attackName + " had no valid targets!");
+            yield break;
+        }
+
+        if (attack.attackType == AttackType.MoveAndHit)
+        {
+            yield return monoBehaviourInstance.StartCoroutine(MoveToEnemyAndAttack(attack, primaryTargetIndex, finalTargetIndices, playImpactEffectCallback));
+        }
+        else
+        {
+            animator.SetTrigger(attack.animationTrigger);
+            yield return new WaitForSeconds(attack.effectDelay);
+            if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
+                GameManager.Instance.PlaySFX(attack.soundEffectName);
+
+            // --- CHANGE --- Pass primaryTargetIndex to the damage handler
+            yield return HandleDamageToTargets(attack, finalTargetIndices, primaryTargetIndex, playImpactEffectCallback);
+            yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.effectDelay));
+        }
+
+        yield return HandleSelfDamage(attack, flashPlayerSpriteCallback);
+        yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
+
+        if (controllerWasTemporarilyChanged)
+        {
+            animator.runtimeAnimatorController = targetOriginalController;
+            animator.Rebind();
+            animator.Update(0f);
+        }
+    }
+
+    private IEnumerator MoveToEnemyAndAttack(AttackData attack, int primaryTargetIndex, List<int> allTargetIndices, Action<GameObject, AttackData> playImpactEffectCallback)
+    {
+        if (primaryTargetIndex < 0 || primaryTargetIndex >= enemies.Count || enemies[primaryTargetIndex] == null || !enemies[primaryTargetIndex].activeInHierarchy)
+        {
+            QueueStatusUpdate("Invalid primary target for move!");
+            yield break;
+        }
+
+        Vector3 enemyPos = enemies[primaryTargetIndex].transform.position;
+        Vector3 targetPos = enemyPos + Vector3.left * attackDistance;
+
+        yield return monoBehaviourInstance.StartCoroutine(MovePlayerTo(targetPos));
+
+        Animator animator = player.GetComponent<Animator>();
+        if (animator != null) animator.SetTrigger(attack.animationTrigger);
+
+        yield return new WaitForSeconds(attack.effectDelay);
+
+        if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
+            GameManager.Instance.PlaySFX(attack.soundEffectName);
+
+        // --- CHANGE --- Pass primaryTargetIndex to the damage handler
+        yield return HandleDamageToTargets(attack, allTargetIndices, primaryTargetIndex, playImpactEffectCallback);
+
+        yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.effectDelay));
+        yield return monoBehaviourInstance.StartCoroutine(MovePlayerTo(originalPlayerPosition));
+    }
+
+    // --- MAJOR CHANGE IN THIS METHOD ---
+    private IEnumerator HandleDamageToTargets(AttackData attack, List<int> targetIndices, int primaryTargetIndex, Action<GameObject, AttackData> playImpactEffectCallback)
+    {
+        var sbm = (StoryBattleManager)monoBehaviourInstance;
+        float totalDamageDealt = 0f;
+
+        foreach (int enemyIndex in targetIndices)
+        {
+            if (enemyIndex < 0 || enemyIndex >= currentEnemyHealths.Count || currentEnemyHealths[enemyIndex] <= 0 || !enemies[enemyIndex].activeInHierarchy) continue;
+
+            // --- NEW LOGIC: Determine per-target multiplier ---
+            float perTargetMultiplier = 1.0f;
+            // Apply the penalty only if this is NOT the primary target
+            if (enemyIndex != primaryTargetIndex)
+            {
+                perTargetMultiplier = attack.damageMultiplier;
+            }
+
+            // Apply the per-target multiplier, then the global player multiplier
+            float finalDamage = (attack.damage * perTargetMultiplier + attack.damageIncrease) * getDamageMultiplier();
+            float modifiedCritChance = Mathf.Min(1f, attack.critChance + getCritChanceBonus());
+            bool isCrit = UnityEngine.Random.Range(0f, 1f) < modifiedCritChance;
+
+            if (isCrit)
+            {
+                finalDamage *= 2f;
+                if (GameManager.Instance != null) GameManager.Instance.PlayCritSound();
+            }
+
+            float initialHealth = currentEnemyHealths[enemyIndex];
+            currentEnemyHealths[enemyIndex] = Mathf.Max(0, currentEnemyHealths[enemyIndex] - finalDamage);
+            float damageDone = initialHealth - currentEnemyHealths[enemyIndex];
+            totalDamageDealt += damageDone;
+
+            playImpactEffectCallback(enemies[enemyIndex], attack);
+            Coroutine healthChangeAnim = (damageDone > 0) ? sbm.uiManager.ShowEnemyHealthChange(enemyIndex, currentEnemyHealths[enemyIndex], -damageDone, isCrit) : null;
+
+            if (targetIndices.Count == 1)
+            {
+                QueueStatusUpdate("You used " + attack.attackName + " on " + getEnemyNames()[enemyIndex] + (isCrit ? "! It's a critical hit!" : "!"), healthChangeAnim);
+            }
+        }
+
+        yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
+
+        if (getHasLifesteal() && getLifestealPercentage() > 0 && totalDamageDealt > 0)
+        {
+            float healAmount = totalDamageDealt * (getLifestealPercentage() / 100f);
+            if (healAmount > 0)
+            {
+                float newPlayerHealth = Mathf.Min(getPlayerMaxHealth(), getCurrentPlayerHealth() + healAmount);
+                setCurrentPlayerHealth(newPlayerHealth);
+                QueueStatusUpdate($"Lifesteal healed {Mathf.Round(healAmount)} HP!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, healAmount, false));
+                yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
+            }
+        }
+    }
+
+    // ... (The rest of the file is unchanged) ...
     private void QueueStatusUpdate(string message, Coroutine animationCoroutine = null)
     {
         statusUpdateQueue.Enqueue(new StatusUpdateAction { Message = message, AnimationCoroutine = animationCoroutine });
@@ -118,115 +308,25 @@ public class AttackHandler
         }
     }
 
-    public IEnumerator PerformAttack(AttackData attack, int targetEnemyIndex,
-                                     Action<GameObject, AttackData> playImpactEffectCallback,
-                                     Func<IEnumerator> flashPlayerSpriteCallback)
+    private IEnumerator HandleSelfDamage(AttackData attack, Func<IEnumerator> flashPlayerSpriteCallback)
     {
-        float modifiedAccuracy = Mathf.Min(1f, attack.accuracy + getAccuracyBonus());
-        if (UnityEngine.Random.Range(0f, 1f) > modifiedAccuracy)
+        var sbm = (StoryBattleManager)monoBehaviourInstance;
+
+        if (attack.doubleEdgeDamage > 0)
         {
-            QueueStatusUpdate(attack.attackName + " missed!");
-            yield return HandleMissedAttack(attack, flashPlayerSpriteCallback);
-            yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
-            yield break;
+            float reducedDamage = attack.doubleEdgeDamage * (1f - getDoubleEdgeReduction());
+            float newPlayerHealth = Mathf.Max(0, getCurrentPlayerHealth() - reducedDamage);
+            setCurrentPlayerHealth(newPlayerHealth);
+            QueueStatusUpdate("But you hurt yourself for " + Mathf.Round(reducedDamage) + " damage!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, -reducedDamage, false));
+            yield return flashPlayerSpriteCallback();
         }
 
-        Animator animator = player.GetComponent<Animator>();
-        if (animator == null) yield break;
-
-        RuntimeAnimatorController targetOriginalController = _playerOriginalAnimatorController;
-        AnimatorOverrideController attackCharacterOverrideController = Resources.Load<AnimatorOverrideController>("Animations/" + attack.characterName + "Override");
-        bool controllerWasTemporarilyChanged = false;
-        if (attackCharacterOverrideController != null && animator.runtimeAnimatorController != attackCharacterOverrideController)
+        if (attack.canSelfKO && UnityEngine.Random.Range(0f, 1f) < attack.selfKOFailChance)
         {
-            animator.runtimeAnimatorController = attackCharacterOverrideController;
-            animator.Rebind();
-            animator.Update(0f);
-            controllerWasTemporarilyChanged = true;
-        }
-
-        if (attack.attackType == AttackType.MoveAndHit)
-        {
-            yield return monoBehaviourInstance.StartCoroutine(MoveToEnemyAndAttack(attack, targetEnemyIndex, playImpactEffectCallback));
-        }
-        else
-        {
-            animator.SetTrigger(attack.animationTrigger);
-            // Use flashInterval for delay as it contains the correct timing value from the data
-            yield return new WaitForSeconds(attack.flashInterval);
-
-            if (attack.attackType == AttackType.Heal)
-            {
-                HandleHealAttack(attack);
-                if (player != null) playImpactEffectCallback(player, attack);
-            }
-            else if (attack.attackType == AttackType.AreaEffect)
-            {
-                yield return monoBehaviourInstance.StartCoroutine(HandleAreaAttack(attack, playImpactEffectCallback));
-            }
-            else
-            {
-                if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
-                    GameManager.Instance.PlaySFX(attack.soundEffectName);
-
-                if (targetEnemyIndex >= 0 && targetEnemyIndex < enemies.Count && enemies[targetEnemyIndex] != null)
-                {
-                    playImpactEffectCallback(enemies[targetEnemyIndex], attack);
-                }
-                HandleDamageAttack(attack, targetEnemyIndex);
-            }
-            // Pass the correct delay to WaitForAnimationToComplete
-            yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.flashInterval));
-        }
-
-        yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
-
-        if (controllerWasTemporarilyChanged)
-        {
-            animator.runtimeAnimatorController = targetOriginalController;
-            animator.Rebind();
-            animator.Update(0f);
+            setCurrentPlayerHealth(0);
+            QueueStatusUpdate("The power was too great! You have been knocked out!", sbm.uiManager.ShowPlayerHealthChange(0, -999, false));
         }
     }
-
-    private IEnumerator MoveToEnemyAndAttack(AttackData attack, int targetEnemyIndex, Action<GameObject, AttackData> playImpactEffectCallback)
-    {
-        if (targetEnemyIndex < 0 || targetEnemyIndex >= enemies.Count || enemies[targetEnemyIndex] == null || !enemies[targetEnemyIndex].activeInHierarchy)
-        {
-            QueueStatusUpdate("Invalid target!");
-            yield break;
-        }
-
-        Vector3 enemyPos = enemies[targetEnemyIndex].transform.position;
-        Vector3 targetPos = enemyPos + Vector3.left * attackDistance;
-
-        yield return monoBehaviourInstance.StartCoroutine(MovePlayerTo(targetPos));
-
-        Animator animator = player.GetComponent<Animator>();
-        if (animator != null)
-        {
-            animator.SetTrigger(attack.animationTrigger);
-        }
-
-        // Use flashInterval for delay as it contains the correct timing value from the data
-        yield return new WaitForSeconds(attack.flashInterval);
-
-        if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
-            GameManager.Instance.PlaySFX(attack.soundEffectName);
-
-        if (targetEnemyIndex >= 0 && targetEnemyIndex < enemies.Count && enemies[targetEnemyIndex] != null)
-        {
-            playImpactEffectCallback(enemies[targetEnemyIndex], attack);
-        }
-
-        HandleDamageAttack(attack, targetEnemyIndex);
-
-        // Pass the correct delay to WaitForAnimationToComplete
-        yield return monoBehaviourInstance.StartCoroutine(WaitForAnimationToComplete(animator, attack.animationTrigger, attack.flashInterval));
-
-        yield return monoBehaviourInstance.StartCoroutine(MovePlayerTo(originalPlayerPosition));
-    }
-
 
     private IEnumerator WaitForAnimationToComplete(Animator animator, string animationStateName, float alreadyWaited = 0f)
     {
@@ -250,80 +350,6 @@ public class AttackHandler
             }
         }
     }
-
-    private IEnumerator HandleAreaAttack(AttackData attack, Action<GameObject, AttackData> playImpactEffectCallback)
-    {
-        // FIX: Play sound for Area of Effect attacks
-        if (GameManager.Instance != null && !string.IsNullOrEmpty(attack.soundEffectName) && attack.soundEffectName != "None")
-        {
-            GameManager.Instance.PlaySFX(attack.soundEffectName);
-        }
-
-        List<int> aliveEnemies = new List<int>();
-        for (int i = 0; i < currentEnemyHealths.Count; i++)
-        {
-            if (currentEnemyHealths[i] > 0 && enemies[i].activeInHierarchy)
-            {
-                aliveEnemies.Add(i);
-            }
-        }
-
-        var sbm = (StoryBattleManager)monoBehaviourInstance;
-        float totalDamageDealt = 0f;
-        QueueStatusUpdate("You used " + attack.attackName + " on all enemies!");
-
-        foreach (int enemyIndex in aliveEnemies)
-        {
-            float initialHealth = currentEnemyHealths[enemyIndex];
-            float finalDamage = (attack.damage + attack.damageIncrease) * getDamageMultiplier();
-            bool isCrit = UnityEngine.Random.Range(0f, 1f) < (attack.critChance + getCritChanceBonus());
-
-            if (isCrit)
-            {
-                finalDamage *= 2f;
-                if (GameManager.Instance != null) GameManager.Instance.PlayCritSound();
-            }
-
-            currentEnemyHealths[enemyIndex] = Mathf.Max(0, currentEnemyHealths[enemyIndex] - finalDamage);
-            float damageDone = initialHealth - currentEnemyHealths[enemyIndex];
-            totalDamageDealt += damageDone;
-
-            if (damageDone > 0)
-            {
-                QueueStatusUpdate("", sbm.uiManager.ShowEnemyHealthChange(enemyIndex, currentEnemyHealths[enemyIndex], -damageDone, isCrit));
-            }
-
-            if (enemyIndex < enemies.Count && enemies[enemyIndex] != null)
-            {
-                playImpactEffectCallback(enemies[enemyIndex], attack);
-            }
-        }
-
-        yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
-
-        if (getHasLifesteal() && getLifestealPercentage() > 0)
-        {
-            float healAmount = totalDamageDealt * (getLifestealPercentage() / 100f);
-            if (healAmount > 0)
-            {
-                float newPlayerHealth = Mathf.Min(getPlayerMaxHealth(), getCurrentPlayerHealth() + healAmount);
-                setCurrentPlayerHealth(newPlayerHealth);
-                QueueStatusUpdate($"Lifesteal healed {Mathf.Round(healAmount)} HP!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, healAmount, false));
-                yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
-            }
-        }
-
-        if (attack.doubleEdgeDamage > 0)
-        {
-            float reducedDamage = attack.doubleEdgeDamage * (1f - getDoubleEdgeReduction());
-
-            float newPlayerHealth = Mathf.Max(0, getCurrentPlayerHealth() - reducedDamage);
-            setCurrentPlayerHealth(newPlayerHealth);
-            QueueStatusUpdate("But you hurt yourself for " + Mathf.Round(reducedDamage) + " damage!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, -reducedDamage, false));
-            yield return monoBehaviourInstance.StartCoroutine(WaitForQueue());
-        }
-    }
-
 
     private IEnumerator MovePlayerTo(Vector3 targetPosition)
     {
@@ -365,53 +391,6 @@ public class AttackHandler
 
         if (GameManager.Instance != null)
             GameManager.Instance.PlaySFX(attack.soundEffectName);
-    }
-
-    private void HandleDamageAttack(AttackData attack, int targetEnemyIndex)
-    {
-        if (targetEnemyIndex < 0 || targetEnemyIndex >= currentEnemyHealths.Count || currentEnemyHealths[targetEnemyIndex] <= 0 || !enemies[targetEnemyIndex].activeInHierarchy)
-        {
-            return;
-        }
-
-        float finalDamage = (attack.damage + attack.damageIncrease) * getDamageMultiplier();
-        float modifiedCritChance = Mathf.Min(1f, attack.critChance + getCritChanceBonus());
-        bool isCrit = UnityEngine.Random.Range(0f, 1f) < modifiedCritChance;
-
-        if (isCrit)
-        {
-            finalDamage *= 2f;
-            if (GameManager.Instance != null)
-                GameManager.Instance.PlayCritSound();
-        }
-
-        float initialHealth = currentEnemyHealths[targetEnemyIndex];
-        currentEnemyHealths[targetEnemyIndex] = Mathf.Max(0, currentEnemyHealths[targetEnemyIndex] - finalDamage);
-        float damageDone = initialHealth - currentEnemyHealths[targetEnemyIndex];
-
-        var sbm = (StoryBattleManager)monoBehaviourInstance;
-        Coroutine healthChangeAnim = (damageDone > 0) ? sbm.uiManager.ShowEnemyHealthChange(targetEnemyIndex, currentEnemyHealths[targetEnemyIndex], -damageDone, isCrit) : null;
-        QueueStatusUpdate("You used " + attack.attackName + " on " + getEnemyNames()[targetEnemyIndex] + (isCrit ? "! It's a critical hit!" : "!"), healthChangeAnim);
-
-        if (getHasLifesteal() && getLifestealPercentage() > 0)
-        {
-            float healAmount = finalDamage * (getLifestealPercentage() / 100f);
-            if (healAmount > 0)
-            {
-                float newPlayerHealth = Mathf.Min(getPlayerMaxHealth(), getCurrentPlayerHealth() + healAmount);
-                setCurrentPlayerHealth(newPlayerHealth);
-                QueueStatusUpdate($"Lifesteal healed {Mathf.Round(healAmount)} HP!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, healAmount, false));
-            }
-        }
-
-        if (attack.doubleEdgeDamage > 0)
-        {
-            float reducedDamage = attack.doubleEdgeDamage * (1f - getDoubleEdgeReduction());
-
-            float newPlayerHealth = Mathf.Max(0, getCurrentPlayerHealth() - reducedDamage);
-            setCurrentPlayerHealth(newPlayerHealth);
-            QueueStatusUpdate("But you hurt yourself for " + Mathf.Round(reducedDamage) + " damage!", sbm.uiManager.ShowPlayerHealthChange(newPlayerHealth, -reducedDamage, false));
-        }
     }
 
     private IEnumerator HandleMissedAttack(AttackData attack, Func<IEnumerator> flashPlayerSpriteCallback)
@@ -468,8 +447,7 @@ public class AttackHandler
                 {
                     enemyAnimator.SetTrigger(attack.animationTrigger);
                 }
-                // Use flashInterval for delay as it contains the correct timing value from the data
-                yield return new WaitForSeconds(attack.flashInterval);
+                yield return new WaitForSeconds(attack.effectDelay);
                 yield return monoBehaviourInstance.StartCoroutine(HandleEnemyDamagePlayer(attack, attackingEnemy, playImpactEffectCallback, flashPlayerSpriteCallback));
                 break;
         }
@@ -521,8 +499,7 @@ public class AttackHandler
             enemyAnimator.SetTrigger(attack.animationTrigger);
         }
 
-        // Use flashInterval for delay as it contains the correct timing value from the data
-        yield return new WaitForSeconds(attack.flashInterval);
+        yield return new WaitForSeconds(attack.effectDelay);
 
         yield return monoBehaviourInstance.StartCoroutine(HandleEnemyDamagePlayer(attack, attackingEnemy, playImpactEffectCallback, flashPlayerSpriteCallback));
 

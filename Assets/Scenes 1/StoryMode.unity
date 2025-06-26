@@ -2158,7 +2158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.83137256}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2250,17 +2250,6 @@ MonoBehaviour:
   enemyUIOffset: {x: 0, y: 1, z: 0}
   characterDB: {fileID: 11400000, guid: 70e92debd75a72f419325fb5dbf7d38d, type: 2}
   groqHandler: {fileID: 182396800}
-  currentPlayerHealth: 0
-  currentEnemyHealths: []
-  damageMultiplier: 1
-  critChanceBonus: 0
-  accuracyBonus: 0
-  healingMultiplier: 1
-  doubleEdgeReduction: 0
-  regenPerTurn: 0
-  hasLifesteal: 0
-  hasShield: 0
-  hasRegeneration: 0
   currentWave: 1
   maxWaves: 10
   waveProgressionMultiplier: 1.2
@@ -2275,6 +2264,17 @@ MonoBehaviour:
   moveSpeed: 10
   attackDistance: -3
   upgradeManager: {fileID: 937416924}
+  currentPlayerHealth: 0
+  currentEnemyHealths: []
+  damageMultiplier: 1
+  critChanceBonus: 0
+  accuracyBonus: 0
+  healingMultiplier: 1
+  doubleEdgeReduction: 0
+  regenPerTurn: 0
+  hasLifesteal: 0
+  hasShield: 0
+  hasRegeneration: 0
 --- !u!1 &551588308
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,12 +3773,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc5444145c487554aaf12408ad89f732, type: 2}
   - {fileID: 11400000, guid: 63bfee989b40f8941809afc17fb41bfb, type: 2}
   - {fileID: 11400000, guid: cc1af39c9e5f5624685dad2e34622009, type: 2}
+  - {fileID: 11400000, guid: f887c7bb0cd91f0499282872ec6a325b, type: 2}
+  - {fileID: 11400000, guid: e671e1d06aca12049a92db7a50c32101, type: 2}
+  - {fileID: 11400000, guid: 68bfdbf6732472c46b94c924d6414091, type: 2}
   staticRareUpgrades:
   - {fileID: 11400000, guid: 9b3e7f24c30a6de41a86d112536d8693, type: 2}
   - {fileID: 11400000, guid: 1986d44925b21e044a35b394c2617508, type: 2}
   - {fileID: 11400000, guid: 52e812610d6c9da45b13312ac0f64d2f, type: 2}
+  - {fileID: 11400000, guid: 0af5007ea837dee4f946d1a07123ee77, type: 2}
   staticEpicUpades:
   - {fileID: 11400000, guid: eb49407f2c8d1ad4e8e7e47a5c2afc4a, type: 2}
+  - {fileID: 11400000, guid: 089cc75da9eeaf14aa0eadcb970b5d2a, type: 2}
   staticLegendaryUpgrades:
   - {fileID: 11400000, guid: ed42e9c1573fb174bb2bae6652639786, type: 2}
   commonChanceCurve:

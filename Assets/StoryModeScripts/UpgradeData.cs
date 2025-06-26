@@ -1,5 +1,4 @@
-﻿// UpgradeData.cs
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -13,7 +12,8 @@ public enum UpgradeType
     DoubleEdgeReduction,
     SpecialAttack,
     Defensive,
-    Utility
+    Utility,
+    AttackModification // --- NEW ---
 }
 
 [Serializable]
@@ -25,7 +25,17 @@ public enum UpgradeRarity
     Legendary
 }
 
-[CreateAssetMenu(fileName = "New Upgrade", menuName = "Battle System/Upgrade Data")] // KEEP THIS!
+// --- NEW ---
+[Serializable]
+public enum AttackModificationType
+{
+    None,
+    AddTargets,
+    SetToFullAOE
+}
+
+
+[CreateAssetMenu(fileName = "New Upgrade", menuName = "Battle System/Upgrade Data")]
 public class UpgradeData : ScriptableObject
 {
     [Header("Basic Info")]
@@ -36,7 +46,7 @@ public class UpgradeData : ScriptableObject
     public UpgradeType upgradeType;
     public UpgradeRarity rarity;
 
-    [Header("Effects")]
+    [Header("Stat Effects")]
     public float healthIncrease = 0f;
     public float damageMultiplier = 1f;
     public float damageIncrease = 0f;
@@ -56,6 +66,16 @@ public class UpgradeData : ScriptableObject
     public bool grantsRegeneration = false;
     public float regenPerTurn = 0f;
 
+    // --- NEW ---
+    [Header("Attack Modification")]
+    [Tooltip("Defines how this upgrade modifies an existing attack.")]
+    public AttackModificationType attackModificationType = AttackModificationType.None;
+    [Tooltip("How many targets to add. Used if modification type is AddTargets.")]
+    public int addTargets = 0;
+    [Tooltip("A multiplier applied to the attack's damage when this mod is applied. E.g., 0.8 for 80% damage.")]
+    public float attackDamageMultiplier = 1.0f;
+
+
     [Header("Appearance")]
     public Color rarityColor = Color.white;
     public Color backgroundColor = Color.gray;
@@ -70,12 +90,9 @@ public class UpgradeData : ScriptableObject
 
     private void OnValidate()
     {
-        // This will only be called for ScriptableObject assets created in the editor.
-        // It sets the default colors based on rarity.
         SetRarityColorsInternal();
     }
 
-    // This method can be called manually for dynamically created instances
     public void SetRarityColorsInternal()
     {
         switch (rarity)
